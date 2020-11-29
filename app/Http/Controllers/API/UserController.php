@@ -15,8 +15,12 @@ class UserController extends Controller
   public function login(){
       if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
           $user = Auth::user();
-          $success['token'] =  $user->createToken('nApp')->accessToken;
-          return response()->json(['success' => $success], $this->successStatus);
+          $success['token'] =  $user->createToken('My Token')->accessToken;
+
+          return response()->json([
+              'data' => $user,
+              'success' => $success],
+          $this->successStatus);
       }
       else{
           return response()->json(['error'=>'Unauthorised'], 401);
@@ -27,7 +31,7 @@ class UserController extends Controller
   {
       $validator = Validator::make($request->all(), [
           'name' => 'required',
-          'email' => 'required|email',
+          'email' => 'required|email|unique:users',
           'password' => 'required',
           'password_confirmation' => 'required|same:password'
       ]);
@@ -37,20 +41,60 @@ class UserController extends Controller
       }
 
       $input = $request->all();
-      $input['password'] = bcrypt($input['password']);
-      $user = User::create($input);
-      $success['token'] =  $user->createToken('nApp')->accessToken;
-      $success['name'] =  $user->name;
-      $updateUser = User::find($user->id);
-      $updateUser->tokens = $success['token'];
-      $updateUser->save();
+      $user = new User;
 
-      return response()->json(['success'=>$success], $this->successStatus);
+      unset($input['password_confirmation']);
+
+      foreach($input as $key => $val) {
+          $user->{$key} = $val;
+          $user->password = bcrypt($input['password']);
+      }
+
+      $user->save();
+      $user->api_token = $user->createToken('nApp')->accessToken;
+
+      return response()->json(['success'=>$user], $this->successStatus);
   }
 
   public function details()
   {
       $user = Auth::user();
       return response()->json(['success' => $user], $this->successStatus);
+  }
+
+  public function getList(Request $request) {
+      if($request->isMethod('GET')) {
+        $data = $request->all();
+        $whereField = 'name, email, customer.nama';
+        $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+        $userList = User::where(function($query) use($whereField, $whereValue) {
+                           if($whereValue) {
+                             foreach(explode(', ', $whereField) as $idx => $field) {
+                               $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                             }
+                           }
+                         })
+                         ->select('users.*')
+                         ->orderBy('id', 'ASC')
+                         ->paginate();
+        
+        foreach($userList as $row) {
+          $row->data_json = $row->toJson();
+        }
+  
+        return response()->json([
+          'status' => true,
+          'responses' => $userList
+        ], 201);
+  
+        
+        
+      } else {
+        return response()->json([
+          'status' => false,
+          'message' => "<strong>failed') !</strong> method_not_allowed"
+        ], 405);
+      }
+
   }
 }

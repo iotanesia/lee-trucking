@@ -33,6 +33,13 @@
     font: 14px arial;
   }
 </style>
+<script>
+    window.Laravel = {!! json_encode([
+      "csrfToken" => csrf_token(),
+      "api_token" => Auth::user()->createToken('nApp')->accessToken,
+      "app_url" => url('/'),
+    ]) !!};
+</script>
 <body>
   <div class="preloader" style="display:none;">
     <div class="loading">

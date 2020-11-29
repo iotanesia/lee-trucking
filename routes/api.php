@@ -26,18 +26,18 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::post('details', 'API\UserController@details');
   Route::group(['as' => 'api-user', 'prefix' => 'user'], function() {
     Route::get('/', 'Services\UserController@index');
-    Route::get('get-list', ['as' => '-get-list', 'uses' => 'Services\UserController@getList']);
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\UserController@getList']);
     Route::post('add', ['as' => '-add', 'uses' => 'Services\UserController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'Services\UserController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'Services\UserController@delete']);
   });
 
-  Route::group(['as' => 'api-tenan', 'prefix' => 'tenan'], function() {
-    Route::get('/', 'Services\TenanController@index');
-    Route::get('get-list', ['as' => '-get-list', 'uses' => 'Services\TenanController@getList']);
-    Route::post('add', ['as' => '-add', 'uses' => 'Services\TenanController@add']);
-    Route::post('edit', ['as' => '-edit', 'uses' => 'Services\TenanController@edit']);
-    Route::post('delete', ['as' => '-delete', 'uses' => 'Services\TenanController@delete']);
+  Route::group(['as' => 'api-truck', 'prefix' => 'truck'], function() {
+    Route::get('/', 'Api\TruckController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\TruckController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\TruckController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\TruckController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\TruckController@delete']);
   });
 
   Route::group(['as' => 'api-transaksi', 'prefix' => 'transaksi'], function() {

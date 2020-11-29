@@ -19,7 +19,7 @@
   <script>
     window.Laravel = {!! json_encode([
       "csrfToken" => csrf_token(),
-      "api_token" => Auth::user()->tokens,
+      "api_token" => Auth::user()->createToken('nApp')->accessToken,
       "app_url" => url('/'),
     ]) !!};
   </script>
