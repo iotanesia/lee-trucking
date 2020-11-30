@@ -6,24 +6,44 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use Auth;
+use DB;
 use Validator;
 
 class UserController extends Controller
 {
-  public $successStatus = 200;
+  public $successStatus = 201;
  
   public function login(){
       if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
-          $user = Auth::user();
-          $success['token'] =  $user->createToken('My Token')->accessToken;
+          $user = User::join('group', 'users.id_group', 'group.id')->select('users.*', 'group.name as group_name')->first();
+          $roleAccess = DB::table('group_access')
+                        ->join('menu', 'group_access.id_menu', 'menu.id')
+                        ->join('group', 'group_access.id_group', 'group.id')
+                        ->select('menu.name as menu_name')
+                        ->where('id_group', Auth::user()->id_group)
+                        ->get();
+
+          foreach($roleAccess as $val) {
+               $datas[] = $val->menu_name;
+          }
+
+          $user->module_access = $datas;
 
           return response()->json([
-              'data' => $user,
-              'success' => $success],
+              'code' => 201,
+              'code_message' => 'Success',
+              'code_type' => 'Success',
+              'data'=> $user
+          ],
           $this->successStatus);
-      }
-      else{
-          return response()->json(['error'=>'Unauthorised'], 401);
+      
+      }else {
+          return response()->json([
+              'code' => 401,
+              'code_message' => 'Unauthorised',
+              'code_type' => 'Unauthorised',
+              'data'=> null
+          ], 401);
       }
   }
 
@@ -47,13 +67,18 @@ class UserController extends Controller
 
       foreach($input as $key => $val) {
           $user->{$key} = $val;
+          $user->tokens = $user->createToken('nApp')->accessToken;
           $user->password = bcrypt($input['password']);
       }
 
       $user->save();
-      $user->api_token = $user->createToken('nApp')->accessToken;
 
-      return response()->json(['success'=>$user], $this->successStatus);
+      return response()->json([
+        'code' => 201,
+        'code_message' => 'Success',
+        'code_type' => 'Success',
+        'data'=> $user
+      ], $this->successStatus);
   }
 
   public function details()
