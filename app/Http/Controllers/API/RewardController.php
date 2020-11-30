@@ -27,18 +27,30 @@ class RewardController extends Controller
       foreach($rewardList as $row) {
         $row->data_json = $row->toJson();
       }
-
-      return response()->json([
-        'status' => true,
-        'responses' => $rewardList
-      ], 201);
-
+      
+      if(!isset($rewardList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'data'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'data'=> $rewardList
+        ], 200);
+      }
       
       
     } else {
       return response()->json([
-        'status' => false,
-        'message' => "<strong>failed') !</strong> method_not_allowed"
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'data'=> null
       ], 405);
     }
   }
@@ -62,21 +74,24 @@ class RewardController extends Controller
 
       if($reward->save()){
         return response()->json([
-          'status' => true,
-          'message' => 'success'
-        ], 201);
+          'code' => 200,
+          'code_message' => 'Berhasil menyimpan data',
+          'code_type' => 'Success',
+        ], 200);
       
       } else {
         return response()->json([
-          'status' => true,
-          'message' => 'gagal'
-        ], 405);  
+          'code' => 401,
+          'code_message' => 'Gagal menyimpan data',
+          'code_type' => 'BadRequest',
+        ], 401);
       }
       
     } else {
       return response()->json([
-        'status' => false,
-        'message' => "<strong>failed') !</strong> method_not_allowed"
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
       ], 405);
     }
   }
@@ -100,21 +115,24 @@ class RewardController extends Controller
 
       if($reward->save()){
         return response()->json([
-          'status' => true,
-          'message' => 'success'
-        ], 201);
+          'code' => 200,
+          'code_message' => 'Berhasil menyimpan data',
+          'code_type' => 'Success',
+        ], 200);
       
       } else {
         return response()->json([
-          'status' => true,
-          'message' => 'gagal'
-        ], 405);  
+          'code' => 401,
+          'code_message' => 'Gagal menyimpan data',
+          'code_type' => 'BadRequest',
+        ], 401);
       }
-
+      
     } else {
       return response()->json([
-        'status' => false,
-        'message' => "<strong>failed') !</strong> method_not_allowed"
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
       ], 405);
     }
   }
@@ -126,20 +144,24 @@ class RewardController extends Controller
 
       if($reward->delete()){
         return response()->json([
-          'status' => true,
-          'message' => 'success'
-        ], 201);
+          'code' => 200,
+          'code_message' => 'Berhasil menghapus data',
+          'code_type' => 'Success',
+        ], 200);
       
       } else {
         return response()->json([
-          'status' => true,
-          'message' => 'gagal'
-        ], 405);  
+          'code' => 401,
+          'code_message' => 'Gagal menghapus data',
+          'code_type' => 'BadRequest',
+        ], 401);
       }
+      
     } else {
       return response()->json([
-        'status' => false,
-        'message' => "<strong>failed') !</strong> method_not_allowed"
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
       ], 405);
     }
   }

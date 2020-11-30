@@ -49,7 +49,7 @@ class UserController extends Controller
           $user->module_access = $datas;
 
           return response()->json([
-              'code' => 201,
+              'code' => 200,
               'code_message' => 'Success',
               'code_type' => 'Success',
               'data'=> $user
@@ -125,18 +125,29 @@ class UserController extends Controller
         foreach($userList as $row) {
           $row->data_json = $row->toJson();
         }
-  
-        return response()->json([
-          'status' => true,
-          'responses' => $userList
-        ], 201);
-  
         
-        
+        if(!isset($userList)){
+          return response()->json([
+            'code' => 404,
+            'code_message' => 'Data tidak ditemukan',
+            'code_type' => 'BadRequest',
+            'data'=> $userList
+          ], 404);
+        }else{
+          return response()->json([
+            'code' => 200,
+            'code_message' => 'Success',
+            'code_type' => 'Success',
+            'data'=> $userList
+          ], 200);
+        }
+
       } else {
         return response()->json([
-          'status' => false,
-          'message' => "<strong>failed') !</strong> method_not_allowed"
+            'code' => 405,
+            'code_message' => 'Method salah',
+            'code_type' => 'BadRequest',
+            'data'=> null
         ], 405);
       }
 
