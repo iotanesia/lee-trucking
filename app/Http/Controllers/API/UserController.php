@@ -14,8 +14,27 @@ class UserController extends Controller
   public $successStatus = 201;
  
   public function login(){
+      $user = User::leftjoin('group', 'users.id_group', 'group.id')->select('users.*', 'group.name as group_name')->where('email', request('email'))->first();
+
+      if(!isset($user)) {
+        return response()->json([
+            'code' => 403,
+            'code_message' => 'User tidak ditemukan',
+            'code_type' => 'BadRequest',
+            'data'=> null
+        ], 403);
+      }
+
       if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
-          $user = User::join('group', 'users.id_group', 'group.id')->select('users.*', 'group.name as group_name')->first();
+          if(!Auth::user()->is_active) {
+              return response()->json([
+                  'code' => 402,
+                  'code_message' => 'User tidak aktif',
+                  'code_type' => 'BadRequest',
+                  'data'=> null
+              ], 402);
+          }
+
           $roleAccess = DB::table('group_access')
                         ->join('menu', 'group_access.id_menu', 'menu.id')
                         ->join('group', 'group_access.id_group', 'group.id')
@@ -40,8 +59,8 @@ class UserController extends Controller
       }else {
           return response()->json([
               'code' => 401,
-              'code_message' => 'Unauthorised',
-              'code_type' => 'Unauthorised',
+              'code_message' => 'Username atau password salah',
+              'code_type' => 'BadRequest',
               'data'=> null
           ], 401);
       }
