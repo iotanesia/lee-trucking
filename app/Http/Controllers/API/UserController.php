@@ -14,7 +14,8 @@ class UserController extends Controller
   public $successStatus = 201;
  
   public function login(){
-      $user = User::leftjoin('group', 'users.id_group', 'group.id')->select('users.*', 'group.name as group_name')->where('email', request('email'))->first();
+      $user = User::leftjoin('group', 'users.id_group', 'group.id')->select('users.*', 'group.name as group_name')
+      ->where('email', request('email'))->first();
 
       if(!isset($user)) {
         return response()->json([
@@ -76,7 +77,12 @@ class UserController extends Controller
       ]);
 
       if ($validator->fails()) {
-          return response()->json(['error'=>$validator->errors()], 401);            
+        return response()->json([
+          'code' => 401,
+          'code_message' => 'Fail',
+          'code_type' => 'BadRequest',
+          'data'=> null
+        ], 401);      
       }
 
       $input = $request->all();

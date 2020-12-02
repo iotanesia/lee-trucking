@@ -23,9 +23,9 @@ Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
  
 Route::group(['middleware' => 'auth:api'], function(){
-  Route::post('details', 'API\UserController@details');
   Route::group(['as' => 'api-user', 'prefix' => 'user'], function() {
     Route::get('/', 'Services\UserController@index');
+    Route::get('details', 'API\UserController@details');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\UserController@getList']);
     Route::post('add', ['as' => '-add', 'uses' => 'Services\UserController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'Services\UserController@edit']);
