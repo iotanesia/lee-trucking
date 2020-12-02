@@ -36,6 +36,9 @@ class UserController extends Controller
               ], 402);
           }
 
+          $user->remember_token = $user->createToken('nApp')->accessToken;
+          $user->id_fcm_android = request('id_fcm_android');
+          $user->save();
           $roleAccess = DB::table('group_access')
                         ->join('menu', 'group_access.id_menu', 'menu.id')
                         ->join('group', 'group_access.id_group', 'group.id')
@@ -48,7 +51,6 @@ class UserController extends Controller
           }
 
           $user->module_access = $datas;
-
           return response()->json([
               'code' => 200,
               'code_message' => 'Success',
