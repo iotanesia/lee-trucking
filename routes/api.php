@@ -48,6 +48,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete', ['as' => '-delete', 'uses' => 'Services\TransaksiController@delete']);
   });
 
+  
+});
 
+Route::group(['as' => 'api-global-param', 'prefix' => 'global-param'], function() {
+    Route::get('/', 'Services\GlobalParamController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\GlobalParamController@getList']);
 });
 
