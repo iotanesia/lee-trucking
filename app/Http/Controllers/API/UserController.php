@@ -94,6 +94,7 @@ class UserController extends Controller
           $user->{$key} = $val;
           $user->tokens = $user->createToken('nApp')->accessToken;
           $user->password = bcrypt($input['password']);
+          $user->is_active = 0;
       }
 
       $user->save();
