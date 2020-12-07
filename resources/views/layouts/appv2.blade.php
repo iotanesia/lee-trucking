@@ -36,7 +36,7 @@
 <script>
     window.Laravel = {!! json_encode([
       "csrfToken" => csrf_token(),
-      "api_token" => Auth::user()->createToken('nApp')->accessToken,
+      "api_token" => Auth::user()->tokens,
       "app_url" => url('/'),
     ]) !!};
 </script>

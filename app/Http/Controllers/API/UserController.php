@@ -91,6 +91,8 @@ class UserController extends Controller
       $user = new User;
 
       unset($input['password_confirmation']);
+      unset($input['_token']);
+      unset($input['terms']);
 
       foreach($input as $key => $val) {
           $user->{$key} = $val;
