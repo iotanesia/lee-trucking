@@ -14,7 +14,7 @@ class UserController extends Controller
   public $successStatus = 201;
  
   public function login(){
-      $user = User::leftjoin('group', 'users.id_group', 'group.id')->select('users.*', 'group.name as group_name')
+      $user = User::leftjoin('corporate1_liexpedition.usr_group', 'users.group_id', 'usr_group.id')->select('users.*', 'usr_group.group_name as group_name')
       ->where('email', request('email'))->first();
 
       if(!isset($user)) {
