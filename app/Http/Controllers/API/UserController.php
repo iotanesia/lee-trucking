@@ -14,8 +14,8 @@ class UserController extends Controller
   public $successStatus = 201;
  
   public function login(){
-      $user = User::leftjoin('group', 'users.id_group', 'group.id')->select('users.*', 'group.name as group_name')
-      ->where('email', request('email'))->first();
+      $user = User::where('email', request('email'))->first();
+      $datas = null;
 
       if(!isset($user)) {
         return response()->json([
@@ -39,11 +39,11 @@ class UserController extends Controller
           $user->remember_token = $user->createToken('nApp')->accessToken;
           $user->id_fcm_android = request('id_fcm_android');
           $user->save();
-          $roleAccess = DB::table('group_access')
-                        ->join('menu', 'group_access.id_menu', 'menu.id')
-                        ->join('group', 'group_access.id_group', 'group.id')
-                        ->select('menu.name as menu_name')
-                        ->where('id_group', Auth::user()->id_group)
+          $roleAccess = DB::table(Auth::user()->schema.'.usr_group_menu')
+                        ->join(Auth::user()->schema.'.usr_menu', 'usr_group_menu.menu_id', 'usr_menu.id')
+                        ->join(Auth::user()->schema.'.usr_group', 'usr_group_menu.group_id', 'usr_group_menu.id')
+                        ->select('usr_menu.menu_name as menu_name')
+                        ->where('usr_group_menu.group_id', Auth::user()->id_group)
                         ->get();
 
           foreach($roleAccess as $val) {
@@ -91,6 +91,8 @@ class UserController extends Controller
       $user = new User;
 
       unset($input['password_confirmation']);
+      unset($input['_token']);
+      unset($input['terms']);
 
       foreach($input as $key => $val) {
           $user->{$key} = $val;

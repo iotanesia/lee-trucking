@@ -49,5 +49,18 @@ Route::group(['middleware' => 'auth:api'], function(){
   });
 
 
+  Route::group(['as' => 'api-driver', 'prefix' => 'driver'], function() {
+    Route::get('/', 'Services\DriverController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'Services\DriverController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'Services\DriverController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'Services\DriverController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'Services\DriverController@delete']);
+  });
+  
+});
+
+Route::group(['as' => 'api-global-param', 'prefix' => 'global-param'], function() {
+    Route::get('/', 'Services\GlobalParamController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\GlobalParamController@getList']);
 });
 

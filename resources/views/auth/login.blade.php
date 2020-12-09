@@ -30,7 +30,7 @@
                                     <div class="position-relative h-100 d-flex justify-content-center align-items-center bg-primary" tabindex="-1">
                                         <div class="slider-content">
                                           <!-- <img width="150" class="img-fluid" src="{{url('asssets')}}/architectui-html-free/assets/images/logo-inverse.png" alt=""> -->
-                                          <h1 style="color:#000"><strong>MOFING-X-SYS</strong></h1>
+                                          <h1 style="color:#000"><strong>liexpedition</strong></h1>
                                         </div>
                                     </div>
                                 </div>
@@ -41,7 +41,7 @@
                         <div class="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
                             <div class="app-logo"></div>
                             <h4 class="mb-0">
-                                <span class="d-block">MOFING-X-SYS</span>
+                                <span class="d-block">liexpedition</span>
                             </h4>
                             <div class="divider row"></div>
                             <div>
