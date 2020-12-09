@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GlobalParam extends Model
+class GlobalParam extends CompModel
 {
-  protected $table = 'global_param';
+  protected $table = 'all_global_param';
 }

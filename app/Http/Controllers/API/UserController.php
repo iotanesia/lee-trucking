@@ -89,20 +89,20 @@ class UserController extends Controller
       }
 
       $input = $request->all();
-      $user = new User;
 
       unset($input['password_confirmation']);
       unset($input['_token']);
       unset($input['terms']);
 
-      foreach($input as $key => $val) {
-          $user->{$key} = $val;
-          $user->tokens = $user->createToken('nApp')->accessToken;
-          $user->password = bcrypt($input['password']);
-          $user->is_active = 0;
-      }
-
-      $user->save();
+      $input['password'] = bcrypt($input['password']);
+      $input['is_active'] = 0;
+      $user = User::create($input);
+      $success['tokens'] =  $user->createToken('nApp')->accessToken;
+      $success['name'] =  $user->name;
+      $updateUser = User::find($user->id);
+      $updateUser->tokens = $success['tokens'];
+      $updateUser->save();
+      $user->tokens = $success['tokens'];
 
       return response()->json([
         'code' => 201,

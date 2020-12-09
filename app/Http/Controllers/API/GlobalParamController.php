@@ -23,7 +23,7 @@ class GlobalParamController extends Controller
                                    }
                                }
                            })
-                           ->where('is_active', 1)
+                           ->where('status_active', 1)
                            ->orderBy('param_name', 'ASC')
                            ->get();
 
