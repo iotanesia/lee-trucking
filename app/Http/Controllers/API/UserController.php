@@ -35,17 +35,18 @@ class UserController extends Controller
                   'data'=> null
               ], 402);
           }
-
+          
+          $schema = Auth::user()->schema.'.';
           $user->remember_token = $user->createToken('nApp')->accessToken;
           $user->id_fcm_android = request('id_fcm_android');
           $user->save();
           $roleAccess = DB::table(Auth::user()->schema.'.usr_group_menu')
                         ->join(Auth::user()->schema.'.usr_menu', 'usr_group_menu.menu_id', 'usr_menu.id')
-                        ->join(Auth::user()->schema.'.usr_group', 'usr_group_menu.group_id', 'usr_group_menu.id')
                         ->select('usr_menu.menu_name as menu_name')
-                        ->where('usr_group_menu.group_id', Auth::user()->id_group)
+                        ->where('usr_group_menu.group_id', Auth::user()->group_id)
                         ->get();
 
+          $user->group_name = isset(DB::table($schema.'usr_group')->find($user->group_id)->group_name) ? DB::table($schema.'usr_group')->find($user->group_id)->group_name : null;
           foreach($roleAccess as $val) {
                $datas[] = $val->menu_name;
           }
