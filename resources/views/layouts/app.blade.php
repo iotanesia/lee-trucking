@@ -111,7 +111,7 @@
 </div>
 <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <script>
-  $.widget.bridge('uibutton', $.ui.button)
+  $.widget.bridge('uibutton', $.ui.button);
 </script>
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>

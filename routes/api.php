@@ -56,6 +56,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('edit', ['as' => '-edit', 'uses' => 'Services\DriverController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'Services\DriverController@delete']);
   });
+
+  Route::group(['as' => 'api-truck', 'prefix' => 'truck'], function() {
+    Route::get('/', 'API\TruckController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\TruckController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\TruckController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\TruckController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\TruckController@delete']);
+  });
   
 });
 
