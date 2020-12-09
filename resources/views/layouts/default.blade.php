@@ -388,7 +388,7 @@
                         <a href="#">
                             <i class="menu-icon fa fa-check-square"></i>
                             <span>{{$row->menu_name}}</span>
-                            <span class="{{$row->menu_icon}}"></span>
+                            <span class="fa arrow"></span>
                         </a>
                         @else
                         <ul class="sub-menu">
