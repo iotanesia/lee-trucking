@@ -56,6 +56,24 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('edit', ['as' => '-edit', 'uses' => 'Services\DriverController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'Services\DriverController@delete']);
   });
+
+
+  Route::group(['as' => 'api-coa', 'prefix' => 'coa'], function() {
+    Route::get('/', 'Services\CoaController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'Services\CoaController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'Services\CoaController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'Services\CoaController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'Services\CoaController@delete']);
+  });
+
+
+  Route::group(['as' => 'api-sparepart', 'prefix' => 'sparepart'], function() {
+    Route::get('/', 'Services\SparePartController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'Services\SparePartController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'Services\SparePartController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'Services\SparePartController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'Services\SparePartController@delete']);
+  });
   
 });
 
