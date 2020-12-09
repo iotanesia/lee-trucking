@@ -1,0 +1,25 @@
+
+
+.text-justify .img-responsive {
+    width: 100%;
+}
+#navbarNav{
+    height:50px;
+}
+#navbarNav .nav > li{
+    height:50px;
+}
+.navbar-right .nav.navbar-nav > li > a
+{
+    position: relative;
+    padding: 16px 6px !important;
+}
+.navbar-right .nav.navbar-nav > li > a
+{
+    padding: 15px 6px !important;
+}
+.navbar .navbar-right .nav > li > .nav-link.padding-user
+{
+    background: none;
+    outline: none;
+}
