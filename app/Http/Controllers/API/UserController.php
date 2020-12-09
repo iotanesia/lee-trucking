@@ -41,9 +41,8 @@ class UserController extends Controller
           $user->save();
           $roleAccess = DB::table(Auth::user()->schema.'.usr_group_menu')
                         ->join(Auth::user()->schema.'.usr_menu', 'usr_group_menu.menu_id', 'usr_menu.id')
-                        ->join(Auth::user()->schema.'.usr_group', 'usr_group_menu.group_id', 'usr_group_menu.id')
                         ->select('usr_menu.menu_name as menu_name')
-                        ->where('usr_group_menu.group_id', Auth::user()->id_group)
+                        ->where('usr_group_menu.group_id', Auth::user()->group_id)
                         ->get();
 
           foreach($roleAccess as $val) {
