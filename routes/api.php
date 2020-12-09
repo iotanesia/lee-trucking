@@ -48,6 +48,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete', ['as' => '-delete', 'uses' => 'Services\TransaksiController@delete']);
   });
 
+
+  Route::group(['as' => 'api-driver', 'prefix' => 'driver'], function() {
+    Route::get('/', 'Services\DriverController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'Services\DriverController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'Services\DriverController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'Services\DriverController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'Services\DriverController@delete']);
+  });
   
 });
 
