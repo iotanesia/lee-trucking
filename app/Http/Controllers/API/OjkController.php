@@ -58,10 +58,10 @@ class OjkController extends Controller
       $data = $request->all();
       $ojk = new Ojk;
       
-      $this->validate($request, [
-        // 'no_ojk' => 'required|string|max:255|unique:ojk',
-        'name' => 'required|string|max:255',
-      ]);
+    //   $this->validate($request, [
+    //     // 'no_ojk' => 'required|string|max:255|unique:ojk',
+    //     'name' => 'required|string|max:255',
+    //   ]);
 
       unset($data['_token']);
       unset($data['id']);
@@ -99,10 +99,10 @@ class OjkController extends Controller
       $data = $request->all();
       $ojk = Ojk::find($data['id']);
       
-      $this->validate($request, [
-        // 'no_ojk' => 'required|string|max:255|unique:ojk,no_ojk,'.$data['id'].',id',
-        'name' => 'required|string|max:255',
-      ]);
+    //   $this->validate($request, [
+    //     // 'no_ojk' => 'required|string|max:255|unique:ojk,no_ojk,'.$data['id'].',id',
+    //     'name' => 'required|string|max:255',
+    //   ]);
       
       unset($data['_token']);
       unset($data['id']);
