@@ -4,17 +4,17 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
-use App\Models\Driver;
+use App\Models\Cabang;
 use Auth;
 
-class DriverController extends Controller
+class CabangController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'driver_name';
+      $whereField = 'cabang_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $driverList = Driver::where(function($query) use($whereField, $whereValue) {
+      $cabangList = Cabang::where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
                           foreach(explode(', ', $whereField) as $idx => $field) {
                             $query->orWhere($field, 'LIKE', "%".$whereValue."%");
@@ -23,12 +23,12 @@ class DriverController extends Controller
                       })
                       ->orderBy('id', 'ASC')
                       ->paginate();
-      
-      foreach($driverList as $row) {
+
+      foreach($cabangList as $row) {
         $row->data_json = $row->toJson();
       }
-
-      if(!isset($driverList)){
+      
+      if(!isset($cabangList)){
         return response()->json([
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
@@ -40,7 +40,7 @@ class DriverController extends Controller
           'code' => 200,
           'code_message' => 'Success',
           'code_type' => 'Success',
-          'data'=> $driverList
+          'data'=> $cabangList
         ], 200);
       }
     } else {
@@ -56,21 +56,21 @@ class DriverController extends Controller
   public function add(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $driver = new Driver;
+      $cabang = new Cabang;
       
       $this->validate($request, [
-        // 'no_Driver' => 'required|string|max:255|unique:Driver',
-        'name' => 'required|string|max:255',
+        // 'no_cabang' => 'required|string|max:255|unique:cabang',
+        'cabang_name' => 'required|string|max:255',
       ]);
 
       unset($data['_token']);
       unset($data['id']);
 
       foreach($data as $key => $row) {
-        $driver->{$key} = $row;
+        $cabang->{$key} = $row;
       }
 
-      if($driver->save()){
+      if($cabang->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -97,21 +97,21 @@ class DriverController extends Controller
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $driver = Driver::find($data['id']);
+      $cabang = cabang::find($data['id']);
       
       $this->validate($request, [
-        // 'no_Driver' => 'required|string|max:255|unique:Driver,no_Driver,'.$data['id'].',id',
-        'name' => 'required|string|max:255',
+        // 'no_cabang' => 'required|string|max:255|unique:cabang,no_cabang,'.$data['id'].',id',
+        'cabang_name' => 'required|string|max:255',
       ]);
       
       unset($data['_token']);
       unset($data['id']);
       
       foreach($data as $key => $row) {
-        $driver->{$key} = $row;
+        $cabang->{$key} = $row;
       }
 
-      if($driver->save()){
+      if($cabang->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -138,9 +138,9 @@ class DriverController extends Controller
   public function delete(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $driver = Driver::find($data['id']);
+      $cabang = cabang::find($data['id']);
 
-      if($driver->delete()){
+      if($cabang->delete()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',

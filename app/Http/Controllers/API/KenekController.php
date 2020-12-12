@@ -4,17 +4,17 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
-use App\Models\Driver;
+use App\Models\Kenek;
 use Auth;
 
-class DriverController extends Controller
+class KenekController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'driver_name';
+      $whereField = 'kenek_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $driverList = Driver::where(function($query) use($whereField, $whereValue) {
+      $kenekList = Kenek::where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
                           foreach(explode(', ', $whereField) as $idx => $field) {
                             $query->orWhere($field, 'LIKE', "%".$whereValue."%");
@@ -24,11 +24,11 @@ class DriverController extends Controller
                       ->orderBy('id', 'ASC')
                       ->paginate();
       
-      foreach($driverList as $row) {
+      foreach($kenekList as $row) {
         $row->data_json = $row->toJson();
       }
 
-      if(!isset($driverList)){
+      if(!isset($kenekList)){
         return response()->json([
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
@@ -40,7 +40,7 @@ class DriverController extends Controller
           'code' => 200,
           'code_message' => 'Success',
           'code_type' => 'Success',
-          'data'=> $driverList
+          'data'=> $kenekList
         ], 200);
       }
     } else {
@@ -56,10 +56,10 @@ class DriverController extends Controller
   public function add(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $driver = new Driver;
+      $kenek = new Kenek;
       
       $this->validate($request, [
-        // 'no_Driver' => 'required|string|max:255|unique:Driver',
+        // 'no_kenek' => 'required|string|max:255|unique:kenek',
         'name' => 'required|string|max:255',
       ]);
 
@@ -67,10 +67,10 @@ class DriverController extends Controller
       unset($data['id']);
 
       foreach($data as $key => $row) {
-        $driver->{$key} = $row;
+        $kenek->{$key} = $row;
       }
 
-      if($driver->save()){
+      if($kenek->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -97,10 +97,10 @@ class DriverController extends Controller
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $driver = Driver::find($data['id']);
+      $kenek = Kenek::find($data['id']);
       
       $this->validate($request, [
-        // 'no_Driver' => 'required|string|max:255|unique:Driver,no_Driver,'.$data['id'].',id',
+        // 'no_kenek' => 'required|string|max:255|unique:kenek,no_kenek,'.$data['id'].',id',
         'name' => 'required|string|max:255',
       ]);
       
@@ -108,10 +108,10 @@ class DriverController extends Controller
       unset($data['id']);
       
       foreach($data as $key => $row) {
-        $driver->{$key} = $row;
+        $kenek->{$key} = $row;
       }
 
-      if($driver->save()){
+      if($kenek->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -138,9 +138,9 @@ class DriverController extends Controller
   public function delete(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $driver = Driver::find($data['id']);
+      $kenek = Kenek::find($data['id']);
 
-      if($driver->delete()){
+      if($kenek->delete()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',

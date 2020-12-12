@@ -50,11 +50,11 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 
   Route::group(['as' => 'api-driver', 'prefix' => 'driver'], function() {
-    Route::get('/', 'Services\DriverController@index');
-    Route::get('get-list', ['as' => '-get-list', 'uses' => 'Services\DriverController@getList']);
-    Route::post('add', ['as' => '-add', 'uses' => 'Services\DriverController@add']);
-    Route::post('edit', ['as' => '-edit', 'uses' => 'Services\DriverController@edit']);
-    Route::post('delete', ['as' => '-delete', 'uses' => 'Services\DriverController@delete']);
+    Route::get('/', 'API\DriverController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\DriverController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\DriverController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\DriverController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\DriverController@delete']);
   });
 
   Route::group(['as' => 'api-truck', 'prefix' => 'truck'], function() {
@@ -63,6 +63,22 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('add', ['as' => '-add', 'uses' => 'API\TruckController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\TruckController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\TruckController@delete']);
+  });
+
+  Route::group(['as' => 'api-cabang', 'prefix' => 'cabang'], function() {
+    Route::get('/', 'API\CabangController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\CabangController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\CabangController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\CabangController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\CabangController@delete']);
+  });
+
+  Route::group(['as' => 'api-kenek', 'prefix' => 'kenek'], function() {
+    Route::get('/', 'API\KenekController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\KenekController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\KenekController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\KenekController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\KenekController@delete']);
   });
   
 });
