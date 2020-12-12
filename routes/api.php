@@ -72,3 +72,9 @@ Route::group(['as' => 'api-global-param', 'prefix' => 'global-param'], function(
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\GlobalParamController@getList']);
 });
 
+Route::group(['as' => 'api-daerah', 'prefix' => 'daerah'], function() {
+  Route::get('get-provinsi', ['as' => '-get-provinsi', 'uses' => 'API\DaerahController@getProvinsi']);
+  Route::get('get-kabupaten-by-idProv', ['as' => '-get-kabupaten-by-idProv', 'uses' => 'API\DaerahController@getKabupatenByIdProvinsi']);
+  Route::get('get-kecamatan-by-idKab', ['as' => '-get-kabupaten-by-idKab', 'uses' => 'API\DaerahController@getKecamatanByIdKabupaten']);
+});
+
