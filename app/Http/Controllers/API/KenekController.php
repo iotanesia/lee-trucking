@@ -22,7 +22,7 @@ class KenekController extends Controller
                         }
                       })
                       ->orderBy('id', 'ASC')
-                      ->paginate();
+                      ->get();
       
       foreach($kenekList as $row) {
         $row->data_json = $row->toJson();

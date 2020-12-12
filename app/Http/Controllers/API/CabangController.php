@@ -22,7 +22,7 @@ class CabangController extends Controller
                         }
                       })
                       ->orderBy('id', 'ASC')
-                      ->paginate();
+                      ->get();
 
       foreach($cabangList as $row) {
         $row->data_json = $row->toJson();

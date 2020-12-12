@@ -22,7 +22,7 @@ class DriverController extends Controller
                         }
                       })
                       ->orderBy('id', 'ASC')
-                      ->paginate();
+                      ->get();
       
       foreach($driverList as $row) {
         $row->data_json = $row->toJson();

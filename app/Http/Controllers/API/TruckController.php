@@ -22,7 +22,7 @@ class TruckController extends Controller
                         }
                       })
                       ->orderBy('id', 'ASC')
-                      ->paginate();
+                      ->get();
 
       foreach($truckList as $row) {
         $row->data_json = $row->toJson();
