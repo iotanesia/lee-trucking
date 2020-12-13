@@ -14,15 +14,17 @@ class KenekController extends Controller
       $data = $request->all();
       $whereField = 'kenek_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $kenekList = Kenek::where(function($query) use($whereField, $whereValue) {
-                        if($whereValue) {
-                          foreach(explode(', ', $whereField) as $idx => $field) {
-                            $query->orWhere($field, 'LIKE', "%".$whereValue."%");
-                          }
-                        }
-                      })
-                      ->orderBy('id', 'ASC')
-                      ->get();
+      $kenekList = Kenek::join('all_global_param', 'ex_master_kenek.kenek_status', 'all_global_param.id')
+                   ->where(function($query) use($whereField, $whereValue) {
+                     if($whereValue) {
+                       foreach(explode(', ', $whereField) as $idx => $field) {
+                         $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                       }
+                     }
+                   })
+                   ->select('ex_master_kenek.*', 'all_global_param.param_name as status_name')
+                   ->orderBy('id', 'ASC')
+                   ->paginate();
       
       foreach($kenekList as $row) {
         $row->data_json = $row->toJson();
@@ -60,7 +62,7 @@ class KenekController extends Controller
       
       $this->validate($request, [
         // 'no_kenek' => 'required|string|max:255|unique:kenek',
-        'name' => 'required|string|max:255',
+        'kenek_name' => 'required|string|max:255',
       ]);
 
       unset($data['_token']);
@@ -101,7 +103,7 @@ class KenekController extends Controller
       
       $this->validate($request, [
         // 'no_kenek' => 'required|string|max:255|unique:kenek,no_kenek,'.$data['id'].',id',
-        'name' => 'required|string|max:255',
+        'kenek_name' => 'required|string|max:255',
       ]);
       
       unset($data['_token']);

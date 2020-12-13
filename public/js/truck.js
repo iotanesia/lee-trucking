@@ -128,8 +128,8 @@ var successLoadtruck = (function(responses, dataModel) {
         },
         success: function(data, textStatus, xhr) {
           alert('Data berhasil di hapus');
-          document.getElementById("search-data").click();
           $('.preloader').hide();
+          document.getElementById("search-data").click();
         },
       });
     }

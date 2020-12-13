@@ -14,15 +14,18 @@ class DriverController extends Controller
       $data = $request->all();
       $whereField = 'driver_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $driverList = Driver::where(function($query) use($whereField, $whereValue) {
-                        if($whereValue) {
-                          foreach(explode(', ', $whereField) as $idx => $field) {
-                            $query->orWhere($field, 'LIKE', "%".$whereValue."%");
-                          }
+      $driverList = Driver::join('all_global_param', 'ex_master_driver.driver_status', 'all_global_param.id')
+                    ->leftJoin('ex_master_kenek', 'ex_master_driver.kenek_id', 'ex_master_kenek.id')
+                    ->where(function($query) use($whereField, $whereValue) {
+                      if($whereValue) {
+                        foreach(explode(', ', $whereField) as $idx => $field) {
+                          $query->orWhere($field, 'LIKE', "%".$whereValue."%");
                         }
-                      })
-                      ->orderBy('id', 'ASC')
-                      ->get();
+                      }
+                    })
+                    ->select('ex_master_driver.*', 'all_global_param.param_name as status_name', 'ex_master_kenek.kenek_name')
+                    ->orderBy('id', 'ASC')
+                    ->paginate();
       
       foreach($driverList as $row) {
         $row->data_json = $row->toJson();
@@ -60,7 +63,7 @@ class DriverController extends Controller
       
       $this->validate($request, [
         // 'no_Driver' => 'required|string|max:255|unique:Driver',
-        'name' => 'required|string|max:255',
+        'driver_name' => 'required|string|max:255',
       ]);
 
       unset($data['_token']);
@@ -101,7 +104,7 @@ class DriverController extends Controller
       
       $this->validate($request, [
         // 'no_Driver' => 'required|string|max:255|unique:Driver,no_Driver,'.$data['id'].',id',
-        'name' => 'required|string|max:255',
+        'driver_name' => 'required|string|max:255',
       ]);
       
       unset($data['_token']);
