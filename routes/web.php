@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/truck', 'TruckController@index')->name('truck');
+Route::get('/cabang', 'CabangController@index')->name('cabang');
 Route::get('/tenan', 'HomeController@indexTenan')->name('home');
 Route::get('/transaksi', 'HomeController@indexTrx')->name('home');
 Route::get('/user-detail/{id}', 'HomeController@userDetail');

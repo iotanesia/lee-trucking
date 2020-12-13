@@ -2,7 +2,7 @@ $("document").ready(function(){
   var accessToken =  window.Laravel.api_token;
 
   $.ajax({
-    url: window.Laravel.app_url + "/api/truck/get-list",
+    url: window.Laravel.app_url + "/api/cabang/get-list",
     type: "GET",
     dataType: "json",
     headers: {"Authorization": "Bearer " + accessToken},
@@ -12,17 +12,17 @@ $("document").ready(function(){
     },
     success: function(data, textStatus, xhr) {
       $('.preloader').hide();
-      successLoadtruck(data);
+      successLoadcabang(data);
     },
   });
 
   $("#btn-submit").click(function(){
-    var event = $("#truck-modal #btn-submit").attr("el-event");
-    var data = new FormData($("#truck-form")[0]);
+    var event = $("#cabang-modal #btn-submit").attr("el-event");
+    var data = new FormData($("#cabang-form")[0]);
     data.append("_token", window.Laravel.csrfToken);
 
     $.ajax({
-      url: window.Laravel.app_url + "/api/truck/" + event + "",
+      url: window.Laravel.app_url + "/api/cabang/" + event + "",
       type: "POST",
       dataType: "json",
       data: data,
@@ -35,7 +35,7 @@ $("document").ready(function(){
     },
     success: function(datas, textStatus, xhr) {
         alert('Data berhasil di simpan');
-        $("#truck-modal").modal("hide");
+        $("#cabang-modal").modal("hide");
         $('.preloader').hide();
         document.getElementById("search-data").click();
       },
@@ -50,51 +50,45 @@ $("document").ready(function(){
     });
   })
 
-  $("#truck-modal").on("show.bs.modal", function(e) {
+  $("#cabang-modal").on("show.bs.modal", function(e) {
     var invoker = $(e.relatedTarget);
 
     if(invoker.attr('el-event') == 'edit') {
       var dataJSON = invoker.attr("data-json");
       var dataJSON = JSON.parse(dataJSON);
 
-      $("#truck-form").find("input[name=id]").val(dataJSON.id);
-      $("#truck-modal #btn-submit").attr("el-event", "edit");
-      $("#truck-form").find("textarea[name=content]").summernote("code", dataJSON.content);
+      $("#cabang-form").find("input[name=id]").val(dataJSON.id);
+      $("#cabang-modal #btn-submit").attr("el-event", "edit");
+      $("#cabang-form").find("textarea[name=content]").summernote("code", dataJSON.content);
       
-      bindToForm($("#truck-modal"), dataJSON);
+      bindToForm($("#cabang-modal"), dataJSON);
       
     } else {
-      $("#truck-form").find("input[name=id]").val(null);
-      $("#truck-modal #btn-submit").attr("el-event", "add");
-      $("#truck-form").find("textarea[name=content]").summernote("code", "");
-      resetForm("#truck-form");
+      $("#cabang-form").find("input[name=id]").val(null);
+      $("#cabang-modal #btn-submit").attr("el-event", "add");
+      $("#cabang-form").find("textarea[name=content]").summernote("code", "");
+      resetForm("#cabang-form");
     }
   });
 });
 
-var successLoadtruck = (function(responses, dataModel) {
+var successLoadcabang = (function(responses, dataModel) {
     
   var tableRows = "";
   var responses = responses.data.data == undefined ? responses : responses.data;
 
   for(var i = 0; i < responses.data.length; i++) {
     id = responses.data[i].id;
-    truck_plat = responses.data[i].truck_plat;
-    truck_status = responses.data[i].status_name;
-    truck_corporate_asal = responses.data[i].truck_corporate_asal;
-    truck_date_join = responses.data[i].truck_date_join;
-    cabang_id = responses.data[i].cabang_name;
+    cabang_name = responses.data[i].cabang_name;
+    alamat = responses.data[i].alamat;
     data_json = responses.data[i].data_json;
 
     tableRows += "<tr>" +
-                   "<td>"+ truck_plat +"</td>"+
-                   "<td>"+ truck_status +"</td>"+
-                   "<td>"+ truck_corporate_asal +"</td>"+
-                   "<td>"+ truck_date_join +"</td>"+
-                   "<td>"+ cabang_id +"</td>"+
+                   "<td>"+ cabang_name +"</td>"+
+                   "<td>"+ alamat +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
-                       "<a class='btn btn-success btn-xs' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#truck-modal'><i class='fa fa-pencil'></i></a>"+
+                       "<a class='btn btn-success btn-xs' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#cabang-modal'><i class='fa fa-pencil'></i></a>"+
                        "<a class='btn btn-danger btn-xs btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
                      "</div>"+
                    "</td>"+
@@ -106,8 +100,8 @@ var successLoadtruck = (function(responses, dataModel) {
                  "</tr>";
   }
 
-  $("#table-truck tbody").html(tableRows);
-  paginate(responses, 'truck');
+  $("#table-cabang tbody").html(tableRows);
+  paginate(responses, 'cabang');
   $(".preloader").hide();
 
   $(".btn-delete").click(function(){
@@ -117,7 +111,7 @@ var successLoadtruck = (function(responses, dataModel) {
 
     if(confirms) {
       $.ajax({
-        url: window.Laravel.app_url + "/api/truck/delete",
+        url: window.Laravel.app_url + "/api/cabang/delete",
         type: "POST",
         dataType: "json",
         data:"id"+"="+id,

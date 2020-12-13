@@ -73,6 +73,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\CabangController@delete']);
   });
 
+  Route::group(['as' => 'api-cabangs', 'prefix' => 'cabangs'], function() {
+    Route::get('/', 'API\CabangsController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\CabangsController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\CabangsController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\CabangsController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\CabangsController@delete']);
+  });
+
   Route::group(['as' => 'api-kenek', 'prefix' => 'kenek'], function() {
     Route::get('/', 'API\KenekController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\KenekController@getList']);
