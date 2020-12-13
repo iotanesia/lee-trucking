@@ -12,17 +12,22 @@ class OjkController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'id';
+      $whereField = 'cabang_name, kabupaten, kecamatan, provinsi';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $ojkList = Ojk::where(function($query) use($whereField, $whereValue) {
-                        if($whereValue) {
-                          foreach(explode(', ', $whereField) as $idx => $field) {
-                            $query->orWhere($field, 'LIKE', "%".$whereValue."%");
-                          }
-                        }
-                      })
-                      ->orderBy('id', 'ASC')
-                      ->paginate();
+      $ojkList = Ojk::join('ex_master_cabang', 'ex_master_cabang.id', 'ex_master_ojk.cabang_id')
+                 ->leftJoin('ex_wil_kabupaten', 'ex_wil_kabupaten.id', 'ex_master_ojk.kabupaten_id')
+                 ->leftJoin('ex_wil_kecamatan', 'ex_wil_kecamatan.id', 'ex_master_ojk.kecamatan_id')
+                 ->leftJoin('ex_wil_provinsi', 'ex_wil_provinsi.id', 'ex_master_ojk.provinsi_id')
+                 ->where(function($query) use($whereField, $whereValue) {
+                   if($whereValue) {
+                     foreach(explode(', ', $whereField) as $idx => $field) {
+                       $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                     }
+                   }
+                 })
+                 ->select('ex_master_ojk.*', 'ex_wil_kabupaten.kabupaten', 'ex_wil_kecamatan.kecamatan', 'ex_wil_provinsi.provinsi', 'ex_master_cabang.cabang_name')
+                 ->orderBy('id', 'ASC')
+                 ->paginate();
       
       foreach($ojkList as $row) {
         $row->data_json = $row->toJson();
@@ -58,10 +63,14 @@ class OjkController extends Controller
       $data = $request->all();
       $ojk = new Ojk;
       
-    //   $this->validate($request, [
-    //     // 'no_ojk' => 'required|string|max:255|unique:ojk',
-    //     'name' => 'required|string|max:255',
-    //   ]);
+      $this->validate($request, [
+        'harga_ojk' => 'required|string|max:255',
+        'kabupaten_id' => 'required',
+        'kecamatan_id' => 'required',
+        'harga_ojk' => 'required',
+        'harga_otv' => 'required',
+        'cabang_id' => 'required',
+      ]);
 
       unset($data['_token']);
       unset($data['id']);
@@ -99,10 +108,14 @@ class OjkController extends Controller
       $data = $request->all();
       $ojk = Ojk::find($data['id']);
       
-    //   $this->validate($request, [
-    //     // 'no_ojk' => 'required|string|max:255|unique:ojk,no_ojk,'.$data['id'].',id',
-    //     'name' => 'required|string|max:255',
-    //   ]);
+      $this->validate($request, [
+        'harga_ojk' => 'required|string|max:255',
+        'kabupaten_id' => 'required',
+        'kecamatan_id' => 'required',
+        'harga_ojk' => 'required',
+        'harga_otv' => 'required',
+        'cabang_id' => 'required',
+      ]);
       
       unset($data['_token']);
       unset($data['id']);
