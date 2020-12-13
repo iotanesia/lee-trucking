@@ -64,7 +64,6 @@ class OjkController extends Controller
       $ojk = new Ojk;
       
       $this->validate($request, [
-        'harga_ojk' => 'required|string|max:255',
         'kabupaten_id' => 'required',
         'kecamatan_id' => 'required',
         'harga_ojk' => 'required',
@@ -109,7 +108,6 @@ class OjkController extends Controller
       $ojk = Ojk::find($data['id']);
       
       $this->validate($request, [
-        'harga_ojk' => 'required|string|max:255',
         'kabupaten_id' => 'required',
         'kecamatan_id' => 'required',
         'harga_ojk' => 'required',
