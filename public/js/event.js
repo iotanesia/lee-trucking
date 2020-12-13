@@ -162,9 +162,9 @@ $(document).on("click", "a[el-event='search-data']", function(event) {
   data.append("order_ascdesc", sortOrder);
 
   var success = (function(response) {
-    if(response.status !== false) {
+    if(response.code_message !== false) {
       if(onSuccessLoad !== undefined) {
-        window[onSuccessLoad](response.responses, dataModel);
+        window[onSuccessLoad](response.data, dataModel);
 
         setDdMenuOpen($("table[data-model='" + dataModel + "'] .btn-group"));
       }

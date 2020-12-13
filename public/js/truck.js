@@ -31,14 +31,16 @@ $("document").ready(function(){
       headers: {"Authorization": "Bearer " + accessToken},
       crossDomain: true,
       beforeSend: function( xhr ) {
-        $('.loader').show();
-      },
-      success: function(datas, textStatus, xhr) {
+        $('.preloader').show();
+    },
+    success: function(datas, textStatus, xhr) {
         alert('Data berhasil di simpan');
         $("table[data-model='truck']").closest("div[id='truck']").find("a[el-event='search-data']").click();
         $("#truck-modal").modal("hide");
+        $('.preloader').hide();
       },
       error: function(datas, textStatus, xhr) {
+        $('.preloader').hide();
         msgError = "";
         for(var item in datas.responseJSON.errors) {
           msgError += datas.responseJSON.errors[item][0] + "*";
@@ -73,16 +75,16 @@ $("document").ready(function(){
 var successLoadtruck = (function(responses, dataModel) {
     
   var tableRows = "";
-  var responses = responses.responses == undefined ? responses : responses.responses;
-    console.log(responses);
-  for(var i = 0; i < responses.data.data.length; i++) {
-    id = responses.data.data[i].id;
-    truck_plat = responses.data.data[i].truck_plat;
-    truck_status = responses.data.data[i].truck_status;
-    truck_corporate_asal = responses.data.data[i].truck_corporate_asal;
-    truck_date_join = responses.data.data[i].truck_date_join;
-    cabang_id = responses.data.data[i].cabang_id;
-    data_json = responses.data.data[i].data_json;
+  var responses = responses.data.data == undefined ? responses : responses.data;
+
+  for(var i = 0; i < responses.data.length; i++) {
+    id = responses.data[i].id;
+    truck_plat = responses.data[i].truck_plat;
+    truck_status = responses.data[i].status_name;
+    truck_corporate_asal = responses.data[i].truck_corporate_asal;
+    truck_date_join = responses.data[i].truck_date_join;
+    cabang_id = responses.data[i].cabang_name;
+    data_json = responses.data[i].data_json;
 
     tableRows += "<tr>" +
                    "<td>"+ truck_plat +"</td>"+

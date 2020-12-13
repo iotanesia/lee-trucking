@@ -12,17 +12,20 @@ class TruckController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'name, no_Truck';
+      $whereField = 'truck_plat';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $truckList = Truck::where(function($query) use($whereField, $whereValue) {
-                        if($whereValue) {
-                          foreach(explode(', ', $whereField) as $idx => $field) {
-                            $query->orWhere($field, 'LIKE', "%".$whereValue."%");
-                          }
-                        }
-                      })
-                      ->orderBy('id', 'ASC')
-                      ->paginate();
+      $truckList = Truck::join('all_global_param', 'ex_master_truck.truck_status', 'all_global_param.id')
+                   ->join('ex_master_cabang','ex_master_truck.cabang_id', 'ex_master_cabang.id')
+                   ->where(function($query) use($whereField, $whereValue) {
+                     if($whereValue) {
+                       foreach(explode(', ', $whereField) as $idx => $field) {
+                         $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                       }
+                     }
+                   })
+                   ->select('ex_master_truck.*', 'all_global_param.param_name as status_name', 'ex_master_cabang.cabang_name')
+                   ->orderBy('ex_master_truck.id', 'ASC')
+                   ->paginate();
 
       foreach($truckList as $row) {
         $row->data_json = $row->toJson();
@@ -60,7 +63,7 @@ class TruckController extends Controller
       
       $this->validate($request, [
         // 'no_Truck' => 'required|string|max:255|unique:Truck',
-        'name' => 'required|string|max:255',
+        'truck_plat' => 'required|string|max:255',
       ]);
 
       unset($data['_token']);
@@ -101,7 +104,7 @@ class TruckController extends Controller
       
       $this->validate($request, [
         // 'no_Truck' => 'required|string|max:255|unique:Truck,no_Truck,'.$data['id'].',id',
-        'name' => 'required|string|max:255',
+        'truck_plat' => 'required|string|max:255',
       ]);
       
       unset($data['_token']);

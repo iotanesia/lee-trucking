@@ -84,6 +84,14 @@
                     <input type="text" class="form-control" name="truck_corporate_asal" id="truck_corporate_asal" placeholder="truck_corporate_asal">
                 </div>
                 <div class="form-group">
+                    <label for="truck_corporate_asal">Status Truck</label>
+                    <select name="truck_status" id="" class="form-control">
+                    @foreach($status as $row)
+                        <option value="{{$row->id}}">{{$row->param_name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="truck_date_join">Truck date join</label>
                     <input type="date" class="form-control" name="truck_date_join" id="truck_date_join" placeholder="truck_date_join">
                 </div>

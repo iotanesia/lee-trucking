@@ -50,45 +50,5 @@ class CompModel extends Model
   {
     parent::boot();
 
-    if(!App::runningInConsole()) {
-      static::creating(function($model) {
-        $user = Auth::user();
-        $model->created_by = $user->id;
-      });
-
-      static::created(function($model) {
-        LogActivity::add($model->getTable(), null, json_encode($model->getAttributes()), 'add');
-
-        if(strpos($model->getTable(), 'payroll') === false && strpos($model->getTable(), 'pph21') === false && strpos($model->getTable(), 'shift') === false
-           && strpos($model->getTable(), 'log_activity') === false) {
-          Cache::forget($model->getTable()."_".$model->getConnectionName());
-          Cache::forever($model->getTable()."_".$model->getConnectionName(),
-                         $model->get()->makeVisible(['created_at', 'created_by', 'updated_at', 'updated_by'])->toArray());
-        }
-      });
-
-      static::updated(function($model) {
-        LogActivity::add($model->getTable(), json_encode($model->getOriginal()), json_encode($model->getAttributes()), 'edit');
-      
-        if(strpos($model->getTable(), 'payroll') === false && strpos($model->getTable(), 'pph21') === false && strpos($model->getTable(), 'shift') === false
-           && strpos($model->getTable(), 'log_activity') === false) {
-          Cache::forget($model->getTable()."_".$model->getConnectionName());
-          Cache::forever($model->getTable()."_".$model->getConnectionName(),
-                         $model->get()->makeVisible(['created_at', 'created_by', 'updated_at', 'updated_by'])->toArray());
-        }
-      });
-
-      static::deleted(function($model)
-      {
-        LogActivity::add($model->getTable(), json_encode($model->getOriginal()), null, 'delete');
-        
-        if(strpos($model->getTable(), 'payroll') === false && strpos($model->getTable(), 'pph21') === false && strpos($model->getTable(), 'shift') === false
-           && strpos($model->getTable(), 'log_activity') === false) {
-          Cache::forget($model->getTable()."_".$model->getConnectionName());
-          Cache::forever($model->getTable()."_".$model->getConnectionName(),
-                         $model->get()->makeVisible(['created_at', 'created_by', 'updated_at', 'updated_by'])->toArray());
-        }
-      });
-    }
   }
 }

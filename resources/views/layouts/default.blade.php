@@ -30,10 +30,33 @@
       "app_url" => url('/'),
     ]) !!};
 </script>
+<style>
+.fixed-footer .app-footer .app-footer__inner{box-shadow:0.3rem -0.46875rem 2.1875rem rgba(4,9,20,0.02),0.3rem -0.9375rem 1.40625rem rgba(4,9,20,0.02),0.3rem -0.25rem 0.53125rem rgba(4,9,20,0.04),0.3rem -0.125rem 0.1875rem rgba(4,9,20,0.02)}
+/* Apply second set of CSS rules */
+.preloader {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 9999;
+background-color: rgba(0, 0, 0, 0.1);
+}
+.preloader .loading {
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%,-50%);
+font: 14px arial;
+}
+</style>
 </head>
 <body class="skin-coreplus">
 <div class="preloader">
-    <div class="loader_img"><img src="{{asset('assets/img/loader.gif')}}" alt="loading..." height="64" width="64"></div>
+    <div class="loading">
+        <img src="{{url('asssets')}}/img/tenor.gif" width="280">
+        <center><p>Harap Tunggu</p></center>
+    </div>
 </div>
 <!-- header logo: style can be found in header-->
 <header class="header">

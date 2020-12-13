@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\Truck;
+use App\Models\GlobalParam;
 use Auth;
 
 class TruckController extends Controller
@@ -27,6 +28,7 @@ class TruckController extends Controller
     public function index(Request $request)
     {
         $data['title'] = 'Truck';
+        $data['status'] = GlobalParam::where('param_type', 'TRUCK_STATUS')->get();
         return view('master.truck.index', $data);
     }
 
