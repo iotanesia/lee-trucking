@@ -106,10 +106,10 @@ class SparePartController extends Controller
       $data = $request->all();
       $sparePart = SparePart::find($data['id']);
       
-      $this->validate($request, [
-        // 'no_SparePart' => 'required|string|max:255|unique:SparePart,no_SparePart,'.$data['id'].',id',
-        'sparepart_name' => 'required|string|max:255',
-      ]);
+      // $this->validate($request, [
+      //   // 'no_SparePart' => 'required|string|max:255|unique:SparePart,no_SparePart,'.$data['id'].',id',
+      //   'sparepart_name' => 'required|string|max:255',
+      // ]);
       
       unset($data['_token']);
       unset($data['id']);
