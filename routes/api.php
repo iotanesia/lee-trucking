@@ -98,11 +98,11 @@ Route::group(['middleware' => 'auth:api'], function(){
   });
   
   Route::group(['as' => 'api-sparepart', 'prefix' => 'sparepart'], function() {
-    Route::get('/', 'API\SparepartController@index');
-    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\SparepartController@getList']);
-    Route::post('add', ['as' => '-add', 'uses' => 'API\SparepartController@add']);
-    Route::post('edit', ['as' => '-edit', 'uses' => 'API\SparepartController@edit']);
-    Route::post('delete', ['as' => '-delete', 'uses' => 'API\SparepartController@delete']);
+    Route::get('/', 'API\SparePartController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\SparePartController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\SparePartController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\SparePartController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\SparePartController@delete']);
   });
   
 });
