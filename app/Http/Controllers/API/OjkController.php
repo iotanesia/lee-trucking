@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\Ojk;
+use Carbon\Carbon;
 use Auth;
 
 class OjkController extends Controller
@@ -74,9 +75,12 @@ class OjkController extends Controller
 
       unset($data['_token']);
       unset($data['id']);
-
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
       foreach($data as $key => $row) {
         $ojk->{$key} = $row;
+        $ojk->created_at = $current_date_time; 
+        $ojk->created_by = $user_id; 
       }
 
       if($ojk->save()){
@@ -109,6 +113,7 @@ class OjkController extends Controller
       $ojk = Ojk::find($data['id']);
       
       $this->validate($request, [
+        'provinsi_id' => 'required',
         'kabupaten_id' => 'required',
         'kecamatan_id' => 'required',
         'harga_ojk' => 'required',
@@ -119,8 +124,12 @@ class OjkController extends Controller
       unset($data['_token']);
       unset($data['id']);
       
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
       foreach($data as $key => $row) {
         $ojk->{$key} = $row;
+        $ojk->updated_at = $current_date_time; 
+        $ojk->updated_by = $user_id; 
       }
 
       if($ojk->save()){

@@ -72,9 +72,12 @@ class SparePartController extends Controller
 
       unset($data['_token']);
       unset($data['id']);
-
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
       foreach($data as $key => $row) {
         $sparePart->{$key} = $row;
+        $sparePart->created_at = $current_date_time;
+        $sparePart->created_by = $user_id;
       }
 
       if($sparePart->save()){
@@ -114,10 +117,13 @@ class SparePartController extends Controller
       unset($data['_token']);
       unset($data['id']);
       
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
       foreach($data as $key => $row) {
         $sparePart->{$key} = $row;
+        $sparePart->updated_at = $current_date_time;
+        $sparePart->updated_by = $user_id;
       }
-
       if($sparePart->save()){
         return response()->json([
           'code' => 200,
