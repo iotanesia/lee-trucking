@@ -19,6 +19,7 @@ class OjkController extends Controller
                  ->leftJoin('ex_wil_kabupaten', 'ex_wil_kabupaten.id', 'ex_master_ojk.kabupaten_id')
                  ->leftJoin('ex_wil_kecamatan', 'ex_wil_kecamatan.id', 'ex_master_ojk.kecamatan_id')
                  ->leftJoin('ex_wil_provinsi', 'ex_wil_provinsi.id', 'ex_master_ojk.provinsi_id')
+                 ->where('ex_master_ojk.is_deleted','=','false')
                  ->where(function($query) use($whereField, $whereValue) {
                    if($whereValue) {
                      foreach(explode(', ', $whereField) as $idx => $field) {
@@ -160,8 +161,15 @@ class OjkController extends Controller
     if($request->isMethod('POST')) {
       $data = $request->all();
       $ojk = Ojk::find($data['id']);
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
 
-      if($ojk->delete()){
+      $ojk->deleted_at = $current_date_time;
+      $ojk->deleted_by = $user_id;
+      $ojk->is_deleted = true;
+
+
+      if($ojk->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',

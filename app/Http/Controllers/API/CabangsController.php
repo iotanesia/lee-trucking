@@ -66,8 +66,13 @@ class CabangsController extends Controller
       unset($data['_token']);
       unset($data['id']);
 
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
+     
       foreach($data as $key => $row) {
-        $cabang->{$key} = $row;
+        $cabang->{$key} = $row; 
+         $cabang->created_at = $current_date_time;
+        $cabang->created_by = $user_id;
       }
 
       if($cabang->save()){
@@ -106,9 +111,13 @@ class CabangsController extends Controller
       
       unset($data['_token']);
       unset($data['id']);
-      
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
+     
       foreach($data as $key => $row) {
         $cabang->{$key} = $row;
+        $cabang->updated_at = $current_date_time;
+        $cabang->updated_by = $user_id;
       }
 
       if($cabang->save()){
@@ -139,8 +148,14 @@ class CabangsController extends Controller
     if($request->isMethod('POST')) {
       $data = $request->all();
       $cabang = cabang::find($data['id']);
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
+      $cabang->deleted_at = $current_date_time;
+      $cabang->deleted_by = $user_id;
+      $cabang->is_deleted = true;
 
-      if($cabang->delete()){
+
+      if($cabang->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',

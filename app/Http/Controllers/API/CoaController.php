@@ -139,8 +139,14 @@ class CoaController extends Controller
     if($request->isMethod('POST')) {
       $data = $request->all();
       $coa = Coa::find($data['id']);
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
+      $coa->deleted_at = $current_date_time;
+      $coa->deleted_by = $user_id;
+      $coa->is_deleted = true;
 
-      if($coa->delete()){
+
+      if($coa->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',

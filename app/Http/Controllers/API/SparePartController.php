@@ -18,6 +18,7 @@ class SparePartController extends Controller
                                        'stk_master_sparepart.group_sparepart_id')
                                 ->leftJoin('stk_restok_sparepart', 'stk_restok_sparepart.id',
                                             'stk_master_sparepart.restok_sparepart_id')
+                                ->where('stk_master_sparepart.is_deleted','=','false')
                                 ->where(function($query) use($whereField, $whereValue) {
                                     if($whereValue) {
                                       foreach(explode(', ', $whereField) as $idx => $field) {
@@ -152,8 +153,15 @@ class SparePartController extends Controller
     if($request->isMethod('POST')) {
       $data = $request->all();
       $sparePart = SparePart::find($data['id']);
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
 
-      if($sparePart->delete()){
+      $sparePart->deleted_at = $current_date_time;
+      $sparePart->deleted_by = $user_id;
+      $sparePart->is_deleted = true;
+
+
+      if($sparePart->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',

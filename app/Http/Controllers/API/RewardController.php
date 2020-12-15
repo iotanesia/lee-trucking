@@ -141,8 +141,14 @@ class RewardController extends Controller
     if($request->isMethod('POST')) {
       $data = $request->all();
       $reward = Reward::find($data['id']);
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
+      $reward->deleted_at = $current_date_time;
+      $reward->deleted_by = $user_id;
+      $reward->is_deleted = true;
 
-      if($reward->delete()){
+
+      if($reward->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',
