@@ -64,6 +64,7 @@ class OjkController extends Controller
       $ojk = new Ojk;
       
       $this->validate($request, [
+        'provinsi_id' => 'required',
         'kabupaten_id' => 'required',
         'kecamatan_id' => 'required',
         'harga_ojk' => 'required',
