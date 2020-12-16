@@ -97,6 +97,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\OjkController@delete']);
   });
   
+  Route::group(['as' => 'api-sparepart', 'prefix' => 'sparepart'], function() {
+    Route::get('/', 'API\SparePartController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\SparePartController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\SparePartController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\SparePartController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\SparePartController@delete']);
+  });
+  
 });
 
 Route::group(['as' => 'api-global-param', 'prefix' => 'global-param'], function() {

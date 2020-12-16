@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\Ojk;
+use Carbon\Carbon;
+use Validator;
 use Auth;
 
 class OjkController extends Controller
@@ -18,6 +20,7 @@ class OjkController extends Controller
                  ->leftJoin('ex_wil_kabupaten', 'ex_wil_kabupaten.id', 'ex_master_ojk.kabupaten_id')
                  ->leftJoin('ex_wil_kecamatan', 'ex_wil_kecamatan.id', 'ex_master_ojk.kecamatan_id')
                  ->leftJoin('ex_wil_provinsi', 'ex_wil_provinsi.id', 'ex_master_ojk.provinsi_id')
+                 ->where('ex_master_ojk.is_deleted','=','false')
                  ->where(function($query) use($whereField, $whereValue) {
                    if($whereValue) {
                      foreach(explode(', ', $whereField) as $idx => $field) {
@@ -63,36 +66,47 @@ class OjkController extends Controller
       $data = $request->all();
       $ojk = new Ojk;
       
-      $this->validate($request, [
+      $validator = Validator::make($request->all(), [
+        'provinsi_id' => 'required',
         'kabupaten_id' => 'required',
         'kecamatan_id' => 'required',
         'harga_ojk' => 'required',
         'harga_otv' => 'required',
         'cabang_id' => 'required',
       ]);
-
-      unset($data['_token']);
-      unset($data['id']);
-
-      foreach($data as $key => $row) {
-        $ojk->{$key} = $row;
-      }
-
-      if($ojk->save()){
-        return response()->json([
-          'code' => 200,
-          'code_message' => 'Berhasil menyimpan data',
-          'code_type' => 'Success',
-        ], 200);
       
-      } else {
+      if($validator->fails()){
         return response()->json([
-          'code' => 401,
-          'code_message' => 'Gagal menyimpan data',
+          'code' => 400,
+          'code_message' => "Kesalahan dalam penginputan / Inputan kosong",
           'code_type' => 'BadRequest',
-        ], 401);
+        ], 400);
+      }else{
+        unset($data['_token']);
+        unset($data['id']);
+        $current_date_time = Carbon::now()->toDateTimeString(); 
+        $user_id = Auth::user()->id;
+        foreach($data as $key => $row) {
+          $ojk->{$key} = $row;
+          $ojk->created_at = $current_date_time; 
+          $ojk->created_by = $user_id; 
+        }
+
+        if($ojk->save()){
+          return response()->json([
+            'code' => 200,
+            'code_message' => 'Berhasil menyimpan data',
+            'code_type' => 'Success',
+          ], 200);
+        
+        } else {
+          return response()->json([
+            'code' => 401,
+            'code_message' => 'Gagal menyimpan data',
+            'code_type' => 'BadRequest',
+          ], 401);
+        }
       }
-      
     } else {
       return response()->json([
         'code' => 405,
@@ -108,6 +122,7 @@ class OjkController extends Controller
       $ojk = Ojk::find($data['id']);
       
       $this->validate($request, [
+        'provinsi_id' => 'required',
         'kabupaten_id' => 'required',
         'kecamatan_id' => 'required',
         'harga_ojk' => 'required',
@@ -118,8 +133,12 @@ class OjkController extends Controller
       unset($data['_token']);
       unset($data['id']);
       
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
       foreach($data as $key => $row) {
         $ojk->{$key} = $row;
+        $ojk->updated_at = $current_date_time; 
+        $ojk->updated_by = $user_id; 
       }
 
       if($ojk->save()){
@@ -150,8 +169,15 @@ class OjkController extends Controller
     if($request->isMethod('POST')) {
       $data = $request->all();
       $ojk = Ojk::find($data['id']);
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
 
-      if($ojk->delete()){
+      $ojk->deleted_at = $current_date_time;
+      $ojk->deleted_by = $user_id;
+      $ojk->is_deleted = true;
+
+
+      if($ojk->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',

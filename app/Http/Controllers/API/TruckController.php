@@ -142,8 +142,15 @@ class TruckController extends Controller
     if($request->isMethod('POST')) {
       $data = $request->all();
       $truck = Truck::find($data['id']);
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
 
-      if($truck->delete()){
+      $truck->deleted_at = $current_date_time;
+      $truck->deleted_by = $user_id;
+      $truck->is_deleted = true;
+
+
+      if($truck->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',

@@ -141,8 +141,14 @@ class KenekController extends Controller
     if($request->isMethod('POST')) {
       $data = $request->all();
       $kenek = Kenek::find($data['id']);
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
+      $kenek->deleted_at = $current_date_time;
+      $kenek->deleted_by = $user_id;
+      $kenek->is_deleted = true;
 
-      if($kenek->delete()){
+
+      if($kenek->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',

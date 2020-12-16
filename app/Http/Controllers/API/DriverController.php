@@ -142,8 +142,14 @@ class DriverController extends Controller
     if($request->isMethod('POST')) {
       $data = $request->all();
       $driver = Driver::find($data['id']);
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $user_id = Auth::user()->id;
+      $driver->deleted_at = $current_date_time;
+      $driver->deleted_by = $user_id;
+      $driver->is_deleted = true;
 
-      if($driver->delete()){
+
+      if($driver->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',
