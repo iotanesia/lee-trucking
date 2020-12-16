@@ -110,3 +110,11 @@ Route::group(['as' => 'api-daerah', 'prefix' => 'daerah'], function() {
   Route::get('get-kecamatan-by-idKab', ['as' => '-get-kabupaten-by-idKab', 'uses' => 'API\DaerahController@getKecamatanByIdKabupaten']);
 });
 
+Route::group(['as' => 'api-spareparts', 'prefix' => 'spareparts'], function() {
+    Route::get('/', 'API\SparePartController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\SparePartController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\SparePartController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\SparePartController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\SparePartController@delete']);
+});
+

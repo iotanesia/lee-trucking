@@ -95,6 +95,7 @@ class UserController extends Controller
       unset($input['terms']);
 
       $input['password'] = bcrypt($input['password']);
+      $input['group_id'] = $input['group_id'];
       $input['is_active'] = 0;
       $user = User::create($input);
       $success['tokens'] =  $user->createToken('nApp')->accessToken;
