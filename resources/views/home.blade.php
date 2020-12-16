@@ -2,7 +2,7 @@
 
     {{-- Page title --}}
     @section('title')
-        Core + Admin Template
+
     @parent
 @stop
 
@@ -135,94 +135,13 @@
                             <h3 class="card-title">Site Activity</h3>
                             <ul class="nav nav-tabs nav-float " dir="rtl" role="tablist" id="myTab" >
                                 <li class="nav-item">
-                                    <a href="#profile" id="profile-tab" role="tab" data-toggle="tab" class="nav-link " aria-controls="home" aria-selected="true">Sales </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#home" id="home-tab" role="tab" data-toggle="tab" class="nav-link active" aria-controls="home" aria-selected="false">Stats</a>
+                                    <a href="#profile" id="profile-tab" role="tab" data-toggle="tab" class="nav-link active" aria-controls="home" aria-selected="true">Sales </a>
                                 </li>
                             </ul>
                         </div>
                         <div class="card-body">
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade  in show active" id="home" aria-labelledby="home-tab" role="tabpanel">
-                                    <div class="row">
-                                        <div class="col-lg-8  col-12 stat-chart">
-                                            <div id="chart6" class='with-3d-shadow with-transitions'>
-                                                <svg></svg>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4  col-12">
-                                            <h4>Stats</h4>
-                                            <div class="task-item">
-                                                Total Sold
-                                                <small class="pull-right text-muted">40%</small>
-                                                <div class="progress progress-sm">
-                                                    <div role="progressbar" aria-valuenow="40" aria-valuemin="0"
-                                                         aria-valuemax="100" style="width: 40%;"
-                                                         class="progress-bar bg-primary">
-                                                        <span class="sr-only">40% Complete (success)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="task-item">
-                                                Product Delivered
-                                                <small class="pull-right text-muted">60%</small>
-                                                <div class="progress progress-sm">
-                                                    <div role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                                                         aria-valuemax="100" style="width: 60%;"
-                                                         class="progress-bar bg-success">
-                                                        <span class="sr-only">60% Complete (success)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="task-item">
-                                                Sale Reports
-                                                <small class="pull-right text-muted">55%</small>
-                                                <div class="progress progress-sm">
-                                                    <div role="progressbar" aria-valuenow="55" aria-valuemin="0"
-                                                         aria-valuemax="100" style="width: 55%;"
-                                                         class="progress-bar bg-info">
-                                                        <span class="sr-only">55% Complete (success)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="task-item">
-                                                New Projects
-                                                <small class="pull-right text-muted">66%</small>
-                                                <div class="progress progress-sm">
-                                                    <div role="progressbar" aria-valuenow="66" aria-valuemin="0"
-                                                         aria-valuemax="100" style="width: 66%;"
-                                                         class="progress-bar bg-warning">
-                                                        <span class="sr-only">66% Complete (success)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="task-item">
-                                                New Users
-                                                <small class="pull-right text-muted">90%</small>
-                                                <div class="progress progress-sm">
-                                                    <div role="progressbar" aria-valuenow="90" aria-valuemin="0"
-                                                         aria-valuemax="100" style="width: 90%;"
-                                                         class="progress-bar bg-danger">
-                                                        <span class="sr-only">90% Complete (success)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="task-item">
-                                                Total Income
-                                                <small class="pull-right text-muted">50%</small>
-                                                <div class="progress progress-sm">
-                                                    <div role="progressbar" aria-valuenow="50" aria-valuemin="0"
-                                                         aria-valuemax="100" style="width: 50%;"
-                                                         class="progress-bar bg-primary">
-                                                        <span class="sr-only">50% Complete (success)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="profile" aria-labelledby="profile-tab" role="tabpanel">
+                                <div class="tab-pane fade in show active" id="profile" aria-labelledby="profile-tab" role="tabpanel">
                                     <div class="row">
                                         <div class="col-xl-8 col-md-12 col-12 sales-tab">
                                             <div id="basicFlotLegend"></div>
@@ -246,31 +165,13 @@
                         </div>
                         <div class="card-body">
                             <div class="server-load">
-                                <div class="server-stat pull-left text-center">
-                                    <p>312 GB</p>
-                                    <span>Usage</span>
-                                </div>
-                                <div class="server-stat pull-left text-center">
-                                    <p>500 GB</p>
-                                    <span>Space</span>
-                                </div>
-                                <div class="server-stat pull-left text-center">
-                                    <p>62.4%</p>
-                                    <span>CPU</span>
-                                </div>
+                                
                             </div>
                             <div>
                                 <div id="flotchart2"></div>
                             </div>
                             <div class="col-12 server-buttons">
-                                <div class="row">
-                                <div class="col-6 zero-padding">
-                                    <button class="btn btn-block btn-danger server-cache text-white">Purge Cache</button>
-                                </div>
-                                <div class="col-6 zero-padding">
-                                    <button class="btn btn-block btn-default server-reset">Reset Server</button>
-                                </div>
-                                </div>
+                                    
                             </div>
                         </div>
                     </div>
@@ -464,7 +365,7 @@
                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="card panel-widget">
                         <div class="card-header">
-                            <h3 class="card-title">Browser Interest</h3>
+                            <h3 class="card-title">Top Driver</h3>
                         </div>
                         <div class="card-body">
                             <ul class="basic-list">
@@ -519,52 +420,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row maps-row">
-                <div class="col-12">
-                    <div class="row">
-                    <div class="col-lg-8 col-md-8 col-12 zero-padding">
-                        <div id="world-map-markers"></div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-12 padding_left">
-                    <div class="stat-details">
-                        <div class="stat-head">
-                            <h4>Statistics:</h4>
-                            <p>Status: Live</p>
-                            <p><i class="fa fa-map-marker stat-icon" aria-hidden="true"></i>48 Counties,
-                                698 Cities</p>
-                            <div>
-                                <p><i class="fa fa-thumbs-o-up stat-icon" aria-hidden="true"></i> 2,543</p>
-                                <small>Desktop Visits</small>
-                                <small class="pull-right text-muted">75%</small>
-                                <div class="progress progress-stats">
-                                    <div role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
-                                         style="width: 75%;" class="progress-bar bg-danger">
-                                        <span class="sr-only">75% Complete (success)</span>
-                                    </div>
-                                </div>
-                                <small>Tab Visits</small>
-                                <small class="pull-right text-muted">8%</small>
-                                <div class="progress progress-stats">
-                                    <div role="progressbar" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100"
-                                         style="width: 8%;" class="progress-bar bg-primary">
-                                        <span class="sr-only">8% Complete (success)</span>
-                                    </div>
-                                </div>
-                                <small>Mobile Visits</small>
-                                <small class="pull-right text-muted">17%</small>
-                                <div class="progress progress-stats">
-                                    <div role="progressbar" aria-valuenow="17" aria-valuemin="0" aria-valuemax="100"
-                                         style="width: 17%;" class="progress-bar bg-warning">
-                                        <span class="sr-only">17% Complete (success)</span>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- row -->
         @include('layouts.right_sidebar')
@@ -584,7 +439,6 @@
 <!-- end of sales tiles -->
 <!-- Flot tab2-->
 <script type="text/javascript" src="{{asset('assets/vendors/flotchart/js/jquery.flot.js')}}" ></script>
-<script type="text/javascript" src="{{asset('assets/vendors/flotchart/js/jquery.flot.resize.js')}}" ></script>
 <script type="text/javascript" src="{{asset('assets/vendors/flotchart/js/jquery.flot.time.js')}}" ></script>
 <script type="text/javascript" src="{{asset('assets/vendors/flotchart/js/jquery.flot.symbol.js')}}" ></script>
 <script type="text/javascript" src="{{asset('assets/vendors/flotchart/js/jquery.flot.pie.js')}}"></script>

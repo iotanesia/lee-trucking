@@ -20,6 +20,11 @@
     <!-- global css -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/app.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/hover/css/hover-min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/animate/animate.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom_css/advanced_modals.css')}}">
+
     <script src="js/jquery3.5.1.js"></script>
 @yield('header_styles')
 <!-- end of global css -->
@@ -73,163 +78,6 @@ font: 14px arial;
         <div class="navbar-collapse " id="navbarNav">
             <div class="navbar-right ml-auto">
             <ul class="nav navbar-nav ">
-                <li class="nav-item dropdown messages-menu">
-                    <a href="#" class="nav-link dropdown-toggle"> <i
-                                class="fa fa-fw fa-envelope-o black"></i>
-                        <span class="label bg-success">2</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-messages table-striped">
-                        <li class="dropdown-title">New Messages</li>
-                        <li class="msg-set message striped-col">
-                            <a href="" class="">
-                                <img class="message-image rounded-circle" src="{{asset('assets/img/authors/avatar7.jpg')}}"
-                                    alt="avatar-image">
-
-                                <div class="message-body"><strong>Ernest Kerry</strong>
-                                    <br>
-                                    Can we Meet?
-                                    <br>
-                                    <small>Just Now</small>
-                                    <span class="label bg-success label-mini msg-lable">New</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="msg-set message">
-                            <a href="" class="">
-                                <img class="message-image rounded-circle" src="{{asset('assets/img/authors/avatar6.jpg')}}"
-                                    alt="avatar-image">
-
-                                <div class="message-body"><strong>John</strong>
-                                    <br>
-                                    Dont forgot to call...
-                                    <br>
-                                    <small>5 minutes ago</small>
-                                    <span class="label bg-success label-mini msg-lable">New</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="msg-set message striped-col">
-                            <a href="" class="">
-                                <img class="message-image rounded-circle" src="{{asset('assets/img/authors/avatar5.jpg')}}"
-                                    alt="avatar-image">
-
-                                <div class="message-body">
-                                    <strong>Wilton Zeph</strong>
-                                    <br>
-                                    If there is anything else &hellip;
-                                    <br>
-                                    <small>14/10/2014 1:31 pm</small>
-                                </div>
-
-                            </a>
-                        </li>
-                        <li class="msg-set message">
-                            <a href="" class="">
-                                <img class="message-image rounded-circle" src="{{asset('assets/img/authors/avatar1.jpg')}}"
-                                    alt="avatar-image">
-                                <div class="message-body">
-                                    <strong>Jenny Kerry</strong>
-                                    <br>
-                                    Let me know when you free
-                                    <br>
-                                    <small>5 days ago</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="msg-set message striped-col">
-                            <a href="" class="">
-                                <img class="message-image rounded-circle" src="{{asset('assets/img/authors/avatar.jpg')}}"
-                                    alt="avatar-image">
-                                <div class="message-body">
-                                    <strong>Tony</strong>
-                                    <br>
-                                    Let me know when you free
-                                    <br>
-                                    <small>5 days ago</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="dropdown-footer"><a href="#">View All messages</a></li>
-                    </ul>
-
-                </li>
-                <!--tasks-->
-                <li class="nav-item dropdown tasks-menu d-none d-sm-block">
-                    <a href="#" class=" nav-link dropdown-toggle">
-                        <i class="fa fa-fw fa-edit black"></i>
-                        <span class="label bg-primary">4</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        <li class="dropdown-title ">You Have 4 Tasks</li>
-                        <li class="message striped-col">
-                            <a href="" class=" ">
-                                Design some buttons
-                                <small class="pull-right">20%</small>
-                                <div class="message-body">
-                                    <div class="progress progress-xs progress_task">
-                                        <div class="progress-bar bg-primary" style="width: 20%"
-                                            role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                            aria-valuemax="100">
-                                            <span class="sr-only">20% Complete</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message">
-                            <a href="" class="">
-                                Create a nice theme
-                                <small class="pull-right">40%</small>
-                                <div class="message-body">
-                                    <div class="progress progress-xs progress_task">
-                                        <div class="progress-bar bg-success" style="width: 40%"
-                                            role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                            aria-valuemax="100">
-                                            <span class="sr-only">40% Complete</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message striped-col">
-                            <a href="" class="">
-                                Some task I need to do
-                                <small class="pull-right">60%</small>
-                                <div class="message-body">
-                                    <div class="progress progress-xs progress_task">
-                                        <div class="progress-bar bg-danger" style="width: 60%"
-                                            role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                            aria-valuemax="100">
-                                            <span class="sr-only">60% Complete</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message">
-                            <a href="" class="">
-                                Make beautiful transitions
-                                <small class="pull-right">80%</small>
-                                <div class="message-body">
-                                    <div class="progress progress-xs progress_task">
-                                        <div class="progress-bar bg-warning" style="width: 80%"
-                                            role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                            aria-valuemax="100">
-                                            <span class="sr-only">80% Complete</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="dropdown-footer"><a href="#"> View All Tasks</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown_message">
-                    <a href="#" class="nav-link dropdown-toggle toggle-right">
-                        <i class="fa fa-fw fa-comments-o black"></i>
-                        <span class="label bg-danger">9</span>
-                    </a>
-                </li>
                 <!-- Notifications: style can be found in dropdown-->
                 <li class="nav-item dropdown notifications-menu">
                     <a href="#" class="nav-link dropdown-toggle" >
@@ -409,31 +257,34 @@ font: 14px arial;
                 </div>
                 <ul class="navigation">
                     <li>
-                        <a href="{{ URL::to('index') }} ">
+                        <a href="{{ url('/') }} ">
                             <i class="menu-icon fa fa-fw fa-home"></i>
-                            <span class="mm-text ">Dashboard V1</span>
+                            <span class="mm-text ">Dashboard</span>
                         </a>
                     </li>
+                    @foreach($menus as $key => $row)
                     <li>
-                        @foreach($menus as $key => $row)
                         @if(!$row->menu_url)
                         <a href="#">
                             <i class="menu-icon fa fa-check-square"></i>
                             <span>{{$row->menu_name}}</span>
                             <span class="fa arrow"></span>
                         </a>
-                        @else
-                        <ul class="sub-menu">
-                            <li {!! (Request::is('form_elements') ? 'class="active"' : '') !!}>
-                                <a href="{{ $row->menu_url }}">
-                                    <i class="fa fa-fw {{$row->menu_icon ? $row->menu_icon : 'fa-circle-o'}}"></i> {{$row->menu_name}}
-                                </a>
-                            </li>
-
-                        </ul>
                         @endif
+                        <ul class="sub-menu">
+                        @foreach($menus as $keys => $rows)
+                            @if($rows->menu_parent == $row->id)
+                                <li>
+                                    <a href="{{ $rows->menu_url }}">
+                                        <i class="fa fa-fw {{$row->menu_icon ? $row->menu_icon : 'fa-circle-o'}}"></i> {{$rows->menu_name}}
+                                    </a>
+                                </li>
+                            @endif
                         @endforeach
+                        </ul>
                     </li>
+                    @endforeach
+                    
                 </ul>
                 <!-- / .navigation -->
             </div>
@@ -451,6 +302,7 @@ font: 14px arial;
 <!-- global js -->
 <script src="{{asset('assets/js/app.js')}}" type="text/javascript"></script>
 <script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/custom_js/advanced_modals.js')}}"></script>
 <!-- end of global js -->
 @yield('footer_scripts')
 <!-- end page level js -->
