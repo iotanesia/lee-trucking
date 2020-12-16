@@ -66,36 +66,43 @@ class SparePartController extends Controller
       $data = $request->all();
       $sparePart = new SparePart;
       
-      $this->validate($request, [
+      $validator = Validator::make($request->all(), [
         // 'no_SparePart' => 'required|string|max:255|unique:SparePart',
         'sparepart_name' => 'required|string|max:255',
       ]);
-
-      unset($data['_token']);
-      unset($data['id']);
-      $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
-      foreach($data as $key => $row) {
-        $sparePart->{$key} = $row;
-        $sparePart->created_at = $current_date_time;
-        $sparePart->created_by = $user_id;
-      }
-
-      if($sparePart->save()){
-        return response()->json([
-          'code' => 200,
-          'code_message' => 'Berhasil menyimpan data',
-          'code_type' => 'Success',
-        ], 200);
       
-      } else {
+      if($validator->fails()){
         return response()->json([
-          'code' => 401,
-          'code_message' => 'Gagal menyimpan data',
+          'code' => 400,
+          'code_message' => "Kesalahan dalam penginputan / Inputan kosong",
           'code_type' => 'BadRequest',
-        ], 401);
+        ], 400);
+      }else{
+        unset($data['_token']);
+        unset($data['id']);
+        $current_date_time = Carbon::now()->toDateTimeString(); 
+        $user_id = Auth::user()->id;
+        foreach($data as $key => $row) {
+          $sparePart->{$key} = $row;
+          $sparePart->created_at = $current_date_time;
+          $sparePart->created_by = $user_id;
+        }
+
+        if($sparePart->save()){
+          return response()->json([
+            'code' => 200,
+            'code_message' => 'Berhasil menyimpan data',
+            'code_type' => 'Success',
+          ], 200);
+        
+        } else {
+          return response()->json([
+            'code' => 401,
+            'code_message' => 'Gagal menyimpan data',
+            'code_type' => 'BadRequest',
+          ], 401);
+        }
       }
-      
     } else {
       return response()->json([
         'code' => 405,
