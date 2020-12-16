@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\SparePart;
+use Validator;
 use Auth;
 
 class SparePartController extends Controller
@@ -70,7 +71,7 @@ class SparePartController extends Controller
         // 'no_SparePart' => 'required|string|max:255|unique:SparePart',
         'sparepart_name' => 'required|string|max:255',
       ]);
-      
+
       if($validator->fails()){
         return response()->json([
           'code' => 400,

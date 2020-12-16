@@ -72,7 +72,7 @@ class CabangsController extends Controller
       foreach($data as $key => $row) {
         $cabang->{$key} = $row; 
          $cabang->created_at = $current_date_time;
-        $cabang->created_by = $user_id;
+         $cabang->created_by = $user_id;
       }
 
       if($cabang->save()){
