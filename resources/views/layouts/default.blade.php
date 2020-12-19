@@ -264,7 +264,7 @@ font: 14px arial;
                     </li>
                     @foreach($menus as $key => $row)
                     <li>
-                        @if(!$row->menu_url)
+                        @if(!$row->menu_url && !$row->menu_parent)
                         <a href="#">
                             <i class="menu-icon fa fa-check-square"></i>
                             <span>{{$row->menu_name}}</span>
