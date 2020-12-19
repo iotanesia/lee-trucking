@@ -23,6 +23,7 @@ Route::get('/cabang', 'CabangController@index')->name('cabang');
 Route::get('/driver', 'DriverController@index')->name('driver');
 Route::get('/kenek', 'KenekController@index')->name('kenek');
 Route::get('/spareparts', 'sparepartsController@index')->name('spareparts');
+Route::get('/ojk', 'OjkController@index')->name('ojk');
 Route::get('/tenan', 'HomeController@indexTenan')->name('home');
 Route::get('/transaksi', 'HomeController@indexTrx')->name('home');
 Route::get('/user-detail/{id}', 'HomeController@userDetail');

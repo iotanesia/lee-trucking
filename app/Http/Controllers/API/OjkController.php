@@ -24,7 +24,7 @@ class OjkController extends Controller
                  ->where(function($query) use($whereField, $whereValue) {
                    if($whereValue) {
                      foreach(explode(', ', $whereField) as $idx => $field) {
-                       $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                       $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                      }
                    }
                  })
@@ -33,9 +33,11 @@ class OjkController extends Controller
                  ->paginate();
       
       foreach($ojkList as $row) {
-        $row->data_json = $row->toJson();
+          $row->data_json = $row->toJson();
+          $row->harga_ojk = number_format($row->harga_ojk);
+          $row->harga_otv = number_format($row->harga_otv);
       }
-
+// dd($ojkList);
       if(!isset($ojkList)){
         return response()->json([
           'code' => 404,
