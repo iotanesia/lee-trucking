@@ -123,7 +123,7 @@ class OjkController extends Controller
       $data = $request->all();
       $ojk = Ojk::find($data['id']);
       
-      $this->validate($request, [
+      $validator = Validator::make($request->all(), [
         'provinsi_id' => 'required',
         'kabupaten_id' => 'required',
         'kecamatan_id' => 'required',
@@ -132,32 +132,40 @@ class OjkController extends Controller
         'cabang_id' => 'required',
       ]);
       
-      unset($data['_token']);
-      unset($data['id']);
-      
-      $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
-      foreach($data as $key => $row) {
-        $ojk->{$key} = $row;
-        $ojk->updated_at = $current_date_time; 
-        $ojk->updated_by = $user_id; 
-      }
-
-      if($ojk->save()){
+      if($validator->fails()){
         return response()->json([
-          'code' => 200,
-          'code_message' => 'Berhasil menyimpan data',
-          'code_type' => 'Success',
-        ], 200);
-      
-      } else {
-        return response()->json([
-          'code' => 401,
-          'code_message' => 'Gagal menyimpan data',
+          'code' => 400,
+          'code_message' => "Kesalahan dalam penginputan / Inputan kosong",
           'code_type' => 'BadRequest',
-        ], 401);
+        ], 400);
+      }else{
+        
+        unset($data['_token']);
+        unset($data['id']);
+        
+        $current_date_time = Carbon::now()->toDateTimeString(); 
+        $user_id = Auth::user()->id;
+        foreach($data as $key => $row) {
+          $ojk->{$key} = $row;
+          $ojk->updated_at = $current_date_time; 
+          $ojk->updated_by = $user_id; 
+        }
+
+        if($ojk->save()){
+          return response()->json([
+            'code' => 200,
+            'code_message' => 'Berhasil menyimpan data',
+            'code_type' => 'Success',
+          ], 200);
+        
+        } else {
+          return response()->json([
+            'code' => 401,
+            'code_message' => 'Gagal menyimpan data',
+            'code_type' => 'BadRequest',
+          ], 401);
+        }
       }
-      
     } else {
       return response()->json([
         'code' => 405,

@@ -4,40 +4,77 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
-use App\Models\SparePart;
+use App\Models\StkRestokSparePart;
 use Validator;
 use Auth;
-use Validator;
-use Carbon\Carbon;
 
-class SparePartController extends Controller
+class StkRestokSparePartController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'sparepart_name, restok_sparepart_name, group_name';
+      $whereField = 'restok_sparepart_name, restok_sparepart_status, restok_sparepart_jenis';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
-                                       'stk_master_sparepart.group_sparepart_id')
-                                ->leftJoin('stk_restok_sparepart', 'stk_restok_sparepart.id',
-                                            'stk_master_sparepart.restok_sparepart_id')
-                                ->where('stk_master_sparepart.is_deleted','=','false')
-                                ->where(function($query) use($whereField, $whereValue) {
+      $restokSparepartList = StkRestokSparePart::where(function($query) use($whereField, $whereValue) {
                                     if($whereValue) {
                                       foreach(explode(', ', $whereField) as $idx => $field) {
                                         $query->orWhere($field, 'LIKE', "%".$whereValue."%");
                                       }
                                     }
                                   })
-                                ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name', 'stk_restok_sparepart.restok_sparepart_name')
-                                ->orderBy('id', 'ASC')
-                                ->paginate();
+                                ->orderBy('restok_sparepart_name', 'ASC')->get();
       
-      foreach($sparePartList as $row) {
+      foreach($restokSparepartList as $row) {
         $row->data_json = $row->toJson();
       }
 
-      if(!isset($sparePartList)){
+      if(!isset($restokSparepartList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'data'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'data'=> $restokSparepartList
+        ], 200);
+      }
+      
+      
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'data'=> null
+      ], 405);
+    }
+  }
+
+  public function getListPagination(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $whereField = 'restok_sparepart_name, restok_sparepart_status, restok_sparepart_jenis';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $restokSparepartList = StkRestokSparePart::where(function($query) use($whereField, $whereValue) {
+                                    if($whereValue) {
+                                      foreach(explode(', ', $whereField) as $idx => $field) {
+                                        $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                                      }
+                                    }
+                                  })
+                                ->orderBy('restok_sparepart_name', 'ASC')
+                                ->paginate();
+      
+      foreach($restokSparepartList as $row) {
+        $row->data_json = $row->toJson();
+      }
+
+      if(!isset($restokSparepartList)){
         return response()->json([
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
@@ -49,7 +86,7 @@ class SparePartController extends Controller
           'code' => 200,
           'code_message' => 'Success',
           'code_type' => 'Success',
-          'result'=> $sparePartList
+          'result'=> $restokSparepartList
         ], 200);
       }
       
@@ -67,11 +104,11 @@ class SparePartController extends Controller
   public function add(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $sparePart = new SparePart;
+      $sparePart = new StkRestokSparePart;
       
       $validator = Validator::make($request->all(), [
         // 'no_SparePart' => 'required|string|max:255|unique:SparePart',
-        'sparepart_name' => 'required|string|max:255',
+        'restok_sparepart_name' => 'required|string|max:255',
       ]);
 
       if($validator->fails()){
@@ -118,7 +155,7 @@ class SparePartController extends Controller
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $sparePart = SparePart::find($data['id']);
+      $sparePart = StkRestokSparePart::find($data['id']);
       
       // $this->validate($request, [
       //   // 'no_SparePart' => 'required|string|max:255|unique:SparePart,no_SparePart,'.$data['id'].',id',
@@ -162,7 +199,7 @@ class SparePartController extends Controller
   public function delete(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $sparePart = SparePart::find($data['id']);
+      $sparePart = StkRestokSparePart::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
       $user_id = Auth::user()->id;
 
