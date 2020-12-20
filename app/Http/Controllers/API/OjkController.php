@@ -34,8 +34,6 @@ class OjkController extends Controller
       
       foreach($ojkList as $row) {
           $row->data_json = $row->toJson();
-          $row->harga_ojk = number_format($row->harga_ojk);
-          $row->harga_otv = number_format($row->harga_otv);
       }
 // dd($ojkList);
       if(!isset($ojkList)){
