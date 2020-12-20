@@ -10,7 +10,7 @@ use App\Models\StkGroupSparepart;
 use App\Models\Kenek;
 use Auth;
 
-class SparePartsController extends Controller
+class SparepartsController extends Controller
 {
     /**
      * Create a new controller instance.
