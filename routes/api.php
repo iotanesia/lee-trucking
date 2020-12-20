@@ -108,12 +108,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::group(['as' => 'api-spareparts', 'prefix' => 'spareparts'], function() {
         Route::get('/', 'API\SparePartController@index');
         Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\SparePartController@getList']);
+        Route::get('get-sparepart-detail', ['as' => '-get-sparepart-detail', 'uses' => 'API\SparePartController@getListDetail']);
         Route::post('add', ['as' => '-add', 'uses' => 'API\SparePartController@add']);
         Route::post('edit', ['as' => '-edit', 'uses' => 'API\SparePartController@edit']);
         Route::post('delete', ['as' => '-delete', 'uses' => 'API\SparePartController@delete']);
     });
   
   Route::group(['as' => 'api-restok-sparepart', 'prefix' => 'restok-sparepart'], function() {
+    Route::get('/', 'API\StkRestokSparePartController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\StkRestokSparePartController@getList']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\StkRestokSparePartController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\StkRestokSparePartController@edit']);
@@ -121,7 +123,9 @@ Route::group(['middleware' => 'auth:api'], function(){
   });
 
   Route::group(['as' => 'api-group-sparepart', 'prefix' => 'group-sparepart'], function() {
+    Route::get('/', 'API\StkGroupSparePartController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\StkGroupSparePartController@getList']);
+    Route::get('get-list-pagination', ['as' => '-get-list-pagination', 'uses' => 'API\StkGroupSparePartController@getListPagination']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\StkGroupSparePartController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\StkGroupSparePartController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\StkGroupSparePartController@delete']);

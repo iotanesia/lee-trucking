@@ -7,7 +7,6 @@ use App\User;
 use App\Models\SparePart;
 use Validator;
 use Auth;
-use Validator;
 use Carbon\Carbon;
 
 class SparePartController extends Controller
@@ -15,12 +14,10 @@ class SparePartController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'sparepart_name, restok_sparepart_name, group_name';
+      $whereField = 'sparepart_name, group_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
                                        'stk_master_sparepart.group_sparepart_id')
-                                ->leftJoin('stk_restok_sparepart', 'stk_restok_sparepart.id',
-                                            'stk_master_sparepart.restok_sparepart_id')
                                 ->where('stk_master_sparepart.is_deleted','=','false')
                                 ->where(function($query) use($whereField, $whereValue) {
                                     if($whereValue) {
@@ -29,7 +26,7 @@ class SparePartController extends Controller
                                       }
                                     }
                                   })
-                                ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name', 'stk_restok_sparepart.restok_sparepart_name')
+                                ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
                                 ->orderBy('id', 'ASC')
                                 ->paginate();
       
@@ -191,6 +188,44 @@ class SparePartController extends Controller
         'code' => 405,
         'code_message' => 'Method salah',
         'code_type' => 'BadRequest',
+      ], 405);
+    }
+  }
+
+  public function getListDetail(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
+                                       'stk_master_sparepart.group_sparepart_id')
+                       ->where('stk_master_sparepart.is_deleted','=','false')
+                       ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
+                       ->where('barcode_gudang', $data['id'])->first();
+
+      $sparePartList->data_json = $sparePartList->toJson();
+      
+      if(!isset($sparePartList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $sparePartList
+        ], 200);
+      }
+      
+      
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
       ], 405);
     }
   }
