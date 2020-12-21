@@ -7,6 +7,7 @@ use App\User;
 use App\Models\StkGroupSparepart;
 use Validator;
 use Auth;
+use Carbon\Carbon;
 
 class StkGroupSparePartController extends Controller
 {
@@ -18,7 +19,7 @@ class StkGroupSparePartController extends Controller
       $groupSparepartList = StkGroupSparepart::where(function($query) use($whereField, $whereValue) {
                                     if($whereValue) {
                                       foreach(explode(', ', $whereField) as $idx => $field) {
-                                        $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                                        $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                                       }
                                     }
                                   })
@@ -56,17 +57,19 @@ class StkGroupSparePartController extends Controller
   public function getListPagination(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'group_name, group_status';
+      $whereField = 'group_name, group_status, group_status_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $groupSparepartList = StkGroupSparepart::where(function($query) use($whereField, $whereValue) {
-                                    if($whereValue) {
-                                      foreach(explode(', ', $whereField) as $idx => $field) {
-                                        $query->orWhere($field, 'LIKE', "%".$whereValue."%");
-                                      }
+      $groupSparepartList = StkGroupSparepart::leftJoin('all_global_param', 'stk_master_group_sparepart.group_status', 'all_global_param.id')
+                            ->where(function($query) use($whereField, $whereValue) {
+                                if($whereValue) {
+                                        foreach(explode(', ', $whereField) as $idx => $field) {
+                                        $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
+                                        }
                                     }
-                                  })
-                                ->orderBy('group_name', 'ASC')
-                                ->paginate();
+                                })
+                            ->select('stk_master_group_sparepart.*', 'all_global_param.param_name as group_status_name')
+                            ->orderBy('group_name', 'ASC')
+                            ->paginate();
       
       foreach($groupSparepartList as $row) {
         $row->data_json = $row->toJson();

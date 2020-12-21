@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Models\Truck;
-use App\Models\GlobalParam;
 use App\Models\StkGroupSparepart;
-use App\Models\Kenek;
+use App\Models\StkHistorySparePart;
+use App\Models\GlobalParam;
 use Auth;
 
-class SparePartsController extends Controller
+class StkGroupSparePartController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -29,9 +28,8 @@ class SparePartsController extends Controller
      */
     public function index(Request $request)
     {
-        $data['title'] = 'Spare Parts';
-        $data['status'] = GlobalParam::where('param_type', 'SPAREPART_STATUS')->get();
-        $data['group'] = StkGroupSparepart::where('is_deleted', 'f')->get();
-        return view('master.spareparts.index', $data);
+        $data['title'] = 'Spare Parts Group';
+        $data['status'] = GlobalParam::where('param_type', 'SPAREPART_GROUP_STATUS')->get();
+        return view('master.spareparts_group.index', $data);
     }
 }

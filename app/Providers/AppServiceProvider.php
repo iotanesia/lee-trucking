@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
                 $schema = Auth::user()->schema.'.';
                 $menus = DB::table($schema.'usr_group_menu')
                          ->join($schema.'usr_menu', 'usr_group_menu.menu_id', 'usr_menu.id')
+                         ->orderBy('sort', 'ASC')
                          ->where('group_id', Auth::user()->group_id)->get();
 
                 View::share('menus', $menus);

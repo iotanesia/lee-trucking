@@ -1,4 +1,5 @@
 function doAjax(url, data, dataType, method, beforeSend, success, error) {
+    console.log(success)
   var accessToken =  window.Laravel.api_token;
   $.ajax({
     cache: false,
@@ -164,7 +165,7 @@ $(document).on("click", "a[el-event='search-data']", function(event) {
   var success = (function(response) {
     if(response.code_message !== false) {
       if(onSuccessLoad !== undefined) {
-        window[onSuccessLoad](response.data, dataModel);
+        window[onSuccessLoad](response, dataModel);
 
         setDdMenuOpen($("table[data-model='" + dataModel + "'] .btn-group"));
       }
@@ -207,6 +208,7 @@ $(document).on("click", "a[el-event='search-data']", function(event) {
     $("table[data-model='" + dataModel + "']").removeAttr("filter-id");
   });
 
+  console.log(url, data);
   doAjax(url, data, "json", "post", beforeSendLoadTable($(this)), success, error);
 
   return false;
@@ -377,7 +379,6 @@ $(document).on("click", "a[el-event='show-page']", function(event) {
   var success = (function(response) {
     if(response.status !== false) {
       if(onSuccessLoad !== undefined) {
-        console.log(response.responses)
         window[onSuccessLoad](response, dataModel);
 
         setDdMenuOpen($("table[data-model='" + dataModel + "'] .btn-group"));
