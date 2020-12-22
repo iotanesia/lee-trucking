@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\SparePart;
+use App\Models\StkHistorySparePart;
 use Validator;
 use Auth;
 use Carbon\Carbon;
@@ -32,6 +33,7 @@ class SparePartController extends Controller
       
       foreach($sparePartList as $row) {
         $row->data_json = $row->toJson();
+        $row->img_sparepart = ($row->img_sparepart) ? url('uploads/sparepart/'.$row->img_sparepart) :url('uploads/sparepart/nia3.png');
       }
 
       if(!isset($sparePartList)){
@@ -64,11 +66,31 @@ class SparePartController extends Controller
   public function add(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
+      $img = $request->file('img_sparepart');
       $sparePart = new SparePart;
-      
+      $barcodeGudang = str_random(15);
+
+      //barcode generated
+      $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+      // generate a pin based on 2 * 7 digits + a random character
+      $pin = mt_rand(1000000, 9999999)
+          . mt_rand(1000000, 9999999)
+          . $characters[rand(0, strlen($characters) - 1)];
+
+      // shuffle the result
+      $barcodeGudang = str_shuffle($pin);
+
       $validator = Validator::make($request->all(), [
-        // 'no_SparePart' => 'required|string|max:255|unique:SparePart',
         'sparepart_name' => 'required|string|max:255',
+        'sparepart_status' => 'required',
+        'sparepart_jenis' => 'required',
+        'jumlah_stok' => 'required',
+        'group_sparepart_id' => 'required',
+        'sparepart_status' => 'required',
+        'barcode_pabrik' => 'required',
+        'sparepart_type' => 'required',
+        'merk_part' => 'required',
       ]);
 
       if($validator->fails()){
@@ -77,6 +99,7 @@ class SparePartController extends Controller
           'code_message' => "Kesalahan dalam penginputan / Inputan kosong",
           'code_type' => 'BadRequest',
         ], 400);
+
       }else{
         unset($data['_token']);
         unset($data['id']);
@@ -84,9 +107,18 @@ class SparePartController extends Controller
         $user_id = Auth::user()->id;
         foreach($data as $key => $row) {
           $sparePart->{$key} = $row;
-          $sparePart->created_at = $current_date_time;
-          $sparePart->created_by = $user_id;
         }
+
+        $sparePart->created_at = $current_date_time;
+        $sparePart->created_by = $user_id;
+        $sparePart->barcode_gudang = $barcodeGudang;
+
+        //upload image
+        $fileExt = $img->extension();
+        $fileName = "IMG-SPAREPART-".$barcodeGudang.".".$fileExt;
+        $path =  public_path().'/uploads/sparepart/' ;
+        $sparePart->img_sparepart = $fileName;
+        $img->move($path, $fileName);
 
         if($sparePart->save()){
           return response()->json([
@@ -115,12 +147,8 @@ class SparePartController extends Controller
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
+      $img = $request->file('img_sparepart');
       $sparePart = SparePart::find($data['id']);
-      
-      // $this->validate($request, [
-      //   // 'no_SparePart' => 'required|string|max:255|unique:SparePart,no_SparePart,'.$data['id'].',id',
-      //   'sparepart_name' => 'required|string|max:255',
-      // ]);
       
       unset($data['_token']);
       unset($data['id']);
@@ -129,9 +157,22 @@ class SparePartController extends Controller
       $user_id = Auth::user()->id;
       foreach($data as $key => $row) {
         $sparePart->{$key} = $row;
-        $sparePart->updated_at = $current_date_time;
-        $sparePart->updated_by = $user_id;
       }
+
+      if(isset($img)){
+         //upload image
+         $fileExt = $img->extension();
+         $fileName = "IMG-SPAREPART-".$sparePart->barcode_gudang.".".$fileExt;
+         $path = public_path().'/uploads/sparepart/' ;
+         $oldFile = $path.$sparePart->img_sparepart;
+
+         $sparePart->img_sparepart = $fileName;
+         $img->move($path, $fileName);
+      }
+
+      $sparePart->updated_at = $current_date_time;
+      $sparePart->updated_by = $user_id;
+
       if($sparePart->save()){
         return response()->json([
           'code' => 200,
@@ -167,7 +208,6 @@ class SparePartController extends Controller
       $sparePart->deleted_by = $user_id;
       $sparePart->is_deleted = true;
 
-
       if($sparePart->save()){
         return response()->json([
           'code' => 200,
@@ -195,27 +235,36 @@ class SparePartController extends Controller
   public function getListDetail(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
+      $whereField = 'barcode_gudang, barcode_pabrik';
+      $whereValue = $data['id'];
       $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
                                        'stk_master_sparepart.group_sparepart_id')
                        ->where('stk_master_sparepart.is_deleted','=','false')
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
-                       ->where('barcode_gudang', $data['id'])->first();
-
-      $sparePartList->data_json = $sparePartList->toJson();
+                       ->where(function($query) use($whereField, $whereValue) {
+                        if($whereValue) {
+                          foreach(explode(', ', $whereField) as $idx => $field) {
+                            $query->orWhere($field, '=', $whereValue);
+                          }
+                        }
+                      })
+                      ->first();
       
       if(!isset($sparePartList)){
         return response()->json([
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
           'code_type' => 'BadRequest',
-          'result'=> null
+          'data'=> null
         ], 404);
       }else{
+        $sparePartList->img_sparepart = ($sparePartList->img_sparepart) ? url('uploads/sparepart/'.$sparePartList->img_sparepart) :url('uploads/sparepart/nia3.png');
+        $sparePartList->data_json = $sparePartList->toJson();
         return response()->json([
           'code' => 200,
           'code_message' => 'Success',
           'code_type' => 'Success',
-          'result'=> $sparePartList
+          'data'=> $sparePartList
         ], 200);
       }
       
@@ -225,8 +274,79 @@ class SparePartController extends Controller
         'code' => 405,
         'code_message' => 'Method salah',
         'code_type' => 'BadRequest',
-        'result'=> null
+        'data'=> null
       ], 405);
     }
   }
+
+  public function updateStok(Request $request) {
+    if($request->isMethod('POST')) {
+        $data = $request->all();
+        $img = $request->file('img_sparepart');
+        $sparePart = SparePart::find($data['id']);
+        $historyStokSparepart = new StkHistorySparePart();
+
+        unset($data['_token']);
+        unset($data['id']);
+        
+        $current_date_time = Carbon::now()->toDateTimeString(); 
+        $user_id = Auth::user()->id;
+
+        foreach($data as $key => $row) {
+          $sparePart->{$key} = $row;
+        }
+
+        $sparePart->updated_at = $current_date_time;
+        $sparePart->updated_by = $user_id;
+  
+        if($sparePart->save()){
+
+          $historyStokSparepart->sparepart_name = $sparePart->sparepart_name;
+          $historyStokSparepart->sparepart_status = $sparePart->sparepart_status;
+          $historyStokSparepart->sparepart_jenis = $sparePart->sparepart_jenis;
+          $historyStokSparepart->restok_group_sparepart_id = $sparePart->group_sparepart_id;
+          $historyStokSparepart->jumlah_stok = $sparePart->jumlah_stok;
+          $historyStokSparepart->created_by = $sparePart->created_by;
+          $historyStokSparepart->created_at = $sparePart->created_at;
+          $historyStokSparepart->updated_by = $sparePart->updated_by;
+          $historyStokSparepart->updated_at = $sparePart->updated_at;
+          $historyStokSparepart->deleted_by = $sparePart->deleted_by;
+          $historyStokSparepart->deleted_at = $sparePart->deleted_at;
+          $historyStokSparepart->is_deleted = $sparePart->is_deleted;
+          $historyStokSparepart->img_sparepart = $sparePart->img_sparepart;
+          $historyStokSparepart->barcode_gudang = $sparePart->barcode_gudang;
+          $historyStokSparepart->barcode_pabrik = $sparePart->barcode_pabrik;
+          $historyStokSparepart->sparepart_type = $sparePart->sparepart_type;
+          $historyStokSparepart->sparepart_id = $sparePart->id;
+
+          if($historyStokSparepart->save()){
+            return response()->json([
+              'code' => 200,
+              'code_message' => 'Berhasil menyimpan data',
+              'code_type' => 'Success',
+            ], 200);
+          }else{
+            return response()->json([
+              'code' => 401,
+              'code_message' => 'Gagal menyimpan data',
+              'code_type' => 'BadRequest',
+            ], 401);
+          }
+        } else {
+          return response()->json([
+            'code' => 401,
+            'code_message' => 'Gagal menyimpan data',
+            'code_type' => 'BadRequest',
+          ], 401);
+        }
+        
+      } else {
+        return response()->json([
+          'code' => 405,
+          'code_message' => 'Method salah',
+          'code_type' => 'BadRequest',
+        ], 405);
+      }
+  }
+
 }

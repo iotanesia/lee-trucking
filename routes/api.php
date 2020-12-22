@@ -89,30 +89,15 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\KenekController@delete']);
   });
   
-  Route::group(['as' => 'api-ojk', 'prefix' => 'ojk'], function() {
-    Route::get('/', 'API\OjkController@index');
-    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\OjkController@getList']);
-    Route::post('add', ['as' => '-add', 'uses' => 'API\OjkController@add']);
-    Route::post('edit', ['as' => '-edit', 'uses' => 'API\OjkController@edit']);
-    Route::post('delete', ['as' => '-delete', 'uses' => 'API\OjkController@delete']);
+  Route::group(['as' => 'api-spareparts', 'prefix' => 'spareparts'], function() {
+      Route::get('/', 'API\SparePartController@index');
+      Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\SparePartController@getList']);
+      Route::get('get-sparepart-detail', ['as' => '-get-sparepart-detail', 'uses' => 'API\SparePartController@getListDetail']);
+      Route::post('add', ['as' => '-add', 'uses' => 'API\SparePartController@add']);
+      Route::post('edit', ['as' => '-edit', 'uses' => 'API\SparePartController@edit']);
+      Route::post('delete', ['as' => '-delete', 'uses' => 'API\SparePartController@delete']);
+      Route::post('update-stok', ['as' => '-update-stok', 'uses' => 'API\SparePartController@updateStok']);
   });
-  
-  Route::group(['as' => 'api-sparepart', 'prefix' => 'sparepart'], function() {
-    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\SparePartController@getList']);
-    Route::post('add', ['as' => '-add', 'uses' => 'API\SparePartController@add']);
-    Route::post('edit', ['as' => '-edit', 'uses' => 'API\SparePartController@edit']);
-    Route::post('delete', ['as' => '-delete', 'uses' => 'API\SparePartController@delete']);
-  });
-
-  
-    Route::group(['as' => 'api-spareparts', 'prefix' => 'spareparts'], function() {
-        Route::get('/', 'API\SparePartController@index');
-        Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\SparePartController@getList']);
-        Route::get('get-sparepart-detail', ['as' => '-get-sparepart-detail', 'uses' => 'API\SparePartController@getListDetail']);
-        Route::post('add', ['as' => '-add', 'uses' => 'API\SparePartController@add']);
-        Route::post('edit', ['as' => '-edit', 'uses' => 'API\SparePartController@edit']);
-        Route::post('delete', ['as' => '-delete', 'uses' => 'API\SparePartController@delete']);
-    });
   
   Route::group(['as' => 'api-restok-sparepart', 'prefix' => 'restok-sparepart'], function() {
     Route::get('/', 'API\StkRestokSparePartController@index');
