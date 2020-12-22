@@ -101,16 +101,19 @@ class SparePartController extends Controller
 
         $sparePart->created_at = $current_date_time;
         $sparePart->created_by = $user_id;
-        $sparePart->barcode_gudang = $sparePart->id.'TSJ'.date('dmY');
-
-        //upload image
-        $fileExt = $img->extension();
-        $fileName = "IMG-SPAREPART-".$barcodeGudang.".".$fileExt;
-        $path =  public_path().'/uploads/sparepart/' ;
-        $sparePart->img_sparepart = $fileName;
-        $img->move($path, $fileName);
+       
 
         if($sparePart->save()){
+          $sparePart->barcode_gudang = $sparePart->id.'-TSJ-'.date('dmY');
+
+          //upload image
+          $fileExt = $img->extension();
+          $fileName = "IMG-SPAREPART-".$sparePart->id.'-TSJ-'.date('dmY').".".$fileExt;
+          $path =  public_path().'/uploads/sparepart/' ;
+          $sparePart->img_sparepart = $fileName;
+          $sparePart->save();
+          $img->move($path, $fileName);
+
           return response()->json([
             'code' => 200,
             'code_message' => 'Berhasil menyimpan data',
