@@ -16,8 +16,8 @@ $("document").ready(function(){
     },
   });
 
-  $("#btn-submit").click(function(){
-    var event = $("#spareparts-modal #btn-submit").attr("el-event");
+  $("#btn-submits").click(function(){
+    var event = $("#spareparts-modal #btn-submits").attr("el-event");
     var data = new FormData($("#spareparts-form")[0]);
     data.append("_token", window.Laravel.csrfToken);
 
@@ -58,14 +58,14 @@ $("document").ready(function(){
       var dataJSON = JSON.parse(dataJSON);
 
       $("#spareparts-form").find("input[name=id]").val(dataJSON.id);
-      $("#spareparts-modal #btn-submit").attr("el-event", "edit");
+      $("#spareparts-modal #btn-submits").attr("el-event", "edit");
       $("#spareparts-form").find("textarea[name=content]").summernote("code", dataJSON.content);
       
       bindToForm($("#spareparts-modal"), dataJSON);
       
     } else {
       $("#spareparts-form").find("input[name=id]").val(null);
-      $("#spareparts-modal #btn-submit").attr("el-event", "add");
+      $("#spareparts-modal #btn-submits").attr("el-event", "add");
       $("#spareparts-form").find("textarea[name=content]").summernote("code", "");
       resetForm("#spareparts-form");
     }

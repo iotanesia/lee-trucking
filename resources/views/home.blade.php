@@ -44,11 +44,11 @@
                                         <div class="widget-count panel-white">
                                             <div class="item-label text-center">
                                                 <div id="count-box" class="count-box">119</div>
-                                                <span class="title">Today Sales</span>
+                                                <span class="title">Today Expedition</span>
                                             </div>
                                             <div class="text-center">
                                                 <span><i class="fa fa-level-up" aria-hidden="true"></i></span>
-                                                <strong>12 more Sales</strong>
+                                                <strong>12 more Expedition</strong>
                                             </div>
                                         </div>
                                     </div>
@@ -69,7 +69,7 @@
                                         <div class="widget-count panel-white">
                                             <div class="item-label text-center">
                                                 <div id="count-box2" class="count-box">316</div>
-                                                <span class="title">Daily Visits</span>
+                                                <span class="title">Repair Truck</span>
                                             </div>
                                             <div class="text-center">
                                                 <span><i class="fa fa-level-up" aria-hidden="true"></i></span>
@@ -118,7 +118,7 @@
                                         <div class="widget-count panel-white">
                                             <div class="item-label text-center">
                                                 <div id="count-box4" class="count-box">1598</div>
-                                                <span class="title">Total Sales</span>
+                                                <span class="title">Total Truck</span>
                                             </div>
                                         </div>
                                     </div>

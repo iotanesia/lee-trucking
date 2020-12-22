@@ -160,18 +160,42 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="group_sparepart_id">Group Sparepart</label>
+                    <select name="group_sparepart_id" id="" class="form-control">
+                    @foreach($group as $row)
+                        <option value="{{$row->id}}">{{$row->group_name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="barcode_pabrik">Code Pabrik</label>
+                    <input type="text" name="barcode_pabrik" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="barcode_gudang">Code Gudang</label>
+                    <input type="text" name="barcode_gudang" class="form-control">
+                </div>
+                <div class="form-group">
                     <label for="sparepart_jenis">Jenis Sparepart</label>
                     <input type="text" name="sparepart_jenis" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="spareparts_stock">Stok</label>
-                    <input type="text" name="stok" class="form-control">
+                    <label for="jumlah_stok">Stok</label>
+                    <input type="text" name="jumlah_stok" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="merk_part">merk_part</label>
+                    <input type="text" class="form-control" name="merk_part" id="merk_part" placeholder="merk_part">
+                </div>
+                <div class="form-group">
+                    <label for="merk_part">image</label>
+                    <input type="file" class="form-control" name="img_sparepart" id="img_sparepart">
                 </div>
             </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" el-event="add" id="btn-submit">Save changes</button>
+            <button type="button" class="btn btn-primary" el-event="add" id="btn-submits">Save changes</button>
         </div>
     </div>
 </div>
