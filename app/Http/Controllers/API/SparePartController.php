@@ -68,18 +68,8 @@ class SparePartController extends Controller
       $data = $request->all();
       $img = $request->file('img_sparepart');
       $sparePart = new SparePart;
-      $barcodeGudang = str_random(15);
 
-      //barcode generated
-      $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-      // generate a pin based on 2 * 7 digits + a random character
-      $pin = mt_rand(1000000, 9999999)
-          . mt_rand(1000000, 9999999)
-          . $characters[rand(0, strlen($characters) - 1)];
-
-      // shuffle the result
-      $barcodeGudang = str_shuffle($pin);
+     
 
       $validator = Validator::make($request->all(), [
         'sparepart_name' => 'required|string|max:255',
@@ -111,7 +101,7 @@ class SparePartController extends Controller
 
         $sparePart->created_at = $current_date_time;
         $sparePart->created_by = $user_id;
-        $sparePart->barcode_gudang = $barcodeGudang;
+        $sparePart->barcode_gudang = $sparePart->id.'TSJ'.date('dmY');
 
         //upload image
         $fileExt = $img->extension();
