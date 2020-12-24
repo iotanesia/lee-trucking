@@ -1,5 +1,4 @@
 function doAjax(url, data, dataType, method, beforeSend, success, error) {
-    console.log(success)
   var accessToken =  window.Laravel.api_token;
   $.ajax({
     cache: false,
@@ -208,7 +207,6 @@ $(document).on("click", "a[el-event='search-data']", function(event) {
     $("table[data-model='" + dataModel + "']").removeAttr("filter-id");
   });
 
-  console.log(url, data);
   doAjax(url, data, "json", "post", beforeSendLoadTable($(this)), success, error);
 
   return false;
@@ -358,7 +356,6 @@ function paginate(responses, dataModel) {
   }
 
   $("div[id='" + dataModel + "']").find(".pagination").html(paginate);
-  $("div[id='" + dataModel + "']").find(".page-into").html(infoTable);
 }
 
 $(document).on("click", "a[el-event='show-page']", function(event) {

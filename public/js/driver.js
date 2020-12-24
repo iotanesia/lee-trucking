@@ -92,8 +92,8 @@ var successLoaddriver = (function(responses, dataModel) {
                    "<td>"+ driver_join_date +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
-                       "<a class='btn btn-success btn-xs' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#driver-modal'><i class='fa fa-pencil'></i></a>"+
-                       "<a class='btn btn-danger btn-xs btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
+                       "<a class='btn btn-success btn-xs btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#driver-modal'><i class='fas fa-edit'></i></a>"+
+                       "<a class='btn btn-danger btn-xs btn-delete btn-sm' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
                      "</div>"+
                    "</td>"+
                  "</tr>";

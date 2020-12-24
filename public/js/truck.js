@@ -87,6 +87,7 @@ var successLoadtruck = (function(responses, dataModel) {
     data_json = responses.data[i].data_json;
 
     tableRows += "<tr>" +
+                   "<td>"+ (i+1) +"</td>"+
                    "<td>"+ truck_plat +"</td>"+
                    "<td>"+ truck_status +"</td>"+
                    "<td>"+ truck_corporate_asal +"</td>"+
@@ -94,8 +95,8 @@ var successLoadtruck = (function(responses, dataModel) {
                    "<td>"+ cabang_id +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
-                       "<a class='btn btn-success btn-xs' href='#' el-event='edit' data-json='"+ data_json +"' data-animate-modal='rotateInDownLeft' data-toggle='modal' data-target='#truck-modal'><i class='fa fa-pencil'></i></a>"+
-                       "<a class='btn btn-danger btn-xs btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
+                       "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-animate-modal='rotateInDownLeft' data-toggle='modal' data-target='#truck-modal'><i class='fas fa-edit'></i></a>"+
+                       "<a class='btn btn-danger btn-sm btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
                      "</div>"+
                    "</td>"+
                  "</tr>";

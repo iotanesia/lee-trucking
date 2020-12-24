@@ -30,7 +30,7 @@ class OjkController extends Controller
                  })
                  ->select('ex_master_ojk.*', 'ex_wil_kabupaten.kabupaten', 'ex_wil_kecamatan.kecamatan', 'ex_wil_provinsi.provinsi', 'ex_master_cabang.cabang_name')
                  ->orderBy('id', 'ASC')
-                 ->paginate();
+                 ->paginate(10);
 				 
       foreach($ojkList as $row) {
           $row->data_json = $row->toJson();
