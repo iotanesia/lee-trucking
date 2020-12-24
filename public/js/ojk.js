@@ -89,6 +89,7 @@ var successLoadojk = (function(responses, dataModel) {
     data_json = responses.data[i].data_json;
 
     tableRows += "<tr>" +
+                   "<td>"+ (i + 1) +"</td>"+
                    "<td>"+ cabang_name +"</td>"+
                    "<td>"+ provinsi +"</td>"+
                    "<td>"+ kabupaten +"</td>"+
@@ -98,8 +99,8 @@ var successLoadojk = (function(responses, dataModel) {
                    "<td>"+ harga_otv +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
-                       "<a class='btn btn-success btn-xs' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#ojk-modal'><i class='fa fa-pencil'></i></a>"+
-                       "<a class='btn btn-danger btn-xs btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
+                       "<a class='btn btn-slack btn-icon-only btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#ojk-modal'><i class='fas fa-edit'></i></a>"+
+                       "<a class='btn btn-danger btn-icon-only btn-sm btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
                      "</div>"+
                    "</td>"+
                  "</tr>";
