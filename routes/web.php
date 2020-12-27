@@ -29,3 +29,4 @@ Route::get('/tenan', 'HomeController@indexTenan')->name('home');
 Route::get('/transaksi', 'HomeController@indexTrx')->name('home');
 Route::get('/user-detail/{id}', 'HomeController@userDetail');
 Route::post('/update-user-detail', 'HomeController@updateUserDetail')->name('update-user-detail');
+Route::get('/expedition', 'ExpeditionController@index')->name('expedition');

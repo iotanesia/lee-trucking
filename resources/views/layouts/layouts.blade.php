@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
   <link rel="stylesheet" href="assets/vendor/nucleo/css/nucleo.css" type="text/css">
   <link rel="stylesheet" href="assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <link rel="stylesheet" href="assets/vendor/select2/dist/css/select2.min.css">
   <link rel="stylesheet" href="assets/css/argon.css?v=1.1.0" type="text/css">
   
   <style>
@@ -241,6 +242,8 @@
   <script src="assets/vendor/chart.js/dist/Chart.min.js"></script>
   <script src="assets/vendor/chart.js/dist/Chart.extension.js"></script>
   <script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
+  <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
+  <script src="assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <!-- Argon JS -->
   <script src="assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->

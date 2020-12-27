@@ -64,7 +64,7 @@
                         <div class="form-group row">
                             <label for="tanggal_lahir" class="col-md-4 col-form-label text-md-right">{{ __('Tanggal lahir') }}</label>
                             <div class="col-md-6">
-                                <input id="tanggal_lahir" type="date" class="form-control{{ $errors->has('tanggal_lahir') ? ' is-invalid' : '' }}" readonly value="@if(isset($userDetail)) {{$userDetail->tanggal_lahir}} @endif" required autofocus>
+                                <input id="tanggal_lahir" type="date" class="datepicker form-control{{ $errors->has('tanggal_lahir') ? ' is-invalid' : '' }}" readonly value="@if(isset($userDetail)) {{$userDetail->tanggal_lahir}} @endif" required autofocus>
                                 @if ($errors->has('tanggal_lahir'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('tanggal_lahir') }}</strong>
