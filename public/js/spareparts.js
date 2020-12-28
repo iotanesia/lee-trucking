@@ -16,8 +16,8 @@ $("document").ready(function(){
     },
   });
 
-  $("#btn-submit").click(function(){
-    var event = $("#spareparts-modal #btn-submit").attr("el-event");
+  $("#btn-submits").click(function(){
+    var event = $("#spareparts-modal #btn-submits").attr("el-event");
     var data = new FormData($("#spareparts-form")[0]);
     data.append("_token", window.Laravel.csrfToken);
 
@@ -58,14 +58,14 @@ $("document").ready(function(){
       var dataJSON = JSON.parse(dataJSON);
 
       $("#spareparts-form").find("input[name=id]").val(dataJSON.id);
-      $("#spareparts-modal #btn-submit").attr("el-event", "edit");
+      $("#spareparts-modal #btn-submits").attr("el-event", "edit");
       $("#spareparts-form").find("textarea[name=content]").summernote("code", dataJSON.content);
       
       bindToForm($("#spareparts-modal"), dataJSON);
       
     } else {
       $("#spareparts-form").find("input[name=id]").val(null);
-      $("#spareparts-modal #btn-submit").attr("el-event", "add");
+      $("#spareparts-modal #btn-submits").attr("el-event", "add");
       $("#spareparts-form").find("textarea[name=content]").summernote("code", "");
       resetForm("#spareparts-form");
     }
@@ -89,6 +89,7 @@ console.log(responses);
     data_json = responses.data[i].data_json;
 
     tableRows += "<tr>" +
+                   "<td>"+ (i+1) +"</td>"+
                    "<td>"+ barcode_gudang +"</td>"+
                    "<td>"+ barcode_pabrik +"</td>"+
                    "<td>"+ sparepart_name +"</td>"+
@@ -98,8 +99,8 @@ console.log(responses);
                    "<td>"+ jumlah_stok +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
-                       "<a class='btn btn-success btn-xs' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#spareparts-modal'><i class='fa fa-pencil'></i></a>"+
-                       "<a class='btn btn-danger btn-xs btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
+                       "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#spareparts-modal'><i class='fas fa-edit'></i></a>"+
+                       "<a class='btn btn-danger btn-sm btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
                      "</div>"+
                    "</td>"+
                  "</tr>";
