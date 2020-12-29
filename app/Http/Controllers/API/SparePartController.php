@@ -69,15 +69,12 @@ class SparePartController extends Controller
       $img = $request->file('img_sparepart');
       $sparePart = new SparePart;
 
-     
-
       $validator = Validator::make($request->all(), [
         'sparepart_name' => 'required|string|max:255',
         'sparepart_status' => 'required',
         'sparepart_jenis' => 'required',
         'jumlah_stok' => 'required',
         'group_sparepart_id' => 'required',
-        'sparepart_status' => 'required',
         'barcode_pabrik' => 'required',
         'sparepart_type' => 'required',
         'merk_part' => 'required',
@@ -142,9 +139,18 @@ class SparePartController extends Controller
       $data = $request->all();
       $img = $request->file('img_sparepart');
       $sparePart = SparePart::find($data['id']);
+
+    if(isset($data['scanner_form'])) {
+        $data['jumlah_stok'] = $data['jumlah_stok'] + $sparePart->jumlah_stok;
+
+    } else {
+        $data['jumlah_stok'] = $data['jumlah_stok'];
+
+    }
       
       unset($data['_token']);
       unset($data['id']);
+      unset($data['scanner_form']);
       
       $current_date_time = Carbon::now()->toDateTimeString(); 
       $user_id = Auth::user()->id;
@@ -165,8 +171,30 @@ class SparePartController extends Controller
 
       $sparePart->updated_at = $current_date_time;
       $sparePart->updated_by = $user_id;
+      $historyStokSparepart = new StkHistorySparePart();
 
-      if($sparePart->save()){
+      if($sparePart->save()) {
+        if(isset($request->scanner_form)) {
+            $historyStokSparepart->sparepart_name = $sparePart->sparepart_name;
+            $historyStokSparepart->sparepart_status = $sparePart->sparepart_status;
+            $historyStokSparepart->sparepart_jenis = $sparePart->sparepart_jenis;
+            $historyStokSparepart->restok_group_sparepart_id = $sparePart->group_sparepart_id;
+            $historyStokSparepart->jumlah_stok = $request->jumlah_stok;
+            $historyStokSparepart->created_by = $sparePart->created_by;
+            $historyStokSparepart->created_at = $sparePart->created_at;
+            $historyStokSparepart->updated_by = $sparePart->updated_by;
+            $historyStokSparepart->updated_at = $sparePart->updated_at;
+            $historyStokSparepart->deleted_by = $sparePart->deleted_by;
+            $historyStokSparepart->deleted_at = $sparePart->deleted_at;
+            $historyStokSparepart->is_deleted = $sparePart->is_deleted;
+            $historyStokSparepart->img_sparepart = $sparePart->img_sparepart;
+            $historyStokSparepart->barcode_gudang = $sparePart->barcode_gudang;
+            $historyStokSparepart->barcode_pabrik = $sparePart->barcode_pabrik;
+            $historyStokSparepart->sparepart_type = $sparePart->sparepart_type;
+            $historyStokSparepart->sparepart_id = $sparePart->id;
+            $historyStokSparepart->save();
+        }
+
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -278,6 +306,7 @@ class SparePartController extends Controller
         $img = $request->file('img_sparepart');
         $sparePart = SparePart::find($data['id']);
         $historyStokSparepart = new StkHistorySparePart();
+        $data['jumlah_stok'] = $data['jumlah_stok'] + $sparePart->jumlah_stok;
 
         unset($data['_token']);
         unset($data['id']);
