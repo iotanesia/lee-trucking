@@ -50,6 +50,40 @@ $("document").ready(function(){
     });
   })
 
+  $("#btn-submit").click(function(){
+    var event = $("#spareparts-scanner-modal #btn-submit").attr("el-event");
+    var data = new FormData($("#spareparts-scanner-form")[0]);
+    data.append("_token", window.Laravel.csrfToken);
+
+    $.ajax({
+      url: window.Laravel.app_url + "/api/spareparts/" + event + "",
+      type: "POST",
+      dataType: "json",
+      data: data,
+      processData: false,
+      contentType: false,
+      headers: {"Authorization": "Bearer " + accessToken},
+      crossDomain: true,
+      beforeSend: function( xhr ) {
+        $('.preloader').show();
+    },
+    success: function(datas, textStatus, xhr) {
+        alert('Data berhasil di simpan');
+        $("#spareparts-modal").modal("hide");
+        $('.preloader').hide();
+        document.getElementById("search-data").click();
+      },
+      error: function(datas, textStatus, xhr) {
+        $('.preloader').hide();
+        msgError = "";
+        for(var item in datas.responseJSON.errors) {
+          msgError += datas.responseJSON.errors[item][0] + "*";
+        }
+        alert(msgError);
+      }
+    });
+  })
+
   $("#spareparts-modal").on("show.bs.modal", function(e) {
     var invoker = $(e.relatedTarget);
 
@@ -70,13 +104,20 @@ $("document").ready(function(){
       resetForm("#spareparts-form");
     }
   });
+
+  $("#spareparts-scanner-modal").on("shown.bs.modal", function(e) {
+    var invoker = $(e.relatedTarget);
+    $("#scanner").val("");
+    $("#scanner").focus();
+    $("#form-scan").hide();
+  });
 });
 
 var successLoadspareparts = (function(responses, dataModel) {
     
   var tableRows = "";
   var responses = responses.result.data == undefined ? responses : responses.result;
-console.log(responses);
+
   for(var i = 0; i < responses.data.length; i++) {
     id = responses.data[i].id;
     sparepart_name = responses.data[i].sparepart_name;
@@ -144,6 +185,7 @@ console.log(responses);
   })
 
   $("#spareparts-scanner-modal #scanner").on('change', function(event) {
+        $(this).select();
         ids = $(this).val();
         var accessToken =  window.Laravel.api_token;
 
@@ -160,12 +202,14 @@ console.log(responses);
                 },
                 success: function(data, textStatus, xhr) {
                    $("#form-scan").show();
-                   var dataJSON = data.result.data_json;
+                   var dataJSON = data.data.data_json;
                    var dataJSON = JSON.parse(dataJSON);
  
                    $("#spareparts-scanner-form").find("input[name=id]").val(dataJSON.id);
+                   $("#spareparts-scanner-form").find("input[name=scanner_form]").attr("disabled", false);
                    $("#spareparts-scanner-modal #btn-submit").attr("el-event", "edit");
                    $("#spareparts-scanner-form").find("textarea[name=content]").summernote("code", dataJSON.content);
+                   $("#spareparts-scanner-form").find("input[name='barcode_pabrik']").attr("readonly", true);
 
                    bindToForm($("#spareparts-scanner-modal"), dataJSON);
 
@@ -175,14 +219,21 @@ console.log(responses);
                     alert('Data Belum ada');
                     $("#spareparts-scanner-form").find("input[name=id]").val(null);
                     $("#spareparts-scanner-modal #btn-submit").attr("el-event", "add");
-                    $("#spareparts-scanner-form").find("textarea[name=content]").summernote("code", "");
-
-                    resetForm("#spareparts-scanner-form");
+                    $("#spareparts-scanner-form").find("textarea[name=content]").summernote("code", "");        
                     
+                    resetForm("#spareparts-scanner-form");
+                    $("#spareparts-scanner-form").find("input[name='barcode_pabrik']").val(ids);
+                    $("#spareparts-scanner-form").find("input[name='barcode_pabrik']").attr("readonly", true);
+                    $("#spareparts-scanner-form").find("input[name=scanner_form]").attr("disabled", true);
                     $("#form-scan").show();
                     $('.preloader').hide();
                 }
               });
         }
   });
+
+  $("#spareparts-scanner-modal #scanner").on('focusout', function(event) {
+      $(this).val('');
+  });
+
 });

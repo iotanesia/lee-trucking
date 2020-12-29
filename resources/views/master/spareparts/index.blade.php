@@ -105,6 +105,7 @@
                     <div id="form-scan" style="display:none">
                         <form role="form" id="spareparts-scanner-form">
                             <input type="hidden" name="id" id="id">
+                            <input type="hidden" name="scanner_form" id="scanner_form" value="1" disabled>
                             <div class="card-body">
                                 <div class="form-group">
                                 <label for="spareparts_name">Spare Part name</label>
@@ -114,6 +115,14 @@
                                 <label for="sparepart_status">Status Sparepart</label>
                                 <select name="sparepart_status" id="" class="form-control">
                                 @foreach($status as $row)
+                                    <option value="{{$row->id}}">{{$row->param_name}}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="sparepart_type">Type Sparepart</label>
+                                <select name="sparepart_type" id="" class="form-control">
+                                @foreach($type as $row)
                                     <option value="{{$row->id}}">{{$row->param_name}}</option>
                                 @endforeach
                                 </select>
@@ -182,6 +191,14 @@
                     <label for="sparepart_status">Status Sparepart</label>
                     <select name="sparepart_status" id="" class="form-control">
                     @foreach($status as $row)
+                        <option value="{{$row->id}}">{{$row->param_name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sparepart_type">Type Sparepart</label>
+                    <select name="sparepart_type" id="" class="form-control">
+                    @foreach($type as $row)
                         <option value="{{$row->id}}">{{$row->param_name}}</option>
                     @endforeach
                     </select>
