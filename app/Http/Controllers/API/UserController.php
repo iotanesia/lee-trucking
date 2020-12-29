@@ -116,7 +116,13 @@ class UserController extends Controller
   public function details()
   {
       $user = Auth::user();
-      return response()->json(['success' => $user], $this->successStatus);
+      
+      return response()->json([
+        'code' => 201,
+        'code_message' => 'Success',
+        'code_type' => 'Success',
+        'data'=> $user
+      ], $this->successStatus);
   }
 
   public function getList(Request $request) {
@@ -163,6 +169,30 @@ class UserController extends Controller
             'data'=> null
         ], 405);
       }
+  }
 
+  public function upatePassword(Request $request)
+  {
+      $user = Auth::user();
+      $user->password = $request->password;
+      if($user->save()){
+        return response()->json([
+          'code' => 201,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'data'=> $user
+        ], $this->successStatus);
+      }else{
+          return response()->json([
+            'code' => 405,
+            'code_message' => 'Method salah',
+            'code_type' => 'BadRequest',
+            'data'=> null
+        ], 405);
+      }
+  }
+
+  public function editProfil(Request $request){
+    $user = Auth::user();
   }
 }
