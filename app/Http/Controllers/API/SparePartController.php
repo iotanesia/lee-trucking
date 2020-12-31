@@ -197,6 +197,9 @@ class SparePartController extends Controller
             $historyStokSparepart->barcode_pabrik = $sparePart->barcode_pabrik;
             $historyStokSparepart->sparepart_type = $sparePart->sparepart_type;
             $historyStokSparepart->sparepart_id = $sparePart->id;
+            $historyStokSparepart->amount = $sparePart->amount;
+            $historyStokSparepart->purchase_date = $sparePart->purchase_date;
+            $historyStokSparepart->due_date = $sparePart->due_date;
             $historyStokSparepart->save();
         }
 
@@ -344,6 +347,9 @@ class SparePartController extends Controller
           $historyStokSparepart->barcode_pabrik = $sparePart->barcode_pabrik;
           $historyStokSparepart->sparepart_type = $sparePart->sparepart_type;
           $historyStokSparepart->sparepart_id = $sparePart->id;
+          $historyStokSparepart->amount = $sparePart->amount;
+          $historyStokSparepart->purchase_date = $sparePart->purchase_date;
+          $historyStokSparepart->due_date = $sparePart->due_date;
 
           if($historyStokSparepart->save()){
             return response()->json([
