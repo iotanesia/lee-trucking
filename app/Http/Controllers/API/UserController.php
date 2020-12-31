@@ -8,6 +8,8 @@ use App\User;
 use Auth;
 use DB;
 use Validator;
+use App\Models\UserDetail;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -116,7 +118,13 @@ class UserController extends Controller
   public function details()
   {
       $user = Auth::user();
-      return response()->json(['success' => $user], $this->successStatus);
+      
+      return response()->json([
+        'code' => 201,
+        'code_message' => 'Success',
+        'code_type' => 'Success',
+        'data'=> $user
+      ], $this->successStatus);
   }
 
   public function getList(Request $request) {
@@ -163,6 +171,105 @@ class UserController extends Controller
             'data'=> null
         ], 405);
       }
-
   }
+
+  public function upatePassword(Request $request)
+  {
+    if($request->isMethod('POST')) {
+      $user = Auth::user();
+      $user->password = bcrypt($request->password);
+      if($user->save()){
+          return response()->json([
+            'code' => 200,
+            'code_message' => 'Success',
+            'code_type' => 'Success',
+          ], $this->successStatus);
+        }else{
+          return response()->json([
+            'code' => 201,
+            'code_message' => 'Fail',
+            'code_type' => 'BadRequest',
+          ], 201);
+        }
+      }else{
+          return response()->json([
+            'code' => 405,
+            'code_message' => 'Method salah',
+            'code_type' => 'BadRequest',
+            'data'=> null
+        ], 405);
+      }
+  }
+
+  public function detailProfile(){
+    $user = Auth::user();
+    $userDetail = UserDetail::where('id_user',$user->id)->first();
+    // dd($user->id);
+    if(isset($userDetail)){
+      $userDetail->foto_profil = ($userDetail->foto_profil) ? url('uploads/profilephoto/'.$userDetail->foto_profil) :url('uploads/sparepart/nia3.png');
+      return response()->json([
+        'code' => 200,
+        'code_message' => 'Success',
+        'code_type' => 'Success',
+        'data'=> $userDetail
+      ], $this->successStatus);
+    }else{
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Detail tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'data'=> null
+      ], 404);
+    }
+  }
+
+  public function updatePhotoProfile(Request $request){
+    if($request->isMethod('POST')) {
+      $img = $request->file('foto_profil');
+      $user = Auth::user();
+      $userDetail = UserDetail::where('id_user',$user->id)->first();
+      
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      if(isset($userDetail)){
+        $userDetail->updated_at = $current_date_time;
+        $userDetail->updated_by = $user->id;
+        if(isset($img)){
+          //upload image
+          $fileExt = $img->extension();
+          $fileName = "IMG-PROFILE-".$userDetail->first_name.".".$fileExt;
+          $path = public_path().'/uploads/profilephoto/' ;
+          $oldFile = $path.$userDetail->first_name;
+ 
+          $userDetail->foto_profil = $fileName;
+          $img->move($path, $fileName);
+       }
+        if($userDetail->save()){
+          return response()->json([
+            'code' => 201,
+            'code_message' => 'Success',
+            'code_type' => 'Success'
+          ], $this->successStatus);
+        }else{
+          return response()->json([
+            'code' => 500,
+            'code_message' => 'Fail',
+            'code_type' => 'BadRequest',
+          ], $this->successStatus);
+        }
+      }else{
+          return response()->json([
+            'code' => 404,
+            'code_message' => 'User Tidak Ditemukan',
+            'code_type' => 'BadRequest',
+        ], 404);
+      }
+    }else{
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+      ], 405);
+    }
+  }
+
 }
