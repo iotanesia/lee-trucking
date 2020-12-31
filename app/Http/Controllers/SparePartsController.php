@@ -32,6 +32,7 @@ class SparePartsController extends Controller
         $data['title'] = 'Spare Parts';
         $data['status'] = GlobalParam::where('param_type', 'SPAREPART_STATUS')->get();
         $data['type'] = GlobalParam::where('param_type', 'SPAREPART_TYPE')->get();
+        $data['jenis'] = GlobalParam::where('param_type', 'SPAREPART_JENIS')->get();
         $data['group'] = StkGroupSparepart::where('is_deleted', 'f')->get();
         return view('master.spareparts.index', $data);
     }
