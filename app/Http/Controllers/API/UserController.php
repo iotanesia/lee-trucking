@@ -9,7 +9,9 @@ use Auth;
 use DB;
 use Validator;
 use App\Models\UserDetail;
+use App\Models\GlobalParam;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -177,20 +179,29 @@ class UserController extends Controller
   {
     if($request->isMethod('POST')) {
       $user = Auth::user();
-      $user->password = bcrypt($request->password);
-      if($user->save()){
-          return response()->json([
-            'code' => 200,
-            'code_message' => 'Success',
-            'code_type' => 'Success',
-          ], 200);
+      if (Hash::check($request->password_old, $user->password)) { 
+        $user->password = bcrypt($request->password);
+        if($user->save()){
+            return response()->json([
+              'code' => 200,
+              'code_message' => 'Success',
+              'code_type' => 'Success',
+            ], 200);
+          }else{
+            return response()->json([
+              'code' => 400,
+              'code_message' => 'Fail',
+              'code_type' => 'BadRequest',
+            ], 400);
+          }
         }else{
           return response()->json([
-            'code' => 500,
-            'code_message' => 'Fail',
+            'code' => 401,
+            'code_message' => 'Password lama tidak cocok',
             'code_type' => 'BadRequest',
-          ], 500);
+          ], 401);
         }
+        
       }else{
           return response()->json([
             'code' => 405,
@@ -206,6 +217,10 @@ class UserController extends Controller
     $userDetail = UserDetail::where('id_user',$user->id)->first();
     // dd($user->id);
     if(isset($userDetail)){
+      $agama = GlobalParam::where('id', $userDetail->agama)->select('description')->first();
+      $kelamin = GlobalParam::where('id', $userDetail->jenis_kelamin)->select('description')->first();
+      $userDetail->agama = $agama->description;
+      $userDetail->jenis_kelamin = $kelamin->description;
       $userDetail->foto_profil = ($userDetail->foto_profil) ? url('uploads/profilephoto/'.$userDetail->foto_profil) :url('uploads/sparepart/nia3.png');
       return response()->json([
         'code' => 200,
