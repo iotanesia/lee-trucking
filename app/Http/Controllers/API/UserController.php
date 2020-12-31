@@ -60,7 +60,7 @@ class UserController extends Controller
               'code_type' => 'Success',
               'data'=> $user
           ],
-          $this->successStatus);
+          200);
       
       }else {
           return response()->json([
@@ -108,11 +108,11 @@ class UserController extends Controller
       $user->tokens = $success['tokens'];
 
       return response()->json([
-        'code' => 201,
+        'code' => 200,
         'code_message' => 'Success',
         'code_type' => 'Success',
         'data'=> $user
-      ], $this->successStatus);
+      ], 200);
   }
 
   public function details()
@@ -120,11 +120,11 @@ class UserController extends Controller
       $user = Auth::user();
       
       return response()->json([
-        'code' => 201,
+        'code' => 200,
         'code_message' => 'Success',
         'code_type' => 'Success',
         'data'=> $user
-      ], $this->successStatus);
+      ], 200);
   }
 
   public function getList(Request $request) {
@@ -183,13 +183,13 @@ class UserController extends Controller
             'code' => 200,
             'code_message' => 'Success',
             'code_type' => 'Success',
-          ], $this->successStatus);
+          ], 200);
         }else{
           return response()->json([
-            'code' => 201,
+            'code' => 500,
             'code_message' => 'Fail',
             'code_type' => 'BadRequest',
-          ], 201);
+          ], 500);
         }
       }else{
           return response()->json([
@@ -212,7 +212,7 @@ class UserController extends Controller
         'code_message' => 'Success',
         'code_type' => 'Success',
         'data'=> $userDetail
-      ], $this->successStatus);
+      ], 200);
     }else{
         return response()->json([
           'code' => 404,
@@ -245,10 +245,10 @@ class UserController extends Controller
        }
         if($userDetail->save()){
           return response()->json([
-            'code' => 201,
+            'code' => 200,
             'code_message' => 'Success',
             'code_type' => 'Success'
-          ], $this->successStatus);
+          ], 200);
         }else{
           return response()->json([
             'code' => 500,
