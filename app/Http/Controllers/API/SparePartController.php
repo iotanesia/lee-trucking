@@ -200,6 +200,7 @@ class SparePartController extends Controller
             $historyStokSparepart->amount = $sparePart->amount;
             $historyStokSparepart->purchase_date = $sparePart->purchase_date;
             $historyStokSparepart->due_date = $sparePart->due_date;
+            $historyStokSparepart->satuan_type = $sparePart->satuan_type;
             $historyStokSparepart->save();
         }
 
@@ -351,6 +352,7 @@ class SparePartController extends Controller
           $historyStokSparepart->amount = $sparePart->amount;
           $historyStokSparepart->purchase_date = $sparePart->purchase_date;
           $historyStokSparepart->due_date = $sparePart->due_date;
+          $historyStokSparepart->satuan_type = $sparePart->satuan_type;
 
           if($historyStokSparepart->save()){
             return response()->json([

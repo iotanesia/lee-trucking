@@ -135,8 +135,11 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-control-label" for="jenis_surat_jalan">Jenis Surat Jalan</label>
-                            <select name="jenis_surat_jalan" class="form-control" id="">
-                            
+                            <select name="jenis_surat_jalan" class="form-control" id="jenis_surat_jalan">
+                                <option value=""></option>
+                                @foreach($sj_type as $row)
+                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -154,17 +157,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-control-label" for="jumlah_palet">Tujuan</label>
-                            <select name="tujuan" class="form-control" id="tujuan">
-                                <option value="">select</option>
-                                <option value="">qwe</option>
-                            </select>
-                            
+                            <select name="ojk_id" class="form-control" id="tujuan"></select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="form-control-label" for="tgl_kirim">Tanggal Kirim</label>
-                            <input type="date" name="tgl_kirim" id="tgl_kirim" class="form-control" placeholder="Tanggal Kirim">
+                            <label class="form-control-label" for="tgl_po">Tanggal Kirim</label>
+                            <input type="date" name="tgl_po" id="tgl_po" class="form-control" placeholder="Tanggal Kirim">
                         </div>
                     </div>
                 </div>
@@ -172,13 +171,74 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">OJK</label>
-                            <input name="ojk" class="form-control" id="ojk">
+                            <input class="form-control" id="ojk">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">OTV</label>
-                            <input name="otv" class="form-control" id="otv">
+                            <input class="form-control" id="otv">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="toko">Toko</label>
+                            <input class="form-control" name="toko" id="toko">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ojk">Payment Method</label>
+                            <select name="otv_payment_method" id="otv_payment_method" class="form-control">
+                                <option value=""></option>
+                                @foreach($payment_method as $row)
+                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="no_rek">Nomor Rekening</label>
+                            <input class="form-control" name="no_rek" id="no_rek">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="bank_name">Nama Bank</label>
+                            <input class="form-control" name="bank_name" id="bank_name">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="nama_penerima">Nama Penerima</label>
+                            <input class="form-control" name="nama_penerima" id="nama_penerima">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="nomor_hp_penerima">Nomor hp Penerima</label>
+                            <input class="form-control" name="nomor_hp_penerima" id="nomor_hp_penerima">
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="bank_name">Truck</label>
+                            <select name="truck_id" id="truck_id" class="form-control">
+                                <option value=""></option>
+                                @foreach($truck as $row)
+                                <option value="{{$row->id}}">{{$row->truck_plat}} - {{$row->truck_name}} </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -186,27 +246,18 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">Supir</label>
-                            <input name="ojk" class="form-control" id="ojk">
+                            <select name="driver_id" id="driver_id" class="form-control">
+                                <option value=""></option>
+                                @foreach($driver as $row)
+                                <option value="{{$row->id}}">{{$row->driver_name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="form-control-label" for="ojk">Kenek</label>
-                            <input name="otv" class="form-control" id="otv">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-control-label" for="ojk">Nomor Rekening</label>
-                            <input name="ojk" class="form-control" id="ojk">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-control-label" for="ojk">Nama Bank</label>
-                            <input name="otv" class="form-control" id="otv">
+                            <label class="form-control-label" for="kenek_id">Kenek</label>
+                            <input name="" class="form-control" id="kenek_id">
                         </div>
                     </div>
                 </div>
@@ -223,39 +274,57 @@
 <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
 <script>
 
-accessToken =  window.Laravel.api_token;
-$("#tujuan").select2({
-    dropdownParent: $("#expedition-modal"),
-    minimumInputLength : 3,
-    placeholder : "Select Tujuan",
-    multiple: false,
-    ajax: {
-        type 	: 'GET',
-        url		: '{{route("api-expedition-get-ojk")}}',
-        data    :  function (params) {
-                    return {
-                        kecamatan: params.term
-                    }},
-        headers	: { "X-CSRF-TOKEN": "{{ csrf_token() }}" },
-        dataType: 'json',
-        quietMillis: 100,
-        headers: {"Authorization": "Bearer " + accessToken},
-        processResults: function (data) {
-            $('#search_marga').attr('disabled', false);
-            var results = [];
-            res = data;
-            $.each(data, function (x, y) {
-                results.push({
-                    id: y.id,
-                    text: y.kecamatan +' - '+ y.cabang_name
+$("document").ready(function() {
+    res = false;
+    accessToken =  window.Laravel.api_token;
+    $("#tujuan").select2({
+        dropdownParent: $("#expedition-modal"),
+        minimumInputLength : 3,
+        placeholder : "Select Tujuan",
+        multiple: false,
+        ajax: {
+            type 	: 'GET',
+            url		: '{{route("api-expedition-get-ojk")}}',
+            data    :  function (params) {
+                        return {
+                            kecamatan: params.term
+                        }},
+            headers	: { "X-CSRF-TOKEN": "{{ csrf_token() }}" },
+            dataType: 'json',
+            quietMillis: 100,
+            headers: {"Authorization": "Bearer " + accessToken},
+            processResults: function (data) {
+                $('#search_marga').attr('disabled', false);
+                var results = [];
+                res = data.data;
+                $.each(data.data, function (x, y) {
+                    results.push({
+                        id: y.id,
+                        text: y.kecamatan +' - '+ y.cabang_name
+                    });
                 });
-            });
 
-            return {
-                results: results,
-            };
+                return {
+                    results: results,
+                };
+            }
         }
-    }
+    });
+
+    $("#tujuan").on("change", function() {
+        idSelected = $(this).val();
+
+        if(res) {
+            $.each(res, function (x, y) {
+                if(y.id == idSelected) {
+                    $("#ojk").val(y.harga_ojk);
+                    $("#otv").val(y.harga_otv);
+                }
+                
+            });
+        }
+
+    });
 });
 </script>
 @endsection

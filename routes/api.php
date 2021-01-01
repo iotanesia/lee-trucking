@@ -128,6 +128,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/', 'API\ExpeditionController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\ExpeditionController@getList']);
     Route::get('get-ojk', ['as' => '-get-ojk', 'uses' => 'API\ExpeditionController@getOjk']);
+    Route::get('get-kenek', ['as' => '-get-kenek', 'uses' => 'API\ExpeditionController@getKenek']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\ExpeditionController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\ExpeditionController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\ExpeditionController@delete']);
