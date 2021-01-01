@@ -1,4 +1,33 @@
-$("document").ready(function(){
+$("document").ready(function() {
+    $("#driver_id").select2({
+        placeholder:"Select Driver"
+    });
+
+    $("#jenis_surat_jalan").select2({
+        placeholder:"Select Jenis Surat Jalan"
+    });
+
+    $("#driver_id").on("change", function() {
+        id = $(this).val();
+
+        $.ajax({
+            url: window.Laravel.app_url + "/api/expedition/get-kenek",
+            type: "GET",
+            dataType: "json",
+            data: 'id='+id,
+            headers: {"Authorization": "Bearer " + accessToken},
+            crossDomain: true,
+            beforeSend: function( xhr ) { 
+              $('.preloader').show();
+            },
+            success: function(res, textStatus, xhr) {
+              $('.preloader').hide();
+              $("#kenek_id").val(res.data.kenek_name)
+              $("#kenek_id").attr("disabled", true)
+            },
+          });
+    });
+
     var accessToken =  window.Laravel.api_token;
   
     $.ajax({
@@ -79,17 +108,25 @@ $("document").ready(function(){
   
     for(var i = 0; i < responses.data.length; i++) {
       id = responses.data[i].id;
-      expedition_name = responses.data[i].expedition_name;
-      expedition_status = responses.data[i].status_name;
-      kenek_name = responses.data[i].kenek_name;
-      expedition_join_date = responses.data[i].expedition_join_date;
+      nomor_inv = responses.data[i].nomor_inv;
+      pabrik_pesanan = responses.data[i].pabrik_pesanan;
+      nomor_surat_jalan = responses.data[i].nomor_surat_jalan;
+      nama_barang = responses.data[i].nama_barang;
+      truck_name = responses.data[i].truck_name;
+      driver_name = responses.data[i].driver_name;
+      tgl_inv = responses.data[i].tgl_inv;
+      tgl_po = responses.data[i].tgl_po;
       data_json = responses.data[i].data_json;
   
       tableRows += "<tr>" +
-                     "<td>"+ expedition_name +"</td>"+
-                     "<td>"+ expedition_status +"</td>"+
-                     "<td>"+ kenek_name +"</td>"+
-                     "<td>"+ expedition_join_date +"</td>"+
+                     "<td>"+ nomor_inv +"</td>"+
+                     "<td>"+ pabrik_pesanan +"</td>"+
+                     "<td>"+ nomor_surat_jalan +"</td>"+
+                     "<td>"+ nama_barang +"</td>"+
+                     "<td>"+ truck_name +"</td>"+
+                     "<td>"+ driver_name +"</td>"+
+                     "<td>"+ tgl_inv +"</td>"+
+                     "<td>"+ tgl_po +"</td>"+
                      "<td align='center'>"+
                        "<div class='btn-group'>"+
                          "<a class='btn btn-success btn-xs btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#expedition-modal'><i class='fas fa-edit'></i></a>"+

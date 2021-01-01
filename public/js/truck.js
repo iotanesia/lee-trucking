@@ -80,6 +80,7 @@ var successLoadtruck = (function(responses, dataModel) {
   for(var i = 0; i < responses.data.length; i++) {
     id = responses.data[i].id;
     truck_plat = responses.data[i].truck_plat;
+    truck_name = responses.data[i].truck_name;
     truck_status = responses.data[i].status_name;
     truck_corporate_asal = responses.data[i].truck_corporate_asal;
     truck_date_join = responses.data[i].truck_date_join;
@@ -88,6 +89,7 @@ var successLoadtruck = (function(responses, dataModel) {
 
     tableRows += "<tr>" +
                    "<td>"+ (i+1) +"</td>"+
+                   "<td>"+ truck_name +"</td>"+
                    "<td>"+ truck_plat +"</td>"+
                    "<td>"+ truck_status +"</td>"+
                    "<td>"+ truck_corporate_asal +"</td>"+
