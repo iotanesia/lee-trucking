@@ -16,6 +16,10 @@ $("document").ready(function(){
     },
   });
 
+  $(".sparepart_jenis").select2({
+      placeholder:"Select Jenis"
+  });
+
   $("#btn-submits").click(function(){
     var event = $("#spareparts-modal #btn-submits").attr("el-event");
     var data = new FormData($("#spareparts-form")[0]);
@@ -36,6 +40,7 @@ $("document").ready(function(){
     success: function(datas, textStatus, xhr) {
         alert('Data berhasil di simpan');
         $("#spareparts-modal").modal("hide");
+        $("#spareparts-scanner-modal").modal("hide");
         $('.preloader').hide();
         document.getElementById("search-data").click();
       },
@@ -210,8 +215,9 @@ var successLoadspareparts = (function(responses, dataModel) {
                    $("#spareparts-scanner-modal #btn-submit").attr("el-event", "edit");
                    $("#spareparts-scanner-form").find("textarea[name=content]").summernote("code", dataJSON.content);
                    $("#spareparts-scanner-form").find("input[name='barcode_pabrik']").attr("readonly", true);
-
+                   
                    bindToForm($("#spareparts-scanner-modal"), dataJSON);
+                   $("#spareparts-scanner-form").find("input[name=jumlah_stok]").val('');
 
                    $('.preloader').hide();
                 },
@@ -234,6 +240,26 @@ var successLoadspareparts = (function(responses, dataModel) {
 
   $("#spareparts-scanner-modal #scanner").on('focusout', function(event) {
       $(this).val('');
+  });
+
+  $("#spareparts-scanner-form #sparepart_jenis").on('change', function(event) {
+      if($(this).val() == 'NOT_PURCHASE') {
+          $("#spareparts-scanner-form .purchase_type").hide();
+          
+      } else {
+          $("#spareparts-scanner-form .purchase_type").show();
+
+      }
+  });
+
+  $("#spareparts-form #sparepart_jenis").on('change', function(event) {
+      if($(this).val() == 'NOT_PURCHASE') {
+          $("#spareparts-form .purchase_type").hide();
+          
+      } else {
+          $("#spareparts-form .purchase_type").show();
+
+      }
   });
 
 });

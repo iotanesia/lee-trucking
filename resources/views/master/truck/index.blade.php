@@ -46,6 +46,7 @@
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
+                                <th>Truck Name</th>
                                 <th>Truck plat</th>
                                 <th>Truck status</th>
                                 <th>Truck corporate asal</th>
@@ -91,8 +92,8 @@
 <div class="modal fade" id="truck-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add truck</h5>
+            <div class="modal-header bg-gradient-primary">
+            <h5 class="modal-title text-white" id="exampleModalLabel">Add truck</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -101,16 +102,20 @@
             <form role="form" id="truck-form">
                 <input type="hidden" name="id" id="id">
                 <div class="card-body">
-                    <div class="form-group">
-                    <label for="truck_plat">Truck Plat</label>
+                <div class="form-group">
+                    <label class="form-control-label" for="truck_plat">Truck name</label>
+                    <input type="text" class="form-control" name="truck_name" id="truck_name" placeholder="truck_name">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="truck_plat">Truck Plat</label>
                     <input type="text" class="form-control" name="truck_plat" id="truck_plat" placeholder="truck_plat">
                 </div>
                 <div class="form-group">
-                    <label for="truck_corporate_asal">Truck corporate asal</label>
+                    <label class="form-control-label" for="truck_corporate_asal">Truck corporate asal</label>
                     <input type="text" class="form-control" name="truck_corporate_asal" id="truck_corporate_asal" placeholder="truck_corporate_asal">
                 </div>
                 <div class="form-group">
-                    <label for="truck_corporate_asal">Status Truck</label>
+                    <label class="form-control-label" for="truck_corporate_asal">Status Truck</label>
                     <select name="truck_status" id="" class="form-control">
                     @foreach($status as $row)
                         <option value="{{$row->id}}">{{$row->param_name}}</option>
@@ -118,11 +123,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="truck_date_join">Truck date join</label>
+                    <label class="form-control-label" for="truck_date_join">Truck date join</label>
                     <input type="date" class="form-control" name="truck_date_join" id="truck_date_join" placeholder="truck_date_join">
                 </div>
                 <div class="form-group">
-                    <label for="cabang_id">Cabang</label>
+                    <label class="form-control-label" for="cabang_id">Cabang</label>
                     <select name="cabang_id" class="form-control" id="">
                         @foreach($cabangList as $row)
                             <option value="{{$row->id}}">{{$row->cabang_name}}</option>

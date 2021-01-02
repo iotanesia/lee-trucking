@@ -91,10 +91,10 @@
       </footer>
       
       <div id="spareparts-scanner-modal" class="modal fade animated" role="dialog">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog" style="max-width: 1600px;">
                 <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Scan spareparts</h5>
+                    <div class="modal-header bg-gradient-primary">
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Scan spareparts</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -106,59 +106,89 @@
                         <form role="form" id="spareparts-scanner-form">
                             <input type="hidden" name="id" id="id">
                             <input type="hidden" name="scanner_form" id="scanner_form" value="1" disabled>
-                            <div class="card-body">
-                                <div class="form-group">
-                                <label for="spareparts_name">Spare Part name</label>
-                                <input type="text" class="form-control" name="sparepart_name" id="sparepart_name" placeholder="spareparts_name">
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="spareparts_name">Spare Part name</label>
+                                        <input type="text" class="form-control" name="sparepart_name" id="sparepart_name" placeholder="Spareparts Name">
+                                    </div>
+                                    <div class="form-group purchase_type" style="display:none">
+                                        <label class="form-control-label" for="purchase_date">Tgl Pembelian</label>
+                                        <input type="date" class="form-control" name="purchase_date" id="purchase_date">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="sparepart_status">Status Sparepart</label>
+                                        <select name="sparepart_status" id="" class="form-control sparepart_status">
+                                        @foreach($status as $row)
+                                            <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
+                                        <select name="sparepart_type" id="" class="form-control sparepart_type">
+                                        @foreach($type as $row)
+                                            <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="barcode_gudang">Code Gudang</label>
+                                        <input type="text" name="barcode_gudang" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="jumlah_stok">Stok</label>
+                                        <div class="input-group mb-2">
+                                            <input type="text" name="jumlah_stok" class="form-control col-md-10">
+                                            <select name="satuan_type" class="form-control col-md-2 satuan_type" id="satuan_type">
+                                                @foreach($satuan as $row)
+                                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="merk_part">image</label>
+                                        <input type="file" class="form-control" name="img_sparepart" id="img_sparepart">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="sparepart_jenis">Jenis Sparepart</label>
+                                        <select name="sparepart_jenis" id="sparepart_jenis" class="form-control sparepart_jenis">                        
+                                        <option value=""></option>
+                                        @foreach($jenis as $row)
+                                            <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group purchase_type" style="display:none">
+                                        <label class="form-control-label" for="due_date">Tgl Jatuh Tempo</label>
+                                        <input type="date" class="form-control" name="due_date" id="due_date">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="group_sparepart_id">Group Sparepart</label>
+                                        <select name="group_sparepart_id" id="" class="form-control">
+                                        @foreach($group as $row)
+                                            <option value="{{$row->id}}">{{$row->group_name}}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="barcode_pabrik">Code Pabrik</label>
+                                        <input type="text" name="barcode_pabrik" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="merk_part">merk_part</label>
+                                        <input type="text" class="form-control" name="merk_part" id="merk_part" placeholder="merk_part">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="amount">Harga</label>
+                                        <input type="text" class="form-control" name="amount" id="amount" placeholder="Harga">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="sparepart_status">Status Sparepart</label>
-                                <select name="sparepart_status" id="" class="form-control">
-                                @foreach($status as $row)
-                                    <option value="{{$row->id}}">{{$row->param_name}}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="sparepart_type">Type Sparepart</label>
-                                <select name="sparepart_type" id="" class="form-control">
-                                @foreach($type as $row)
-                                    <option value="{{$row->id}}">{{$row->param_name}}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="group_sparepart_id">Group Sparepart</label>
-                                <select name="group_sparepart_id" id="" class="form-control">
-                                @foreach($group as $row)
-                                    <option value="{{$row->id}}">{{$row->group_name}}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="barcode_pabrik">Code Pabrik</label>
-                                <input type="text" name="barcode_pabrik" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="barcode_gudang">Code Gudang</label>
-                                <input type="text" name="barcode_gudang" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="sparepart_jenis">Jenis Sparepart</label>
-                                <input type="text" name="sparepart_jenis" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="jumlah_stok">Stok</label>
-                                <input type="text" name="jumlah_stok" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="merk_part">merk_part</label>
-                                <input type="text" class="form-control" name="merk_part" id="merk_part" placeholder="merk_part">
-                            </div>
-                            <div class="form-group">
-                                <label for="merk_part">image</label>
-                                <input type="file" class="form-control" name="img_sparepart" id="img_sparepart">
-                            </div>
+                            
                         </form>
                     </div>
                 </div>
@@ -171,10 +201,10 @@
     </div>
   </div>
   <div class="modal fade" id="spareparts-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1600px;">
         <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add spareparts</h5>
+            <div class="modal-header bg-gradient-primary">
+            <h5 class="modal-title text-white" id="exampleModalLabel">Add spareparts</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -182,59 +212,94 @@
         <div class="modal-body">
             <form role="form" id="spareparts-form">
                 <input type="hidden" name="id" id="id">
-                <div class="card-body">
-                    <div class="form-group">
-                    <label for="spareparts_name">Spare Part name</label>
-                    <input type="text" class="form-control" name="sparepart_name" id="sparepart_name" placeholder="spareparts_name">
-                </div>
-                <div class="form-group">
-                    <label for="sparepart_status">Status Sparepart</label>
-                    <select name="sparepart_status" id="" class="form-control">
-                    @foreach($status as $row)
-                        <option value="{{$row->id}}">{{$row->param_name}}</option>
-                    @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="sparepart_type">Type Sparepart</label>
-                    <select name="sparepart_type" id="" class="form-control">
-                    @foreach($type as $row)
-                        <option value="{{$row->id}}">{{$row->param_name}}</option>
-                    @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="group_sparepart_id">Group Sparepart</label>
-                    <select name="group_sparepart_id" id="" class="form-control">
-                    @foreach($group as $row)
-                        <option value="{{$row->id}}">{{$row->group_name}}</option>
-                    @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="barcode_pabrik">Code Pabrik</label>
-                    <input type="text" name="barcode_pabrik" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="barcode_gudang">Code Gudang</label>
-                    <input type="text" name="barcode_gudang" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="sparepart_jenis">Jenis Sparepart</label>
-                    <input type="text" name="sparepart_jenis" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="jumlah_stok">Stok</label>
-                    <input type="text" name="jumlah_stok" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="merk_part">merk_part</label>
-                    <input type="text" class="form-control" name="merk_part" id="merk_part" placeholder="merk_part">
-                </div>
-                <div class="form-group">
-                    <label for="merk_part">image</label>
-                    <input type="file" class="form-control" name="img_sparepart" id="img_sparepart">
-                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="form-control-label" for="spareparts_name">Spare Part name</label>
+                            <input type="text" class="form-control" name="sparepart_name" id="sparepart_name" placeholder="Spareparts Name">
+                        </div>
+                        
+                        <div class="form-group purchase_type" style="display:none">
+                            <label class="form-control-label" for="purchase_date">Tgl Pembelian</label>
+                            <input type="date" class="form-control" name="purchase_date" id="purchase_date">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-control-label" for="sparepart_status">Status Sparepart</label>
+                            <select name="sparepart_status" id="" class="form-control">
+                            @foreach($status as $row)
+                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
+                            <select name="sparepart_type" id="" class="form-control">
+                            @foreach($type as $row)
+                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="group_sparepart_id">Group Sparepart</label>
+                            <select name="group_sparepart_id" id="" class="form-control">
+                            @foreach($group as $row)
+                                <option value="{{$row->id}}">{{$row->group_name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-control-label" for="amount">Harga</label>
+                            <input type="text" class="form-control" name="amount" id="amount" placeholder="Harga">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="merk_part">image</label>
+                            <input type="file" class="form-control" name="img_sparepart" id="img_sparepart">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="form-control-label" for="sparepart_jenis">Jenis Sparepart</label>
+                            <select name="sparepart_jenis" id="sparepart_jenis" class="form-control sparepart_jenis">
+                                <option value=""></option>
+                                @foreach($jenis as $row)
+                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group purchase_type" style="display:none">
+                            <label class="form-control-label" for="due_date">Tgl Jatuh tempo</label>
+                            <input type="date" class="form-control" name="due_date" id="due_date">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="barcode_pabrik">Code Pabrik</label>
+                            <input type="text" name="barcode_pabrik" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="barcode_gudang">Code Gudang</label>
+                            <input type="text" name="barcode_gudang" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="jumlah_stok">Stok</label>
+                            <div class="input-group mb-2">
+                                <input type="text" name="jumlah_stok" class="form-control col-md-10">
+                                <select name="satuan_type" class="form-control col-md-2 satuan_type" id="satuan_type">
+                                    @foreach($satuan as $row)
+                                    <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="merk_part">merk_part</label>
+                            <input type="text" class="form-control" name="merk_part" id="merk_part" placeholder="merk_part">
+                        </div>
+                    </div>
+                </div>                
             </form>
         </div>
         <div class="modal-footer">

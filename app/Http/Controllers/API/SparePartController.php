@@ -15,21 +15,22 @@ class SparePartController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'sparepart_name, group_name';
+      $whereField = 'sparepart_name, group_name, stk_master_sparepart.barcode_pabrik';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
                                        'stk_master_sparepart.group_sparepart_id')
-                                ->where('stk_master_sparepart.is_deleted','=','false')
-                                ->where(function($query) use($whereField, $whereValue) {
-                                    if($whereValue) {
-                                      foreach(explode(', ', $whereField) as $idx => $field) {
-                                        $query->orWhere($field, 'LIKE', "%".$whereValue."%");
-                                      }
-                                    }
-                                  })
-                                ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
-                                ->orderBy('id', 'ASC')
-                                ->paginate();
+                       ->join('all_global_param as sparepart_jenis', 'stk_master_sparepart.sparepart_jenis', 'sparepart_jenis.param_code')
+                       ->where('stk_master_sparepart.is_deleted','=','false')
+                       ->where(function($query) use($whereField, $whereValue) {
+                           if($whereValue) {
+                               foreach(explode(', ', $whereField) as $idx => $field) {
+                               $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                               }
+                           }
+                           })
+                       ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
+                       ->orderBy('id', 'ASC')
+                       ->paginate();
       
       foreach($sparePartList as $row) {
         $row->data_json = $row->toJson();
@@ -90,8 +91,10 @@ class SparePartController extends Controller
       }else{
         unset($data['_token']);
         unset($data['id']);
+
         $current_date_time = Carbon::now()->toDateTimeString(); 
         $user_id = Auth::user()->id;
+
         foreach($data as $key => $row) {
           $sparePart->{$key} = $row;
         }
@@ -104,12 +107,14 @@ class SparePartController extends Controller
           $sparePart->barcode_gudang = $sparePart->id.'-TSJ-'.date('dmY');
 
           //upload image
-          $fileExt = $img->extension();
-          $fileName = "IMG-SPAREPART-".$sparePart->id.'-TSJ-'.date('dmY').".".$fileExt;
-          $path =  public_path().'/uploads/sparepart/' ;
-          $sparePart->img_sparepart = $fileName;
-          $sparePart->save();
-          $img->move($path, $fileName);
+          if($img) {
+              $fileExt = $img->extension();
+              $fileName = "IMG-SPAREPART-".$sparePart->id.'-TSJ-'.date('dmY').".".$fileExt;
+              $path =  public_path().'/uploads/sparepart/' ;
+              $sparePart->img_sparepart = $fileName;
+              $sparePart->save();
+              $img->move($path, $fileName);
+          }
 
           return response()->json([
             'code' => 200,
@@ -192,6 +197,10 @@ class SparePartController extends Controller
             $historyStokSparepart->barcode_pabrik = $sparePart->barcode_pabrik;
             $historyStokSparepart->sparepart_type = $sparePart->sparepart_type;
             $historyStokSparepart->sparepart_id = $sparePart->id;
+            $historyStokSparepart->amount = $sparePart->amount;
+            $historyStokSparepart->purchase_date = $sparePart->purchase_date;
+            $historyStokSparepart->due_date = $sparePart->due_date;
+            $historyStokSparepart->satuan_type = $sparePart->satuan_type;
             $historyStokSparepart->save();
         }
 
@@ -339,6 +348,10 @@ class SparePartController extends Controller
           $historyStokSparepart->barcode_pabrik = $sparePart->barcode_pabrik;
           $historyStokSparepart->sparepart_type = $sparePart->sparepart_type;
           $historyStokSparepart->sparepart_id = $sparePart->id;
+          $historyStokSparepart->amount = $sparePart->amount;
+          $historyStokSparepart->purchase_date = $sparePart->purchase_date;
+          $historyStokSparepart->due_date = $sparePart->due_date;
+          $historyStokSparepart->satuan_type = $sparePart->satuan_type;
 
           if($historyStokSparepart->save()){
             return response()->json([
