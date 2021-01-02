@@ -81,6 +81,7 @@ class ExpeditionController extends Controller
 
       foreach($data as $key => $row) {
         $expeditionActivity->{$key} = $row;
+        $expeditionActivity->status_activty = 'SUBMIT';
       }
 
       $expeditionActivity->created_at = $current_date_time;

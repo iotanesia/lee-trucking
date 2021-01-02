@@ -133,10 +133,6 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-control-label" for="barcode_gudang">Code Gudang</label>
-                                        <input type="text" name="barcode_gudang" class="form-control">
-                                    </div>
-                                    <div class="form-group">
                                         <label class="form-control-label" for="jumlah_stok">Stok</label>
                                         <div class="input-group mb-2">
                                             <input type="text" name="jumlah_stok" class="form-control col-md-10">
@@ -249,14 +245,12 @@
                             @endforeach
                             </select>
                         </div>
-                        
                         <div class="form-group">
-                            <label class="form-control-label" for="amount">Harga</label>
-                            <input type="text" class="form-control" name="amount" id="amount" placeholder="Harga">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-control-label" for="merk_part">image</label>
-                            <input type="file" class="form-control" name="img_sparepart" id="img_sparepart">
+                            <label class="form-control-label" for="merk_part">Image</label> 
+                            <div id="imagescr">
+                                  <img id="imgScreen" width="40%" src="{{asset('assets/img/add-photo.png')}}" alt="Not Found" style="background-size: cover; max-width : 120px" />
+                                  <input style="margin-left:10px" type="file" name="img_sparepart" required onchange="readURL(this, 1)" value="">
+                              </div>
                         </div>
                     </div>
                     <div class="col">
@@ -280,10 +274,6 @@
                             <input type="text" name="barcode_pabrik" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label class="form-control-label" for="barcode_gudang">Code Gudang</label>
-                            <input type="text" name="barcode_gudang" class="form-control">
-                        </div>
-                        <div class="form-group">
                             <label class="form-control-label" for="jumlah_stok">Stok</label>
                             <div class="input-group mb-2">
                                 <input type="text" name="jumlah_stok" class="form-control col-md-10">
@@ -297,6 +287,10 @@
                         <div class="form-group">
                             <label class="form-control-label" for="merk_part">merk_part</label>
                             <input type="text" class="form-control" name="merk_part" id="merk_part" placeholder="merk_part">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="amount">Harga</label>
+                            <input type="text" class="form-control" name="amount" id="amount" placeholder="Harga">
                         </div>
                     </div>
                 </div>                

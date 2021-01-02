@@ -75,6 +75,7 @@ $("document").ready(function(){
     success: function(datas, textStatus, xhr) {
         alert('Data berhasil di simpan');
         $("#spareparts-modal").modal("hide");
+        $("#spareparts-scanner-modal").modal("hide");
         $('.preloader').hide();
         document.getElementById("search-data").click();
       },
@@ -91,21 +92,40 @@ $("document").ready(function(){
 
   $("#spareparts-modal").on("show.bs.modal", function(e) {
     var invoker = $(e.relatedTarget);
+    var src = '{{asset("assets/img/add-photo.png")}}';
 
     if(invoker.attr('el-event') == 'edit') {
       var dataJSON = invoker.attr("data-json");
       var dataJSON = JSON.parse(dataJSON);
 
+      bindToForm($("#spareparts-modal"), dataJSON);
+
       $("#spareparts-form").find("input[name=id]").val(dataJSON.id);
       $("#spareparts-modal #btn-submits").attr("el-event", "edit");
       $("#spareparts-form").find("textarea[name=content]").summernote("code", dataJSON.content);
+      $("#spareparts-form").find("input[name=jumlah_stok]").attr("disabled", true);
+      $("#spareparts-form").find("input[name=barcode_pabrik]").attr("disabled", true);
+      $("#spareparts-form").find("input[name=due_date]").attr("disabled", true);
+      $("#spareparts-form").find("select[name=sparepart_jenis]").attr("disabled", true).trigger("change");
+      $("#spareparts-form").find("input[name=purchase_date]").attr("disabled", true);
+      $("#spareparts-form").find("select[name=sparepart_type]").attr("disabled", true);
+      $("#spareparts-form").find("select[name=satuan_type]").attr("disabled", true);
+      $("#spareparts-form").find("input[name=amount]").attr("disabled", true);
+      $("#spareparts-form #imgScreen").attr("src", dataJSON.img_sparepart);
       
-      bindToForm($("#spareparts-modal"), dataJSON);
       
     } else {
       $("#spareparts-form").find("input[name=id]").val(null);
       $("#spareparts-modal #btn-submits").attr("el-event", "add");
       $("#spareparts-form").find("textarea[name=content]").summernote("code", "");
+      $("#spareparts-form").find("input[name=jumlah_stok]").attr("disabled", false);
+      $("#spareparts-form").find("input[name=barcode_pabrik]").attr("disabled", false);
+      $("#spareparts-form").find("input[name=due_date]").attr("disabled", false);
+      $("#spareparts-form").find("select[name=sparepart_jenis]").attr("disabled", false).trigger("change");
+      $("#spareparts-form").find("input[name=purchase_date]").attr("disabled", false);
+      $("#spareparts-form").find("select[name=sparepart_type]").attr("disabled", false);
+      $("#spareparts-form").find("select[name=satuan_type]").attr("disabled", false);
+      $("#spareparts-form").find("input[name=amount]").attr("disabled", false);
       resetForm("#spareparts-form");
     }
   });
