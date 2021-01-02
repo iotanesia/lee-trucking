@@ -9,6 +9,7 @@ use App\Models\StkHistorySparePart;
 use Validator;
 use Auth;
 use Carbon\Carbon;
+use DB;
 
 class SparePartController extends Controller
 {
@@ -33,8 +34,8 @@ class SparePartController extends Controller
                        ->paginate();
       
       foreach($sparePartList as $row) {
-        $row->data_json = $row->toJson();
         $row->img_sparepart = ($row->img_sparepart) ? url('uploads/sparepart/'.$row->img_sparepart) :url('uploads/sparepart/nia3.png');
+        $row->data_json = $row->toJson();
       }
 
       if(!isset($sparePartList)){
@@ -70,6 +71,8 @@ class SparePartController extends Controller
       $img = $request->file('img_sparepart');
       $sparePart = new SparePart;
 
+      DB::connection(Auth::user()->schema)->beginTransaction();
+
       $validator = Validator::make($request->all(), [
         'sparepart_name' => 'required|string|max:255',
         'sparepart_status' => 'required',
@@ -104,7 +107,31 @@ class SparePartController extends Controller
        
 
         if($sparePart->save()){
+          $historyStokSparepart = new StkHistorySparePart();
           $sparePart->barcode_gudang = $sparePart->id.'-TSJ-'.date('dmY');
+          $historyStokSparepart->sparepart_name = $sparePart->sparepart_name;
+          $historyStokSparepart->sparepart_status = $sparePart->sparepart_status;
+          $historyStokSparepart->sparepart_jenis = $sparePart->sparepart_jenis;
+          $historyStokSparepart->restok_group_sparepart_id = $sparePart->group_sparepart_id;
+          $historyStokSparepart->jumlah_stok = $request->jumlah_stok;
+          $historyStokSparepart->created_by = $sparePart->created_by;
+          $historyStokSparepart->created_at = $sparePart->created_at;
+          $historyStokSparepart->updated_by = $sparePart->updated_by;
+          $historyStokSparepart->updated_at = $sparePart->updated_at;
+          $historyStokSparepart->deleted_by = $sparePart->deleted_by;
+          $historyStokSparepart->deleted_at = $sparePart->deleted_at;
+          $historyStokSparepart->is_deleted = $sparePart->is_deleted;
+          $historyStokSparepart->img_sparepart = $sparePart->img_sparepart;
+          $historyStokSparepart->barcode_gudang = $sparePart->barcode_gudang;
+          $historyStokSparepart->barcode_pabrik = $sparePart->barcode_pabrik;
+          $historyStokSparepart->sparepart_type = $sparePart->sparepart_type;
+          $historyStokSparepart->sparepart_id = $sparePart->id;
+          $historyStokSparepart->amount = $sparePart->amount;
+          $historyStokSparepart->purchase_date = $sparePart->purchase_date;
+          $historyStokSparepart->due_date = $sparePart->due_date;
+          $historyStokSparepart->satuan_type = $sparePart->satuan_type;
+          $historyStokSparepart->transaction_type = "IN";
+          $historyStokSparepart->save();
 
           //upload image
           if($img) {
@@ -116,6 +143,8 @@ class SparePartController extends Controller
               $img->move($path, $fileName);
           }
 
+          DB::connection(Auth::user()->schema)->commit();
+
           return response()->json([
             'code' => 200,
             'code_message' => 'Berhasil menyimpan data',
@@ -123,6 +152,8 @@ class SparePartController extends Controller
           ], 200);
         
         } else {
+          DB::connection(Auth::user()->schema)->rollback();
+
           return response()->json([
             'code' => 401,
             'code_message' => 'Gagal menyimpan data',
@@ -147,9 +178,6 @@ class SparePartController extends Controller
 
     if(isset($data['scanner_form'])) {
         $data['jumlah_stok'] = $data['jumlah_stok'] + $sparePart->jumlah_stok;
-
-    } else {
-        $data['jumlah_stok'] = $data['jumlah_stok'];
 
     }
       
@@ -201,6 +229,7 @@ class SparePartController extends Controller
             $historyStokSparepart->purchase_date = $sparePart->purchase_date;
             $historyStokSparepart->due_date = $sparePart->due_date;
             $historyStokSparepart->satuan_type = $sparePart->satuan_type;
+            $historyStokSparepart->transaction_type = "IN";
             $historyStokSparepart->save();
         }
 
@@ -353,6 +382,7 @@ class SparePartController extends Controller
           $historyStokSparepart->purchase_date = $sparePart->purchase_date;
           $historyStokSparepart->due_date = $sparePart->due_date;
           $historyStokSparepart->satuan_type = $sparePart->satuan_type;
+          $historyStokSparepart->transaction_type = "IN";
 
           if($historyStokSparepart->save()){
             return response()->json([

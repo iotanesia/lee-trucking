@@ -79,6 +79,7 @@ class ExpeditionController extends Controller
 
       foreach($data as $key => $row) {
         $expeditionActivity->{$key} = $row;
+        $expeditionActivity->status_activty = 'SUBMIT';
       }
 
       if($expeditionActivity->save()) { 
