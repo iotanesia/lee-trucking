@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('edit', ['as' => '-edit', 'uses' => 'Services\UserController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'Services\UserController@delete']);
     Route::post('updatePhotoProfile', ['as' => '-updateProfile', 'uses' => 'API\UserController@updatePhotoProfile']);
-    Route::post('upatePassword', ['as' => '-upatePassword', 'uses' => 'API\UserController@upatePassword']);
+    Route::post('updatePassword', ['as' => '-updatePassword', 'uses' => 'API\UserController@updatePassword']);
   });
 
   Route::group(['as' => 'api-truck', 'prefix' => 'truck'], function() {

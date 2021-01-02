@@ -175,7 +175,7 @@ class UserController extends Controller
       }
   }
 
-  public function upatePassword(Request $request)
+  public function updatePassword(Request $request)
   {
     if($request->isMethod('POST')) {
       $user = Auth::user();
@@ -217,8 +217,8 @@ class UserController extends Controller
     $userDetail = UserDetail::where('id_user',$user->id)->first();
     // dd($user->id);
     if(isset($userDetail)){
-      $agama = GlobalParam::where('id', $userDetail->agama)->select('description')->first();
-      $kelamin = GlobalParam::where('id', $userDetail->jenis_kelamin)->select('description')->first();
+      $agama = GlobalParam::where('param_code', $userDetail->agama)->select('description')->first();
+      $kelamin = GlobalParam::where('param_code', $userDetail->jenis_kelamin)->select('description')->first();
       $userDetail->agama = $agama->description;
       $userDetail->jenis_kelamin = $kelamin->description;
       $userDetail->foto_profil = ($userDetail->foto_profil) ? url('uploads/profilephoto/'.$userDetail->foto_profil) :url('uploads/sparepart/nia3.png');
