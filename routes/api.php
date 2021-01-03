@@ -134,6 +134,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\ExpeditionController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\ExpeditionController@delete']);
   });
+
+});
+
+Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
+  Route::get('/', 'Services\DropDown@index');
+  Route::get('get-list-truck', ['as' => '-get-list-truck', 'uses' => 'API\DropDownController@getListTruck']);
+  Route::get('get-list-driver', ['as' => '-get-list-driver', 'uses' => 'API\DropDownController@getListDriver']);
+  Route::get('get-list-kenek', ['as' => '-get-list-kenek', 'uses' => 'API\DropDownController@getListKenek']);
 });
 
 Route::group(['as' => 'api-global-param', 'prefix' => 'global-param'], function() {
