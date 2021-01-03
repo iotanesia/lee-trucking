@@ -91,7 +91,7 @@
   </div>
   
 <div class="modal fade" id="expedition-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document" style="max-width: 1000px;">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
             <h5 class="modal-title text-white" id="exampleModalLabel">Add expedition</h5>
@@ -112,7 +112,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-control-label" for="tgl_inv">Tanggal Invoice</label>
-                            <input type="text" name="tgl_inv" id="tgl_inv" class="form-control" placeholder="Tanggal Invoice">
+                            <input type="date" name="tgl_inv" id="tgl_inv" class="form-control" placeholder="Tanggal Invoice">
                         </div>
                     </div>
                 </div>
@@ -162,7 +162,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-control-label" for="tgl_po">Tanggal Kirim</label>
-                            <input type="text" name="tgl_po" id="tgl_po" class="form-control" placeholder="Tanggal Kirim">
+                            <input type="date" name="tgl_po" id="tgl_po" class="form-control" placeholder="Tanggal Kirim">
                         </div>
                     </div>
                 </div>
@@ -299,7 +299,7 @@ $("document").ready(function() {
                 $.each(data.data, function (x, y) {
                     results.push({
                         id: y.id,
-                        text: y.kabupaten+ ' - ' + y.kecamatan +' - '+ y.cabang_name
+                        text: y.kecamatan +' - '+ y.cabang_name
                     });
                 });
 

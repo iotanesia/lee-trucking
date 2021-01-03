@@ -18,9 +18,13 @@ class ExpeditionController extends Controller
       $data = $request->all();
       $whereField = 'ExpeditionActivity_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.id')
+      $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+                   ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
+                   ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
+                   ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
+                   ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
                    ->where(function($query) use($whereField, $whereValue) {
                      if($whereValue) {
                        foreach(explode(', ', $whereField) as $idx => $field) {
@@ -28,7 +32,61 @@ class ExpeditionController extends Controller
                        }
                      }
                    })
-                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
+                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
+                            'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv')
+                   ->orderBy('id', 'ASC')
+                   ->paginate();
+      
+      foreach($expeditionActivityList as $row) {
+        $row->data_json = $row->toJson();
+      }
+
+      if(!isset($expeditionActivityList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'data'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'data'=> $expeditionActivityList
+        ], 200);
+      }
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'data'=> null
+      ], 405);
+    }
+  }
+
+  public function getListApproval(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $whereField = 'ExpeditionActivity_name';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
+                   ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
+                   ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+                   ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
+                   ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
+                   ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
+                   ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+                   ->where(function($query) use($whereField, $whereValue) {
+                     if($whereValue) {
+                       foreach(explode(', ', $whereField) as $idx => $field) {
+                         $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                       }
+                     }
+                   })
+                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
+                            'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv')
                    ->orderBy('id', 'ASC')
                    ->paginate();
       
@@ -79,7 +137,7 @@ class ExpeditionController extends Controller
 
       foreach($data as $key => $row) {
         $expeditionActivity->{$key} = $row;
-        $expeditionActivity->status_activty = 'SUBMIT';
+        $expeditionActivity->status_activity = 'SUBMIT';
       }
 
       if($expeditionActivity->save()) { 
@@ -195,9 +253,11 @@ class ExpeditionController extends Controller
     if($request->isMethod('GET')) {
         $data = $request->all();
         $getOjk = Ojk::join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
+                ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
                 ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
-                ->select('ex_master_ojk.*', 'ex_wil_kecamatan.kecamatan', 'ex_master_cabang.cabang_name')
+                ->select('ex_master_ojk.*', 'ex_wil_kecamatan.kecamatan', 'ex_master_cabang.cabang_name', 'ex_wil_kabupaten.kabupaten')
                 ->where('ex_wil_kecamatan.kecamatan', 'iLike', '%'.$data['kecamatan'].'%')
+                ->where('ex_master_ojk.is_deleted', 'f')
                 ->get();
 
         return response()->json([
