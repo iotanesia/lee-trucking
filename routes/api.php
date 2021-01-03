@@ -20,9 +20,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 
 Route::post('login', 'API\UserController@login');
-Route::post('register', 'API\UserController@register');
  
 Route::group(['middleware' => 'auth:api'], function(){
+  Route::post('register', 'API\UserController@register');
   Route::group(['as' => 'api-user', 'prefix' => 'user'], function() {
     Route::get('/', 'Services\UserController@index');
     Route::get('details', 'API\UserController@detailProfile');
