@@ -1,0 +1,22 @@
+new ex - Buat Expedisi (status_activity = SUBMIT) (api/expedition/get-list)
+approval ojk driver (api/expedition/get-list-approval-ojk)
+approval ojk  - SUBMIT - Approve (status_activity = APPROVAL_OJK_DRIVER, status_approval = APPROVED)
+              - SUBMIT - Reject (status_activity = SUBMIT, status_approval = REJETED, keterangan)
+              - SUBMIT - Revision (status_activity = SUBMIT, status_approval = REVISION, keterangan)
+
+mobile (driver) (api/expedition/get-list-expedition-driver)
+konfirmasi ekspedisi - APPROVAL_OJK_DRIVER && APPROVED = (swipe) (status_activity = DRIVER_MENUJU_TUJUAN) param(id, ex_id, status_activity, longlat)
+konfirmasi ekspedisi - DRIVER_MENUJU_TUJUAN = (swipe) (status_activity = DRIVER_SAMPAI_TUJUAN) param(id, ex_id, status_activity, longlat, img (foto toko tujuan optional))
+konfirmasi ekspedisi - DRIVER_SAMPAI_TUJUAN = (swipe) (status_activity = DRIVER_SELESAI_EKSPEDISI) param(id, ex_id, status_activity, longlat, img (foto bukti bayar optional), nominal, otv_payment_method, if(otv_payment_method == NON_TUNAI) ? bank_name, no_rek : null)
+
+approval otv toko (if(otv_payment_method == NON_TUNAI) ? owner : admin -> owner) (api/expedition/get-list-approval-otv)
+approval otv toko (NON_TUNAI) - DRIVER_SELESAI_EKSPEDISI - Approve (status_activity = CLOSED_EXPEDITION, status_approval = APPROVED, id ,ex_id)
+approval otv toko (TUNAI to admin) - DRIVER_SELESAI_EKSPEDISI - Approve (status_activity = WAITING_OWNER, status_approval = APPROVED, id ,ex_id)
+approval otv toko (TUNAI to owner) - DRIVER_SELESAI_EKSPEDISI - Approve (status_activity = CLOSED_EXPEDITION, status_approval = APPROVED, id ,ex_id)
+
+NOTIF jgn lupa
+
+
+
+
+

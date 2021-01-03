@@ -52,6 +52,7 @@
                             <th>Tanggal PO</th>
                             <th>Tujuan</th>
                             <th>Status</th>
+                            <th>Status Approval</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -104,6 +105,7 @@
                 <input type="hidden" name="id" id="id">
                 <input type="hidden" name="update_lates_status" id="update_lates_status" value="true">
                 <input type="hidden" name="status_activity" id="status_activity" value="APPROVAL_OJK_DRIVER">
+                <input type="hidden" name="status_approval" id="status_approval" value="">
                 <input type="hidden" name="ex_id" id="ex_id">
                 <div class="row">
                     <div class="col-md-4">
@@ -263,6 +265,7 @@
         <div class="modal-footer bg-gradient-secondary">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-success" id="btn-submit">Approve</button>
+            <button type="button" class="btn btn-warning" el-event="edit" id="btn-revision">Revision</button>
             <button type="button" class="btn btn-danger" el-event="edit" id="btn-reject">Reject</button>
         </div>
     </div>

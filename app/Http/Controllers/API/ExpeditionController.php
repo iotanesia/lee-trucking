@@ -49,14 +49,14 @@ class ExpeditionController extends Controller
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
           'code_type' => 'BadRequest',
-          'data'=> null
+          'result'=> null
         ], 404);
       }else{
         return response()->json([
           'code' => 200,
           'code_message' => 'Success',
           'code_type' => 'Success',
-          'data'=> $expeditionActivityList
+          'result'=> $expeditionActivityList
         ], 200);
       }
     } else {
@@ -64,7 +64,7 @@ class ExpeditionController extends Controller
         'code' => 405,
         'code_message' => 'Method salah',
         'code_type' => 'BadRequest',
-        'data'=> null
+        'result'=> null
       ], 405);
     }
   }
@@ -102,14 +102,14 @@ class ExpeditionController extends Controller
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
           'code_type' => 'BadRequest',
-          'data'=> null
+          'result'=> null
         ], 404);
       }else{
         return response()->json([
           'code' => 200,
           'code_message' => 'Success',
           'code_type' => 'Success',
-          'data'=> $expeditionActivityList
+          'result'=> $expeditionActivityList
         ], 200);
       }
     } else {
@@ -117,7 +117,7 @@ class ExpeditionController extends Controller
         'code' => 405,
         'code_message' => 'Method salah',
         'code_type' => 'BadRequest',
-        'data'=> null
+        'result'=> null
       ], 405);
     }
   }
