@@ -168,7 +168,7 @@ class SparePartController extends Controller
          $fileExt = $img->extension();
          $fileName = "IMG-SPAREPART-".$sparePart->barcode_gudang.".".$fileExt;
          $path = public_path().'/uploads/sparepart/' ;
-         $oldFile = $path.$sparePart->img_sparepart;
+         $oldFile = $path.$sparePart->barcode_gudang;
 
          $sparePart->img_sparepart = $fileName;
          $img->move($path, $fileName);
