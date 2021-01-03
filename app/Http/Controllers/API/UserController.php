@@ -251,9 +251,9 @@ class UserController extends Controller
         if(isset($img)){
           //upload image
           $fileExt = $img->extension();
-          $fileName = "IMG-PROFILE-".$userDetail->first_name.".".$fileExt;
+          $fileName = "IMG-PROFILE-".$userDetail->first_name."-".$userDetail->id.".".$fileExt;
           $path = public_path().'/uploads/profilephoto/' ;
-          $oldFile = $path.$userDetail->first_name;
+          $oldFile = $path.$userDetail->first_name."-".$userDetail->id;
  
           $userDetail->foto_profil = $fileName;
           $img->move($path, $fileName);

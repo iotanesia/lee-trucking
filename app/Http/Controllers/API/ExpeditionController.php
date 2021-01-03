@@ -219,9 +219,9 @@ class ExpeditionController extends Controller
           if(isset($img)){
             //upload image
             $fileExt = $img->extension();
-            $fileName = "IMG-EXPEDITION-".$exStatusActivity->id.".".$fileExt;
+            $fileName = "IMG-EXPEDITION-".$exStatusActivity->id.$exStatusActivity->ex_id.".".$fileExt;
             $path = public_path().'/uploads/expedition/' ;
-            $oldFile = $path.$exStatusActivity->id;
+            $oldFile = $path.$exStatusActivity->id.$exStatusActivity->ex_id;
    
             $exStatusActivity->img = $fileName;
             $img->move($path, $fileName);
