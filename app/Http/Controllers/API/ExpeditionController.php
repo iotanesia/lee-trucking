@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\ExpeditionActivity;
+use App\Models\ExStatusActivity;
 use App\Models\Ojk;
 use App\Models\Kenek;
 use App\Models\Driver;
@@ -122,7 +123,8 @@ class ExpeditionController extends Controller
   public function add(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-
+      $idUser = Auth::user()->id;
+      $current_date_time = Carbon::now()->toDateTimeString(); 
       DB::connection(Auth::user()->schema)->beginTransaction();
       $expeditionActivity = new ExpeditionActivity;
       
@@ -139,6 +141,10 @@ class ExpeditionController extends Controller
         $expeditionActivity->{$key} = $row;
         $expeditionActivity->status_activity = 'SUBMIT';
       }
+
+      $expeditionActivity->created_at = $current_date_time;
+      $expeditionActivity->created_by = $idUser;
+      $expeditionActivity->user_id = $idUser;
 
       if($expeditionActivity->save()) { 
         $code = str_repeat("0", 4 - strlen($expeditionActivity->id)).$expeditionActivity->id;
@@ -176,7 +182,12 @@ class ExpeditionController extends Controller
     if($request->isMethod('POST')) {
       $data = $request->all();
       $expeditionActivity = ExpeditionActivity::find($data['id']);
-      
+      $idUser = Auth::user()->id;
+
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+
+      $statusActivityParam = $request->update_lates_status;
+
       $this->validate($request, [
         // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity,no_ExpeditionActivity,'.$data['id'].',id',
         // 'ExpeditionActivity_name' => 'required|string|max:255',
@@ -186,25 +197,64 @@ class ExpeditionController extends Controller
       unset($data['id']);
       unset($data['jenis_surat_jalan']);
       
-      foreach($data as $key => $row) {
-        $expeditionActivity->{$key} = $row;
-      }
+      $expeditionActivity->update_by = $idUser;
+      $expeditionActivity->updated_at = $current_date_time;
 
-      if($expeditionActivity->save()){
-        return response()->json([
-          'code' => 200,
-          'code_message' => 'Berhasil menyimpan data',
-          'code_type' => 'Success',
-        ], 200);
-      
-      } else {
-        return response()->json([
-          'code' => 401,
-          'code_message' => 'Gagal menyimpan data',
-          'code_type' => 'BadRequest',
-        ], 401);
-      }
-      
+      if($statusActivityParam){
+        $img = $request->file('img');
+        $exStatusActivity = new ExStatusActivity();
+        
+        foreach($data as $key => $row) {
+          $exStatusActivity->{$key} = $row;
+        }
+       
+        $expeditionActivity->status_activity = $request->status_activity;
+        $exStatusActivity->approval_by = $idUser;
+        $exStatusActivity->approval_at = $current_date_time;
+
+        if($exStatusActivity->save()){
+          if(isset($img)){
+            //upload image
+            $fileExt = $img->extension();
+            $fileName = "IMG-EXPEDITION-".$exStatusActivity->id.".".$fileExt;
+            $path = public_path().'/uploads/expedition/' ;
+            $oldFile = $path.$exStatusActivity->id;
+   
+            $exStatusActivity->img = $fileName;
+            $img->move($path, $fileName);
+            $exStatusActivity->save();
+         }
+            return response()->json([
+              'code' => 200,
+              'code_message' => 'Berhasil menyimpan data',
+              'code_type' => 'Success',
+            ], 200);
+          } else {
+            return response()->json([
+              'code' => 401,
+              'code_message' => 'Gagal menyimpan data',
+              'code_type' => 'BadRequest',
+            ], 401);
+          }
+        }else{
+          foreach($data as $key => $row) {
+            $expeditionActivity->{$key} = $row;
+          }
+          if($expeditionActivity->save()){
+            return response()->json([
+              'code' => 200,
+              'code_message' => 'Berhasil menyimpan data',
+              'code_type' => 'Success',
+            ], 200);
+          
+          } else {
+            return response()->json([
+              'code' => 401,
+              'code_message' => 'Gagal menyimpan data',
+              'code_type' => 'BadRequest',
+            ], 401);
+          }
+        }
     } else {
       return response()->json([
         'code' => 405,

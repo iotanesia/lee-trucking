@@ -360,7 +360,6 @@ class SparePartController extends Controller
         $sparePart->updated_by = $user_id;
   
         if($sparePart->save()){
-
           $historyStokSparepart->sparepart_name = $sparePart->sparepart_name;
           $historyStokSparepart->sparepart_status = $sparePart->sparepart_status;
           $historyStokSparepart->sparepart_jenis = $sparePart->sparepart_jenis;
