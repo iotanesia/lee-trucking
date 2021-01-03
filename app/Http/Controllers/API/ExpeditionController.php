@@ -27,6 +27,7 @@ class ExpeditionController extends Controller
                    ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
                    ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
                    ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+                   ->leftJoin('ex_master_kenek','expedition_activity.kenek_id', 'ex_master_kenek.id')
                    ->where(function($query) use($whereField, $whereValue) {
                      if($whereValue) {
                        foreach(explode(', ', $whereField) as $idx => $field) {
@@ -35,7 +36,7 @@ class ExpeditionController extends Controller
                      }
                    })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
-                            'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv')
+                            'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
                    ->orderBy('id', 'ASC')
                    ->paginate();
       
@@ -192,6 +193,7 @@ class ExpeditionController extends Controller
       $this->validate($request, [
         // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity,no_ExpeditionActivity,'.$data['id'].',id',
         // 'ExpeditionActivity_name' => 'required|string|max:255',
+
       ]);
       
       unset($data['_token']);
@@ -350,6 +352,44 @@ class ExpeditionController extends Controller
             'code_message' => 'Method salah',
             'code_type' => 'BadRequest',
         ], 405);
+    }
+  }
+
+  public function getExpeditionHistoryByDriverId(Request $request){
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $expeditionActivityList = ExStatusActivity::leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
+                   ->where('ex_id', $data['ex_id'])
+                   ->select('ex_status_activity.*', 'all_global_param.param_name as approval_name')
+                   ->orderBy('approval_at', 'DESC')
+                   ->paginate();
+      
+      foreach($expeditionActivityList as $row) {
+        $row->data_json = $row->toJson();
+      }
+
+      if(!isset($expeditionActivityList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $expeditionActivityList
+        ], 200);
+      }
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
     }
   }
 }

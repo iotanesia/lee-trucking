@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\Driver;
+use App\Models\UserDetail;
 use Auth;
 use Carbon\Carbon;
 
@@ -20,7 +21,7 @@ class DriverController extends Controller
                     ->where(function($query) use($whereField, $whereValue) {
                       if($whereValue) {
                         foreach(explode(', ', $whereField) as $idx => $field) {
-                          $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                          $query->orWhere($field, 'ILIKE', "%".$whereValue."%");
                         }
                       }
                     })
@@ -170,6 +171,44 @@ class DriverController extends Controller
         'code' => 405,
         'code_message' => 'Method salah',
         'code_type' => 'BadRequest',
+      ], 405);
+    }
+  }
+  
+  public function getUserDriverList(Request $request){
+    if($request->isMethod('GET')) {
+      $userList = UserDetail::leftjoin('public.users', 'public.users.id', 'usr_detail.id_user')
+                       ->where('public.users.group_id', 14)
+                       ->select('usr_detail.*')
+                       ->orderBy('usr_detail.first_name', 'ASC')
+                       ->get();
+      
+      foreach($userList as $row) {
+        $row->data_json = $row->toJson();
+      }
+      
+      if(!isset($userList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'data'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'data'=> $userList
+        ], 200);
+      }
+
+    } else {
+      return response()->json([
+          'code' => 405,
+          'code_message' => 'Method salah',
+          'code_type' => 'BadRequest',
+          'data'=> null
       ], 405);
     }
   }

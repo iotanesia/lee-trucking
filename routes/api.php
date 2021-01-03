@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-driver', 'prefix' => 'driver'], function() {
     Route::get('/', 'API\DriverController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\DriverController@getList']);
+    Route::get('get-user-driver-list', ['as' => '-get-user-driver-list', 'uses' => 'API\DriverController@getUserDriverList']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\DriverController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\DriverController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\DriverController@delete']);
@@ -129,6 +130,7 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-expedition', 'prefix' => 'expedition'], function() {
     Route::get('/', 'API\ExpeditionController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\ExpeditionController@getList']);
+    Route::get('get-list-history-by-driver', ['as' => '-get-list-history-by-driver', 'uses' => 'API\ExpeditionController@getExpeditionHistoryByDriverId']);
     Route::get('get-list-approval', ['as' => '-get-list-approval', 'uses' => 'API\ExpeditionController@getListApproval']);
     Route::get('get-ojk', ['as' => '-get-ojk', 'uses' => 'API\ExpeditionController@getOjk']);
     Route::get('get-kenek', ['as' => '-get-kenek', 'uses' => 'API\ExpeditionController@getKenek']);
