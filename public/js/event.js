@@ -408,3 +408,11 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+function dateFormat(userDate) {
+    var dateAr = userDate.split(' ');
+    var date = dateAr[0].split('-');
+    var newDate = date[2]+'-'+date[2]+'-'+date[0];
+
+    return newDate
+}

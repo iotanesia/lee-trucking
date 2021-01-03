@@ -61,6 +61,42 @@ $("document").ready(function() {
   
     $("#btn-submit").click(function(){
       var event = $("#expedition-modal #btn-submit").attr("el-event");
+      $("#expedition-form #status_activity").val("APPROVAL_OJK_DRIVER");
+      var data = new FormData($("#expedition-form")[0]);
+      data.append("_token", window.Laravel.csrfToken);
+  
+      $.ajax({
+        url: window.Laravel.app_url + "/api/expedition/" + event + "",
+        type: "POST",
+        dataType: "json",
+        data: data,
+        processData: false,
+        contentType: false,
+        headers: {"Authorization": "Bearer " + accessToken},
+        crossDomain: true,
+        beforeSend: function( xhr ) {
+          $('.preloader').show();
+      },
+      success: function(datas, textStatus, xhr) {
+          alert('Data berhasil di simpan');
+          $("#expedition-modal").modal("hide");
+          $('.preloader').hide();
+          document.getElementById("search-data").click();
+        },
+        error: function(datas, textStatus, xhr) {
+          $('.preloader').hide();
+          msgError = "";
+          for(var item in datas.responseJSON.errors) {
+            msgError += datas.responseJSON.errors[item][0] + "*";
+          }
+          alert(msgError);
+        }
+      });
+    })
+  
+    $("#btn-reject").click(function(){
+      var event = $("#expedition-modal #btn-reject").attr("el-event");
+      $("#expedition-form #status_activity").val("REJECT");
       var data = new FormData($("#expedition-form")[0]);
       data.append("_token", window.Laravel.csrfToken);
   
@@ -101,6 +137,7 @@ $("document").ready(function() {
         var dataJSON = JSON.parse(dataJSON);
   
         $("#expedition-form").find("input[name=id]").val(dataJSON.id);
+        $("#expedition-form").find("input[name=ex_id]").val(dataJSON.id);
         $("#expedition-modal #btn-submit").attr("el-event", "edit");
         $("#expedition-form").find("textarea[name=content]").summernote("code", dataJSON.content);
         
@@ -139,20 +176,38 @@ $("document").ready(function() {
       kecamatan = responses.data[i].kecamatan;
       kabupaten = responses.data[i].kabupaten;
       cabang_name = responses.data[i].cabang_name;
+      status_name = responses.data[i].status_name;
       data_json = responses.data[i].data_json;
+
+      if(responses.data[i].status_activity == 'SUBMIT') {
+          classColor = 'badge-success';
+          
+      } else if(responses.data[i].status_activity == 'APPROVAL_OJK_DRIVER') {
+          classColor = 'badge-warning';
+
+      } else if(responses.data[i].status_activity == 'DRIVER_MENUJU_TUJUAN') {
+          classColor = 'badge-info';
+
+      } else if(responses.data[i].status_activity == 'DRIVER_SAMPAI_TUJUAN') {
+          classColor = 'badge-gradient-warning';
+      
+      } else {
+          classColor = 'badge-danger';
+
+      }
   
       tableRows += "<tr>" +
                      "<td>"+ (i+1) +"</td>"+
                      "<td>"+ nomor_inv +"</td>"+
                      "<td>"+ truck_plat +"</td>"+
                      "<td>"+ driver_name +"</td>"+
-                     "<td>"+ tgl_inv +"</td>"+
-                     "<td>"+ tgl_po +"</td>"+
+                     "<td>"+ dateFormat(tgl_inv) +"</td>"+
+                     "<td>"+ dateFormat(tgl_po) +"</td>"+
                      "<td>"+ kabupaten +" - "+ kecamatan +" - "+ cabang_name +"</td>"+
+                     "<td> <span class='badge "+classColor+"'>"+ status_name +"</span></td>"+
                      "<td align='center'>"+
                        "<div class='btn-group'>"+
-                         "<a class='btn btn-success btn-xs btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#expedition-modal'><i class='fas fa-edit'></i></a>"+
-                         "<a class='btn btn-danger btn-xs btn-delete btn-sm' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
+                         "<a class='btn btn-warning btn-xs btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#expedition-modal'><i class='fas fa-search'></i></a>"+
                        "</div>"+
                      "</td>"+
                    "</tr>";

@@ -11,6 +11,7 @@ use App\Models\Kenek;
 use App\Models\Driver;
 use Auth;
 use DB;
+use Carbon\Carbon;
 
 class ExpeditionController extends Controller
 {
@@ -197,22 +198,24 @@ class ExpeditionController extends Controller
       unset($data['id']);
       unset($data['jenis_surat_jalan']);
       
-      $expeditionActivity->update_by = $idUser;
+      $expeditionActivity->updated_by = $idUser;
       $expeditionActivity->updated_at = $current_date_time;
 
       if($statusActivityParam){
         $img = $request->file('img');
         $exStatusActivity = new ExStatusActivity();
-        
+
+        unset($data['update_lates_status']);
+
         foreach($data as $key => $row) {
           $exStatusActivity->{$key} = $row;
         }
-       
+
         $expeditionActivity->status_activity = $request->status_activity;
         $exStatusActivity->approval_by = $idUser;
         $exStatusActivity->approval_at = $current_date_time;
 
-        if($exStatusActivity->save()){
+        if($exStatusActivity->save() && $expeditionActivity->save()){
           if(isset($img)){
             //upload image
             $fileExt = $img->extension();
@@ -236,10 +239,12 @@ class ExpeditionController extends Controller
               'code_type' => 'BadRequest',
             ], 401);
           }
+
         }else{
           foreach($data as $key => $row) {
             $expeditionActivity->{$key} = $row;
           }
+
           if($expeditionActivity->save()){
             return response()->json([
               'code' => 200,
