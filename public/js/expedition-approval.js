@@ -61,7 +61,7 @@ $("document").ready(function() {
   
     $("#btn-submit").click(function(){
       var event = $("#expedition-modal #btn-submit").attr("el-event");
-      $("#expedition-form #status_activity").val("APPROVAL_OJK_DRIVER");
+      $("#expedition-form #status_approval").val("APPROVED");
       var data = new FormData($("#expedition-form")[0]);
       data.append("_token", window.Laravel.csrfToken);
   
@@ -96,7 +96,42 @@ $("document").ready(function() {
   
     $("#btn-reject").click(function(){
       var event = $("#expedition-modal #btn-reject").attr("el-event");
-      $("#expedition-form #status_activity").val("REJECT");
+      $("#expedition-form #status_approval").val("REJECTED");
+      var data = new FormData($("#expedition-form")[0]);
+      data.append("_token", window.Laravel.csrfToken);
+  
+      $.ajax({
+        url: window.Laravel.app_url + "/api/expedition/" + event + "",
+        type: "POST",
+        dataType: "json",
+        data: data,
+        processData: false,
+        contentType: false,
+        headers: {"Authorization": "Bearer " + accessToken},
+        crossDomain: true,
+        beforeSend: function( xhr ) {
+          $('.preloader').show();
+      },
+      success: function(datas, textStatus, xhr) {
+          alert('Data berhasil di simpan');
+          $("#expedition-modal").modal("hide");
+          $('.preloader').hide();
+          document.getElementById("search-data").click();
+        },
+        error: function(datas, textStatus, xhr) {
+          $('.preloader').hide();
+          msgError = "";
+          for(var item in datas.responseJSON.errors) {
+            msgError += datas.responseJSON.errors[item][0] + "*";
+          }
+          alert(msgError);
+        }
+      });
+    })
+  
+    $("#btn-revision").click(function(){
+      var event = $("#expedition-modal #btn-revision").attr("el-event");
+      $("#expedition-form #status_approval").val("REVISION");
       var data = new FormData($("#expedition-form")[0]);
       data.append("_token", window.Laravel.csrfToken);
   
@@ -160,7 +195,7 @@ $("document").ready(function() {
   var successLoadexpedition = (function(responses, dataModel) {
       
     var tableRows = "";
-    var responses = responses.data.data == undefined ? responses : responses.data;
+    var responses = responses.result.data == undefined ? responses : responses.result;
   
     for(var i = 0; i < responses.data.length; i++) {
       id = responses.data[i].id;
@@ -205,9 +240,10 @@ $("document").ready(function() {
                      "<td>"+ dateFormat(tgl_po) +"</td>"+
                      "<td>"+ kabupaten +" - "+ kecamatan +" - "+ cabang_name +"</td>"+
                      "<td> <span class='badge "+classColor+"'>"+ status_name +"</span></td>"+
+                     "<td> <span class='badge "+classColor+"'>"+ status_name +"</span></td>"+
                      "<td align='center'>"+
                        "<div class='btn-group'>"+
-                         "<a class='btn btn-warning btn-xs btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#expedition-modal'><i class='fas fa-search'></i></a>"+
+                         "<a class='btn btn-warning btn-xs btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#expedition-modal'><i class='fas fa-eye'></i></a>"+
                        "</div>"+
                      "</td>"+
                    "</tr>";
