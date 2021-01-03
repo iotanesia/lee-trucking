@@ -193,6 +193,7 @@ class ExpeditionController extends Controller
       $this->validate($request, [
         // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity,no_ExpeditionActivity,'.$data['id'].',id',
         // 'ExpeditionActivity_name' => 'required|string|max:255',
+
       ]);
       
       unset($data['_token']);
@@ -351,6 +352,44 @@ class ExpeditionController extends Controller
             'code_message' => 'Method salah',
             'code_type' => 'BadRequest',
         ], 405);
+    }
+  }
+
+  public function getExpeditionHistoryByDriverId(Request $request){
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $expeditionActivityList = ExStatusActivity::leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
+                   ->where('ex_id', $data['ex_id'])
+                   ->select('ex_status_activity.*', 'all_global_param.param_name as approval_name')
+                   ->orderBy('approval_at', 'DESC')
+                   ->paginate();
+      
+      foreach($expeditionActivityList as $row) {
+        $row->data_json = $row->toJson();
+      }
+
+      if(!isset($expeditionActivityList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $expeditionActivityList
+        ], 200);
+      }
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
     }
   }
 }
