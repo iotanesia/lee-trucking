@@ -45,7 +45,7 @@ $("document").ready(function() {
     var accessToken =  window.Laravel.api_token;
   
     $.ajax({
-      url: window.Laravel.app_url + "/api/expedition/get-list",
+      url: window.Laravel.app_url + "/api/expedition/get-list-approval",
       type: "GET",
       dataType: "json",
       headers: {"Authorization": "Bearer " + accessToken},

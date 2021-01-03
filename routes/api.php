@@ -129,12 +129,21 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-expedition', 'prefix' => 'expedition'], function() {
     Route::get('/', 'API\ExpeditionController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\ExpeditionController@getList']);
+    Route::get('get-list-approval', ['as' => '-get-list-approval', 'uses' => 'API\ExpeditionController@getListApproval']);
     Route::get('get-ojk', ['as' => '-get-ojk', 'uses' => 'API\ExpeditionController@getOjk']);
     Route::get('get-kenek', ['as' => '-get-kenek', 'uses' => 'API\ExpeditionController@getKenek']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\ExpeditionController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\ExpeditionController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\ExpeditionController@delete']);
   });
+
+});
+
+Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
+  Route::get('/', 'Services\DropDown@index');
+  Route::get('get-list-truck', ['as' => '-get-list-truck', 'uses' => 'API\DropDownController@getListTruck']);
+  Route::get('get-list-driver', ['as' => '-get-list-driver', 'uses' => 'API\DropDownController@getListDriver']);
+  Route::get('get-list-kenek', ['as' => '-get-list-kenek', 'uses' => 'API\DropDownController@getListKenek']);
 });
 
 Route::group(['as' => 'api-global-param', 'prefix' => 'global-param'], function() {
