@@ -397,3 +397,22 @@ $(document).on("click", "a[el-event='show-page']", function(event) {
 
   return false;
 });
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imgScreen').attr('src', e.target.result).css('display','block');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function dateFormat(userDate) {
+    var dateAr = userDate.split(' ');
+    var date = dateAr[0].split('-');
+    var newDate = date[2]+'-'+date[2]+'-'+date[0];
+
+    return newDate
+}

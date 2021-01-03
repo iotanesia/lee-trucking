@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <link rel="stylesheet" href="assets/vendor/select2/dist/css/select2.min.css">
   <link rel="stylesheet" href="assets/css/argon.css?v=1.1.0" type="text/css">
+  <link rel="stylesheet" href="daterangepicker/daterangepicker.css" type="text/css">
   
   <style>
   .fixed-footer .app-footer .app-footer__inner{box-shadow:0.3rem -0.46875rem 2.1875rem rgba(4,9,20,0.02),0.3rem -0.9375rem 1.40625rem rgba(4,9,20,0.02),0.3rem -0.25rem 0.53125rem rgba(4,9,20,0.04),0.3rem -0.125rem 0.1875rem rgba(4,9,20,0.02)}
@@ -219,10 +220,13 @@
                   <span>My profile</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
+                <a href="#!" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" >
                   <i class="ni ni-user-run"></i>
                   <span>Logout</span>
                 </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+                </form>
               </div>
             </li>
           </ul>
@@ -243,7 +247,8 @@
   <script src="assets/vendor/chart.js/dist/Chart.extension.js"></script>
   <script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
   <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
-  <script src="assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="daterangepicker/moment.min.js"></script>
+  <script src="daterangepicker/daterangepicker.js"></script>
   <!-- Argon JS -->
   <script src="assets/js/argon.js?v=1.1.0"></script>
   <!-- Demo JS - remove this in your project -->

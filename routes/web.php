@@ -30,3 +30,5 @@ Route::get('/transaksi', 'HomeController@indexTrx')->name('home');
 Route::get('/user-detail/{id}', 'HomeController@userDetail');
 Route::post('/update-user-detail', 'HomeController@updateUserDetail')->name('update-user-detail');
 Route::get('/expedition', 'ExpeditionController@index')->name('expedition');
+Route::get('/expedition-tracking', 'ExpeditionController@indexTracking')->name('expedition-tracking');
+Route::get('/approval-ojk-driver', 'ExpeditionController@indexApprove')->name('approval-ojk-driver');
