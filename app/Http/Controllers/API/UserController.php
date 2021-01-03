@@ -76,6 +76,8 @@ class UserController extends Controller
 
   public function register(Request $request)
   {
+    
+      $input = $request->all();
       $validator = Validator::make($request->all(), [
           'name' => 'required',
           'email' => 'required|email|unique:users',
@@ -83,6 +85,8 @@ class UserController extends Controller
           'password_confirmation' => 'required|same:password'
       ]);
 
+      $userAuth = Auth::user();
+      $current_date_time = Carbon::now()->toDateTimeString(); 
       if ($validator->fails()) {
         return response()->json([
           'code' => 401,
@@ -92,29 +96,56 @@ class UserController extends Controller
         ], 401);      
       }
 
-      $input = $request->all();
-
       unset($input['password_confirmation']);
       unset($input['_token']);
       unset($input['terms']);
-
       $input['password'] = bcrypt($input['password']);
-      $input['group_id'] = $input['group_id'];
-      $input['is_active'] = 0;
+      $input['group_id'] = $request->group_id;
+      
       $user = User::create($input);
       $success['tokens'] =  $user->createToken('nApp')->accessToken;
       $success['name'] =  $user->name;
       $updateUser = User::find($user->id);
       $updateUser->tokens = $success['tokens'];
-      $updateUser->save();
-      $user->tokens = $success['tokens'];
-
-      return response()->json([
-        'code' => 200,
-        'code_message' => 'Success',
-        'code_type' => 'Success',
-        'data'=> $user
-      ], 200);
+      if($updateUser->save()){
+        $userDetail = new UserDetail();
+        
+        unset($input['name']);
+        unset($input['email']);
+        unset($input['password']);
+        unset($input['password_confirmation']);
+        unset($input['group_id']);
+        foreach($input as $key => $row) {
+          $userDetail->{$key} = $row;
+        }
+        $userDetail->id_user = $user->id;
+        $userDetail->created_at = $current_date_time;
+        $userDetail->created_by = $userAuth->id;
+        if($userDetail->save()) {
+          return response()->json([
+            'code' => 200,
+            'code_message' => 'Success',
+            'code_type' => 'Success',
+            'data'=> $user
+          ], 200);
+        }else{
+          return response()->json([
+            'code' => 400,
+            'code_message' => 'Gagal menyimpan user',
+            'code_type' => 'BadRequest',
+            'data'=> null
+          ], 400);
+        }
+      }else{
+          return response()->json([
+          'code' => 400,
+          'code_message' => 'Gagal menyimpan user',
+          'code_type' => 'BadRequest',
+          'data'=> null
+        ], 400);
+      }       
+      
+    
   }
 
   public function details()
@@ -251,9 +282,9 @@ class UserController extends Controller
         if(isset($img)){
           //upload image
           $fileExt = $img->extension();
-          $fileName = "IMG-PROFILE-".$userDetail->first_name.".".$fileExt;
+          $fileName = "IMG-PROFILE-".$userDetail->first_name."-".$userDetail->id.".".$fileExt;
           $path = public_path().'/uploads/profilephoto/' ;
-          $oldFile = $path.$userDetail->first_name;
+          $oldFile = $path.$userDetail->first_name."-".$userDetail->id;
  
           $userDetail->foto_profil = $fileName;
           $img->move($path, $fileName);

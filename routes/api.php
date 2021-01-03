@@ -20,9 +20,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 
 Route::post('login', 'API\UserController@login');
-Route::post('register', 'API\UserController@register');
  
 Route::group(['middleware' => 'auth:api'], function(){
+  Route::post('register', 'API\UserController@register');
   Route::group(['as' => 'api-user', 'prefix' => 'user'], function() {
     Route::get('/', 'Services\UserController@index');
     Route::get('details', 'API\UserController@detailProfile');
@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-driver', 'prefix' => 'driver'], function() {
     Route::get('/', 'API\DriverController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\DriverController@getList']);
+    Route::get('get-user-driver-list', ['as' => '-get-user-driver-list', 'uses' => 'API\DriverController@getUserDriverList']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\DriverController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\DriverController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\DriverController@delete']);
@@ -131,6 +132,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\ExpeditionController@getList']);
     Route::get('get-list-approval-ojk', ['as' => '-get-list-approval-ojk', 'uses' => 'API\ExpeditionController@getListApprovalOjk']);
     Route::get('get-list-approval-otv', ['as' => '-get-list-approval-otv', 'uses' => 'API\ExpeditionController@getListApprovalOtv']);
+    Route::get('get-list-history-by-driver', ['as' => '-get-list-history-by-driver', 'uses' => 'API\ExpeditionController@getExpeditionHistoryByDriverId']);
     Route::get('get-ojk', ['as' => '-get-ojk', 'uses' => 'API\ExpeditionController@getOjk']);
     Route::get('get-kenek', ['as' => '-get-kenek', 'uses' => 'API\ExpeditionController@getKenek']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\ExpeditionController@add']);
