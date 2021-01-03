@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-expedition" data-model="expedition" request-url="{{ route('api-expedition') }}" on-success-load="successLoadexpedition">
+                    <table class="table align-items-center table-flush table-striped" id="table-expedition" api-route="get-list-approval-ojk" data-model="expedition" request-url="{{ route('api-expedition') }}" on-success-load="successLoadexpedition">
                         <thead class="bg-gradient-info text-white">
                         <tr>
                             <th>No</th>

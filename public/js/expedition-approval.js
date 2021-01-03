@@ -45,7 +45,7 @@ $("document").ready(function() {
     var accessToken =  window.Laravel.api_token;
   
     $.ajax({
-      url: window.Laravel.app_url + "/api/expedition/get-list-approval",
+      url: window.Laravel.app_url + "/api/expedition/get-list-approval-ojk",
       type: "GET",
       dataType: "json",
       headers: {"Authorization": "Bearer " + accessToken},
@@ -61,6 +61,7 @@ $("document").ready(function() {
   
     $("#btn-submit").click(function(){
       var event = $("#expedition-modal #btn-submit").attr("el-event");
+      $("#expedition-form #status_activity").val("APPROVAL_OJK_DRIVER");
       $("#expedition-form #status_approval").val("APPROVED");
       var data = new FormData($("#expedition-form")[0]);
       data.append("_token", window.Laravel.csrfToken);
@@ -96,6 +97,7 @@ $("document").ready(function() {
   
     $("#btn-reject").click(function(){
       var event = $("#expedition-modal #btn-reject").attr("el-event");
+      $("#expedition-form #status_activity").val("SUBMIT");
       $("#expedition-form #status_approval").val("REJECTED");
       var data = new FormData($("#expedition-form")[0]);
       data.append("_token", window.Laravel.csrfToken);
@@ -131,6 +133,7 @@ $("document").ready(function() {
   
     $("#btn-revision").click(function(){
       var event = $("#expedition-modal #btn-revision").attr("el-event");
+      $("#expedition-form #status_activity").val("SUBMIT");
       $("#expedition-form #status_approval").val("REVISION");
       var data = new FormData($("#expedition-form")[0]);
       data.append("_token", window.Laravel.csrfToken);
@@ -175,6 +178,18 @@ $("document").ready(function() {
         $("#expedition-form").find("input[name=ex_id]").val(dataJSON.id);
         $("#expedition-modal #btn-submit").attr("el-event", "edit");
         $("#expedition-form").find("textarea[name=content]").summernote("code", dataJSON.content);
+
+        if(dataJSON.status_activity !== "SUBMIT") {
+            $("#expedition-modal #btn-submit").hide();
+            $("#expedition-modal #btn-reject").hide();
+            $("#expedition-modal #btn-revision").hide();
+            
+        } else {
+            $("#expedition-modal #btn-submit").show();
+            $("#expedition-modal #btn-reject").show();
+            $("#expedition-modal #btn-revision").show();
+
+        }
         
         bindToForm($("#expedition-modal"), dataJSON);
 
