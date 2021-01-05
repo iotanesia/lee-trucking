@@ -74,7 +74,8 @@ class ExpeditionController extends Controller
       $data = $request->all();
       $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
+      $expeditionActivityList = ExpeditionActivity::
+                     leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
                    ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
@@ -93,8 +94,22 @@ class ExpeditionController extends Controller
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv')
                    ->orderBy('id', 'ASC')
                    ->paginate();
-      
+                   
+                
       foreach($expeditionActivityList as $row) {
+
+        $approvalCode = ExStatusActivity::
+                      leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
+                      ->where('ex_status_activity.ex_id',$row->id)->orderBy('ex_status_activity.updated_at', 'DESC')
+                      ->select('all_global_param.param_code as approval_code')->first();
+
+        $approvalName = ExStatusActivity::
+                      leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
+                      ->where('ex_status_activity.ex_id',$row->id)->orderBy('ex_status_activity.updated_at', 'DESC')
+                      ->select('all_global_param.param_name as approval_name')->first();
+                  
+        $row->approval_code = $approvalCode['approval_code'];
+        $row->approval_name = $approvalName['approval_name'];
         $row->data_json = $row->toJson();
       }
 
@@ -149,6 +164,19 @@ class ExpeditionController extends Controller
                    ->paginate();
       
       foreach($expeditionActivityList as $row) {
+            
+        $approvalCode = ExStatusActivity::
+                      leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
+                      ->where('ex_status_activity.ex_id',$row->id)->orderBy('ex_status_activity.updated_at', 'DESC')
+                      ->select('all_global_param.param_code as approval_code')->first();
+
+        $approvalName = ExStatusActivity::
+                      leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
+                      ->where('ex_status_activity.ex_id',$row->id)->orderBy('ex_status_activity.updated_at', 'DESC')
+                      ->select('all_global_param.param_name as approval_name')->first();
+                  
+        $row->approval_code = $approvalCode['approval_code'];
+        $row->approval_name = $approvalName['approval_name'];
         $row->data_json = $row->toJson();
       }
 
