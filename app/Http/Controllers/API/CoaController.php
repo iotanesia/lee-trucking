@@ -13,18 +13,24 @@ class CoaController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'name, no_coa';
+      $whereField = 'coa_code, coa_name, coa_status.param_name, coa_category.param_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $coaList = Coa::where(function($query) use($whereField, $whereValue) {
-                        if($whereValue) {
-                          foreach(explode(', ', $whereField) as $idx => $field) {
-                            $query->orWhere($field, 'LIKE', "%".$whereValue."%");
-                          }
+      $coaList = Coa::leftJoin('all_global_param as coa_status', 'coa_master_jurnal.coa_status', 'coa_status.param_code')
+                 ->leftJoin('all_global_param as coa_category', 'coa_master_jurnal.coa_category', 'coa_category.param_code')
+                 ->leftJoin('coa_master_jurnal as coa_master_jurnal_parent', 'coa_master_jurnal.coa_parent', 'coa_master_jurnal_parent.id')
+                 ->where(function($query) use($whereField, $whereValue) {
+                    if($whereValue) {
+                        foreach(explode(', ', $whereField) as $idx => $field) {
+                        $query->orWhere($field, 'LIKE', "%".$whereValue."%");
                         }
-                      })
-                      ->orderBy('id', 'ASC')
-                      ->paginate();
-      
+                    }
+                 })
+                 ->where('coa_status.param_type', 'COA_STATUS')
+                 ->where('coa_category.param_type', 'COA_CATEGORY')
+                 ->select('coa_master_jurnal.*', 'coa_status.param_name as coa_status_name', 'coa_category.param_name as coa_category_name', 'coa_master_jurnal_parent.coa_name as parent_coa_name')
+                 ->orderBy('id', 'ASC')
+                 ->paginate();
+
       foreach($coaList as $row) {
         $row->data_json = $row->toJson();
       }
@@ -61,7 +67,7 @@ class CoaController extends Controller
       
       $this->validate($request, [
         // 'no_coa' => 'required|string|max:255|unique:Coa',
-        'name' => 'required|string|max:255',
+        // 'name' => 'required|string|max:255',
       ]);
 
       unset($data['_token']);
