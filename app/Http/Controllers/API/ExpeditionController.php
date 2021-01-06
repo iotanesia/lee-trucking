@@ -437,7 +437,7 @@ class ExpeditionController extends Controller
     }
   }
 
-  public function getExpeditionHistoryByDriverId(Request $request){
+  public function getExpeditionHistoryByExpeditionId(Request $request){
     if($request->isMethod('GET')) {
       $data = $request->all();
       $expeditionActivityList = ExStatusActivity::leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
