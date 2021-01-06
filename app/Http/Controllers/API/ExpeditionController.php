@@ -459,9 +459,7 @@ class ExpeditionController extends Controller
       
       foreach($expeditionActivityList as $row) {
         $row->img = ($row->img) ? url('uploads/expedition/'.$row->img) :url('uploads/sparepart/nia3.png');
-        // $approvedBy = UserDetail::where('id_user',$row->approval_by)
-        //                           ->select(DB::raw('CONCAT(\'first_name\',\'last_name\') AS approved_by'))->first();
-        // $row->approved_by = $approvedBy['approved_by'];
+    
         $row->data_json = $row->toJson();
       }
 
