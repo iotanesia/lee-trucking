@@ -141,6 +141,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\ExpeditionController@delete']);
   });
 
+  Route::group(['as' => 'api-coa', 'prefix' => 'coa'], function() {
+    Route::get('/', 'API\CoaController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\CoaController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\CoaController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\CoaController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\CoaController@delete']);
+  });
+
 });
 
 Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
