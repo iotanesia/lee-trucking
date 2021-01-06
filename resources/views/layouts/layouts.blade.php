@@ -78,7 +78,7 @@
           <ul class="navbar-nav">
             @foreach($menus as $key => $row)
             <li class="nav-item">
-              @if(!$row->menu_parent)
+              @if(!$row->menu_parent && $row->menu_name != 	"Mobile Expedition")
               <a class="nav-link" @if($row->menu_url) href="{{$row->menu_url}}" @else href="#navbar-dashboards-{{$row->id}}" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-dashboards-{{$row->id}}" @endif>
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">{{$row->menu_name}}</span>

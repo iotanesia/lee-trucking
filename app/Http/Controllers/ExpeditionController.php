@@ -65,4 +65,17 @@ class ExpeditionController extends Controller
 
         return view('expedition.approval.index', $data);
     }
+
+    public function indexApproveOtv(Request $request)
+    {
+        $data['title'] = 'Expedition Approval OTV Toko';
+        $data['status'] = GlobalParam::where('param_type', 'STATUS_ACTIVITY')->get();
+        $data['sj_type'] = GlobalParam::where('param_type', 'SJ_TYPE')->get();
+        $data['payment_method'] = GlobalParam::where('param_type', 'PAYMENT_METHOD')->get();
+        $data['group'] = ExpeditionActivity::where('is_deleted', 'f')->get();
+        $data['driver'] = Driver::where('is_deleted', 'f')->get();
+        $data['truck'] = Truck::where('is_deleted', 'f')->get();
+
+        return view('expedition.approval-otv.index', $data);
+    }
 }
