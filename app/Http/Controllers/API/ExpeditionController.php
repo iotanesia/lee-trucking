@@ -493,11 +493,13 @@ class ExpeditionController extends Controller
   public function getExpeditionHistoryByDriver(Request $request){
     if($request->isMethod('GET')) {
       $user = Auth::user();
+      // dd($user->id);
       $data = $request->all();
       $expeditionActivityList = ExpeditionActivity::join('ex_status_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
                     ->leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                     ->leftjoin('usr_detail', 'ex_status_activity.approval_by', 'usr_detail.id_user')
-                    ->where('expedition_activity.driver_id', $user->id)
+                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+                    ->where('ex_master_driver.user_id', $user->id)
                     ->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN'])
                    ->select('ex_status_activity.*', 'all_global_param.param_name as approval_name',  DB::raw('CONCAT(usr_detail.first_name, \' \', usr_detail.last_name) AS approved_by'))
                    ->orderBy('approval_at', 'DESC')
