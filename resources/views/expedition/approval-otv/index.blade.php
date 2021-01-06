@@ -286,6 +286,6 @@
     </div>
 </div>
 <script src="{{asset('js/event.js')}}"></script>
-<script src="{{asset('js/expedition-approval.js')}}"></script>
+<script src="{{asset('js/expedition-approval-otv.js')}}"></script>
 <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
 @endsection

@@ -146,8 +146,8 @@ $("document").ready(function() {
                      "<td>"+ nomor_inv +"</td>"+
                      "<td>"+ truck_plat +"</td>"+
                      "<td>"+ driver_name +"</td>"+
-                     "<td>"+ tgl_inv +"</td>"+
-                     "<td>"+ tgl_po +"</td>"+
+                     "<td>"+ dateFormat(tgl_inv) +"</td>"+
+                     "<td>"+ dateFormat(tgl_po) +"</td>"+
                      "<td>"+ kabupaten +" - "+ kecamatan +" - "+ cabang_name +"</td>"+
                      "<td align='center'>"+
                        "<div class='btn-group'>"+

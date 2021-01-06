@@ -1,5 +1,13 @@
 @extends('layouts/layouts')
 @section('content')
+<style>
+.modal-dialog {
+    max-width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+</style>
     <div class="header bg-gradient-info pb-6">
       <div class="container-fluid">
         <div class="header-body">
@@ -91,7 +99,7 @@
   </div>
   
 <div class="modal fade" id="expedition-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document" style="max-width: 1000px;">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
             <h5 class="modal-title text-white" id="exampleModalLabel">Add expedition</h5>
@@ -170,13 +178,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">OJK</label>
-                            <input class="form-control" id="ojk">
+                            <input class="form-control" name="harga_ojk" id="ojk">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">OTV</label>
-                            <input class="form-control" id="otv">
+                            <input class="form-control" name="harga_otv" id="otv">
                         </div>
                     </div>
                 </div>

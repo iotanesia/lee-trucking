@@ -21,31 +21,10 @@ $("document").ready(function() {
         placeholder:"Select Jenis Surat Jalan"
     });
 
-    $("#driver_id").on("change", function() {
-        id = $(this).val();
-
-        $.ajax({
-            url: window.Laravel.app_url + "/api/expedition/get-kenek",
-            type: "GET",
-            dataType: "json",
-            data: 'id='+id,
-            headers: {"Authorization": "Bearer " + accessToken},
-            crossDomain: true,
-            beforeSend: function( xhr ) { 
-              $('.preloader').show();
-            },
-            success: function(res, textStatus, xhr) {
-              $('.preloader').hide();
-              $("#kenek_id").val(res.data.kenek_name)
-              $("#kenek_id").attr("disabled", true)
-            },
-          });
-    });
-
     var accessToken =  window.Laravel.api_token;
   
     $.ajax({
-      url: window.Laravel.app_url + "/api/expedition/get-list-approval-ojk",
+      url: window.Laravel.app_url + "/api/expedition/get-list-approval-otv",
       type: "GET",
       dataType: "json",
       headers: {"Authorization": "Bearer " + accessToken},
@@ -244,6 +223,7 @@ $("document").ready(function() {
       
       } else {
           classColor = 'badge-danger';
+
       }
 
       if(responses.data[i].approval_code == 'APPROVED') {
@@ -254,11 +234,10 @@ $("document").ready(function() {
 
       } else if(responses.data[i].approval_code == 'WAITING_OWNER') {
           classColors = 'badge-info';
-
+      
       } else if(responses.data[i].approval_code == null){
           approval_name = '-';
           classColors = '';
-  
       } else {
           classColors = 'badge-danger';
       }
