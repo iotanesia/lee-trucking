@@ -132,7 +132,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\ExpeditionController@getList']);
     Route::get('get-list-approval-ojk', ['as' => '-get-list-approval-ojk', 'uses' => 'API\ExpeditionController@getListApprovalOjk']);
     Route::get('get-list-approval-otv', ['as' => '-get-list-approval-otv', 'uses' => 'API\ExpeditionController@getListApprovalOtv']);
-    Route::get('get-list-history-by-expeditionId', ['as' => '-get-list-history-by-expeditionId', 'uses' => 'API\ExpeditionController@getExpeditionHistoryByExpeditionId']);
+    Route::get('get-list-history-by-param', ['as' => '-get-list-history-by-param', 'uses' => 'API\ExpeditionController@getExpeditionHistoryByNoInvOrNoSuratJalan']);
     Route::get('get-ojk', ['as' => '-get-ojk', 'uses' => 'API\ExpeditionController@getOjk']);
     Route::get('get-kenek', ['as' => '-get-kenek', 'uses' => 'API\ExpeditionController@getKenek']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\ExpeditionController@add']);

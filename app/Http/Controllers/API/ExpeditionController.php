@@ -9,6 +9,7 @@ use App\Models\ExStatusActivity;
 use App\Models\Ojk;
 use App\Models\Kenek;
 use App\Models\Driver;
+use App\Models\UserDetail;
 use Auth;
 use DB;
 use Carbon\Carbon;
@@ -437,16 +438,30 @@ class ExpeditionController extends Controller
     }
   }
 
-  public function getExpeditionHistoryByExpeditionId(Request $request){
+  public function getExpeditionHistoryByNoInvOrNoSuratJalan(Request $request){
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $expeditionActivityList = ExStatusActivity::leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
-                   ->where('ex_id', $data['ex_id'])
-                   ->select('ex_status_activity.*', 'all_global_param.param_name as approval_name')
+      $whereField = 'nomor_inv, nomor_surat_jalan';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $expeditionActivityList = ExpeditionActivity::join('ex_status_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
+                    ->leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
+                    ->leftjoin('usr_detail', 'ex_status_activity.approval_by', 'usr_detail.id_user')
+                    ->where(function($query) use($whereField, $whereValue) {
+                      if($whereValue) {
+                        foreach(explode(', ', $whereField) as $idx => $field) {
+                          $query->orWhere($field, '=', $whereValue);
+                        }
+                      }
+                    })
+                   ->select('ex_status_activity.*', 'all_global_param.param_name as approval_name',  DB::raw('CONCAT(usr_detail.first_name, \' \', usr_detail.last_name) AS approved_by'))
                    ->orderBy('approval_at', 'DESC')
                    ->paginate();
       
       foreach($expeditionActivityList as $row) {
+        $row->img = ($row->img) ? url('uploads/expedition/'.$row->img) :url('uploads/sparepart/nia3.png');
+        // $approvedBy = UserDetail::where('id_user',$row->approval_by)
+        //                           ->select(DB::raw('CONCAT(\'first_name\',\'last_name\') AS approved_by'))->first();
+        // $row->approved_by = $approvedBy['approved_by'];
         $row->data_json = $row->toJson();
       }
 
