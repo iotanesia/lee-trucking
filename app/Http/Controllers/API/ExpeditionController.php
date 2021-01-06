@@ -489,4 +489,47 @@ class ExpeditionController extends Controller
       ], 405);
     }
   }
+
+  public function getExpeditionHistoryByDriver(Request $request){
+    if($request->isMethod('GET')) {
+      $user = Auth::user();
+      $data = $request->all();
+      $expeditionActivityList = ExpeditionActivity::join('ex_status_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
+                    ->leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
+                    ->leftjoin('usr_detail', 'ex_status_activity.approval_by', 'usr_detail.id_user')
+                    ->where('expedition_activity.driver_id', $user->id)
+                   ->select('ex_status_activity.*', 'all_global_param.param_name as approval_name',  DB::raw('CONCAT(usr_detail.first_name, \' \', usr_detail.last_name) AS approved_by'))
+                   ->orderBy('approval_at', 'DESC')
+                   ->paginate();
+      
+      foreach($expeditionActivityList as $row) {
+        $row->img = ($row->img) ? url('uploads/expedition/'.$row->img) :url('uploads/sparepart/nia3.png');
+    
+        $row->data_json = $row->toJson();
+      }
+
+      if(!isset($expeditionActivityList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $expeditionActivityList
+        ], 200);
+      }
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
+    }
+  }
 }
