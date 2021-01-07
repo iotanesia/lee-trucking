@@ -48,7 +48,19 @@ $("document").ready(function(){
           alert(msgError);
         }
       });
-    })
+    });
+
+    $("#coa_status").select2({
+        placeholder:"Select Status"
+    });
+
+    $("#coa_parent").select2({
+        placeholder:"Select Parent"
+    });
+
+    $("#coa_category").select2({
+        placeholder:"Select Category"
+    });
   
     $("#coa-modal").on("show.bs.modal", function(e) {
       var invoker = $(e.relatedTarget);
@@ -89,10 +101,10 @@ $("document").ready(function(){
       tableRows += "<tr>" +
                      "<td>"+ (i + 1) +"</td>"+
                      "<td>"+ coa_name +"</td>"+
-                     "<td>"+ coa_code +"</td>"+
+                     "<td>"+ def(coa_code) +"</td>"+
                      "<td>"+ coa_status_name +"</td>"+
                      "<td>"+ coa_category_name +"</td>"+
-                     "<td>"+ parent_coa_name +"</td>"+
+                     "<td>"+ def(parent_coa_name) +"</td>"+
                      "<td align='center'>"+
                        "<div class='btn-group'>"+
                          "<a class='btn btn-slack btn-icon-only btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#coa-modal'><i class='fas fa-edit'></i></a>"+

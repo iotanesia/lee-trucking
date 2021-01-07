@@ -416,3 +416,11 @@ function dateFormat(userDate) {
 
     return newDate
 }
+
+function def(element) {
+    if(element == null) {
+        element = "";
+    }
+
+    return element
+}

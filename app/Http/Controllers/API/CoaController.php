@@ -13,7 +13,7 @@ class CoaController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'coa_code, coa_name, coa_status.param_name, coa_category.param_name';
+      $whereField = 'coa_master_jurnal.coa_code, coa_master_jurnal.coa_name, coa_status.param_name, coa_category.param_name, coa_master_jurnal_parent.coa_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $coaList = Coa::leftJoin('all_global_param as coa_status', 'coa_master_jurnal.coa_status', 'coa_status.param_code')
                  ->leftJoin('all_global_param as coa_category', 'coa_master_jurnal.coa_category', 'coa_category.param_code')
