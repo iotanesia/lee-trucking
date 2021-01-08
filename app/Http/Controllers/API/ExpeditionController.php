@@ -352,7 +352,7 @@ class ExpeditionController extends Controller
                 $coaActivity->rek_name = $exStatusActivity->rek_name;
                 $coaActivity->save();
               }
-            }else if($expeditionActivity->status_activity == 'DRIVER_SELESAI_EKSPEDISI'){
+            }else if($expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN'){
               if($expeditionActivity->harga_otv == $request->nominal){
                 $exStatusActivity->nominal_kurang_bayar = 0;
                 $exStatusActivity->save();
