@@ -315,8 +315,8 @@ class ExpeditionController extends Controller
         $expeditionActivity->status_activity = $request->status_activity;
         $expeditionActivity->bank_name = $request->bank_name;
         $expeditionActivity->no_rek = $request->no_rek;
-        $expeditionActivity->approval_by = $idUser;
-        $expeditionActivity->approval_at = $current_date_time;
+        $expeditionActivity->updated_by = $idUser;
+        $expeditionActivity->updated_at = $current_date_time;
         if($expeditionActivity->save()){
           
         unset($data['otv_payment_method']);
