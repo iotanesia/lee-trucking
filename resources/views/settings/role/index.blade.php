@@ -24,7 +24,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-12">
-          <div class="card" id="driver"    >
+          <div class="card" id="coa"    >
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
@@ -35,20 +35,22 @@
             </div>
             <div class="card-body">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control has-primary" name="search_value" data-model="driver" placeholder="Search Key">
+                    <input type="text" class="form-control has-primary" name="search_value" data-model="coa" placeholder="Search Key">
                     <div class="input-group-append">
-                        <a type="button" class="input-group-text btn-sm btn-flat" id="search-data" el-event="search-data" data-model="driver"><i class="fa fa-search"></i></a>
-                        <a type="button" class="input-group-text btn-sm btn-flat bg-primary text-white"  data-toggle="modal" data-target="#driver-modal"><i class="fa fa-plus"></i></a>
+                        <a type="button" class="input-group-text btn-sm btn-flat" id="search-data" el-event="search-data" data-model="coa"><i class="fa fa-search"></i></a>
+                        <a type="button" class="input-group-text btn-sm btn-flat bg-primary text-white"  data-toggle="modal" data-target="#coa-modal"><i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-driver" data-model="driver" request-url="{{ route('api-driver') }}" on-success-load="successLoaddriver">
+                    <table class="table align-items-center table-flush table-striped" id="table-coa" data-model="coa" request-url="{{ route('api-coa') }}" on-success-load="successLoadcoa">
                         <thead class="bg-gradient-info text-white">
                         <tr>
-                            <th>Driver Name</th>
+                            <th>No</th>
+                            <th>COA Name</th>
+                            <th>COA Code</th>
                             <th>Status</th>
-                            <th>Kenek</th>
-                            <th>Join Date</th>
+                            <th>Category</th>
+                            <th>Parent Name</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -87,52 +89,50 @@
     </div>
   </div>
   
-<div class="modal fade" id="driver-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="coa-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add driver</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Add COA</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-            <form role="form" id="driver-form">
-            <input type="hidden" name="id" id="id">
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="SS">Select User</label>
-                    <select name="user_id" id="user_id" class="form-control">
-                    <option value=""></option>
-                    @foreach($users as $row)
-                        <option value="{{$row->id}}">{{$row->name}}</option>
-                    @endforeach
-                    </select>
-                </div>
+            <form role="form" id="coa-form">
+                <input type="hidden" name="id" id="id">
+                <div class="card-body">
                     <div class="form-group">
-                    <label for="driver_name">driver name</label>
-                    <input type="text" class="form-control" name="driver_name" id="driver_name" placeholder="Driver name">
-                </div>
-                <div class="form-group">
-                    <label for="driver_status">Status Driver</label>
-                    <select name="driver_status" id="" class="form-control">
-                    @foreach($status as $row)
-                        <option value="{{$row->id}}">{{$row->param_name}}</option>
-                    @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="kenek_id">Kenek</label>
-                    <select name="kenek_id" id="" class="form-control">
-                    @foreach($kenekList as $row)
-                        <option value="{{$row->id}}">{{$row->kenek_name}}</option>
-                    @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="driver_join_date">Join Date</label>
-                    <input type="date" name="driver_join_date" class="form-control">
-                </div>
+                        <label for="coa_name">COA Name</label>
+                        <input type="text" class="form-control" name="coa_name" id="coa_name" placeholder="coa_name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="coa_parent">Parent</label>
+                        <select name="coa_parent" class="form-control" id="coa_parent">
+                            <option value=""></option>
+                            @foreach($parent as $row)
+                            <option value="{{$row->id}}">{{$row->coa_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="coa_status">Status</label>
+                        <select name="coa_status" class="form-control" id="coa_status">
+                            <option value=""></option>
+                            @foreach($status as $row)
+                            <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="coa_category">COA Category</label>
+                        <select name="coa_category" class="form-control" id="coa_category">
+                            <option value=""></option>
+                            @foreach($category as $row)
+                            <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
             </form>
         </div>
         <div class="modal-footer">
@@ -142,5 +142,5 @@
     </div>
 </div>
 <script src="{{asset('js/event.js')}}"></script>
-<script src="{{asset('js/driver.js')}}"></script>
+<script src="{{asset('js/coa.js')}}"></script>
 @endsection

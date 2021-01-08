@@ -8,6 +8,7 @@ use App\Models\Truck;
 use App\Models\GlobalParam;
 use App\Models\Driver;
 use App\Models\Kenek;
+use App\Models\Group;
 use Auth;
 
 class DriverController extends Controller
@@ -32,6 +33,8 @@ class DriverController extends Controller
         $data['title'] = 'Driver';
         $data['status'] = GlobalParam::where('param_type', 'DRIVER_STATUS')->where('status_active', 1)->get();
         $data['kenekList'] = Kenek::get();
+        $groupCheck = Group::where('group_name', 'Driver')->first();
+        $data['users'] = User::where('group_id', $groupCheck->id)->get();
         return view('master.driver.index', $data);
     }
 }
