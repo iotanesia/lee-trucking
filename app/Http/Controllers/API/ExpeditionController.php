@@ -320,6 +320,7 @@ class ExpeditionController extends Controller
 
       $data = $request->all();
       $expeditionActivity = ExpeditionActivity::find($data['id']);
+      $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('id', 'DESC')->first();
       $idUser = Auth::user()->id;
 
       $current_date_time = Carbon::now()->toDateTimeString(); 
@@ -342,7 +343,6 @@ class ExpeditionController extends Controller
       if($statusActivityParam){
         $img = $request->file('img');
         $exStatusActivity = new ExStatusActivity();
-        $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('id', 'DESC')->first();
 
         unset($data['update_lates_status']);
         
