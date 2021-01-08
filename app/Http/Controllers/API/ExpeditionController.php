@@ -342,6 +342,7 @@ class ExpeditionController extends Controller
       if($statusActivityParam){
         $img = $request->file('img');
         $exStatusActivity = new ExStatusActivity();
+        $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('id', 'DESC')->first();
 
         unset($data['update_lates_status']);
         
@@ -383,6 +384,11 @@ class ExpeditionController extends Controller
 
             }else if($expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN'){
               if($expeditionActivity->harga_otv == $request->nominal){
+                $exStatusActivity->img = $data['img'] ? $data['img'] :  $lastExActivity->img;
+                $exStatusActivity->nominal = $data['nominal'] ? $data['nominal'] :  $lastExActivity->nominal;
+                $exStatusActivity->rek_name = $data['rek_name'] ? $data['rek_name'] :  $lastExActivity->rek_name;
+                $exStatusActivity->no_rek = $data['no_rek'] ? $data['no_rek'] :  $lastExActivity->no_rek;
+                $exStatusActivity->long_lat = $data['long_lat'] ? $data['long_lat'] :  $lastExActivity->long_lat;
                 $exStatusActivity->nominal_kurang_bayar = 0;
                 $exStatusActivity->save();
                 $idCoaSheet1 = array(18, 17, 20, 19);
@@ -403,6 +409,11 @@ class ExpeditionController extends Controller
                 }
 
               }else if($request->nominal < $expeditionActivity->harga_otv){
+                $exStatusActivity->img = $data['img'] ? $data['img'] :  $lastExActivity->img;
+                $exStatusActivity->nominal = $data['nominal'] ? $data['nominal'] :  $lastExActivity->nominal;
+                $exStatusActivity->rek_name = $data['rek_name'] ? $data['rek_name'] :  $lastExActivity->rek_name;
+                $exStatusActivity->no_rek = $data['no_rek'] ? $data['no_rek'] :  $lastExActivity->no_rek;
+                $exStatusActivity->long_lat = $data['long_lat'] ? $data['long_lat'] :  $lastExActivity->long_lat;
                 $exStatusActivity->nominal_kurang_bayar = $expeditionActivity->harga_otv - $request->nominal;
                 $exStatusActivity->save();
                 $idCoaSheet2 = array(18, 17, 20, 19);
