@@ -102,10 +102,12 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
-            <h5 class="modal-title text-white" id="exampleModalLabel">Expedition</h5>
-            <button type="button" class="btn btn-success btn-sm" id="btn-submit">Approve</button>
-            <button type="button" class="btn btn-warning btn-sm" el-event="edit" id="btn-revision">Revision</button>
-            <button type="button" class="btn btn-danger btn-sm" el-event="edit" id="btn-reject">Reject</button>
+            <h5 class="modal-title text-white" style="margin-right:50px" id="exampleModalLabel">Expedition</h5>
+            
+            <button type="button" class="btn btn-success btn-sm" id="btn-submit" style="border-radius:20px">Approve</button>
+            <button type="button" class="btn btn-warning btn-sm" el-event="edit" style="border-radius:20px" id="btn-revision">Revision</button>
+            <button type="button" class="btn btn-danger btn-sm" el-event="edit" style="border-radius:20px" id="btn-reject">Reject</button>
+
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

@@ -167,7 +167,7 @@ class ExpeditionController extends Controller
                    ->leftJoin('ex_master_kenek', 'ex_master_kenek.id', 'expedition_activity.kenek_id')
                    ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                    ->where('expedition_activity.is_deleted','false')
-                   ->whereIn('expedition_activity.status_activity', ['DRIVER_SELESAI_EKSPEDISI', 'APPROVAL_OTV_DRIVER', 'CLOSED_EXPEDITION'])
+                   ->whereIn('expedition_activity.status_activity', ['DRIVER_SELESAI_EKSPEDISI', 'APPROVAL_OTV_DRIVER', 'CLOSED_EXPEDITION', 'WAITING_OWNER'])
                    ->where(function($query) use($whereField, $whereValue) {
                      if($whereValue) {
                        foreach(explode(', ', $whereField) as $idx => $field) {
@@ -349,6 +349,7 @@ class ExpeditionController extends Controller
         $expeditionActivity->status_activity = $request->status_activity;
         $expeditionActivity->updated_by = $idUser;
         $expeditionActivity->updated_at = $current_date_time;
+
         if($expeditionActivity->save()){
           $statusActivityId = GlobalParam::where('param_code', $expeditionActivity->status_activity)->select('id')->first();
               
@@ -364,6 +365,7 @@ class ExpeditionController extends Controller
           if($exStatusActivity->save()){
             if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
               $idCoaSheet = array(30, 27, 29, 26);
+
               foreach($idCoaSheet as $key => $row) {
                 $coaActivity = new CoaActivity();
                 $coaActivity->activity_id = $statusActivityId['id'];
@@ -378,11 +380,13 @@ class ExpeditionController extends Controller
                 $coaActivity->rek_name = $exStatusActivity->rek_name;
                 $coaActivity->save();
               }
+
             }else if($expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN'){
               if($expeditionActivity->harga_otv == $request->nominal){
                 $exStatusActivity->nominal_kurang_bayar = 0;
                 $exStatusActivity->save();
                 $idCoaSheet1 = array(18, 17, 20, 19);
+
                 foreach($idCoaSheet1 as $key => $row) {
                   $coaActivity = new CoaActivity();
                   $coaActivity->activity_id = $statusActivityId['id'];
@@ -397,41 +401,44 @@ class ExpeditionController extends Controller
                   $coaActivity->rek_name = $exStatusActivity->rek_name;
                   $coaActivity->save();
                 }
+
               }else if($request->nominal < $expeditionActivity->harga_otv){
                 $exStatusActivity->nominal_kurang_bayar = $expeditionActivity->harga_otv - $request->nominal;
                 $exStatusActivity->save();
                 $idCoaSheet2 = array(18, 17, 20, 19);
                 $idCoaSheet3 = array(8, 7, 10, 9);
+                
                 foreach($idCoaSheet2 as $key => $row) {
-                $coaActivity = new CoaActivity();
-                $coaActivity->activity_id = $statusActivityId['id'];
-                $coaActivity->activity_name = $expeditionActivity->status_activity;
-                $coaActivity->status = 'ACTIVE';
-                $coaActivity->nominal = $exStatusActivity->nominal;
-                $coaActivity->rek_no = $exStatusActivity->no_rek;
-                $coaActivity->coa_id = $row;
-                $coaActivity->ex_id = $expeditionActivity->id;
-                $coaActivity->created_at = $current_date_time;
-                $coaActivity->created_by = $idUser;
-                $coaActivity->rek_name = $exStatusActivity->rek_name;
-                $coaActivity->save();
+                    $coaActivity = new CoaActivity();
+                    $coaActivity->activity_id = $statusActivityId['id'];
+                    $coaActivity->activity_name = $expeditionActivity->status_activity;
+                    $coaActivity->status = 'ACTIVE';
+                    $coaActivity->nominal = $exStatusActivity->nominal;
+                    $coaActivity->rek_no = $exStatusActivity->no_rek;
+                    $coaActivity->coa_id = $row;
+                    $coaActivity->ex_id = $expeditionActivity->id;
+                    $coaActivity->created_at = $current_date_time;
+                    $coaActivity->created_by = $idUser;
+                    $coaActivity->rek_name = $exStatusActivity->rek_name;
+                    $coaActivity->save();
+                }
+                
+                foreach($idCoaSheet3 as $key => $row) {
+                    $coaActivity = new CoaActivity();
+                    $coaActivity->activity_id = $statusActivityId['id'];
+                    $coaActivity->activity_name = $expeditionActivity->status_activity;
+                    $coaActivity->status = 'ACTIVE';
+                    $coaActivity->nominal = $exStatusActivity->nominal_kurang_bayar;
+                    $coaActivity->rek_no = $exStatusActivity->no_rek;
+                    $coaActivity->coa_id = $row;
+                    $coaActivity->ex_id = $expeditionActivity->id;
+                    $coaActivity->created_at = $current_date_time;
+                    $coaActivity->created_by = $idUser;
+                    $coaActivity->rek_name = $exStatusActivity->rek_name;
+                    $coaActivity->save();
+                }
               }
-              foreach($idCoaSheet3 as $key => $row) {
-                $coaActivity = new CoaActivity();
-                $coaActivity->activity_id = $statusActivityId['id'];
-                $coaActivity->activity_name = $expeditionActivity->status_activity;
-                $coaActivity->status = 'ACTIVE';
-                $coaActivity->nominal = $exStatusActivity->nominal_kurang_bayar;
-                $coaActivity->rek_no = $exStatusActivity->no_rek;
-                $coaActivity->coa_id = $row;
-                $coaActivity->ex_id = $expeditionActivity->id;
-                $coaActivity->created_at = $current_date_time;
-                $coaActivity->created_by = $idUser;
-                $coaActivity->rek_name = $exStatusActivity->rek_name;
-                $coaActivity->save();
             }
-            }
-          }
             if(isset($img)){
               //upload image
               $fileExt = $img->extension();

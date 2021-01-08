@@ -114,6 +114,16 @@
                 <input type="hidden" name="status_approval" id="status_approval" value="">
                 <input type="hidden" name="ex_id" id="ex_id">
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                        <a data-fslightbox="gallery2" data-type="image" style="align-self: center; margin: 2px" href="{{ url('/uploads/expedition/IMG-EXPEDITION-7825.jpg') }}">
+                            <img src="" id="img" class="img-fluid rounded" width="200" alt="">
+                        </a>
+                        </div>
+                    </div>
+                </div>
+                <hr class="bg-info">
+                <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="nomor_inv">Nomor Invoice</label>
