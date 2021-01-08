@@ -2,10 +2,8 @@
 @section('content')
 <style>
 .modal-dialog {
-    max-width: 100%;
+    max-width: 80%;
     height: 100%;
-    margin: 0;
-    padding: 0;
 }
 </style>
     <div class="header bg-gradient-info pb-6">
@@ -111,35 +109,39 @@
             <form role="form" id="expedition-form">
                 <input type="hidden" name="id" id="id">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="nomor_inv">Nomor Invoice</label>
                             <input type="text" class="form-control" name="nomor_inv" id="nomor_inv" placeholder="Nomor Invoice">
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-control-label" for="tgl_inv">Tanggal Invoice</label>
-                            <input type="text" name="tgl_inv" id="tgl_inv" class="form-control" placeholder="Tanggal Invoice">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="pabrik_pesanan">Pabrik Pesanan</label>
                             <input type="text" name="pabrik_pesanan" id="pabrik_pesanan" class="form-control" placeholder="Pabrik Pesanan">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="nama_barang">Nama Barang</label>
                             <input type="text" name="nama_barang" id="nama_barang" class="form-control" placeholder="Nama Barang">
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ojk">Jumlah Palet</label>
+                            <input type="text" name="jumlah_palet" id="jumlah_palet" class="form-control" placeholder="Jumlah Palet">
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="tgl_inv">Tanggal Invoice</label>
+                            <input type="text" name="tgl_inv" id="tgl_inv" class="form-control" placeholder="Tanggal Invoice">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="jenis_surat_jalan">Jenis Surat Jalan</label>
                             <select name="jenis_surat_jalan" class="form-control" id="jenis_surat_jalan">
@@ -150,24 +152,30 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-control-label" for="ojk">Jumlah Palet</label>
-                            <input type="text" name="jumlah_palet" id="jumlah_palet" class="form-control" placeholder="Jumlah Palet">
-                        </div>
-                    </div>
                 </div>
                 <br>
                 <label class="form-control-label" for="jenis_surat_jalan">Ordering Expedition</label>        
-                <hr>
+                <hr class="bg-info" style="margin-top:0px">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="jumlah_palet">Tujuan</label>
                             <select name="ojk_id" class="form-control" id="tujuan"></select>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ojk">OJK</label>
+                            <input class="form-control" name="harga_ojk" id="ojk">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ojk">OTV</label>
+                            <input class="form-control" name="harga_otv" id="otv">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="tgl_po">Tanggal Kirim</label>
                             <input type="text" name="tgl_po" id="tgl_po" class="form-control" placeholder="Tanggal Kirim">
@@ -175,27 +183,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-control-label" for="ojk">OJK</label>
-                            <input class="form-control" name="harga_ojk" id="ojk">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="form-control-label" for="ojk">OTV</label>
-                            <input class="form-control" name="harga_otv" id="otv">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="toko">Toko</label>
                             <input class="form-control" name="toko" id="toko">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">Payment Method</label>
                             <select name="otv_payment_method" id="otv_payment_method" class="form-control">
@@ -208,36 +202,34 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="no_rek">Nomor Rekening</label>
+                            <label class="form-control-label" for="no_rek">Nomor Rekening Driver</label>
                             <input class="form-control" name="no_rek" id="no_rek">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="bank_name">Nama Bank</label>
                             <input class="form-control" name="bank_name" id="bank_name">
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="nama_penerima">Nama Penerima</label>
+                            <label class="form-control-label" for="nama_penerima">Nama Penerima Rekening</label>
                             <input class="form-control" name="nama_penerima" id="nama_penerima">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="nomor_hp_penerima">Nomor hp Penerima</label>
                             <input class="form-control" name="nomor_hp_penerima" id="nomor_hp_penerima">
                         </div>
                     </div>
                 </div>
-                <hr>
+                <hr class="bg-info">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="bank_name">Truck</label>
                             <select name="truck_id" id="truck_id" class="form-control">
@@ -248,9 +240,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">Supir</label>
                             <select name="driver_id" id="driver_id" class="form-control">
@@ -261,7 +251,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="kenek_id">Kenek</label>
                             <input name="" class="form-control" id="kenek_id">

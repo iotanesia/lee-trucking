@@ -2,10 +2,8 @@
 @section('content')
 <style>
 .modal-dialog {
-    max-width: 100%;
+    max-width: 80%;
     height: 100%;
-    margin: 0;
-    padding: 0;
 }
 </style>
     <div class="header bg-gradient-info pb-6">
@@ -100,49 +98,58 @@
   </div>
   
 <div class="modal fade" id="expedition-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form role="form" id="expedition-form">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
             <h5 class="modal-title text-white" id="exampleModalLabel">Expedition</h5>
+            <button type="button" class="btn btn-success btn-sm" id="btn-submit">Approve</button>
+            <button type="button" class="btn btn-warning btn-sm" el-event="edit" id="btn-revision">Revision</button>
+            <button type="button" class="btn btn-danger btn-sm" el-event="edit" id="btn-reject">Reject</button>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-            <form role="form" id="expedition-form">
                 <input type="hidden" name="id" id="id">
                 <input type="hidden" name="update_lates_status" id="update_lates_status" value="true">
                 <input type="hidden" name="status_activity" id="status_activity" value="APPROVAL_OJK_DRIVER">
                 <input type="hidden" name="status_approval" id="status_approval" value="">
                 <input type="hidden" name="ex_id" id="ex_id">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="nomor_inv">Nomor Invoice</label>
-                            <input type="text" class="form-control" name="nomor_inv" id="nomor_inv" placeholder="Nomor Invoice" disabled>
+                            <input disabled type="text" class="form-control" name="nomor_inv" id="nomor_inv" placeholder="Nomor Invoice">
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="form-control-label" for="tgl_inv">Tanggal Invoice</label>
-                            <input disabled type="text" name="tgl_inv" id="tgl_inv" class="form-control" placeholder="Tanggal Invoice">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="pabrik_pesanan">Pabrik Pesanan</label>
                             <input disabled type="text" name="pabrik_pesanan" id="pabrik_pesanan" class="form-control" placeholder="Pabrik Pesanan">
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="nama_barang">Nama Barang</label>
                             <input disabled type="text" name="nama_barang" id="nama_barang" class="form-control" placeholder="Nama Barang">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="ojk">Jumlah Palet</label>
+                            <input disabled type="text" name="jumlah_palet" id="jumlah_palet" class="form-control" placeholder="Jumlah Palet">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="tgl_inv">Tanggal Invoice</label>
+                            <input disabled type="text" name="tgl_inv" id="tgl_inv" class="form-control" placeholder="Tanggal Invoice">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="jenis_surat_jalan">Jenis Surat Jalan</label>
                             <select disabled name="jenis_surat_jalan" class="form-control" id="jenis_surat_jalan">
@@ -153,51 +160,44 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="form-control-label" for="ojk">Jumlah Palet</label>
-                            <input disabled type="text" name="jumlah_palet" id="jumlah_palet" class="form-control" placeholder="Jumlah Palet">
-                        </div>
-                    </div>
                 </div>
                 <br>
                 <label class="form-control-label" for="jenis_surat_jalan">Ordering Expedition</label>        
-                <hr>
+                <hr class="bg-info" style="margin-top:0px">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="jumlah_palet">Tujuan</label>
                             <select disabled name="ojk_id" class="form-control" id="tujuan"></select>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">OJK</label>
-                            <input disabled class="form-control" id="ojk">
+                            <input disabled class="form-control" name="harga_ojk" id="ojk">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">OTV</label>
-                            <input disabled class="form-control" id="otv">
+                            <input disabled class="form-control" name="harga_otv" id="otv">
                         </div>
                     </div>
-                    
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="tgl_po">Tanggal Kirim</label>
                             <input disabled type="text" name="tgl_po" id="tgl_po" class="form-control" placeholder="Tanggal Kirim">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="toko">Toko</label>
                             <input disabled class="form-control" name="toko" id="toko">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">Payment Method</label>
                             <select disabled name="otv_payment_method" id="otv_payment_method" class="form-control">
@@ -210,36 +210,34 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="no_rek">Nomor Rekening</label>
+                            <label class="form-control-label" for="no_rek">Nomor Rekening Driver</label>
                             <input disabled class="form-control" name="no_rek" id="no_rek">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="bank_name">Nama Bank</label>
                             <input disabled class="form-control" name="bank_name" id="bank_name">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="nama_penerima">Nama Penerima</label>
+                            <label class="form-control-label" for="nama_penerima">Nama Penerima Rekening</label>
                             <input disabled class="form-control" name="nama_penerima" id="nama_penerima">
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="nomor_hp_penerima">Nomor hp Penerima</label>
                             <input disabled class="form-control" name="nomor_hp_penerima" id="nomor_hp_penerima">
                         </div>
                     </div>
                 </div>
-                <hr>
+                <hr class="bg-info">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="bank_name">Truck</label>
                             <select disabled name="truck_id" id="truck_id" class="form-control">
@@ -250,7 +248,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">Supir</label>
                             <select disabled name="driver_id" id="driver_id" class="form-control">
@@ -261,17 +259,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="kenek_id">Kenek</label>
-                            <input disabled class="form-control" id="kenek_id">
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="form-control-label" for="kenek_id">Keterangan</label>
-                            <textarea class="form-control" name="keterangan"></textarea>
+                            <input disabled name="" class="form-control" id="kenek_id">
                         </div>
                     </div>
                 </div>
@@ -279,9 +270,6 @@
         </div>
         <div class="modal-footer bg-gradient-secondary">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success" id="btn-submit">Approve</button>
-            <button type="button" class="btn btn-warning" el-event="edit" id="btn-revision">Revision</button>
-            <button type="button" class="btn btn-danger" el-event="edit" id="btn-reject">Reject</button>
         </div>
     </div>
 </div>
