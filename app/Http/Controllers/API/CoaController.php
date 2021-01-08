@@ -108,7 +108,7 @@ class CoaController extends Controller
       
       $this->validate($request, [
         // 'no_coa' => 'required|string|max:255|unique:Coa,no_coa,'.$data['id'].',id',
-        'name' => 'required|string|max:255',
+        // 'name' => 'required|string|max:255',
       ]);
       
       unset($data['_token']);
