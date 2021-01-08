@@ -180,7 +180,6 @@ class ExpeditionController extends Controller
         $approvalCode = ExStatusActivity::leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
         ->where('ex_status_activity.ex_id',$row->id)
         ->where('all_global_param.param_type', 'EX_STATUS_APPROVAL')
-        ->where('ex_status_activity.is_deleted','false')
         ->orderBy('ex_status_activity.updated_at', 'DESC')
         ->select('all_global_param.param_code as approval_code', 
         'all_global_param.param_name as approval_name', 'ex_status_activity.keterangan')->first();
@@ -465,7 +464,6 @@ class ExpeditionController extends Controller
       $expeditionActivityList = ExpeditionActivity::join('ex_status_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
                     ->leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                     ->leftjoin('usr_detail', 'ex_status_activity.approval_by', 'usr_detail.id_user')
-                    ->where('ex_status_activity.is_deleted', 'false')
                     ->where('all_global_param.param_type', 'EX_STATUS_APPROVAL')
                     ->where(function($query) use($whereField, $whereValue) {
                       if($whereValue) {
