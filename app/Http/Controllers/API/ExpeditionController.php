@@ -8,8 +8,10 @@ use App\Models\ExpeditionActivity;
 use App\Models\ExStatusActivity;
 use App\Models\Ojk;
 use App\Models\Kenek;
+use App\Models\CoaActivity;
 use App\Models\Driver;
 use App\Models\UserDetail;
+use App\Models\GlobalParam;
 use Auth;
 use DB;
 use Carbon\Carbon;
@@ -95,7 +97,7 @@ class ExpeditionController extends Controller
                    ->leftJoin('ex_master_kenek', 'ex_master_kenek.id', 'expedition_activity.kenek_id')
                    ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                    ->where('expedition_activity.is_deleted','false')
-                   ->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN', 'DRIVER_SELESAI_EKSPEDISI'])
+                   ->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN'])
                    ->where(function($query) use($whereField, $whereValue) {
                      if($whereValue) {
                        foreach(explode(', ', $whereField) as $idx => $field) {
@@ -310,7 +312,7 @@ class ExpeditionController extends Controller
         $exStatusActivity = new ExStatusActivity();
 
         unset($data['update_lates_status']);
-
+        
         $expeditionActivity->otv_payment_method = $request->otv_payment_method;
         $expeditionActivity->status_activity = $request->status_activity;
         $expeditionActivity->bank_name = $request->bank_name;
@@ -318,7 +320,8 @@ class ExpeditionController extends Controller
         $expeditionActivity->updated_by = $idUser;
         $expeditionActivity->updated_at = $current_date_time;
         if($expeditionActivity->save()){
-          
+          $statusActivityId = GlobalParam::where('param_code', $expeditionActivity->status_activity)->select('id')->first();
+              
         unset($data['otv_payment_method']);
         unset($data['status_activity']);
         unset($data['bank_name']);
@@ -330,6 +333,75 @@ class ExpeditionController extends Controller
           $exStatusActivity->approval_by = $idUser;
           $exStatusActivity->approval_at = $current_date_time;
           if($exStatusActivity->save()){
+            if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
+              $coaActivity = new CoaActivity();
+              $idCoaSheet = array(30, 27, 29, 26);
+              foreach($idCoaSheet as $key => $row) {
+                $coaActivity->activity_id = $statusActivityId['id'];
+                $coaActivity->activity_name = $expeditionActivity->status_activity;
+                $coaActivity->status = 'ACTIVE';
+                $coaActivity->nominal = $expeditionActivity->harga_ojk;
+                $coaActivity->rek_no = $expeditionActivity->no_rek;
+                $coaActivity->coa_id = $row;
+                $coaActivity->ex_id = $expeditionActivity->id;
+                $coaActivity->created_at = $expeditionActivity->created_at;
+                $coaActivity->created_by = $expeditionActivity->created_by;
+                $coaActivity->rek_name = $expeditionActivity->bank_name;
+                $coaActivity->save();
+              }
+          }else if($expeditionActivity->status_activity == 'DRIVER_SELESAI_EKSPEDISI'){
+            $coaActivity = new CoaActivity();
+            if($expeditionActivity->harga_otv == $exStatusActivity->nominal){
+               $exStatusActivity->nominal_kurang_bayar = 0;
+               $idCoaSheet = array(18, 17, 20, 19);
+               foreach($idCoaSheet as $key => $row) {
+                $coaActivity->activity_id = $statusActivityId['id'];
+                $coaActivity->activity_name = $expeditionActivity->status_activity;
+                $coaActivity->status = 'ACTIVE';
+                $coaActivity->nominal = $exStatusActivity->nominal;
+                $coaActivity->rek_no = $expeditionActivity->no_rek;
+                $coaActivity->coa_id = $row;
+                $coaActivity->ex_id = $expeditionActivity->id;
+                $coaActivity->created_at = $expeditionActivity->created_at;
+                $coaActivity->created_by = $expeditionActivity->created_by;
+                $coaActivity->rek_name = $expeditionActivity->bank_name;
+                $coaActivity->save();
+               }
+               $exStatusActivity->save();
+            }else if($exStatusActivity->nominal < $expeditionActivity->harga_otv){
+              $exStatusActivity->nominal_kurang_bayar = $expeditionActivity->harga_otv - $exStatusActivity->nominal;
+              $idCoaSheet1 = array(18, 17, 20, 19);
+              $idCoaSheet2 = array(8, 7, 10, 9);
+              foreach($idCoaSheet1 as $key => $row) {
+              $coaActivity->activity_id = $statusActivityId['id'];
+               $coaActivity->activity_name = $expeditionActivity->status_activity;
+               $coaActivity->status = 'ACTIVE';
+               $coaActivity->nominal = $exStatusActivity->nominal;
+               $coaActivity->rek_no = $expeditionActivity->no_rek;
+               $coaActivity->coa_id = $row;
+               $coaActivity->ex_id = $expeditionActivity->id;
+               $coaActivity->created_at = $expeditionActivity->created_at;
+               $coaActivity->created_by = $expeditionActivity->created_by;
+               $coaActivity->rek_name = $expeditionActivity->bank_name;
+               $coaActivity->save();
+            }
+            foreach($idCoaSheet2 as $key => $row) {
+              $coaActivity->activity_id = $statusActivityId['id'];
+              $coaActivity->activity_name = $expeditionActivity->status_activity;
+              $coaActivity->status = 'ACTIVE';
+              $coaActivity->nominal = $exStatusActivity->nominal_kurang_bayar;
+              $coaActivity->rek_no = $expeditionActivity->no_rek;
+              $coaActivity->coa_id = $row;
+              $coaActivity->ex_id = $expeditionActivity->id;
+              $coaActivity->created_at = $expeditionActivity->created_at;
+              $coaActivity->created_by = $expeditionActivity->created_by;
+              $coaActivity->rek_name = $expeditionActivity->bank_name;
+              $coaActivity->save();
+           }
+
+
+            $exStatusActivity->save();
+          }
             if(isset($img)){
               //upload image
               $fileExt = $img->extension();
