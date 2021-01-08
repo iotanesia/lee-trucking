@@ -344,11 +344,11 @@ class ExpeditionController extends Controller
                 $coaActivity->activity_name = $expeditionActivity->status_activity;
                 $coaActivity->status = 'ACTIVE';
                 $coaActivity->nominal = $expeditionActivity->harga_ojk;
-                $coaActivity->rek_no = $expeditionActivity->no_rek;
+                $coaActivity->rek_no = $exStatusActivity->no_rek;
                 $coaActivity->coa_id = $row;
                 $coaActivity->ex_id = $expeditionActivity->id;
-                $coaActivity->created_at = $expeditionActivity->created_at;
-                $coaActivity->created_by = $expeditionActivity->created_by;
+                $coaActivity->created_at = $current_date_time;
+                $coaActivity->created_by = $idUser;
                 $coaActivity->rek_name = $exStatusActivity->rek_name;
                 $coaActivity->save();
               }
@@ -366,8 +366,8 @@ class ExpeditionController extends Controller
                   $coaActivity->rek_no = $exStatusActivity->no_rek;
                   $coaActivity->coa_id = $row;
                   $coaActivity->ex_id = $expeditionActivity->id;
-                  $coaActivity->created_at = $expeditionActivity->created_at;
-                  $coaActivity->created_by = $expeditionActivity->created_by;
+                  $coaActivity->created_at = $current_date_time;
+                  $coaActivity->created_by = $idUser;
                   $coaActivity->rek_name = $exStatusActivity->rek_name;
                   $coaActivity->save();
                 }
@@ -385,8 +385,8 @@ class ExpeditionController extends Controller
                 $coaActivity->rek_no = $exStatusActivity->no_rek;
                 $coaActivity->coa_id = $row;
                 $coaActivity->ex_id = $expeditionActivity->id;
-                $coaActivity->created_at = $expeditionActivity->created_at;
-                $coaActivity->created_by = $expeditionActivity->created_by;
+                $coaActivity->created_at = $current_date_time;
+                $coaActivity->created_by = $idUser;
                 $coaActivity->rek_name = $exStatusActivity->rek_name;
                 $coaActivity->save();
               }
@@ -399,8 +399,8 @@ class ExpeditionController extends Controller
                 $coaActivity->rek_no = $exStatusActivity->no_rek;
                 $coaActivity->coa_id = $row;
                 $coaActivity->ex_id = $expeditionActivity->id;
-                $coaActivity->created_at = $expeditionActivity->created_at;
-                $coaActivity->created_by = $expeditionActivity->created_by;
+                $coaActivity->created_at = $current_date_time;
+                $coaActivity->created_by = $idUser;
                 $coaActivity->rek_name = $exStatusActivity->rek_name;
                 $coaActivity->save();
             }
