@@ -25,7 +25,7 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::post('register', 'API\UserController@register');
   Route::group(['as' => 'api-user', 'prefix' => 'user'], function() {
     Route::get('/', 'Services\UserController@index');
-    Route::get('details', ['as' => '-details', 'API\UserController@detailProfile']);
+    Route::get('details', ['as' => '-details', 'uses' => 'API\UserController@detailProfile']);
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\UserController@getList']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\UserController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\UserController@edit']);
