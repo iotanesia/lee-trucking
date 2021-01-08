@@ -474,13 +474,27 @@ class ExpeditionController extends Controller
               'code_type' => 'BadRequest',
             ], 401);
           }
+
+        } else {
+            foreach($data as $key => $val) {
+                $expeditionActivity->{$key} = $val;
+            }
         }
-        
-        return response()->json([
-            'code' => 200,
-            'code_message' => 'Berhasil menyimpan data',
-            'code_type' => 'Success',
-          ], 200);
+
+        if($expeditionActivity->save()) {
+            return response()->json([
+                'code' => 200,
+                'code_message' => 'Berhasil menyimpan data',
+                'code_type' => 'Success',
+              ], 200);
+
+        } else {
+            return response()->json([
+                'code' => 405,
+                'code_message' => 'Method salah',
+                'code_type' => 'BadRequest',
+              ], 405);
+        }
 
       } else {
         return response()->json([
