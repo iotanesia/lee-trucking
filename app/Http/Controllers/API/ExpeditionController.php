@@ -414,7 +414,6 @@ class ExpeditionController extends Controller
                 ->where('ex_wil_kecamatan.kecamatan', 'iLike', '%'.$data['kecamatan'].'%')
                 ->where('ex_master_ojk.is_deleted', 'f')
                 ->get();
-
         return response()->json([
             'code' => 200,
             'code_message' => 'Success',
@@ -470,7 +469,7 @@ class ExpeditionController extends Controller
                       }
                     })
                    ->select('ex_status_activity.*', 'all_global_param.param_name as approval_name',  
-                   DB::raw('CONCAT(usr_detail.first_name, \' \', usr_detail.last_name) AS approved_by'))
+                    DB::raw('CONCAT(usr_detail.first_name, \' \', usr_detail.last_name) AS approved_by'))
                    ->orderBy('approval_at', 'DESC')
                    ->paginate();
       
