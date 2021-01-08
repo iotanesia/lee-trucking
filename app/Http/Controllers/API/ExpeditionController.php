@@ -327,7 +327,7 @@ class ExpeditionController extends Controller
           $statusActivityId = GlobalParam::where('param_code', $expeditionActivity->status_activity)->select('id')->first();
               
           unset($data['otv_payment_method']);
-          unset($data['status_activity']);
+          // unset($data['status_activity']);
 
           foreach($data as $key => $row) {
             $exStatusActivity->{$key} = $row;
