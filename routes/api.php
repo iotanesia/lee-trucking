@@ -25,11 +25,11 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::post('register', 'API\UserController@register');
   Route::group(['as' => 'api-user', 'prefix' => 'user'], function() {
     Route::get('/', 'Services\UserController@index');
-    Route::get('details', 'API\UserController@detailProfile');
+    Route::get('details', ['as' => '-details', 'uses' => 'API\UserController@detailProfile']);
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\UserController@getList']);
-    Route::post('add', ['as' => '-add', 'uses' => 'Services\UserController@add']);
-    Route::post('edit', ['as' => '-edit', 'uses' => 'Services\UserController@edit']);
-    Route::post('delete', ['as' => '-delete', 'uses' => 'Services\UserController@delete']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\UserController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\UserController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\UserController@delete']);
     Route::post('updatePhotoProfile', ['as' => '-updateProfile', 'uses' => 'API\UserController@updatePhotoProfile']);
     Route::post('updatePassword', ['as' => '-updatePassword', 'uses' => 'API\UserController@updatePassword']);
   });

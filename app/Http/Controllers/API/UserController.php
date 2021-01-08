@@ -76,7 +76,6 @@ class UserController extends Controller
 
   public function register(Request $request)
   {
-    
       $input = $request->all();
       $validator = Validator::make($request->all(), [
           'name' => 'required',
@@ -86,7 +85,7 @@ class UserController extends Controller
       ]);
 
       $userAuth = Auth::user();
-      $current_date_time = Carbon::now()->toDateTimeString(); 
+      $current_date_time = Carbon::now()->toDateTimeString();
       if ($validator->fails()) {
         return response()->json([
           'code' => 401,
@@ -144,8 +143,55 @@ class UserController extends Controller
           'data'=> null
         ], 400);
       }       
+  }
+
+  public function edit(Request $request)
+  {
+      $input = $request->all();
+      $validator = Validator::make($request->all(), [
+          'name' => 'required',
+          'email' => 'required|email|unique:users,email,'.$input['id'].',id',
+          'password' => 'nullable',
+          'password_confirmation' => 'nullable|same:password'
+      ]);
+
+      $userAuth = Auth::user();
+      $current_date_time = Carbon::now()->toDateTimeString();
+      if ($validator->fails()) {
+        return response()->json([
+          'code' => 401,
+          'code_message' => 'Fail',
+          'code_type' => 'BadRequest',
+          'data'=> null
+        ], 401);      
+      }
+
+      $user = User::find($input['id']);
       
-    
+      unset($input['_token']);
+      unset($input['password_confirmation']);
+  
+      foreach($input as $key => $row) {
+          if($row) {
+              $user->{$key} = $row;
+          }
+      }
+
+      if($user->save()){
+        return response()->json([
+            'code' => 200,
+            'code_message' => 'Berhasil menyimpan data',
+            'code_type' => 'Success',
+          ], 200);
+
+      }else{
+          return response()->json([
+          'code' => 400,
+          'code_message' => 'Gagal menyimpan user',
+          'code_type' => 'BadRequest',
+          'data'=> null
+        ], 400);
+      }       
   }
 
   public function details()
@@ -163,18 +209,19 @@ class UserController extends Controller
   public function getList(Request $request) {
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $whereField = 'name, email, customer.nama';
+        $whereField = 'name, email, usr_groups.group_name';
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-        $userList = User::where(function($query) use($whereField, $whereValue) {
-                           if($whereValue) {
-                             foreach(explode(', ', $whereField) as $idx => $field) {
-                               $query->orWhere($field, 'LIKE', "%".$whereValue."%");
-                             }
-                           }
-                         })
-                         ->select('users.*')
-                         ->orderBy('id', 'ASC')
-                         ->paginate();
+        $userList = User::join(Auth::user()->schema.'.usr_group as usr_groups', 'users.group_id', 'usr_groups.id')
+                    ->where(function($query) use($whereField, $whereValue) {
+                        if($whereValue) {
+                            foreach(explode(', ', $whereField) as $idx => $field) {
+                            $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                            }
+                        }
+                    })
+                    ->select('users.*', 'usr_groups.group_name')
+                    ->orderBy('users.id', 'ASC')
+                    ->paginate();
         
         foreach($userList as $row) {
           $row->data_json = $row->toJson();
@@ -185,14 +232,14 @@ class UserController extends Controller
             'code' => 404,
             'code_message' => 'Data tidak ditemukan',
             'code_type' => 'BadRequest',
-            'data'=> $userList
+            'result'=> $userList
           ], 404);
         }else{
           return response()->json([
             'code' => 200,
             'code_message' => 'Success',
             'code_type' => 'Success',
-            'data'=> $userList
+            'result'=> $userList
           ], 200);
         }
 
@@ -201,10 +248,12 @@ class UserController extends Controller
             'code' => 405,
             'code_message' => 'Method salah',
             'code_type' => 'BadRequest',
-            'data'=> null
+            'result'=> null
         ], 405);
       }
   }
+
+
 
   public function updatePassword(Request $request)
   {

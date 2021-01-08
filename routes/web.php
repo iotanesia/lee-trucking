@@ -34,3 +34,4 @@ Route::get('/expedition-tracking', 'ExpeditionController@indexTracking')->name('
 Route::get('/approval-ojk-driver', 'ExpeditionController@indexApprove')->name('approval-ojk-driver');
 Route::get('/approval-otv', 'ExpeditionController@indexApproveOtv')->name('approval-otv');
 Route::get('/coa', 'CoaController@index')->name('coa');
+Route::get('/user', 'UserController@index')->name('user');
