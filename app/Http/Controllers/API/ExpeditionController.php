@@ -313,7 +313,6 @@ class ExpeditionController extends Controller
 
         $expeditionActivity->otv_payment_method = $request->otv_payment_method;
         $expeditionActivity->status_activity = $request->status_activity;
-        $expeditionActivity->long_lat = $request->long_lat;
         $expeditionActivity->bank_name = $request->bank_name;
         $expeditionActivity->no_rek = $request->no_rek;
         $expeditionActivity->approval_by = $idUser;
@@ -322,7 +321,6 @@ class ExpeditionController extends Controller
           
         unset($data['otv_payment_method']);
         unset($data['status_activity']);
-        unset($data['long_lat']);
         unset($data['bank_name']);
         unset($data['no_rek']);
           foreach($data as $key => $row) {
