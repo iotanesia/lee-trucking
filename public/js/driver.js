@@ -16,6 +16,12 @@ $("document").ready(function(){
     },
   });
 
+   $("#user_id").select2({
+       placeholder:"Select User"
+   }).on('select2:select', function (e) {
+      $("#driver_name").val($('#user_id :selected').text());
+   });
+
   $("#btn-submit").click(function(){
     var event = $("#driver-modal #btn-submit").attr("el-event");
     var data = new FormData($("#driver-form")[0]);
