@@ -321,8 +321,6 @@ class ExpeditionController extends Controller
         
         $expeditionActivity->otv_payment_method = $request->otv_payment_method;
         $expeditionActivity->status_activity = $request->status_activity;
-        $expeditionActivity->bank_name = $request->bank_name;
-        $expeditionActivity->no_rek = $request->no_rek;
         $expeditionActivity->updated_by = $idUser;
         $expeditionActivity->updated_at = $current_date_time;
         if($expeditionActivity->save()){
@@ -330,8 +328,6 @@ class ExpeditionController extends Controller
               
           unset($data['otv_payment_method']);
           unset($data['status_activity']);
-          unset($data['bank_name']);
-          unset($data['no_rek']);
 
           foreach($data as $key => $row) {
             $exStatusActivity->{$key} = $row;
@@ -353,7 +349,7 @@ class ExpeditionController extends Controller
                 $coaActivity->ex_id = $expeditionActivity->id;
                 $coaActivity->created_at = $expeditionActivity->created_at;
                 $coaActivity->created_by = $expeditionActivity->created_by;
-                $coaActivity->rek_name = $expeditionActivity->bank_name;
+                $coaActivity->rek_name = $exStatusActivity->rek_name;
                 $coaActivity->save();
               }
             }else if($expeditionActivity->status_activity == 'DRIVER_SELESAI_EKSPEDISI'){
@@ -371,7 +367,7 @@ class ExpeditionController extends Controller
                   $coaActivity->ex_id = $expeditionActivity->id;
                   $coaActivity->created_at = $expeditionActivity->created_at;
                   $coaActivity->created_by = $expeditionActivity->created_by;
-                  $coaActivity->rek_name = $expeditionActivity->bank_name;
+                  $coaActivity->rek_name = $exStatusActivity->rek_name;
                   $coaActivity->save();
                 }
                 $exStatusActivity->save();
@@ -390,7 +386,7 @@ class ExpeditionController extends Controller
                 $coaActivity->ex_id = $expeditionActivity->id;
                 $coaActivity->created_at = $expeditionActivity->created_at;
                 $coaActivity->created_by = $expeditionActivity->created_by;
-                $coaActivity->rek_name = $expeditionActivity->bank_name;
+                $coaActivity->rek_name = $exStatusActivity->rek_name;
                 $coaActivity->save();
               }
               foreach($idCoaSheet3 as $key => $row) {
@@ -404,7 +400,7 @@ class ExpeditionController extends Controller
                 $coaActivity->ex_id = $expeditionActivity->id;
                 $coaActivity->created_at = $expeditionActivity->created_at;
                 $coaActivity->created_by = $expeditionActivity->created_by;
-                $coaActivity->rek_name = $expeditionActivity->bank_name;
+                $coaActivity->rek_name = $exStatusActivity->rek_name;
                 $coaActivity->save();
             }
               $exStatusActivity->save();
