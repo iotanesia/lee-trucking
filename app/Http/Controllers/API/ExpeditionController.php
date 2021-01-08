@@ -185,7 +185,12 @@ class ExpeditionController extends Controller
         ->orderBy('ex_status_activity.updated_at', 'DESC')
         ->select('all_global_param.param_code as approval_code', 
         'all_global_param.param_name as approval_name', 'ex_status_activity.keterangan')->first();
-        
+        $allglobalParam = GlobalParam::where('param_code', $row->otv_payment_method)->first();
+        if(isset($allglobalParam)){
+          $row->otv_payment_method_name = $allglobalParam['param_name'];
+        }else{
+          $row->otv_payment_method_name = null;
+        }
         $row->approval_code = $approvalCode['approval_code'];
         $row->approval_name = $approvalCode['approval_name'];
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
@@ -224,7 +229,7 @@ class ExpeditionController extends Controller
       $current_date_time = Carbon::now()->toDateTimeString(); 
       DB::connection(Auth::user()->schema)->beginTransaction();
       $expeditionActivity = new ExpeditionActivity;
-      
+      $masterOjk = OJK::where('id', $data['ojk_id'])->select('harga_otv', 'harga_otv')->first();
       $this->validate($request, [
         // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
         // 'ExpeditionActivity_name' => 'required|string|max:255',
@@ -238,7 +243,8 @@ class ExpeditionController extends Controller
         $expeditionActivity->{$key} = $row;
         $expeditionActivity->status_activity = 'SUBMIT';
       }
-
+      $expeditionActivity->harga_ojk = $masterOjk['harga_ojk'];
+      $expeditionActivity->harga_otv = $masterOjk['harga_otv'];
       $expeditionActivity->created_at = $current_date_time;
       $expeditionActivity->created_by = $idUser;
       $expeditionActivity->user_id = $idUser;
@@ -335,9 +341,9 @@ class ExpeditionController extends Controller
           $exStatusActivity->approval_at = $current_date_time;
           if($exStatusActivity->save()){
             if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
-              $coaActivity = new CoaActivity();
               $idCoaSheet = array(30, 27, 29, 26);
               foreach($idCoaSheet as $key => $row) {
+                $coaActivity = new CoaActivity();
                 $coaActivity->activity_id = $statusActivityId['id'];
                 $coaActivity->activity_name = $expeditionActivity->status_activity;
                 $coaActivity->status = 'ACTIVE';
@@ -351,11 +357,11 @@ class ExpeditionController extends Controller
                 $coaActivity->save();
               }
             }else if($expeditionActivity->status_activity == 'DRIVER_SELESAI_EKSPEDISI'){
-              $coaActivity = new CoaActivity();
               if($expeditionActivity->harga_otv == $exStatusActivity->nominal){
                 $exStatusActivity->nominal_kurang_bayar = 0;
-                $idCoaSheet = array(18, 17, 20, 19);
-                foreach($idCoaSheet as $key => $row) {
+                $idCoaSheet1 = array(18, 17, 20, 19);
+                foreach($idCoaSheet1 as $key => $row) {
+                  $coaActivity = new CoaActivity();
                   $coaActivity->activity_id = $statusActivityId['id'];
                   $coaActivity->activity_name = $expeditionActivity->status_activity;
                   $coaActivity->status = 'ACTIVE';
@@ -371,9 +377,10 @@ class ExpeditionController extends Controller
                 $exStatusActivity->save();
               }else if($exStatusActivity->nominal < $expeditionActivity->harga_otv){
                 $exStatusActivity->nominal_kurang_bayar = $expeditionActivity->harga_otv - $exStatusActivity->nominal;
-                $idCoaSheet1 = array(18, 17, 20, 19);
-                $idCoaSheet2 = array(8, 7, 10, 9);
-                foreach($idCoaSheet1 as $key => $row) {
+                $idCoaSheet2 = array(18, 17, 20, 19);
+                $idCoaSheet3 = array(8, 7, 10, 9);
+                foreach($idCoaSheet2 as $key => $row) {
+                $coaActivity = new CoaActivity();
                 $coaActivity->activity_id = $statusActivityId['id'];
                 $coaActivity->activity_name = $expeditionActivity->status_activity;
                 $coaActivity->status = 'ACTIVE';
@@ -386,7 +393,8 @@ class ExpeditionController extends Controller
                 $coaActivity->rek_name = $expeditionActivity->bank_name;
                 $coaActivity->save();
               }
-              foreach($idCoaSheet2 as $key => $row) {
+              foreach($idCoaSheet3 as $key => $row) {
+                $coaActivity = new CoaActivity();
                 $coaActivity->activity_id = $statusActivityId['id'];
                 $coaActivity->activity_name = $expeditionActivity->status_activity;
                 $coaActivity->status = 'ACTIVE';
