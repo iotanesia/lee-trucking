@@ -353,8 +353,9 @@ class ExpeditionController extends Controller
                 $coaActivity->save();
               }
             }else if($expeditionActivity->status_activity == 'DRIVER_SELESAI_EKSPEDISI'){
-              if($expeditionActivity->harga_otv == $exStatusActivity->nominal){
+              if($expeditionActivity->harga_otv == $request->nominal){
                 $exStatusActivity->nominal_kurang_bayar = 0;
+                $exStatusActivity->save();
                 $idCoaSheet1 = array(18, 17, 20, 19);
                 foreach($idCoaSheet1 as $key => $row) {
                   $coaActivity = new CoaActivity();
@@ -362,7 +363,7 @@ class ExpeditionController extends Controller
                   $coaActivity->activity_name = $expeditionActivity->status_activity;
                   $coaActivity->status = 'ACTIVE';
                   $coaActivity->nominal = $exStatusActivity->nominal;
-                  $coaActivity->rek_no = $expeditionActivity->no_rek;
+                  $coaActivity->rek_no = $exStatusActivity->no_rek;
                   $coaActivity->coa_id = $row;
                   $coaActivity->ex_id = $expeditionActivity->id;
                   $coaActivity->created_at = $expeditionActivity->created_at;
@@ -370,9 +371,9 @@ class ExpeditionController extends Controller
                   $coaActivity->rek_name = $exStatusActivity->rek_name;
                   $coaActivity->save();
                 }
+              }else if($request->nominal < $expeditionActivity->harga_otv){
+                $exStatusActivity->nominal_kurang_bayar = $expeditionActivity->harga_otv - $request->nominal;
                 $exStatusActivity->save();
-              }else if($exStatusActivity->nominal < $expeditionActivity->harga_otv){
-                $exStatusActivity->nominal_kurang_bayar = $expeditionActivity->harga_otv - $exStatusActivity->nominal;
                 $idCoaSheet2 = array(18, 17, 20, 19);
                 $idCoaSheet3 = array(8, 7, 10, 9);
                 foreach($idCoaSheet2 as $key => $row) {
@@ -381,7 +382,7 @@ class ExpeditionController extends Controller
                 $coaActivity->activity_name = $expeditionActivity->status_activity;
                 $coaActivity->status = 'ACTIVE';
                 $coaActivity->nominal = $exStatusActivity->nominal;
-                $coaActivity->rek_no = $expeditionActivity->no_rek;
+                $coaActivity->rek_no = $exStatusActivity->no_rek;
                 $coaActivity->coa_id = $row;
                 $coaActivity->ex_id = $expeditionActivity->id;
                 $coaActivity->created_at = $expeditionActivity->created_at;
@@ -395,7 +396,7 @@ class ExpeditionController extends Controller
                 $coaActivity->activity_name = $expeditionActivity->status_activity;
                 $coaActivity->status = 'ACTIVE';
                 $coaActivity->nominal = $exStatusActivity->nominal_kurang_bayar;
-                $coaActivity->rek_no = $expeditionActivity->no_rek;
+                $coaActivity->rek_no = $exStatusActivity->no_rek;
                 $coaActivity->coa_id = $row;
                 $coaActivity->ex_id = $expeditionActivity->id;
                 $coaActivity->created_at = $expeditionActivity->created_at;
@@ -403,7 +404,6 @@ class ExpeditionController extends Controller
                 $coaActivity->rek_name = $exStatusActivity->rek_name;
                 $coaActivity->save();
             }
-              $exStatusActivity->save();
             }
           }
             if(isset($img)){
