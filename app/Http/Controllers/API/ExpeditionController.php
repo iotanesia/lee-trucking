@@ -409,11 +409,11 @@ class ExpeditionController extends Controller
                 }
 
               }else if($request->nominal < $expeditionActivity->harga_otv){
-                $exStatusActivity->img = $data['img'] ? $data['img'] :  $lastExActivity->img;
-                $exStatusActivity->nominal = $data['nominal'] ? $data['nominal'] :  $lastExActivity->nominal;
-                $exStatusActivity->rek_name = $data['rek_name'] ? $data['rek_name'] :  $lastExActivity->rek_name;
-                $exStatusActivity->no_rek = $data['no_rek'] ? $data['no_rek'] :  $lastExActivity->no_rek;
-                $exStatusActivity->long_lat = $data['long_lat'] ? $data['long_lat'] :  $lastExActivity->long_lat;
+                $exStatusActivity->img = isset($data['img']) ? $data['img'] :  $lastExActivity->img;
+                $exStatusActivity->nominal = isset($data['nominal']) ? $data['nominal'] :  $lastExActivity->nominal;
+                $exStatusActivity->rek_name = isset($data['rek_name']) ? $data['rek_name'] :  $lastExActivity->rek_name;
+                $exStatusActivity->no_rek = isset($data['no_rek']) ? $data['no_rek'] :  $lastExActivity->no_rek;
+                $exStatusActivity->long_lat = isset($data['long_lat']) ? $data['long_lat'] :  $lastExActivity->long_lat;
                 $exStatusActivity->nominal_kurang_bayar = $expeditionActivity->harga_otv - $request->nominal;
                 $exStatusActivity->save();
                 $idCoaSheet2 = array(18, 17, 20, 19);
