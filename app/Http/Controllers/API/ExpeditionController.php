@@ -12,6 +12,7 @@ use App\Models\CoaActivity;
 use App\Models\Driver;
 use App\Models\UserDetail;
 use App\Models\GlobalParam;
+use App\Models\Group;
 use Auth;
 use DB;
 use Carbon\Carbon;
@@ -153,6 +154,9 @@ class ExpeditionController extends Controller
       $data = $request->all();
       $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $groupAdmin = Group::where('group_name', 'Admin Kantor')->first();
+      $groupOwner = Group::where('group_name', 'Owner')->first();
+      $groupId = Auth::user()->group_id;
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -171,30 +175,44 @@ class ExpeditionController extends Controller
                        }
                      }
                    })
+                   ->where(function($query) use($groupOwner, $groupId) {
+                        if($groupId == $groupOwner->id) {
+                            $query->where('status_activity', 'DRIVER_SELESAI_EKSPEDISI')
+                                  ->where('otv_payment_method', 'NON_TUNAI')
+                                  ->orWhere('status_activity', 'WAITING_OWNER');
+                        }
+                   })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                              'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
                    ->orderBy('id', 'ASC')
                    ->paginate();
       
-      foreach($expeditionActivityList as $row) {
-            
-        $approvalCode = ExStatusActivity::leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
-        ->where('ex_status_activity.ex_id',$row->id)
-        ->where('all_global_param.param_type', 'EX_STATUS_APPROVAL')
-        ->orderBy('ex_status_activity.updated_at', 'DESC')
-        ->select('all_global_param.param_code as approval_code', 
-        'all_global_param.param_name as approval_name', 'ex_status_activity.keterangan')->first();
-        $allglobalParam = GlobalParam::where('param_code', $row->otv_payment_method)->first();
-        if(isset($allglobalParam)){
-          $row->otv_payment_method_name = $allglobalParam['param_name'];
-        }else{
-          $row->otv_payment_method_name = null;
-        }
-        $row->approval_code = $approvalCode['approval_code'];
-        $row->approval_name = $approvalCode['approval_name'];
-        $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
-        $row->data_json = $row->toJson();
+      foreach($expeditionActivityList as $key => $row) {
+        //   if(($row->otv_payment_method == "NON_TUNAI" && $row->status_activity == "DRIVER_SELESAI_EKSPEDISI" && $groupId == $groupOwner->id) || ($row->status_activity == "WAITING_OWNER")) {
+              $approvalCode = ExStatusActivity::leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
+                              ->where('ex_status_activity.ex_id',$row->id)
+                              ->where('all_global_param.param_type', 'EX_STATUS_APPROVAL')
+                              ->orderBy('ex_status_activity.updated_at', 'DESC')
+                              ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.keterangan')->first();
+    
+              $allglobalParam = GlobalParam::where('param_code', $row->otv_payment_method)->first();
+    
+              if(isset($allglobalParam)){
+                $row->otv_payment_method_name = $allglobalParam['param_name'];
+              
+              }else{
+                $row->otv_payment_method_name = null;
+              }
+    
+              $row->approval_code = $approvalCode['approval_code'];
+              $row->approval_name = $approvalCode['approval_name'];
+              $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
+              $row->data_json = $row->toJson();
+
+        //   } else {
+        //       unset($expeditionActivityList[$key]);
+        //   }
       }
 
       if(!isset($expeditionActivityList)){
