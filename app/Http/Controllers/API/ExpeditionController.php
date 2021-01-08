@@ -311,52 +311,44 @@ class ExpeditionController extends Controller
 
         unset($data['update_lates_status']);
 
-        foreach($data as $key => $row) {
-          $exStatusActivity->{$key} = $row;
-        }
-
         $expeditionActivity->otv_payment_method = $request->otv_payment_method;
         $expeditionActivity->status_activity = $request->status_activity;
-        $exStatusActivity->approval_by = $idUser;
-        $exStatusActivity->approval_at = $current_date_time;
-
-        if($exStatusActivity->save() && $expeditionActivity->save()){
-          if(isset($img)){
-            //upload image
-            $fileExt = $img->extension();
-            $fileName = "IMG-EXPEDITION-".$exStatusActivity->id.$exStatusActivity->ex_id.".".$fileExt;
-            $path = public_path().'/uploads/expedition/' ;
-            $oldFile = $path.$exStatusActivity->id.$exStatusActivity->ex_id;
-   
-            $exStatusActivity->img = $fileName;
-            $img->move($path, $fileName);
-            $exStatusActivity->save();
-         }
-            return response()->json([
-              'code' => 200,
-              'code_message' => 'Berhasil menyimpan data',
-              'code_type' => 'Success',
-            ], 200);
-          } else {
-            return response()->json([
-              'code' => 401,
-              'code_message' => 'Gagal menyimpan data',
-              'code_type' => 'BadRequest',
-            ], 401);
-          }
-
-        }else{
-          foreach($data as $key => $row) {
-            $expeditionActivity->{$key} = $row;
-          }
-
-          if($expeditionActivity->save()){
-            return response()->json([
-              'code' => 200,
-              'code_message' => 'Berhasil menyimpan data',
-              'code_type' => 'Success',
-            ], 200);
+        $expeditionActivity->long_lat = $request->long_lat;
+        $expeditionActivity->bank_name = $request->bank_name;
+        $expeditionActivity->no_rek = $request->no_rek;
+        $expeditionActivity->approval_by = $idUser;
+        $expeditionActivity->approval_at = $current_date_time;
+        if($expeditionActivity->save()){
           
+        unset($data['otv_payment_method']);
+        unset($data['status_activity']);
+        unset($data['long_lat']);
+        unset($data['bank_name']);
+        unset($data['no_rek']);
+          foreach($data as $key => $row) {
+            $exStatusActivity->{$key} = $row;
+          }
+
+          $exStatusActivity->approval_by = $idUser;
+          $exStatusActivity->approval_at = $current_date_time;
+          if($exStatusActivity->save()){
+            if(isset($img)){
+              //upload image
+              $fileExt = $img->extension();
+              $fileName = "IMG-EXPEDITION-".$exStatusActivity->id.$exStatusActivity->ex_id.".".$fileExt;
+              $path = public_path().'/uploads/expedition/' ;
+              $oldFile = $path.$exStatusActivity->id.$exStatusActivity->ex_id;
+     
+              $exStatusActivity->img = $fileName;
+              $img->move($path, $fileName);
+              $exStatusActivity->save();
+           }
+          }
+            return response()->json([
+              'code' => 200,
+              'code_message' => 'Berhasil menyimpan data',
+              'code_type' => 'Success',
+            ], 200);
           } else {
             return response()->json([
               'code' => 401,
