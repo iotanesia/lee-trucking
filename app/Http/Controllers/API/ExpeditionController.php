@@ -182,6 +182,12 @@ class ExpeditionController extends Controller
                                   ->orWhere('status_activity', 'WAITING_OWNER');
                         }
                    })
+                   ->where(function($query) use($groupAdmin, $groupId) {
+                        if($groupId == $groupAdmin->id) {
+                            $query->where('status_activity', 'DRIVER_SELESAI_EKSPEDISI')
+                                  ->where('otv_payment_method', 'TUNAI');
+                        }
+                   })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                              'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
