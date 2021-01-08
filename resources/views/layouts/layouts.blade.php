@@ -246,6 +246,7 @@
   <script src="assets/vendor/chart.js/dist/Chart.min.js"></script>
   <script src="assets/vendor/chart.js/dist/Chart.extension.js"></script>
   <script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
+  <script src="{{url('assets/js/fslightbox.js')}}"></script>
   <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
   <script src="daterangepicker/moment.min.js"></script>
   <script src="daterangepicker/daterangepicker.js"></script>

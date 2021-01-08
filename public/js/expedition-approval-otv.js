@@ -157,6 +157,8 @@ $("document").ready(function() {
         $("#expedition-form").find("input[name=ex_id]").val(dataJSON.id);
         $("#expedition-modal #btn-submit").attr("el-event", "edit");
         $("#expedition-form").find("textarea[name=content]").summernote("code", dataJSON.content);
+        $("#expedition-form #img").attr("src", dataJSON.otv_image);
+        // $("#expedition-form #flash-img").attr("href", dataJSON.otv_image);
 
         if(dataJSON.status_activity !== "SUBMIT") {
             $("#expedition-modal #btn-submit").hide();
@@ -238,6 +240,7 @@ $("document").ready(function() {
       } else if(responses.data[i].approval_code == null){
           approval_name = '-';
           classColors = '';
+
       } else {
           classColors = 'badge-danger';
       }
