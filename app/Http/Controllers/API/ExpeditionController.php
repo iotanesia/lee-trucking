@@ -475,6 +475,13 @@ class ExpeditionController extends Controller
             ], 401);
           }
         }
+        
+        return response()->json([
+            'code' => 200,
+            'code_message' => 'Berhasil menyimpan data',
+            'code_type' => 'Success',
+          ], 200);
+
       } else {
         return response()->json([
           'code' => 405,
