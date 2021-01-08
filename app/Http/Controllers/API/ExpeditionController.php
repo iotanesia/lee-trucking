@@ -229,7 +229,7 @@ class ExpeditionController extends Controller
       $current_date_time = Carbon::now()->toDateTimeString(); 
       DB::connection(Auth::user()->schema)->beginTransaction();
       $expeditionActivity = new ExpeditionActivity;
-      $masterOjk = OJK::where('id', $data['ojk_id'])->select('harga_otv', 'harga_otv')->first();
+      $masterOjk = OJK::where('id', $data['ojk_id'])->select('harga_otv', 'harga_ojk')->first();
       $this->validate($request, [
         // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
         // 'ExpeditionActivity_name' => 'required|string|max:255',
