@@ -424,3 +424,9 @@ function def(element) {
 
     return element
 }
+
+$("#btn-search-trigger").on('keypress',function(e) {
+    if(e.which == 13) {
+        document.getElementById("search-data").click();
+    }
+});

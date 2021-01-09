@@ -3,6 +3,18 @@ $("document").ready(function() {
         placeholder:"Select Driver"
     });
 
+    $("#otv_payment_method").select2({
+        placeholder:"Select Payment"
+    });
+
+    $("#truck_id").select2({
+        placeholder:"Select Truck"
+    });
+
+    $("#kenek_id").select2({
+        placeholder:"Select Kenek"
+    });
+
     $("#tgl_inv").daterangepicker({
         locale: {
             format: 'DD-MM-YYYY'
@@ -36,8 +48,7 @@ $("document").ready(function() {
             },
             success: function(res, textStatus, xhr) {
               $('.preloader').hide();
-              $("#kenek_id").val(res.data.kenek_name)
-              $("#kenek_id").attr("disabled", true)
+              $("#kenek_id").val(res.data.id).trigger("change");
             },
           });
     });

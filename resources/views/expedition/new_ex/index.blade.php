@@ -37,16 +37,23 @@
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
                   <h5 class="h3 mb-0">Table {{$title}}</h5>
                 </div>
+                <div class="navbar-search navbar-search-light form-inline mr-sm-3">
+                    <div class="form-group mb-0">
+                        <div class="input-group input-group-alternative input-group-merge">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="expedition" placeholder="Search Key">
+                        </div>
+                    </div>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="expedition"><i class="fa fa-search"></i></a>
+                </div>
               </div>
             </div>
             <div class="card-body">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control has-primary" name="search_value" data-model="expedition" placeholder="Search Key">
-                    <div class="input-group-append">
-                        <a type="button" class="input-group-text btn-sm btn-flat" id="search-data" el-event="search-data" data-model="expedition"><i class="fa fa-search"></i></a>
-                        <a type="button" class="input-group-text btn-sm btn-flat bg-primary text-white"  data-toggle="modal" data-target="#expedition-modal"><i class="fa fa-plus"></i></a>
-                    </div>
-                </div>
+                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#expedition-modal">
+                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+                </button>
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush table-striped" id="table-expedition" data-model="expedition" request-url="{{ route('api-expedition') }}" on-success-load="successLoadexpedition">
                         <thead class="bg-gradient-info text-white">
@@ -111,39 +118,58 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="nomor_inv">Nomor Invoice</label>
-                            <input type="text" class="form-control" name="nomor_inv" id="nomor_inv" placeholder="Nomor Invoice">
+                            <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-receipt"></i></span>
+                                </div>
+                                <input class="form-control" name="nomor_inv" id="nomor_inv" placeholder="Nomor Invoice" type="text">
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="pabrik_pesanan">Pabrik Pesanan</label>
-                            <input type="text" name="pabrik_pesanan" id="pabrik_pesanan" class="form-control" placeholder="Pabrik Pesanan">
+                            <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                </div>
+                                <input type="text" name="pabrik_pesanan" id="pabrik_pesanan" class="form-control" placeholder="Pabrik Pesanan">
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="nama_barang">Nama Barang</label>
-                            <input type="text" name="nama_barang" id="nama_barang" class="form-control" placeholder="Nama Barang">
+                            <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+                                </div>
+                                <input type="text" name="nama_barang" id="nama_barang" class="form-control" placeholder="Nama Barang">
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="ojk">Jumlah Palet</label>
-                            <input type="text" name="jumlah_palet" id="jumlah_palet" class="form-control" placeholder="Jumlah Palet">
+                            <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-infinity"></i></span>
+                                </div>
+                                <input type="text" name="jumlah_palet" id="jumlah_palet" class="form-control" placeholder="Jumlah Palet">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="tgl_inv">Tanggal Invoice</label>
-                            <input type="text" name="tgl_inv" id="tgl_inv" class="form-control" placeholder="Tanggal Invoice">
+                            <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input type="text" name="tgl_inv" id="tgl_inv" class="form-control" placeholder="Tanggal Invoice">
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="form-control-label" for="jenis_surat_jalan">Jenis Surat Jalan</label>
                             <select name="jenis_surat_jalan" class="form-control" id="jenis_surat_jalan">
                                 <option value=""></option>
                                 @foreach($sj_type as $row)
@@ -163,22 +189,37 @@
                             <select name="ojk_id" class="form-control" id="tujuan"></select>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3">                
+                        <label class="form-control-label" for="ojk">OJK</label>
                         <div class="form-group">
-                            <label class="form-control-label" for="ojk">OJK</label>
-                            <input class="form-control" name="harga_ojk" id="ojk">
+                            <div class="input-group input-group-merge">                            
+                                <input class="form-control" name="harga_ojk" placeholder="Harga OJK" id="ojk">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">OTV</label>
-                            <input class="form-control" name="harga_otv" id="otv">
+                            <div class="input-group input-group-merge">
+                                <input class="form-control" name="harga_otv" id="otv" placeholder="Harga OTV" >
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="tgl_po">Tanggal Kirim</label>
-                            <input type="text" name="tgl_po" id="tgl_po" class="form-control" placeholder="Tanggal Kirim">
+                            <div class="input-group input-group-merge">
+                                <input type="text" name="tgl_po" id="tgl_po" class="form-control" placeholder="Tanggal Kirim">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -186,7 +227,12 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="toko">Toko</label>
-                            <input class="form-control" name="toko" id="toko">
+                            <div class="input-group input-group-merge">
+                                <input class="form-control" name="toko" id="toko" placeholder="Toko" type="text">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="far fa-building"></i></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -205,25 +251,45 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="no_rek">Nomor Rekening Driver</label>
-                            <input class="form-control" name="no_rek" id="no_rek">
+                            <div class="input-group input-group-merge">
+                                <input class="form-control" name="no_rek" id="no_rek" placeholder="Nomor Rekening Driver">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="bank_name">Nama Bank</label>
-                            <input class="form-control" name="bank_name" id="bank_name">
+                            <div class="input-group input-group-merge">
+                                <input class="form-control" name="bank_name" id="bank_name" placeholder="Nama Bank">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-landmark"></i></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="nama_penerima">Nama Penerima Rekening</label>
-                            <input class="form-control" name="nama_penerima" id="nama_penerima">
+                            <div class="input-group input-group-merge">
+                                <input class="form-control" name="nama_penerima" placeholder="Nama Penerima Rekening" id="nama_penerima">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-landmark"></i></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="nomor_hp_penerima">Nomor hp Penerima</label>
-                            <input class="form-control" name="nomor_hp_penerima" id="nomor_hp_penerima">
+                            <div class="input-group input-group-merge">
+                                <input class="form-control" name="nomor_hp_penerima" id="nomor_hp_penerima" placeholder="Nomor Hp">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -254,7 +320,12 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="kenek_id">Kenek</label>
-                            <input name="" class="form-control" id="kenek_id">
+                            <select name="kenek_id" id="kenek_id" class="form-control">
+                                <option value=""></option>
+                                @foreach($kenek as $row)
+                                <option value="{{$row->id}}">{{$row->kenek_name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>

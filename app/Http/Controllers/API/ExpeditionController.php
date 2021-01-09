@@ -22,7 +22,7 @@ class ExpeditionController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'ExpeditionActivity_name';
+      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
@@ -37,7 +37,7 @@ class ExpeditionController extends Controller
                    ->where(function($query) use($whereField, $whereValue) {
                      if($whereValue) {
                        foreach(explode(', ', $whereField) as $idx => $field) {
-                         $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                         $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                        }
                      }
                    })
@@ -85,7 +85,7 @@ class ExpeditionController extends Controller
   public function getListApprovalOjk(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name';
+      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $expeditionActivityList = ExpeditionActivity::
                      leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
@@ -152,7 +152,7 @@ class ExpeditionController extends Controller
   public function getListApprovalOtv(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name';
+      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $groupAdmin = Group::where('group_name', 'Admin Kantor')->first();
       $groupOwner = Group::where('group_name', 'Owner')->first();
