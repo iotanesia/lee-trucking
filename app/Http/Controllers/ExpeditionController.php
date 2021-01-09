@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\Truck;
 use App\Models\Driver;
+use App\Models\Kenek;
 use App\Models\GlobalParam;
 use App\Models\ExpeditionActivity;
 use Auth;
@@ -36,6 +37,7 @@ class ExpeditionController extends Controller
         $data['group'] = ExpeditionActivity::where('is_deleted', 'f')->get();
         $data['driver'] = Driver::where('is_deleted', 'f')->get();
         $data['truck'] = Truck::where('is_deleted', 'f')->get();
+        $data['kenek'] = Kenek::where('is_deleted', 'f')->get();
 
         return view('expedition.new_ex.index', $data);
     }
@@ -49,6 +51,7 @@ class ExpeditionController extends Controller
         $data['group'] = ExpeditionActivity::where('is_deleted', 'f')->get();
         $data['driver'] = Driver::where('is_deleted', 'f')->get();
         $data['truck'] = Truck::where('is_deleted', 'f')->get();
+        $data['kenek'] = Kenek::where('is_deleted', 'f')->get();
 
         return view('expedition.tracking.index', $data);
     }
@@ -62,6 +65,7 @@ class ExpeditionController extends Controller
         $data['group'] = ExpeditionActivity::where('is_deleted', 'f')->get();
         $data['driver'] = Driver::where('is_deleted', 'f')->get();
         $data['truck'] = Truck::where('is_deleted', 'f')->get();
+        $data['kenek'] = Kenek::where('is_deleted', 'f')->get();
 
         return view('expedition.approval.index', $data);
     }
@@ -75,6 +79,7 @@ class ExpeditionController extends Controller
         $data['group'] = ExpeditionActivity::where('is_deleted', 'f')->get();
         $data['driver'] = Driver::where('is_deleted', 'f')->get();
         $data['truck'] = Truck::where('is_deleted', 'f')->get();
+        $data['kenek'] = Kenek::where('is_deleted', 'f')->get();
 
         return view('expedition.approval-otv.index', $data);
     }

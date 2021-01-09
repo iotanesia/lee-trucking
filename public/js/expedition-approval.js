@@ -3,6 +3,18 @@ $("document").ready(function() {
         placeholder:"Select Driver"
     });
 
+    $("#otv_payment_method").select2({
+        placeholder:"Select Payment"
+    });
+
+    $("#truck_id").select2({
+        placeholder:"Select Truck"
+    });
+
+    $("#kenek_id").select2({
+        placeholder:"Select Kenek"
+    });
+
     $("#tgl_inv").daterangepicker({
         locale: {
             format: 'DD-MM-YYYY'
