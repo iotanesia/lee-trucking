@@ -35,3 +35,5 @@ Route::get('/approval-ojk-driver', 'ExpeditionController@indexApprove')->name('a
 Route::get('/approval-otv', 'ExpeditionController@indexApproveOtv')->name('approval-otv');
 Route::get('/coa', 'CoaController@index')->name('coa');
 Route::get('/user', 'UserController@index')->name('user');
+Route::get('/role', 'GroupController@index')->name('group');
+Route::get('/my-profile', 'HomeController@myProfile')->name('my-profile');

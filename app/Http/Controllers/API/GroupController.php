@@ -4,47 +4,46 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
-use App\Models\Truck;
+use App\Models\Group;
 use Auth;
 use Carbon\Carbon;
 
-class TruckController extends Controller
+class GroupController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'truck_plat';
+      $whereField = 'group_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $truckList = Truck::join('all_global_param', 'ex_master_truck.truck_status', 'all_global_param.id')
-                   ->join('ex_master_cabang','ex_master_truck.cabang_id', 'ex_master_cabang.id')
-                   ->where(function($query) use($whereField, $whereValue) {
+      $groupList = Group::where(function($query) use($whereField, $whereValue) {
                      if($whereValue) {
                        foreach(explode(', ', $whereField) as $idx => $field) {
-                         $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                         $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                        }
                      }
                    })
-                   ->select('ex_master_truck.*', 'all_global_param.param_name as status_name', 'ex_master_cabang.cabang_name')
-                   ->orderBy('ex_master_truck.id', 'ASC')
+                   ->where('is_deleted', false)
+                   ->select('usr_group.*')
+                   ->orderBy('usr_group.id', 'ASC')
                    ->paginate();
 
-      foreach($truckList as $row) {
+      foreach($groupList as $row) {
         $row->data_json = $row->toJson();
       }
       
-      if(!isset($truckList)){
+      if(!isset($groupList)){
         return response()->json([
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
           'code_type' => 'BadRequest',
-          'data'=> null
+          'result'=> null
         ], 404);
       }else{
         return response()->json([
           'code' => 200,
           'code_message' => 'Success',
           'code_type' => 'Success',
-          'data'=> $truckList
+          'result'=> $groupList
         ], 200);
       }
     } else {
@@ -52,7 +51,7 @@ class TruckController extends Controller
         'code' => 405,
         'code_message' => 'Method salah',
         'code_type' => 'BadRequest',
-        'data'=> null
+        'result'=> null
       ], 405);
     }
   }
@@ -60,21 +59,21 @@ class TruckController extends Controller
   public function add(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $truck = new Truck;
+      $group = new Group;
       
       $this->validate($request, [
-        // 'no_Truck' => 'required|string|max:255|unique:Truck',
-        'truck_plat' => 'required|string|max:255',
+        // 'no_group' => 'required|string|max:255|unique:group',
+        // 'group_plat' => 'required|string|max:255',
       ]);
 
       unset($data['_token']);
       unset($data['id']);
 
       foreach($data as $key => $row) {
-        $truck->{$key} = $row;
+        $group->{$key} = $row;
       }
 
-      if($truck->save()){
+      if($group->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -101,21 +100,21 @@ class TruckController extends Controller
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $truck = Truck::find($data['id']);
+      $group = Group::find($data['id']);
       
       $this->validate($request, [
-        // 'no_Truck' => 'required|string|max:255|unique:Truck,no_Truck,'.$data['id'].',id',
-        'truck_plat' => 'required|string|max:255',
+        // 'no_group' => 'required|string|max:255|unique:group,no_group,'.$data['id'].',id',
+        // 'group_plat' => 'required|string|max:255',
       ]);
       
       unset($data['_token']);
       unset($data['id']);
       
       foreach($data as $key => $row) {
-        $truck->{$key} = $row;
+        $group->{$key} = $row;
       }
 
-      if($truck->save()){
+      if($group->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -142,16 +141,16 @@ class TruckController extends Controller
   public function delete(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $truck = Truck::find($data['id']);
+      $group = Group::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
       $user_id = Auth::user()->id;
 
-      $truck->deleted_at = $current_date_time;
-      $truck->deleted_by = $user_id;
-      $truck->is_deleted = true;
+      $group->deleted_at = $current_date_time;
+      $group->deleted_by = $user_id;
+      $group->is_deleted = true;
 
 
-      if($truck->save()){
+      if($group->save()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',

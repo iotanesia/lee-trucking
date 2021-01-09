@@ -34,6 +34,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('updatePassword', ['as' => '-updatePassword', 'uses' => 'API\UserController@updatePassword']);
   });
 
+  Route::group(['as' => 'api-group', 'prefix' => 'group'], function() {
+    Route::get('/', 'Api\GroupController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\GroupController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\GroupController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\GroupController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\GroupController@delete']);
+  });
+
   Route::group(['as' => 'api-truck', 'prefix' => 'truck'], function() {
     Route::get('/', 'Api\TruckController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\TruckController@getList']);
