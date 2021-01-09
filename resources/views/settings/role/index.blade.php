@@ -24,7 +24,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-12">
-          <div class="card" id="coa"    >
+          <div class="card" id="group"    >
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
@@ -35,22 +35,18 @@
             </div>
             <div class="card-body">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control has-primary" name="search_value" data-model="coa" placeholder="Search Key">
+                    <input type="text" class="form-control has-primary" name="search_value" data-model="group" placeholder="Search Key">
                     <div class="input-group-append">
-                        <a type="button" class="input-group-text btn-sm btn-flat" id="search-data" el-event="search-data" data-model="coa"><i class="fa fa-search"></i></a>
-                        <a type="button" class="input-group-text btn-sm btn-flat bg-primary text-white"  data-toggle="modal" data-target="#coa-modal"><i class="fa fa-plus"></i></a>
+                        <a type="button" class="input-group-text btn-sm btn-flat" id="search-data" el-event="search-data" data-model="group"><i class="fa fa-search"></i></a>
+                        <a type="button" class="input-group-text btn-sm btn-flat bg-primary text-white"  data-toggle="modal" data-target="#group-modal"><i class="fa fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-coa" data-model="coa" request-url="{{ route('api-coa') }}" on-success-load="successLoadcoa">
+                    <table class="table align-items-center table-flush table-striped" id="table-group" data-model="group" request-url="{{ route('api-group') }}" on-success-load="successLoadgroup">
                         <thead class="bg-gradient-info text-white">
                         <tr>
                             <th>No</th>
-                            <th>COA Name</th>
-                            <th>COA Code</th>
-                            <th>Status</th>
-                            <th>Category</th>
-                            <th>Parent Name</th>
+                            <th>group Name</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -89,49 +85,22 @@
     </div>
   </div>
   
-<div class="modal fade" id="coa-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="group-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add COA</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Add group</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-            <form role="form" id="coa-form">
+            <form role="form" id="group-form">
                 <input type="hidden" name="id" id="id">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="coa_name">COA Name</label>
-                        <input type="text" class="form-control" name="coa_name" id="coa_name" placeholder="coa_name">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="coa_parent">Parent</label>
-                        <select name="coa_parent" class="form-control" id="coa_parent">
-                            <option value=""></option>
-                            @foreach($parent as $row)
-                            <option value="{{$row->id}}">{{$row->coa_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="coa_status">Status</label>
-                        <select name="coa_status" class="form-control" id="coa_status">
-                            <option value=""></option>
-                            @foreach($status as $row)
-                            <option value="{{$row->param_code}}">{{$row->param_name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="coa_category">COA Category</label>
-                        <select name="coa_category" class="form-control" id="coa_category">
-                            <option value=""></option>
-                            @foreach($category as $row)
-                            <option value="{{$row->param_code}}">{{$row->param_name}}</option>
-                            @endforeach
-                        </select>
+                        <label for="group_name">group Name</label>
+                        <input type="text" class="form-control" name="group_name" id="group_name" placeholder="group_name">
                     </div>
             </form>
         </div>
@@ -142,5 +111,5 @@
     </div>
 </div>
 <script src="{{asset('js/event.js')}}"></script>
-<script src="{{asset('js/coa.js')}}"></script>
+<script src="{{asset('js/group.js')}}"></script>
 @endsection

@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Customer;
-use App\Tenan;
-use App\Transaksi;
+use App\Models\UserDetail;
 use Auth;
 
 class HomeController extends Controller
@@ -41,6 +39,12 @@ class HomeController extends Controller
         $customerList = Customer::all();
         $tenanList = Tenan::all();
         return view('transaksi', compact('customerList', 'tenanList'));
+    }
+
+    public function myProfile(Request $request)
+    {
+        $data['user_detail'] = UserDetail::where('id_user', Auth::user()->id)->first();
+        return view('my_profile', $data);
     }
 
 }

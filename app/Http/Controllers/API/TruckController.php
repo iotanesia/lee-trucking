@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\Truck;
 use Auth;
+use Carbon\Carbon;
 
 class TruckController extends Controller
 {
