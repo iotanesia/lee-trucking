@@ -70,6 +70,23 @@ $("document").ready(function(){
       resetForm("#truck-form");
     }
   });
+
+  $("#truck_status").select2({
+    placeholder:"Select Status"
+  });
+
+  $("#cabang_id").select2({
+    placeholder:"Select Cabang"
+  });
+
+  $("#truck_date_join").daterangepicker({
+    locale: {
+        format: 'DD-MM-YYYY'
+    },
+    singleDatePicker : true,
+  });
+
+
 });
 
 var successLoadtruck = (function(responses, dataModel) {
@@ -89,16 +106,16 @@ var successLoadtruck = (function(responses, dataModel) {
 
     tableRows += "<tr>" +
                    "<td>"+ (i+1) +"</td>"+
-                   "<td>"+ truck_name +"</td>"+
-                   "<td>"+ truck_plat +"</td>"+
-                   "<td>"+ truck_status +"</td>"+
-                   "<td>"+ truck_corporate_asal +"</td>"+
-                   "<td>"+ truck_date_join +"</td>"+
-                   "<td>"+ cabang_id +"</td>"+
+                   "<td>"+ def(truck_name) +"</td>"+
+                   "<td>"+ def(truck_plat) +"</td>"+
+                   "<td>"+ def(truck_status) +"</td>"+
+                   "<td>"+ def(truck_corporate_asal) +"</td>"+
+                   "<td>"+ def(truck_date_join) +"</td>"+
+                   "<td>"+ def(cabang_id) +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
                        "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-animate-modal='rotateInDownLeft' data-toggle='modal' data-target='#truck-modal'><i class='fas fa-edit'></i></a>"+
-                       "<a class='btn btn-danger btn-sm btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
+                       "<a class='btn btn-danger btn-sm' href='#' el-event='edit' data-id='"+ id +"' data-url='/api/truck/delete' data-toggle='modal' data-target='#deletedModal'><i class='fa fa-trash'></i></a>"+
                      "</div>"+
                    "</td>"+
                  "</tr>";
