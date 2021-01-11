@@ -31,17 +31,27 @@
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
                   <h5 class="h3 mb-0">Table {{$title}}</h5>
                 </div>
+                <div class="navbar-search navbar-search-light form-inline mr-sm-3">
+                    <div class="form-group mb-0">
+                        <div class="input-group input-group-alternative input-group-merge">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="sparepart" placeholder="Search Key">
+                        </div>
+                    </div>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="sparepart"><i class="fa fa-search"></i></a>
+                </div>
               </div>
             </div>
             <div class="card-body">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control has-primary" name="search_value" data-model="spareparts" placeholder="Search Key">
-                    <div class="input-group-append">
-                        <a type="button" class="input-group-text btn-sm btn-flat" id="search-data" el-event="search-data" data-model="spareparts"><i class="fa fa-search"></i></a>
-                        <a type="button" class="input-group-text btn-sm btn-flat bg-primary text-white"  data-toggle="modal" data-target="#spareparts-modal"><i class="fa fa-plus"></i></a>
-                        <a type="button" class="input-group-text btn-sm btn-flat bg-success text-white"  data-toggle="modal" data-target="#spareparts-scanner-modal">Scanner</a>
-                    </div>
-                </div>
+                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#spareparts-modal">
+                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+                </button>
+                <a class="btn btn-icon btn-success mb-2" type="button" data-toggle="modal" data-target="#spareparts-scanner-modal">
+                    <span class="btn-inner--icon"><i class="fas fa-barcode text-black"></i></span>
+                    <span class="btn-inner--text text-white">Scanner</span>
+                </a>
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush table-striped" id="table-spareparts" data-model="spareparts" request-url="{{ route('api-spareparts') }}" on-success-load="successLoadspareparts">
                         <thead class="bg-gradient-info text-white">
@@ -100,7 +110,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control" name="scanner" id="scanner" placeholder="Scan Code">
+                    <div class="input-group input-group-merge">
+                        <input type="text" class="form-control" name="scanner" id="scanner" placeholder="Scan Code">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                        </div>
+                    </div>
                     <hr>
                     <div id="form-scan" style="display:none">
                         <form role="form" id="spareparts-scanner-form">
@@ -118,7 +133,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-control-label" for="sparepart_status">Status Sparepart</label>
-                                        <select name="sparepart_status" id="" class="form-control sparepart_status">
+                                        <select name="sparepart_status" id="sparepart_status" class="form-control sparepart_status">
                                         @foreach($status as $row)
                                             <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                                         @endforeach
@@ -126,7 +141,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
-                                        <select name="sparepart_type" id="" class="form-control sparepart_type">
+                                        <select name="sparepart_type" id="sparepart_type" class="form-control sparepart_type">
                                         @foreach($type as $row)
                                             <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                                         @endforeach
@@ -164,7 +179,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-control-label" for="group_sparepart_id">Group Sparepart</label>
-                                        <select name="group_sparepart_id" id="" class="form-control">
+                                        <select name="group_sparepart_id" id="group_sparepart_id" class="form-control group_sparepart_id">
+                                            <option value=""></option>
                                         @foreach($group as $row)
                                             <option value="{{$row->id}}">{{$row->group_name}}</option>
                                         @endforeach
@@ -222,7 +238,7 @@
                         
                         <div class="form-group">
                             <label class="form-control-label" for="sparepart_status">Status Sparepart</label>
-                            <select name="sparepart_status" id="" class="form-control">
+                            <select name="sparepart_status" id="" class="form-control sparepart_status">
                             @foreach($status as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                             @endforeach
@@ -230,7 +246,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
-                            <select name="sparepart_type" id="" class="form-control">
+                            <select name="sparepart_type" id="" class="form-control sparepart_type">
                             @foreach($type as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                             @endforeach
@@ -239,7 +255,7 @@
 
                         <div class="form-group">
                             <label class="form-control-label" for="group_sparepart_id">Group Sparepart</label>
-                            <select name="group_sparepart_id" id="" class="form-control">
+                            <select name="group_sparepart_id" id="" class="form-control group_sparepart_id">
                             @foreach($group as $row)
                                 <option value="{{$row->id}}">{{$row->group_name}}</option>
                             @endforeach

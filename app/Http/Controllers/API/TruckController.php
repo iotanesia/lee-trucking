@@ -13,17 +13,18 @@ class TruckController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'truck_plat';
+      $whereField = 'truck_plat, truck_name, all_global_param.param_name, ex_master_cabang.cabang_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $truckList = Truck::join('all_global_param', 'ex_master_truck.truck_status', 'all_global_param.id')
                    ->join('ex_master_cabang','ex_master_truck.cabang_id', 'ex_master_cabang.id')
                    ->where(function($query) use($whereField, $whereValue) {
                      if($whereValue) {
                        foreach(explode(', ', $whereField) as $idx => $field) {
-                         $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                         $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                        }
                      }
                    })
+                   ->where('ex_master_truck.is_deleted', 'f')
                    ->select('ex_master_truck.*', 'all_global_param.param_name as status_name', 'ex_master_cabang.cabang_name')
                    ->orderBy('ex_master_truck.id', 'ASC')
                    ->paginate();

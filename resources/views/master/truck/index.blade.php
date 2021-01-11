@@ -31,16 +31,23 @@
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
                   <h5 class="h3 mb-0">Table {{$title}}</h5>
                 </div>
+                <div class="navbar-search navbar-search-light form-inline mr-sm-3">
+                    <div class="form-group mb-0">
+                        <div class="input-group input-group-alternative input-group-merge">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="truck" placeholder="Search Key">
+                        </div>
+                    </div>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="truck"><i class="fa fa-search"></i></a>
+                </div>
               </div>
             </div>
             <div class="card-body">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control has-primary" name="search_value" data-model="truck" placeholder="Search Key">
-                    <div class="input-group-append">
-                        <a type="button" class="input-group-text btn-sm btn-flat" id="search-data" el-event="search-data" data-model="truck"><i class="fa fa-search"></i></a>
-                        <a type="button" class="input-group-text btn-sm btn-flat bg-primary text-white"  data-toggle="modal" data-target="#truck-modal"><i class="fa fa-plus"></i></a>
-                    </div>
-                </div>
+                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#truck-modal">
+                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+                </button>
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush table-striped" id="table-truck" data-model="truck" request-url="{{ route('api-truck') }}" on-success-load="successLoadtruck">
                         <thead class="bg-gradient-info text-white">
@@ -104,19 +111,35 @@
                 <div class="card-body">
                 <div class="form-group">
                     <label class="form-control-label" for="truck_plat">Truck name</label>
-                    <input type="text" class="form-control" name="truck_name" id="truck_name" placeholder="truck_name">
+                    <div class="input-group input-group-merge">
+                        <input type="text" class="form-control" name="truck_name" id="truck_name" placeholder="Truck Name">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-bus-alt"></i></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="truck_plat">Truck Plat</label>
-                    <input type="text" class="form-control" name="truck_plat" id="truck_plat" placeholder="truck_plat">
+                    <div class="input-group input-group-merge">
+                        <input type="text" class="form-control" name="truck_plat" id="truck_plat" placeholder="Truck Plat">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-window-maximize"></i></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="truck_corporate_asal">Truck corporate asal</label>
-                    <input type="text" class="form-control" name="truck_corporate_asal" id="truck_corporate_asal" placeholder="truck_corporate_asal">
+                    <div class="input-group input-group-merge">
+                        <input type="text" class="form-control" name="truck_corporate_asal" id="truck_corporate_asal" placeholder="Truck Corporate Asal">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-building"></i></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="truck_corporate_asal">Status Truck</label>
-                    <select name="truck_status" id="" class="form-control">
+                    <select name="truck_status" id="truck_status" class="form-control">
+                        <option value=""></option>
                     @foreach($status as $row)
                         <option value="{{$row->id}}">{{$row->param_name}}</option>
                     @endforeach
@@ -124,11 +147,17 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="truck_date_join">Truck date join</label>
-                    <input type="date" class="form-control" name="truck_date_join" id="truck_date_join" placeholder="truck_date_join">
+                    <div class="input-group input-group-merge">
+                        <input type="text" class="form-control" name="truck_date_join" id="truck_date_join" placeholder="Truck Date Join">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="cabang_id">Cabang</label>
-                    <select name="cabang_id" class="form-control" id="">
+                    <select name="cabang_id" class="form-control" id="cabang_id">
+                        <option value=""></option>
                         @foreach($cabangList as $row)
                             <option value="{{$row->id}}">{{$row->cabang_name}}</option>
                         @endforeach

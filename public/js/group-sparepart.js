@@ -70,6 +70,11 @@ $("document").ready(function(){
       resetForm("#group-sparepart-form");
     }
   });
+  
+  $("#group_status").select2({
+    placeholder:"Select Status"
+  });
+
 });
 
 var successLoadgroupsparepart = (function(responses, dataModel) {

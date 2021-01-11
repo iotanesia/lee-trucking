@@ -16,10 +16,6 @@ $("document").ready(function(){
     },
   });
 
-  $(".sparepart_jenis").select2({
-      placeholder:"Select Jenis"
-  });
-
   $("#btn-submits").click(function(){
     var event = $("#spareparts-modal #btn-submits").attr("el-event");
     var data = new FormData($("#spareparts-form")[0]);
@@ -54,6 +50,33 @@ $("document").ready(function(){
       }
     });
   })
+
+    $(".sparepart_status").select2({
+        placeholder:"Select Status"
+    });
+
+    $(".sparepart_type").select2({
+        placeholder:"Select Type"
+    });
+
+    $(".sparepart_type").select2({
+        placeholder:"Select Type"
+    });
+
+    $(".sparepart_jenis").select2({
+        placeholder:"Select Jenis"
+    });
+
+    $(".group_sparepart_id").select2({
+        placeholder:"Select Group"
+    });
+
+  $("#driver_join_date").daterangepicker({
+    locale: {
+        format: 'DD-MM-YYYY'
+    },
+    singleDatePicker : true,
+  });
 
   $("#btn-submit").click(function(){
     var event = $("#spareparts-scanner-modal #btn-submit").attr("el-event");

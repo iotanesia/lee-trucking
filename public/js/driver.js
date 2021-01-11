@@ -76,6 +76,22 @@ $("document").ready(function(){
       resetForm("#driver-form");
     }
   });
+
+  $("#driver_status").select2({
+    placeholder:"Select Driver"
+  });
+
+  $("#kenek_id").select2({
+    placeholder:"Select Kenek"
+  });
+
+  $("#driver_join_date").daterangepicker({
+    locale: {
+        format: 'DD-MM-YYYY'
+    },
+    singleDatePicker : true,
+  });
+
 });
 
 var successLoaddriver = (function(responses, dataModel) {
