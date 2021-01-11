@@ -38,7 +38,7 @@ $("document").ready(function(){
         $('.preloader').show();
     },
     success: function(datas, textStatus, xhr) {
-        alert('Data berhasil di simpan');
+        $("#successModal").modal("show");
         $("#spareparts-modal").modal("hide");
         $("#spareparts-scanner-modal").modal("hide");
         $('.preloader').hide();
@@ -73,7 +73,7 @@ $("document").ready(function(){
         $('.preloader').show();
     },
     success: function(datas, textStatus, xhr) {
-        alert('Data berhasil di simpan');
+        $("#successModal").modal("show");
         $("#spareparts-modal").modal("hide");
         $("#spareparts-scanner-modal").modal("hide");
         $('.preloader').hide();

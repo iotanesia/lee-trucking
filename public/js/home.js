@@ -33,7 +33,7 @@ $("document").ready(function(){
         $('.loader').show();
       },
       success: function(datas, textStatus, xhr) {
-        alert('Data berhasil di simpan');
+        $("#successModal").modal("show");
         $("table[data-model='user']").closest("div[id='user']").find("a[el-event='search-data']").click();
         $("#user-modal").modal("hide");
       },

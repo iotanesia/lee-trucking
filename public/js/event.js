@@ -430,3 +430,33 @@ $("#btn-search-trigger").on('keypress',function(e) {
         document.getElementById("search-data").click();
     }
 });
+
+$("document").ready(function(){
+    $("#deletedModal").on("show.bs.modal", function(e) {
+        var invoker = $(e.relatedTarget);
+        idDeleted = invoker.attr('data-id');      
+        urlDeleted = invoker.attr('data-url');      
+    });
+
+    $(".btn-deleted").click(function() {
+        var accessToken =  window.Laravel.api_token;
+
+        $.ajax({
+            url: window.Laravel.app_url+urlDeleted,
+            type: "POST",
+            dataType: "json",
+            data:"id"+"="+idDeleted,
+            headers: {"Authorization": "Bearer " + accessToken},
+            crossDomain: true,
+            beforeSend: function( xhr ) { 
+              $('.preloader').show();
+            },
+            success: function(data, textStatus, xhr) {
+              $('.preloader').hide();
+              $("#deletedModal").modal("hide");
+              
+              document.getElementById("search-data").click();
+            },
+        });
+    });
+});

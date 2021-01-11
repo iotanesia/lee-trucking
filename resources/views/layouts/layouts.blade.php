@@ -233,6 +233,41 @@
         </div>
       </div>
     </nav>
+    <div id="deletedModal" class="modal fade">
+        <div class="modal-dialog modal-confirm modal-dialog-centered" style="max-width:400px">
+            <div class="modal-content">
+                <div class="modal-header flex-column">
+                    <img src="{{url('assets/new/img/ilustrationFailed.png')}}" class="rounded mx-auto d-block" alt="delete-icon" width="150">
+                    <h4 class="modal-title w-100" style="margin-left:25%">Anda Yakin Menghapus?</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" hidden  name="id" value="12" id="id_delete">
+                    <p>Do you really want to delete these records? This process cannot be undone.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-danger btn-lg btn-deleted">Delete</button>
+                    <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="successModal" class="modal fade">
+        <div class="modal-dialog modal-confirm modal-dialog-centered" style="max-width:400px">
+            <div class="modal-content">
+                <div class="modal-header flex-column">
+                    <img src="{{url('assets/new/img/ilustrationSuccess.png')}}" class="rounded mx-auto d-block" alt="delete-icon" width="150">
+                </div>
+                <div class="modal-body">
+                    <center>
+                        <h2>Data Berhasil Di Simpan</h2>
+                    </center>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-success btn-lg" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
     @yield("content")
     
   <!-- Argon Scripts -->

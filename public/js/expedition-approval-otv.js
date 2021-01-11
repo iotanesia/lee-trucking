@@ -70,7 +70,7 @@ $("document").ready(function() {
           $('.preloader').show();
       },
       success: function(datas, textStatus, xhr) {
-          alert('Data berhasil di simpan');
+          $("#successModal").modal("show");
           $("#expedition-modal").modal("hide");
           $('.preloader').hide();
           document.getElementById("search-data").click();
@@ -106,7 +106,7 @@ $("document").ready(function() {
           $('.preloader').show();
       },
       success: function(datas, textStatus, xhr) {
-          alert('Data berhasil di simpan');
+          $("#successModal").modal("show");
           $("#expedition-modal").modal("hide");
           $('.preloader').hide();
           document.getElementById("search-data").click();
@@ -142,7 +142,7 @@ $("document").ready(function() {
           $('.preloader').show();
       },
       success: function(datas, textStatus, xhr) {
-          alert('Data berhasil di simpan');
+          $("#successModal").modal("show");
           $("#expedition-modal").modal("hide");
           $('.preloader').hide();
           document.getElementById("search-data").click();

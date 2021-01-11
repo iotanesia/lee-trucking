@@ -14,7 +14,7 @@ class StkGroupSparePartController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'group_name, group_status';
+      $whereField = 'group_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $groupSparepartList = StkGroupSparepart::where(function($query) use($whereField, $whereValue) {
                                     if($whereValue) {
@@ -57,7 +57,7 @@ class StkGroupSparePartController extends Controller
   public function getListPagination(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'group_name, group_status, group_status_name';
+      $whereField = 'group_name, all_global_param.param_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $groupSparepartList = StkGroupSparepart::leftJoin('all_global_param', 'stk_master_group_sparepart.group_status', 'all_global_param.id')
                             ->where(function($query) use($whereField, $whereValue) {
