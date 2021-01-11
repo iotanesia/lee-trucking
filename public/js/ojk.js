@@ -100,7 +100,7 @@ var successLoadojk = (function(responses, dataModel) {
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
                        "<a class='btn btn-slack btn-icon-only btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#ojk-modal'><i class='fas fa-edit'></i></a>"+
-                       "<a class='btn btn-danger btn-icon-only btn-sm btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
+                       "<a class='btn btn-danger btn-icon-only btn-sm' href='#' el-event='edit' data-id='"+ id +"' data-url='/api/ojk/delete' data-toggle='modal' data-target='#deletedModal'><i class='fa fa-trash'></i></a>"+
                      "</div>"+
                    "</td>"+
                  "</tr>";
