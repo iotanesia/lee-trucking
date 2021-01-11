@@ -1,0 +1,325 @@
+/*---------------------------------
+sidebar
+----------------------*/
+
+#sidebar-wrapper {
+    z-index: 1000;
+    height: 100%;
+	width:0px;
+	left: -50px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #ffffff;
+    transition: all 0.5s ease;
+    box-shadow: 13px -2px 17px -12px rgba(41,50,66,.05);
+}
+
+#sidebar-wrapper::-webkit-scrollbar {
+    width: 8px;
+    background: #222e3c;
+}
+
+#sidebar-wrapper::-webkit-scrollbar-thumb {
+    background-color:#989898;
+	border-radius:10px;
+}
+
+.sidebar-brand {
+    font-weight: 600;
+    font-size: 1.15rem;
+    padding: 1.15rem 1.5rem;
+    display: block;
+    color: #f8f9fa;
+}
+
+.sidebar-header{
+	text-transform: uppercase;
+    padding: 1rem 1rem !important;
+    font-family: 'HKGroteskBold';
+    font-size: 16px;
+    color:#606060;
+    border-bottom: solid 1px #e5e5e5;
+    border-top: solid 1px #e5e5e5;
+}
+
+.navbar-nav > li > a ,.submenu-box ul li a {
+    color:#25282B !important;
+    text-transform: capitalize;
+    font-family: 'HKGroteskMedium';
+    font-size: 16px;
+	padding: 10px 10px 20px 20px !important;
+    display: block;
+    font-weight: 400;
+    position: relative;
+    z-index: 2;
+}
+
+.submenu-box ul li a {
+    padding: 10px 16px 10px 42px !important;
+    color:#52575C !important;
+}
+
+.submenu-box ul li a:hover {
+    color:#25282B !important;
+    background-color: #f2f2f2;
+    text-decoration: none;
+    padding: 10px 16px 10px 42px !important;
+}
+
+.navbar-nav > li > a:hover{
+    color: #25282B !important;
+    background-color: #f2f2f2;
+}
+
+.navbar-nav .has-sub > a.collapsed::after {
+    transition: 0.4s ease;
+}
+
+.navbar-nav .has-sub > a.collapsed::after {
+    color: #25282B;
+    font-size: 13px;
+    content: "\f078";
+}
+.navbar-nav .has-sub > a.collapsed::after {
+   color:#25282B;
+}
+
+.navbar-nav .has-sub > a::after {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    color: #25282B;
+    display: block;
+    content: "\f077";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 13px;
+    line-height: 30px;
+    margin-top: -15px;
+}
+
+#wrapper.toggled {
+    padding-left: 270px;
+}
+
+.toggled#sidebar-wrapper {
+    width:270px!important;
+    height: 100%;
+     left: 0px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    transition: all 0.5s ease;
+}
+
+.navbar-nav li{
+  display:block!important;
+  margin: 0px 0px;
+}
+
+.nav-item .nav-link{
+    display:block;
+    color:white!important;
+	text-transform:capitalize;
+    text-decoration: none;
+    padding: 6px 10px; 
+    transition:0.4s ease;	
+}
+
+.navbar-nav > li > a i:before{
+  margin:0px 5px 0px 0px;
+  font-size:14px;
+}
+/*---------------------------------
+sidebar
+----------------------*/
+
+
+/*---------------------------------
+  main-content
+----------------------*/
+
+#content {
+    width: 100%;
+    padding-bottom: 4%;
+}
+
+#page-content-wrapper {
+    width: 100%;
+	transition: all 0.5s ease;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -270px;
+
+	transition: all 0.5s ease;
+}
+
+ .toggled#page-content-wrapper{
+  margin-left:270px;
+  transition: all 0.5s ease;
+ }
+ 
+ @media only screen and (min-width:992px){
+ .toggled#page-content-wrapper{
+    width:calc(100% - 270px); 
+	}
+ }
+/*---------------------------------
+  main-content
+----------------------*/
+
+/*---------------------------------
+cross-bar animation
+----------------------*/
+.nav-icon1{
+  z-index: 999;
+  position:relative;
+  display: block;
+  width:23px;
+  margin:0px 30px 0px 25px;
+   cursor:pointer;
+  height: 25px;
+}
+
+.nav-icon1 span{
+  position:absolute;
+  top:0;
+  width:100%;
+  height:3px;
+  cursor:pointer;
+  background-color:#5d5d5d;
+  left:0;
+  transform:rotate(0deg);
+  transition:.30s ease-in-out;
+}
+
+.nav-icon1:hover span:nth-of-type(1){
+  top:-3px
+}
+
+.nav-icon1:hover span:nth-of-type(3){
+  top:19px;
+}
+
+.nav-icon1 span:nth-of-type(1){
+   top:0;
+}
+
+.nav-icon1 span:nth-of-type(2){
+   top:8px;
+}
+
+.nav-icon1 span:nth-of-type(3){
+   top:16px;
+}
+
+.nav-icon1.open span:nth-of-type(1){
+   top:8px;
+   transform:rotate(135deg);
+}
+
+.nav-icon1.open span:nth-of-type(2){
+   top:8px;
+   opacity:0;
+   left:-30px;
+}
+
+.nav-icon1.open span:nth-of-type(3){
+   top:8px;
+   transform:rotate(-135deg);
+}
+
+
+/*---------------------------------
+cross-bar animation
+----------------------*/
+
+
+/*---------------------------------
+header navbar design
+----------------------*/
+.my-navbar{
+  padding:0px;
+  background-color:white;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.16);
+}
+
+.text-gray-600 {
+    color: #858796!important;
+}
+.nav-link .img-profile {
+    height:40px;
+    width:40px;
+}
+
+.navbar-nav > li > a > i {
+    font-size: 18px;
+    color: #25282B;
+    margin: 8px 8px 0px 0px;
+    padding: 0px;
+}
+
+.badge-counter {
+    position: absolute;
+    transform:scale(.7);
+    transform-origin: top right;
+    right:6px;
+	margin-top:4px;
+}
+
+.dropdown, .dropleft, .dropright, .dropup {
+    position: relative;
+}
+
+.nav-flag, .nav-icon {
+    padding: .1rem .8rem;
+    display: block;
+    font-size: 1.5rem;
+    color: #6c757d;
+    transition: background .1s ease-in-out,color .1s ease-in-out;
+    line-height: 1.4;
+}
+
+.navbar-expand .navbar-nav .dropdown-menu {
+    position: absolute;
+}
+
+.navbar-nav .dropdown-menu {
+    box-shadow: 0 0.1rem 0.2rem rgba(0,0,0,.05);
+}
+
+.navbar-nav .dropdown-menu {
+    position: static;
+    float: none;
+}
+.dropdown-menu-lg {
+    min-width: 20rem;
+}
+
+.position-relative {
+    position: relative!important;
+}
+
+.nav-item .indicator {
+    background: #3b7ddd;
+    box-shadow: 0 0.1rem 0.2rem rgba(0,0,0,.05);
+    border-radius: 50%;
+    display: block;
+    height: 18px;
+    width: 18px;
+    padding: 1px;
+    position: absolute;
+    top: 0;
+    right: -8px;
+    text-align: center;
+    transition: top .1s ease-out;
+    font-size: .675rem;
+    color: #fff;
+}
+/*---------------------------------
+ header navbar design
+----------------------*/
