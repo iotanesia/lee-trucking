@@ -31,18 +31,25 @@
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
                   <h5 class="h3 mb-0">Table {{$title}}</h5>
                 </div>
+                <div class="navbar-search navbar-search-light form-inline mr-sm-3">
+                    <div class="form-group mb-0">
+                        <div class="input-group input-group-alternative input-group-merge">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="group-sparepart" placeholder="Search Key">
+                        </div>
+                    </div>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="group-sparepart"><i class="fa fa-search"></i></a>
+                </div>
               </div>
             </div>
             <div class="card-body">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control has-primary" name="search_value" data-model="group-sparepart" placeholder="Search Key">
-                    <div class="input-group-append">
-                        <a type="button" class="input-group-text btn-sm btn-flat" id="search-data" el-event="search-data" data-model="group-sparepart"><i class="fa fa-search"></i></a>
-                        <a type="button" class="input-group-text btn-sm btn-flat bg-primary text-white"  data-toggle="modal" data-target="#group-sparepart-modal"><i class="fa fa-plus"></i></a>
-                    </div>
-                </div>
+                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#group-sparepart-modal">
+                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+                </button>
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-group-sparepart" data-model="group-sparepart" request-url="{{ route('api-group-sparepart') }}" on-success-load="successLoadgroup-sparepart">
+                    <table class="table align-items-center table-flush table-striped" id="table-group-sparepart" api-route="get-list-pagination" data-model="group-sparepart" request-url="{{ route('api-group-sparepart') }}" on-success-load="successLoadgroup-sparepart">
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>N0</th>

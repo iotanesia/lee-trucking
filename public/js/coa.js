@@ -34,7 +34,7 @@ $("document").ready(function(){
           $('.preloader').show();
       },
       success: function(datas, textStatus, xhr) {
-          alert('Data berhasil di simpan');
+          $("#successModal").modal("show")
           $("#coa-modal").modal("hide");
           $('.preloader').hide();
           document.getElementById("search-data").click();
@@ -108,7 +108,7 @@ $("document").ready(function(){
                      "<td align='center'>"+
                        "<div class='btn-group'>"+
                          "<a class='btn btn-slack btn-icon-only btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#coa-modal'><i class='fas fa-edit'></i></a>"+
-                         "<a class='btn btn-danger btn-icon-only btn-sm btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
+                         "<a class='btn btn-danger btn-icon-only btn-sm' href='#' el-event='edit' data-id='"+ id +"' data-url='/api/coa/delete' data-toggle='modal' data-target='#deletedModal'><i class='fa fa-trash'></i></a>"+
                        "</div>"+
                      "</td>"+
                    "</tr>";
@@ -123,31 +123,6 @@ $("document").ready(function(){
     paginate(responses, 'coa');
   
     $(".preloader").hide();
-  
-    $(".btn-delete").click(function(){
-      var id = $(this).attr("data-id");
-      var confirms =  confirm("Are You sure want to delete this file!");
-      var accessToken =  window.Laravel.api_token;
-  
-      if(confirms) {
-        $.ajax({
-          url: window.Laravel.app_url + "/api/coa/delete",
-          type: "POST",
-          dataType: "json",
-          data:"id"+"="+id,
-          headers: {"Authorization": "Bearer " + accessToken},
-          crossDomain: true,
-          beforeSend: function( xhr ) { 
-            $('.preloader').show();
-          },
-          success: function(data, textStatus, xhr) {
-            alert('Data berhasil di hapus');
-            $('.preloader').hide();
-            document.getElementById("search-data").click();
-          },
-        });
-      }
-    })
   
     $("#select-provinsi").on("click", function() {
         var id = $(this).val();

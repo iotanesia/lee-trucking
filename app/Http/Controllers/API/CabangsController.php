@@ -22,6 +22,7 @@ class CabangsController extends Controller
                           }
                         }
                       })
+                      ->where('is_deleted', 'f')
                       ->orderBy('id', 'ASC')
                       ->paginate();
 

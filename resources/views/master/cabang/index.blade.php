@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-cabang" data-model="cabangs" request-url="{{ route('api-cabangs') }}" on-success-load="successLoadcabangs">
+                    <table class="table align-items-center table-flush table-striped" id="table-cabang" data-model="cabangs" request-url="{{ route('api-cabangs') }}" on-success-load="successLoadcabang">
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>

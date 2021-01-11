@@ -114,6 +114,7 @@ class UserController extends Controller
         unset($input['password']);
         unset($input['password_confirmation']);
         unset($input['group_id']);
+        unset($input['is_active']);
         foreach($input as $key => $row) {
           $userDetail->{$key} = $row;
         }

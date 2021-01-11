@@ -34,7 +34,7 @@ $("document").ready(function(){
         $('.preloader').show();
     },
     success: function(datas, textStatus, xhr) {
-        alert('Data berhasil di simpan');
+        $("#successModal").modal("show");
         $("#cabang-modal").modal("hide");
         $('.preloader').hide();
         document.getElementById("search-data").click();
@@ -90,7 +90,7 @@ var successLoadcabang = (function(responses, dataModel) {
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
                        "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#cabang-modal'><i class='fas fa-edit'></i></a>"+
-                       "<a class='btn btn-danger btn-sm btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
+                       "<a class='btn btn-danger btn-sm' href='#' el-event='edit' data-id='"+ id +"' data-url='/api/cabang/delete' data-toggle='modal' data-target='#deletedModal'><i class='fa fa-trash'></i></a>"+
                      "</div>"+
                    "</td>"+
                  "</tr>";

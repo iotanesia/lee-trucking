@@ -27,6 +27,7 @@ class CoaController extends Controller
                  })
                  ->where('coa_status.param_type', 'COA_STATUS')
                  ->where('coa_category.param_type', 'COA_CATEGORY')
+                 ->where('coa_master_jurnal.is_deleted', 'f')
                  ->select('coa_master_jurnal.*', 'coa_status.param_name as coa_status_name', 'coa_category.param_name as coa_category_name', 'coa_master_jurnal_parent.coa_name as parent_coa_name')
                  ->orderBy('id', 'ASC')
                  ->paginate();
