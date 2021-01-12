@@ -107,11 +107,6 @@ class ExpeditionController extends Controller
                        }
                      }
                    })
-                   ->where(function($query) use($platform) {
-                      if($platform == 'mobile') {
-                          $query->where('ex_status_activity.status_approval', '<>', 'APPROVED');
-                      }
-                    })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
                    ->orderBy('id', 'ASC')
@@ -122,6 +117,11 @@ class ExpeditionController extends Controller
 
         $approvalCode = ExStatusActivity::leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                         ->where('ex_status_activity.ex_id',$row->id)->orderBy('ex_status_activity.updated_at', 'DESC')
+                        ->where(function($query) use($platform) {
+                          if($platform == 'mobile') {
+                              $query->where('ex_status_activity.status_approval', '<>', 'APPROVED');
+                          }
+                        })
                         ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.keterangan')->first();
                   
         $row->approval_code = $approvalCode['approval_code'];
