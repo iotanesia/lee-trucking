@@ -101,7 +101,6 @@ class ExpeditionController extends Controller
                    ->join('ex_status_activity','expedition_activity.id','ex_status_activity.ex_id')
                    ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                    ->where('expedition_activity.is_deleted','false')
-
                    ->where(function($query) use($whereField, $whereValue) {
                      if($whereValue) {
                        foreach(explode(', ', $whereField) as $idx => $field) {
