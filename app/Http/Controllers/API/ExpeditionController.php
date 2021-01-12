@@ -400,7 +400,17 @@ class ExpeditionController extends Controller
                 $coaActivity->rek_name = $exStatusActivity->rek_name;
                 $coaActivity->save();
               }
-
+              if(isset($img)){
+                //upload image
+                $fileExt = $img->extension();
+                $fileName = "IMG-EXPEDITION-".$exStatusActivity->id.$exStatusActivity->ex_id.".".$fileExt;
+                $path = public_path().'/uploads/expedition/' ;
+                $oldFile = $path.$exStatusActivity->id.$exStatusActivity->ex_id;
+       
+                $exStatusActivity->img = $fileName;
+                $img->move($path, $fileName);
+                $exStatusActivity->save();
+              }
             }else if($expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN'){
               if($expeditionActivity->harga_otv == $request->nominal){
                 $exStatusActivity->img = $data['img'] ? $data['img'] :  $lastExActivity->img;
