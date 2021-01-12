@@ -117,7 +117,7 @@ class ExpeditionController extends Controller
         $approvalCode = ExStatusActivity::leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                         ->where('ex_status_activity.ex_id',$row->id)->orderBy('ex_status_activity.updated_at', 'DESC')
                         ->where(function($query) use($platform) {
-                          if($data['from'] == 'mobile') {
+                          if(isset($data['from']) && $data['from'] == 'mobile') {
                               $query->where('ex_status_activity.status_approval', '<>', 'APPROVED');
                               $query->where('ex_status_activity.status_activity','SUBMIT');
                           }
