@@ -120,6 +120,7 @@ class ExpeditionController extends Controller
                         ->where(function($query) use($platform) {
                           if($platform == 'mobile') {
                               $query->where('ex_status_activity.status_approval', '<>', 'APPROVED');
+                              $query->where('ex_status_activity.status_activity','SUBMIT');
                           }
                         })
                         ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.keterangan')->first();
