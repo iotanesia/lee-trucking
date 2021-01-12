@@ -97,7 +97,6 @@ class ExpeditionController extends Controller
                    ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
                    ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
                    ->leftJoin('ex_master_kenek', 'ex_master_kenek.id', 'expedition_activity.kenek_id')
-                   ->leftJoin('ex_status_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
                    ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                    ->where('expedition_activity.is_deleted','false')
                    ->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN'])
@@ -108,11 +107,6 @@ class ExpeditionController extends Controller
                        }
                      }
                    })
-                   ->where(function($query) use($platform) {
-                      if($platform == 'mobile') {
-                          $query->where('ex_status_activity.status_approval', '<>', 'APPROVED');
-                      }
-                    })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
                    ->orderBy('id', 'ASC')
@@ -123,6 +117,11 @@ class ExpeditionController extends Controller
 
         $approvalCode = ExStatusActivity::leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                         ->where('ex_status_activity.ex_id',$row->id)->orderBy('ex_status_activity.updated_at', 'DESC')
+                        ->where(function($query) use($platform) {
+                          if($platform == 'mobile') {
+                              $query->where('ex_status_activity.status_approval', '<>', 'APPROVED');
+                          }
+                        })
                         ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.keterangan')->first();
                   
         $row->approval_code = $approvalCode['approval_code'];
