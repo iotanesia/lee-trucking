@@ -118,7 +118,7 @@ class ExpeditionController extends Controller
                           if($groupId == $groupDriver->id) {
                               $query->whereIn('expedition_activity.status_activity', ['APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
                           }else{
-                          $query->where('expedition_activity.status_activity','SUBMIT');
+                              $query->where('expedition_activity.status_activity','SUBMIT');
                           }
                         });
                     }else{
