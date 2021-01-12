@@ -97,6 +97,7 @@ class ExpeditionController extends Controller
                    ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
                    ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
                    ->leftJoin('ex_master_kenek', 'ex_master_kenek.id', 'expedition_activity.kenek_id')
+                   ->leftJoin('ex_status_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
                    ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                    ->where('expedition_activity.is_deleted','false')
                    ->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN'])
