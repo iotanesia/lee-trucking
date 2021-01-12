@@ -87,9 +87,8 @@ class ExpeditionController extends Controller
       $data = $request->all();
       $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      if(isset($request->from)){
-        $platform = $request->from;
-      }
+      $platform = (isset($data['from'])) ? $data['from'] : '';
+      
       $expeditionActivityList = ExpeditionActivity::
                      leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
@@ -120,9 +119,10 @@ class ExpeditionController extends Controller
         $approvalCode = ExStatusActivity::leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                         ->where('ex_status_activity.ex_id',$row->id)->orderBy('ex_status_activity.updated_at', 'DESC')
                         ->where(function($query) use($platform) {
-                          if(isset($platform) && $platform == 'mobile') {
+                          if($platform == 'mobile') {
                               $query->where('ex_status_activity.status_approval', '<>', 'APPROVED');
                               $query->where('ex_status_activity.status_activity','SUBMIT');
+                              
                           }
                         })
                         ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.keterangan')->first();
