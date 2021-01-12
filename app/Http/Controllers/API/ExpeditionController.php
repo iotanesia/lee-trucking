@@ -660,7 +660,7 @@ class ExpeditionController extends Controller
   public function getExpeditionHistoryByDriver(Request $request){
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $groupOwner = Group::where('group_name', 'Driver')->first();
+      $groupDriver = Group::where('group_name', 'Driver')->first();
       $user = Auth::user();
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
