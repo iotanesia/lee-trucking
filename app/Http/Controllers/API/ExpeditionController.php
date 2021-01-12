@@ -698,6 +698,7 @@ class ExpeditionController extends Controller
         ->orderBy('ex_status_activity.updated_at', 'DESC')
         ->select('ex_status_activity.long_lat')->first();
         $row->long_lat = $exStatusActivity['long_lat'];
+        $row->img = ($exStatusActivity['img']) ? url('uploads/expedition/'.$exStatusActivity['img']) :'';
         $row->data_json = $row->toJson();
       }
 
