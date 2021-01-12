@@ -90,7 +90,7 @@ class ExpeditionController extends Controller
       $platform = (isset($data['from'])) ? $data['from'] : '';
       $groupAdmin = Group::where('group_name', 'Admin Kantor')->first();
       $groupOwner = Group::where('group_name', 'Owner')->first();
-      $groupOwner = Group::where('group_name', 'Driver')->first();
+      $groupDriver = Group::where('group_name', 'Driver')->first();
       $groupId = Auth::user()->group_id;
       $expeditionActivityList = ExpeditionActivity::
                      leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
@@ -119,8 +119,8 @@ class ExpeditionController extends Controller
                         $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
                     }
                   })
-                  ->where(function($query) use($groupAdmin, $groupId) {
-                    if($groupId == $groupAdmin->id) {
+                  ->where(function($query) use($groupDriver, $groupId) {
+                    if($groupId == $groupDriver->id) {
                         $query->whereIn('expedition_activity.status_activity', ['APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
                     }
                   }) 
