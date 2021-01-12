@@ -113,17 +113,18 @@ class ExpeditionController extends Controller
                    })  
                    ->where(function($query) use($platform) {
                     if($platform == 'mobile') {
-                        $query->where('ex_status_activity.status_approval', '<>', 'APPROVED');
-                        $query->where('expedition_activity.status_activity','SUBMIT');
+                        $query->where('ex_status_activity.status_approval', '<>', 'APPROVED')
+                        ->where(function($query) use($groupDriver, $groupId) {
+                          if($groupId == $groupDriver->id) {
+                              $query->whereIn('expedition_activity.status_activity', ['APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
+                          }else{
+                              $query->where('expedition_activity.status_activity','SUBMIT');
+                          }
+                        });
                     }else{
                         $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
                     }
                   })
-                  ->where(function($query) use($groupDriver, $groupId) {
-                    if($groupId == $groupDriver->id) {
-                        $query->whereIn('expedition_activity.status_activity', ['APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
-                    }
-                  }) 
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
                    ->orderBy('id', 'ASC')
