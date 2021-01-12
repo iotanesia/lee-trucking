@@ -88,10 +88,7 @@ class ExpeditionController extends Controller
       $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $platform = (isset($data['from'])) ? $data['from'] : '';
-      $groupAdmin = Group::where('group_name', 'Admin Kantor')->first();
-      $groupOwner = Group::where('group_name', 'Owner')->first();
-      $groupDriver = Group::where('group_name', 'Driver')->first();
-      $groupId = Auth::user()->group_id;
+      
       $expeditionActivityList = ExpeditionActivity::
                      leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
@@ -104,6 +101,7 @@ class ExpeditionController extends Controller
                    ->join('ex_status_activity','expedition_activity.id','ex_status_activity.ex_id')
                    ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                    ->where('expedition_activity.is_deleted','false')
+
                    ->where(function($query) use($whereField, $whereValue) {
                      if($whereValue) {
                        foreach(explode(', ', $whereField) as $idx => $field) {
@@ -113,14 +111,8 @@ class ExpeditionController extends Controller
                    })  
                    ->where(function($query) use($platform) {
                     if($platform == 'mobile') {
-                        $query->where('ex_status_activity.status_approval', '<>', 'APPROVED')
-                        ->where(function($query) use($groupDriver, $groupId) {
-                          if($groupId == $groupDriver->id) {
-                              $query->whereIn('expedition_activity.status_activity', ['APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
-                          }else{
-                              $query->where('expedition_activity.status_activity','SUBMIT');
-                          }
-                        });
+                        $query->where('ex_status_activity.status_approval', '<>', 'APPROVED');
+                        $query->where('expedition_activity.status_activity','SUBMIT');
                     }else{
                         $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
                     }
@@ -668,6 +660,7 @@ class ExpeditionController extends Controller
   public function getExpeditionHistoryByDriver(Request $request){
     if($request->isMethod('GET')) {
       $data = $request->all();
+      $groupOwner = Group::where('group_name', 'Driver')->first();
       $user = Auth::user();
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
@@ -680,6 +673,15 @@ class ExpeditionController extends Controller
                    ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                    ->where('ex_master_driver.user_id', $user->id)
                    ->where('expedition_activity.is_deleted', 'false')
+                   ->where(function($query) use($groupDriver, $user) {
+                      if($user->group_id == $groupDriver->id) {
+                         $query->whereIn('expedition_activity.status_activity', ['APPROVAL_OJK_DRIVER', 
+                                         'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
+                      }else{
+                          $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 
+                                          'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
+                      }
+                    })
                    ->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 
                             'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN'])
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
