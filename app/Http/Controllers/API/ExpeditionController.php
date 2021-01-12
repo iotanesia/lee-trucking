@@ -87,6 +87,7 @@ class ExpeditionController extends Controller
       $data = $request->all();
       $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $platform = $data['from'];
       $expeditionActivityList = ExpeditionActivity::
                      leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
@@ -106,6 +107,11 @@ class ExpeditionController extends Controller
                        }
                      }
                    })
+                   ->where(function($query) use($platform) {
+                      if($platform == 'mobile') {
+                          $query->where('ex_status_activity.status_approval', '<>', 'APPROVED');
+                      }
+                    })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
                    ->orderBy('id', 'ASC')
@@ -157,6 +163,7 @@ class ExpeditionController extends Controller
       $groupAdmin = Group::where('group_name', 'Admin Kantor')->first();
       $groupOwner = Group::where('group_name', 'Owner')->first();
       $groupId = Auth::user()->group_id;
+
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -187,7 +194,7 @@ class ExpeditionController extends Controller
                             $query->where('status_activity', 'DRIVER_SELESAI_EKSPEDISI')
                                   ->where('otv_payment_method', 'TUNAI');
                         }
-                   })
+                   }) 
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                              'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
