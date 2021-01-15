@@ -607,7 +607,7 @@ class ExpeditionController extends Controller
   public function getExpeditionHistoryByNoInvOrNoSuratJalan(Request $request){
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'nomor_inv, nomor_surat_jalan, driver_id';
+      $whereField = 'nomor_inv, nomor_surat_jalan';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $expeditionActivityList = ExpeditionActivity::join('ex_status_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
                     ->leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
