@@ -19,7 +19,8 @@ $("document").ready(function(){
    $("#user_id").select2({
        placeholder:"Select User"
    }).on('select2:select', function (e) {
-      $("#driver_name").val($('#user_id :selected').text());
+      var name = $('#user_id :selected').text().split(" - ");  
+      $("#driver_name").val(name[0]);
    });
 
   $("#btn-submit").click(function(){

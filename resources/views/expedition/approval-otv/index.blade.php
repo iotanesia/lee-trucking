@@ -112,7 +112,10 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
-            <h5 class="modal-title text-white" id="exampleModalLabel">Expedition</h5>
+            <h5 class="modal-title text-white" style="margin-right:50px" id="exampleModalLabel">Expedition</h5>
+            <button type="button" class="btn btn-success btn-sm" id="btn-submit" style="border-radius:20px">Approve</button>
+            <button type="button" class="btn btn-warning btn-sm" el-event="edit" style="border-radius:20px" id="btn-revision">Revision</button>
+            <button type="button" class="btn btn-danger btn-sm" el-event="edit" style="border-radius:20px" id="btn-reject">Reject</button>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -121,7 +124,7 @@
             <form role="form" id="expedition-form">
                 <input type="hidden" name="id" id="id">
                 <input type="hidden" name="update_lates_status" id="update_lates_status" value="true">
-                <input type="hidden" name="status_activity" id="status_activity" value="APPROVAL_OJK_DRIVER">
+                <input type="hidden" name="status_activity" id="status_activity" value="DRIVER_SELESAI_EKSPEDISI">
                 <input type="hidden" name="status_approval" id="status_approval" value="">
                 <input type="hidden" name="ex_id" id="ex_id">
                 <div class="row">
@@ -342,9 +345,6 @@
         </div>
         <div class="modal-footer bg-gradient-secondary">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success" id="btn-submit">Approve</button>
-            <button type="button" class="btn btn-warning" el-event="edit" id="btn-revision">Revision</button>
-            <button type="button" class="btn btn-danger" el-event="edit" id="btn-reject">Reject</button>
         </div>
     </div>
 </div>
