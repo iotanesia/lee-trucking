@@ -112,7 +112,7 @@
                     <select name="user_id" id="user_id" class="form-control">
                     <option value=""></option>
                     @foreach($users as $row)
-                        <option value="{{$row->id}}">{{$row->name}}</option>
+                        <option value="{{$row->id}}">{{$row->name}} - {{$row->email}}</option>
                     @endforeach
                     </select>
                 </div>

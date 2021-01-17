@@ -52,7 +52,6 @@ $("document").ready(function() {
   
     $("#btn-submit").click(function(){
       var event = $("#expedition-modal #btn-submit").attr("el-event");
-      $("#expedition-form #status_activity").val("APPROVAL_OJK_DRIVER");
       $("#expedition-form #status_approval").val("APPROVED");
       var data = new FormData($("#expedition-form")[0]);
       data.append("_token", window.Laravel.csrfToken);
@@ -88,7 +87,7 @@ $("document").ready(function() {
   
     $("#btn-reject").click(function(){
       var event = $("#expedition-modal #btn-reject").attr("el-event");
-      $("#expedition-form #status_activity").val("SUBMIT");
+      $("#expedition-form #status_activity").val("DRIVER_SELESAI_EKSPEDISI");
       $("#expedition-form #status_approval").val("REJECTED");
       var data = new FormData($("#expedition-form")[0]);
       data.append("_token", window.Laravel.csrfToken);
@@ -124,7 +123,7 @@ $("document").ready(function() {
   
     $("#btn-revision").click(function(){
       var event = $("#expedition-modal #btn-revision").attr("el-event");
-      $("#expedition-form #status_activity").val("SUBMIT");
+      $("#expedition-form #status_activity").val("DRIVER_SELESAI_EKSPEDISI");
       $("#expedition-form #status_approval").val("REVISION");
       var data = new FormData($("#expedition-form")[0]);
       data.append("_token", window.Laravel.csrfToken);
@@ -164,6 +163,7 @@ $("document").ready(function() {
       if(invoker.attr('el-event') == 'edit') {
         var dataJSON = invoker.attr("data-json");
         var dataJSON = JSON.parse(dataJSON);
+        var group_id = window.Laravel.group_id;
   
         $("#expedition-form").find("input[name=id]").val(dataJSON.id);
         $("#expedition-form").find("input[name=ex_id]").val(dataJSON.id);
@@ -171,20 +171,16 @@ $("document").ready(function() {
         $("#expedition-form").find("textarea[name=content]").summernote("code", dataJSON.content);
         $("#expedition-form #img").attr("src", dataJSON.otv_image);
         // $("#expedition-form #flash-img").attr("href", dataJSON.otv_image);
-
-        if(dataJSON.status_activity !== "SUBMIT") {
-            $("#expedition-modal #btn-submit").hide();
-            $("#expedition-modal #btn-reject").hide();
-            $("#expedition-modal #btn-revision").hide();
-            
-        } else {
-            $("#expedition-modal #btn-submit").show();
-            $("#expedition-modal #btn-reject").show();
-            $("#expedition-modal #btn-revision").show();
-
-        }
         
         bindToForm($("#expedition-modal"), dataJSON);
+
+        if((group_id == 8 && dataJSON.status_activity == 'DRIVER_SELESAI_EKSPEDISI') || (group_id == 8 && dataJSON.status_activity == 'WAITING_OWNER')) {
+            $("#expedition-form").find("input[name=status_activity]").val("CLOSED_EXPEDITION");
+            
+        } else if(group_id == 10 && dataJSON.status_activity == "DRIVER_SELESAI_EKSPEDISI") {
+            alert('aabb');
+            $("#expedition-form").find("input[name=status_activity]").val("WAITING_OWNER");
+        }
 
         $("#expedition-modal #tujuan").html("<option value='"+dataJSON.ojk_id+"'>"+kabupaten +" - "+ kecamatan +" - "+ cabang_name +"</option>").trigger("change");
         $("#expedition-modal #ojk").val(dataJSON.harga_ojk);

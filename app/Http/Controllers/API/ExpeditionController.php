@@ -284,6 +284,9 @@ class ExpeditionController extends Controller
       unset($data['id']);
       unset($data['jenis_surat_jalan']);
 
+      $data['tgl_po'] = date('Y-m-d H:i:s', strtotime($data['tgl_po']));
+      $data['tgl_inv'] = date('Y-m-d H:i:s', strtotime($data['tgl_inv']));
+
       foreach($data as $key => $row) {
         $expeditionActivity->{$key} = $row;
         $expeditionActivity->status_activity = 'SUBMIT';

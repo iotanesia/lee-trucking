@@ -41,6 +41,7 @@
       "csrfToken" => csrf_token(),
       "api_token" => Auth::user()->tokens,
       "app_url" => url('/'),
+      "group_id" => Auth::user()->group_id
       ]) !!};
   </script>
 </head>
