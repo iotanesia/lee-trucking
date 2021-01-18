@@ -364,6 +364,7 @@ class ExpeditionController extends Controller
 
       if($statusActivityParam){
         $img = $request->file('img');
+        $img_tujuan = $request->file('img_tujuan');
         $exStatusActivity = new ExStatusActivity();
 
         unset($data['update_lates_status']);
@@ -386,6 +387,7 @@ class ExpeditionController extends Controller
           $exStatusActivity->approval_by = $idUser;
           $exStatusActivity->approval_at = $current_date_time;
           $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : null;
+          $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : null;
           
           if($exStatusActivity->save()){
             if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
@@ -484,6 +486,20 @@ class ExpeditionController extends Controller
               $exStatusActivity->img = $fileName;
 
               $img->move($path, $fileName);
+              $exStatusActivity->save();
+            }
+
+            if(isset($img)){
+
+              //upload image
+              $fileExt = $img_tujuan->extension();
+              $fileName = "IMG_TUJUAN-EXPEDITION-".$exStatusActivity->id.$exStatusActivity->ex_id.".".$fileExt;
+              $path = public_path().'/uploads/expedition/' ;
+              $oldFile = $path.$exStatusActivity->id.$exStatusActivity->ex_id;
+     
+              $exStatusActivity->img_tujuan = $fileName;
+
+              $img_tujuan->move($path, $fileName);
               $exStatusActivity->save();
             }
           }
