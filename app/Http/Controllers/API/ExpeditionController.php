@@ -547,7 +547,6 @@ class ExpeditionController extends Controller
               }
             }
           }
-          if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
             if(isset($img)){
 
               //upload image
@@ -561,7 +560,7 @@ class ExpeditionController extends Controller
               $img->move($path, $fileName);
               $exStatusActivity->save();
             }
-          }else if($expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN'){
+            
             if(isset($img_tujuan)){
 
               //upload image
@@ -576,7 +575,7 @@ class ExpeditionController extends Controller
               $exStatusActivity->save();
             }
           }
-        }
+        
             return response()->json([
               'code' => 200,
               'code_message' => 'Berhasil menyimpan data',
