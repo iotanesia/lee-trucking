@@ -76,6 +76,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\TruckController@delete']);
   });
 
+  Route::group(['as' => 'api-reward', 'prefix' => 'reward'], function() {
+    Route::get('/', 'API\RewardController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\RewardController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\RewardController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\RewardController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\RewardController@delete']);
+  });
+
   Route::group(['as' => 'api-cabang', 'prefix' => 'cabang'], function() {
     Route::get('/', 'API\CabangController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\CabangController@getList']);

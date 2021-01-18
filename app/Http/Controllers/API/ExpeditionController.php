@@ -405,6 +405,7 @@ class ExpeditionController extends Controller
               }
             }else if($expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN'){
               if($expeditionActivity->harga_otv == $request->nominal){
+                $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : null;
                 $exStatusActivity->nominal = $data['nominal'] ? $data['nominal'] :  $lastExActivity->nominal;
                 $exStatusActivity->rek_name = $data['rek_name'] ? $data['rek_name'] :  $lastExActivity->rek_name;
                 $exStatusActivity->no_rek = $data['no_rek'] ? $data['no_rek'] :  $lastExActivity->no_rek;
@@ -429,6 +430,7 @@ class ExpeditionController extends Controller
                 }
 
               }else if($request->nominal < $expeditionActivity->harga_otv){
+                $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : null;
                 $exStatusActivity->nominal = isset($data['nominal']) ? $data['nominal'] :  $lastExActivity->nominal;
                 $exStatusActivity->rek_name = isset($data['rek_name']) ? $data['rek_name'] :  $lastExActivity->rek_name;
                 $exStatusActivity->no_rek = isset($data['no_rek']) ? $data['no_rek'] :  $lastExActivity->no_rek;

@@ -4,26 +4,26 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
-use App\Models\Reward;
+use App\Models\ExpeditionActivity;
 use Auth;
 use Carbon\Carbon;
 
-class RewardController extends Controller
+class BonusDriverRitController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
       $whereField = 'name, no_Reward';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $rewardList = Reward::where(function($query) use($whereField, $whereValue) {
+      $rewardList = ExpeditionActivity::where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
-                          foreach(explode(', ', $whereField) as $idx => $field) {
-                            $query->orWhere($field, 'LIKE', "%".$whereValue."%");
-                          }
+                            foreach(explode(', ', $whereField) as $idx => $field) {
+                                $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
+                            }
                         }
-                      })
-                      ->orderBy('id', 'ASC')
-                      ->paginate();
+                    })
+                    ->orderBy('id', 'ASC')
+                    ->paginate();
       
       foreach($rewardList as $row) {
         $row->data_json = $row->toJson();
