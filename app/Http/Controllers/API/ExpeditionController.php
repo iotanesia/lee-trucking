@@ -551,7 +551,7 @@ class ExpeditionController extends Controller
 
               //upload image
               $fileExt = $img->extension();
-              $fileName = "IMG-EXPEDITION-".$exStatusActivity->id.$exStatusActivity->ex_id.".".$fileExt;
+              $fileName = "IMG-EXPEDITION-".$exStatusActivity->id.$exStatusActivity->ex_id.strtotime(date('YmdHis')).".".$fileExt;
               $path = public_path().'/uploads/expedition/' ;
               $oldFile = $path.$exStatusActivity->id.$exStatusActivity->ex_id;
      
@@ -565,7 +565,7 @@ class ExpeditionController extends Controller
 
               //upload image
               $fileExt = $img_tujuan->extension();
-              $fileName = "IMG_TUJUAN-EXPEDITION-".$exStatusActivity->id.$exStatusActivity->ex_id.".".$fileExt;
+              $fileName = "IMG-TUJUAN-EXPEDITION-".$exStatusActivity->id.$exStatusActivity->ex_id.strtotime(date('YmdHis')).".".$fileExt;
               $path = public_path().'/uploads/expedition/' ;
               $oldFile = $path.$exStatusActivity->id.$exStatusActivity->ex_id;
      
