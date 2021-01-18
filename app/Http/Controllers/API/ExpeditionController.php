@@ -410,6 +410,7 @@ class ExpeditionController extends Controller
             }else if($expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN'){
               if($expeditionActivity->harga_otv == $request->nominal){
                 $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : null;
+                $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : null;
                 $exStatusActivity->nominal = $data['nominal'] ? $data['nominal'] :  $lastExActivity->nominal;
                 $exStatusActivity->rek_name = $data['rek_name'] ? $data['rek_name'] :  $lastExActivity->rek_name;
                 $exStatusActivity->no_rek = $data['no_rek'] ? $data['no_rek'] :  $lastExActivity->no_rek;
@@ -435,6 +436,7 @@ class ExpeditionController extends Controller
 
               }else if($request->nominal < $expeditionActivity->harga_otv){
                 $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : null;
+                $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : null;
                 $exStatusActivity->nominal = isset($data['nominal']) ? $data['nominal'] :  $lastExActivity->nominal;
                 $exStatusActivity->rek_name = isset($data['rek_name']) ? $data['rek_name'] :  $lastExActivity->rek_name;
                 $exStatusActivity->no_rek = isset($data['no_rek']) ? $data['no_rek'] :  $lastExActivity->no_rek;
@@ -720,9 +722,10 @@ class ExpeditionController extends Controller
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
         $exStatusActivity = ExStatusActivity::where('ex_status_activity.ex_id',$row->id)
         ->orderBy('ex_status_activity.updated_at', 'DESC')
-        ->select('ex_status_activity.long_lat','ex_status_activity.img')->first();
+        ->select('ex_status_activity.long_lat','ex_status_activity.img', 'ex_status_activity.img_tujuan')->first();
         $row->long_lat = $exStatusActivity['long_lat'];
         $row->img = ($exStatusActivity['img']) ? url('uploads/expedition/'.$exStatusActivity['img']) :'';
+        $row->img_tujuan = ($exStatusActivity['img_tujuan']) ? url('uploads/expedition/'.$exStatusActivity['img_tujuan']) :'';
         $row->data_json = $row->toJson();
       }
 
