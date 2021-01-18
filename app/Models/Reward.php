@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Reward extends Model
+class Reward extends CompModel
 {
-  protected $table = 'reward';
+  protected $table = 'ex_master_reward';
 }
