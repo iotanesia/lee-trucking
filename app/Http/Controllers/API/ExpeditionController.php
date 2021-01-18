@@ -385,6 +385,8 @@ class ExpeditionController extends Controller
 
           $exStatusActivity->approval_by = $idUser;
           $exStatusActivity->approval_at = $current_date_time;
+          $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : null;
+          
           if($exStatusActivity->save()){
             if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
               $idCoaSheet = array(30, 27, 29, 26);
