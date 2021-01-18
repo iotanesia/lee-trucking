@@ -725,6 +725,7 @@ class ExpeditionController extends Controller
         ->select('ex_status_activity.long_lat','ex_status_activity.img', 'ex_status_activity.img_tujuan')->first();
         $row->long_lat = $exStatusActivity['long_lat'];
         $row->img = ($exStatusActivity['img']) ? url('uploads/expedition/'.$exStatusActivity['img']) :'';
+        $row->img_tujuan = ($exStatusActivity['img_tujuan']) ? url('uploads/expedition/'.$exStatusActivity['img_tujuan']) :'';
         $row->data_json = $row->toJson();
       }
 
