@@ -475,6 +475,7 @@ class ExpeditionController extends Controller
                 }
               }
             }
+
             if(isset($img)){
 
               //upload image
@@ -489,7 +490,7 @@ class ExpeditionController extends Controller
               $exStatusActivity->save();
             }
 
-            if(isset($img)){
+            if(isset($img_tujuan)){
 
               //upload image
               $fileExt = $img_tujuan->extension();
@@ -632,7 +633,7 @@ class ExpeditionController extends Controller
       $data = $request->all();
       $whereField = 'nomor_inv, nomor_surat_jalan';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $expeditionActivityList = ExpeditionActivity::join('ex_status_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
+      $expeditionActivityList = ExpeditionActivity::leftjoin('ex_status_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
                     ->leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                     ->leftjoin('usr_detail', 'ex_status_activity.approval_by', 'usr_detail.id_user')
                     ->where('all_global_param.param_type', 'EX_STATUS_APPROVAL')
