@@ -87,6 +87,8 @@ class ExpeditionController extends Controller
       $data = $request->all();
       $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $platform = (isset($data['from'])) ? $data['from'] : '';
+      
       $expeditionActivityList = ExpeditionActivity::
                      leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
@@ -96,16 +98,25 @@ class ExpeditionController extends Controller
                    ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
                    ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
                    ->leftJoin('ex_master_kenek', 'ex_master_kenek.id', 'expedition_activity.kenek_id')
+                   ->join('ex_status_activity','expedition_activity.id','ex_status_activity.ex_id')
                    ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                    ->where('expedition_activity.is_deleted','false')
-                   ->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN'])
+
                    ->where(function($query) use($whereField, $whereValue) {
                      if($whereValue) {
                        foreach(explode(', ', $whereField) as $idx => $field) {
                          $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                        }
                      }
-                   })
+                   })  
+                   ->where(function($query) use($platform) {
+                    if($platform == 'mobile') {
+                        $query->where('ex_status_activity.status_approval', '<>', 'APPROVED');
+                        $query->where('expedition_activity.status_activity','SUBMIT');
+                    }else{
+                        $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
+                    }
+                  })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
                    ->orderBy('id', 'ASC')
@@ -116,6 +127,13 @@ class ExpeditionController extends Controller
 
         $approvalCode = ExStatusActivity::leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                         ->where('ex_status_activity.ex_id',$row->id)->orderBy('ex_status_activity.updated_at', 'DESC')
+                        ->where(function($query) use($platform) {
+                          if($platform == 'mobile') {
+                              $query->where('ex_status_activity.status_approval', '<>', 'APPROVED');
+                              $query->where('ex_status_activity.status_activity','SUBMIT');
+                              
+                          }
+                        })
                         ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.keterangan')->first();
                   
         $row->approval_code = $approvalCode['approval_code'];
@@ -157,6 +175,7 @@ class ExpeditionController extends Controller
       $groupAdmin = Group::where('group_name', 'Admin Kantor')->first();
       $groupOwner = Group::where('group_name', 'Owner')->first();
       $groupId = Auth::user()->group_id;
+
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -187,7 +206,7 @@ class ExpeditionController extends Controller
                             $query->where('status_activity', 'DRIVER_SELESAI_EKSPEDISI')
                                   ->where('otv_payment_method', 'TUNAI');
                         }
-                   })
+                   }) 
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                              'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
@@ -384,10 +403,8 @@ class ExpeditionController extends Controller
                 $coaActivity->rek_name = $exStatusActivity->rek_name;
                 $coaActivity->save();
               }
-
             }else if($expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN'){
               if($expeditionActivity->harga_otv == $request->nominal){
-                $exStatusActivity->img = $data['img'] ? $data['img'] :  $lastExActivity->img;
                 $exStatusActivity->nominal = $data['nominal'] ? $data['nominal'] :  $lastExActivity->nominal;
                 $exStatusActivity->rek_name = $data['rek_name'] ? $data['rek_name'] :  $lastExActivity->rek_name;
                 $exStatusActivity->no_rek = $data['no_rek'] ? $data['no_rek'] :  $lastExActivity->no_rek;
@@ -412,7 +429,6 @@ class ExpeditionController extends Controller
                 }
 
               }else if($request->nominal < $expeditionActivity->harga_otv){
-                $exStatusActivity->img = isset($data['img']) ? $data['img'] :  $lastExActivity->img;
                 $exStatusActivity->nominal = isset($data['nominal']) ? $data['nominal'] :  $lastExActivity->nominal;
                 $exStatusActivity->rek_name = isset($data['rek_name']) ? $data['rek_name'] :  $lastExActivity->rek_name;
                 $exStatusActivity->no_rek = isset($data['no_rek']) ? $data['no_rek'] :  $lastExActivity->no_rek;
@@ -454,6 +470,7 @@ class ExpeditionController extends Controller
               }
             }
             if(isset($img)){
+
               //upload image
               $fileExt = $img->extension();
               $fileName = "IMG-EXPEDITION-".$exStatusActivity->id.$exStatusActivity->ex_id.".".$fileExt;
@@ -461,6 +478,7 @@ class ExpeditionController extends Controller
               $oldFile = $path.$exStatusActivity->id.$exStatusActivity->ex_id;
      
               $exStatusActivity->img = $fileName;
+
               $img->move($path, $fileName);
               $exStatusActivity->save();
             }
@@ -592,7 +610,7 @@ class ExpeditionController extends Controller
   public function getExpeditionHistoryByNoInvOrNoSuratJalan(Request $request){
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'nomor_inv, nomor_surat_jalan, driver_id';
+      $whereField = 'nomor_inv, nomor_surat_jalan';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $expeditionActivityList = ExpeditionActivity::join('ex_status_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
                     ->leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
@@ -644,6 +662,7 @@ class ExpeditionController extends Controller
   public function getExpeditionHistoryByDriver(Request $request){
     if($request->isMethod('GET')) {
       $data = $request->all();
+      $groupDriver = Group::where('group_name', 'Driver')->first();
       $user = Auth::user();
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
@@ -656,6 +675,15 @@ class ExpeditionController extends Controller
                    ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                    ->where('ex_master_driver.user_id', $user->id)
                    ->where('expedition_activity.is_deleted', 'false')
+                   ->where(function($query) use($groupDriver, $user) {
+                      if($user->group_id == $groupDriver->id) {
+                         $query->whereIn('expedition_activity.status_activity', ['APPROVAL_OJK_DRIVER', 
+                                         'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
+                      }else{
+                          $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 
+                                          'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
+                      }
+                    })
                    ->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 
                             'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN'])
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
@@ -670,8 +698,9 @@ class ExpeditionController extends Controller
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
         $exStatusActivity = ExStatusActivity::where('ex_status_activity.ex_id',$row->id)
         ->orderBy('ex_status_activity.updated_at', 'DESC')
-        ->select('ex_status_activity.long_lat')->first();
+        ->select('ex_status_activity.long_lat','ex_status_activity.img')->first();
         $row->long_lat = $exStatusActivity['long_lat'];
+        $row->img = ($exStatusActivity['img']) ? url('uploads/expedition/'.$exStatusActivity['img']) :'';
         $row->data_json = $row->toJson();
       }
 
