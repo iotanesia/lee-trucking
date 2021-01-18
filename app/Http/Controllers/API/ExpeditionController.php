@@ -708,7 +708,7 @@ class ExpeditionController extends Controller
       $expeditionActivityList = ExStatusActivity::leftjoin('expedition_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
                     ->leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                     ->leftjoin('usr_detail', 'ex_status_activity.approval_by', 'usr_detail.id_user')
-                    ->where('all_global_param.param_type', 'EX_STATUS_APPROVAL')
+                    // ->where('all_global_param.param_type', 'EX_STATUS_APPROVAL')
                     ->where(function($query) use($whereField, $whereValue) {
                       if($whereValue) {
                         foreach(explode(', ', $whereField) as $idx => $field) {
@@ -724,6 +724,7 @@ class ExpeditionController extends Controller
       foreach($expeditionActivityList as $row) {
       
         $row->img = ($row->img) ? url('uploads/expedition/'.$row->img) :url('uploads/sparepart/nia3.png');
+        $row->img_tujuan = ($row->img_tujuan ) ? url('uploads/expedition/'.$row->img_tujuan) :url('uploads/sparepart/nia3.png');
     
         $row->data_json = $row->toJson();
       }
