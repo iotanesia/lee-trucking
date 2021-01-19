@@ -725,7 +725,7 @@ class ExpeditionController extends Controller
       
         $row->img = ($row->img) ? url('uploads/expedition/'.$row->img) :url('uploads/sparepart/nia3.png');
         $row->img_tujuan = ($row->img_tujuan ) ? url('uploads/expedition/'.$row->img_tujuan) :url('uploads/sparepart/nia3.png');
-    
+ 
         $row->data_json = $row->toJson();
       }
 
