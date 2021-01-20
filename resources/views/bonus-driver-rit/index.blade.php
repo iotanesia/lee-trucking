@@ -24,7 +24,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-12">
-          <div class="card" id="cabangs"    >
+          <div class="card" id="bonusDriverRit"    >
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
@@ -37,25 +37,24 @@
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                             </div>
-                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="cabangs" placeholder="Search Key">
+                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="bonusDriverRit" placeholder="Search Key">
                         </div>
                     </div>
-                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="cabangs"><i class="fa fa-search"></i></a>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="bonusDriverRit"><i class="fa fa-search"></i></a>
                 </div>
               </div>
             </div>
             <div class="card-body">
-                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#cabang-modal">
+                <!-- <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#bonusDriverRit-modal">
                     <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-                </button>
+                </button> -->
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-cabang" data-model="cabangs" request-url="{{ route('api-cabangs') }}" on-success-load="successLoadcabang">
+                    <table class="table align-items-center table-flush table-striped" id="table-bonusDriverRit" data-model="bonusDriverRit" request-url="{{ route('api-bonusDriverRit') }}" on-success-load="successLoadbonusDriverRit">
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
-                                <th>cabangs plat</th>
-                                <th>Alamat</th>
-                                <th>Action</th>
+                                <th>Driver</th>
+                                <th>Total Rit</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -92,25 +91,25 @@
       </footer>
     </div>
   </div>
-<div class="modal fade" id="cabang-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="bonusDriverRit-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add cabang</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Add bonusDriverRit</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-            <form role="form" id="cabang-form">
+            <form role="form" id="bonusDriverRit-form">
                 <input type="hidden" name="id" id="id">
                 <div class="card-body">
                     <div class="form-group">
-                    <label for="cabang_name">cabang Plat</label>
-                    <input type="text" class="form-control" name="cabang_name" id="cabang_name" placeholder="cabang_name">
+                    <label for="bonusDriverRit_name">bonusDriverRit Plat</label>
+                    <input type="text" class="form-control" name="bonusDriverRit_name" id="bonusDriverRit_name" placeholder="bonusDriverRit_name">
                 </div>
                 <div class="form-group">
-                    <label for="alamat">cabang corporate asal</label>
+                    <label for="alamat">bonusDriverRit corporate asal</label>
                     <textarea type="text" class="form-control" name="alamat" id="alamat" placeholder="alamat"> </textarea>
                 </div>
             </form>
@@ -122,5 +121,5 @@
     </div>
 </div>
 <script src="{{asset('js/event.js')}}"></script>
-<script src="{{asset('js/cabang.js')}}"></script>
+<script src="{{asset('js/bonusDriverRit.js')}}"></script>
 @endsection

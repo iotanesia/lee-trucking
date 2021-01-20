@@ -166,6 +166,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\CoaController@delete']);
   });
 
+  Route::group(['as' => 'api-bonusDriverRit', 'prefix' => 'bonusDriverRit'], function() {
+    Route::get('/', 'API\BonusDriverRitController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\BonusDriverRitController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\BonusDriverRitController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\BonusDriverRitController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\BonusDriverRitController@delete']);
+  });
+
 });
 
 Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {

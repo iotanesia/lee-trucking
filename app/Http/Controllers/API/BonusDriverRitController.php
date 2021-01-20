@@ -7,6 +7,7 @@ use App\User;
 use App\Models\ExpeditionActivity;
 use Auth;
 use Carbon\Carbon;
+use DB;
 
 class BonusDriverRitController extends Controller
 {
@@ -15,14 +16,66 @@ class BonusDriverRitController extends Controller
       $data = $request->all();
       $whereField = 'name, no_Reward';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $rewardList = ExpeditionActivity::where(function($query) use($whereField, $whereValue) {
+      $rewardList = ExpeditionActivity::join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+                    ->where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
                             foreach(explode(', ', $whereField) as $idx => $field) {
                                 $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                             }
                         }
                     })
-                    ->orderBy('id', 'ASC')
+                    ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
+                    ->groupBy('driver_id', 'driver_name')
+                    ->orderBy('total_rit', 'DESC')
+                    ->paginate();
+      
+      foreach($rewardList as $row) {
+        $row->data_json = $row->toJson();
+      }
+      
+      if(!isset($rewardList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $rewardList
+        ], 200);
+      }
+      
+      
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
+    }
+  }
+
+  public function getListReward(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $whereField = 'name, no_Reward';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $rewardList = ExpeditionActivity::join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+                    ->where(function($query) use($whereField, $whereValue) {
+                        if($whereValue) {
+                            foreach(explode(', ', $whereField) as $idx => $field) {
+                                $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
+                            }
+                        }
+                    })
+                    ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
+                    ->groupBy('driver_id', 'driver_name')
+                    ->orderBy('total_rit', 'DESC')
                     ->paginate();
       
       foreach($rewardList as $row) {
