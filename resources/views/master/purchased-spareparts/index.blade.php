@@ -45,9 +45,9 @@
               </div>
             </div>
             <div class="card-body">
-                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#spareparts-modal">
+                <!-- <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#spareparts-modal">
                     <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-                </button>
+                </button> -->
                 <a class="btn btn-icon btn-success mb-2" type="button" data-toggle="modal" data-target="#spareparts-scanner-modal">
                     <span class="btn-inner--icon"><i class="fas fa-barcode text-black"></i></span>
                     <span class="btn-inner--text text-white">Scanner</span>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>
         @section('title')
-            | Liexpedition
+            | Viexpedition
         @show
     </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1' name='viewport'>
@@ -68,7 +68,7 @@ font: 14px arial;
     <nav class="navbar navbar-expand-md navbar-static-top">
         <a href="index " class="logo navbar-brand">
             <!-- Add the class icon to your logo image or logo icon to add the margining -->
-            <h3>Liexpedition</h3>
+            <h3>Viexpedition</h3>
         </a>
         <div>
             <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button"> <i
