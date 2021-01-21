@@ -114,7 +114,7 @@ class ExpeditionController extends Controller
                    ->where(function($query) use($platform) {
                     if($platform == 'mobile') {
                         $query->Where('expedition_activity.status_activity','SUBMIT')
-                        ->andWhere('ex_status_activity','<>','APPROVED');
+                              ->Where('ex_status_activity.status_approval','<>','APPROVED');
                     }else{
                         $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
                     }
