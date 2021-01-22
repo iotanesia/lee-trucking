@@ -55,9 +55,10 @@
                                 <th>No</th>
                                 <th>Driver</th>
                                 <th>Total Rit</th>
-                                <th>Total Pendapatan</th>
                                 <th>Reward Jenis</th>
+                                <th>Pendapatan</th>
                                 <th>Bonus</th>
+                                <th>Total Pendapatan</th>
                             </tr>
                         </thead>
                         <tbody></tbody>

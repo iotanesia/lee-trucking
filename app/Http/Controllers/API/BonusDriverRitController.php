@@ -31,7 +31,10 @@ class BonusDriverRitController extends Controller
                     ->paginate();
       
       foreach($rewardList as $row) {
-        $row->data_json = $row->toJson();
+          $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->first();
+          $row->reward_jenis = $reward->reward_jenis;
+          $row->bonus = $reward->bonus;
+          $row->data_json = $row->toJson();
       }
       
       if(!isset($rewardList)){
@@ -80,9 +83,6 @@ class BonusDriverRitController extends Controller
                     ->paginate();
       
       foreach($rewardList as $row) {
-          $reward = Reward::where('min', '>=', $row->total_rit)->where('max', '<=', $row->total_rit)->first();
-          $row->reward_jenis = $reward->reward_jenis;
-          $row->bonus = $reward->bonus;
           $row->data_json = $row->toJson();
       }
       

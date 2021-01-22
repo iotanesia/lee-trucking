@@ -101,9 +101,10 @@ $("document").ready(function(){
                      "<td>"+ (i + 1) +"</td>"+
                      "<td>"+ driver_name +"</td>"+
                      "<td>"+ def(total_rit) +"</td>"+
-                     "<td>Rp "+ parseInt(total_rit) * 10000 +"</td>"+
                      "<td>"+ def(reward_jenis) +"</td>"+
-                     "<td>"+  def(bonus)  +"</td>"+
+                     "<td>Rp "+ parseInt(total_rit) * 10000 +"</td>"+
+                     "<td>Rp "+  def(bonus)  +"</td>"+
+                     "<td>Rp "+  (parseInt(bonus) + (parseInt(total_rit) * 10000))  +"</td>"+
                    "</tr>";
     }
   
