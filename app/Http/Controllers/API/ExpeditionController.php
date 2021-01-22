@@ -49,11 +49,13 @@ class ExpeditionController extends Controller
                    ->paginate();
       
       foreach($expeditionActivityList as $row) {
-        $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);   
-        $exStatusActivity = ExStatusActivity::where('ex_status_activity.ex_id',$row->id)
-        ->leftJoin('all_global_param', 'ex_status_activity.status_activity', 'all_global_param.param_code')
-        ->orderBy('ex_status_activity.id', 'DESC')
-        ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.long_lat')->first();
+        $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
+        $exStatusActivity = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
+                            ->leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
+                            ->where('ex_status_activity.ex_id', $row->id)
+                            ->orderBy('ex_status_activity.id', 'DESC')
+                            ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.*')->first();
+
         $row->long_lat = $exStatusActivity['long_lat'];
         $row->approval_code = $exStatusActivity['approval_code'];
         $row->approval_name = $exStatusActivity['approval_name'];
@@ -93,60 +95,47 @@ class ExpeditionController extends Controller
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $platform = (isset($data['from'])) ? $data['from'] : '';
       
-      $expeditionActivityList = ExStatusActivity::
-                     join('all_global_param as global_param_ex', 
-                     'ex_status_activity.status_approval', 'global_param_ex.param_code')
-                   ->join('expedition_activity','ex_status_activity.ex_id' ,'expedition_activity.id')
-                   ->join('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
-                   ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
-                   ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
-                   ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
-                   ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
-                   ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
-                   ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
-                   ->leftJoin('ex_master_kenek', 'ex_master_kenek.id', 'expedition_activity.kenek_id')
-                   ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
-                  //  ->where('global_param_ex.param_type', 'EX_STATUS_APPROVAL')
-                   ->where('expedition_activity.is_deleted','false')
-                   ->where(function($query) use($whereField, $whereValue) {
-                     if($whereValue) {
-                       foreach(explode(', ', $whereField) as $idx => $field) {
-                         $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
-                       }
-                     }
-                   })  
-                   ->where(function($query) use($platform) {
-                    if($platform == 'mobile') {
-                        $query->Where('expedition_activity.status_activity','SUBMIT')
-                        ->where('ex_status_activity.status_approval','<>','APPROVED');
-                    }else{
-                        $query->whereIn('expedition_activity.status_activity', 
-                        ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
-                    }
-                  })
-                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
-                            'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
-                            'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 
-                            'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name'
-                            ,'global_param_ex.param_code as approval_code', 
-                            'global_param_ex.param_name as approval_name',
-                            'ex_status_activity.no_rek as otv_no_rek', 'ex_status_activity.nominal as otv_nominal',
-                            'ex_status_activity.img as otv_image'
-                            )
-                            ->orderBy('expedition_activity.updated_at', 'DESC')
-                            // ->groupBy('ex_status_activity.ex_id')
-                   ->paginate();
+      $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
+                                ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
+                                ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+                                ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
+                                ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
+                                ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
+                                ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+                                ->leftJoin('ex_master_kenek', 'ex_master_kenek.id', 'expedition_activity.kenek_id')
+                                ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
+                                ->where('expedition_activity.is_deleted','false')
+                                ->where(function($query) use($whereField, $whereValue) {
+                                    if($whereValue) {
+                                    foreach(explode(', ', $whereField) as $idx => $field) {
+                                        $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
+                                    }
+                                    }
+                                })
+                                ->where(function($query) use($platform) {
+                                    if($platform == 'mobile') {
+                                        $query->Where('expedition_activity.status_activity','SUBMIT');
+                
+                                    }else{
+                                        $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
+                                    }
+                                  })
+                                ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
+                                        'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
+                                            'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
+                                ->orderBy('id', 'ASC')
+      ->paginate();
                    
       foreach($expeditionActivityList as $row) {
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
         $row->data_json = $row->toJson();
 
 
-        // $approvalCode = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
-        //                 ->leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
-        //                 ->where('ex_status_activity.ex_id', $row->id)
-        //                 ->orderBy('ex_status_activity.id', 'DESC')
-        //                 ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.*')->first();
+        $approvalCode = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
+                        ->leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
+                        ->where('ex_status_activity.ex_id', $row->id)
+                        ->orderBy('ex_status_activity.id', 'DESC')
+                        ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.*')->first();
 
         $allglobalParam = GlobalParam::where('param_code', $row->otv_payment_method)->first();
 
@@ -156,13 +145,13 @@ class ExpeditionController extends Controller
         }else{
         $row->otv_payment_method_name = null;
         }
-        
-        // $row->approval_code = $approvalCode['approval_code'];
-        // $row->approval_name = $approvalCode['approval_name'];
-        // $row->otv_no_rek = $approvalCode['no_rek'];
-        // $row->otv_nominal = $approvalCode['nominal'];
-        // $row->otv_nama_bank = $approvalCode['rek_name'];
-        $row->otv_image = url('/uploads/expedition/'.$row->otv_image);
+
+        $row->approval_code = $approvalCode['approval_code'];
+        $row->approval_name = $approvalCode['approval_name'];
+        $row->otv_no_rek = $approvalCode['no_rek'];
+        $row->otv_nominal = $approvalCode['nominal'];
+        $row->otv_nama_bank = $approvalCode['rek_name'];
+        $row->otv_image = url('/uploads/expedition/'.$approvalCode['img']);
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
         $row->data_json = $row->toJson();
       }
