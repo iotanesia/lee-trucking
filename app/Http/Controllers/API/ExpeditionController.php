@@ -911,6 +911,16 @@ class ExpeditionController extends Controller
                             'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
                    ->orderBy('id', 'DESC')->first();
       
+    
+
+      if(!isset($expeditionActivityList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'data'=> null
+        ], 404);
+      }else{
         $expeditionActivityList->jenis_surat_jalan = substr($expeditionActivityList->nomor_surat_jalan, 0, 2);   
         $exStatusActivity = ExStatusActivity::where('ex_status_activity.ex_id',$expeditionActivityList->id)
         ->leftJoin('all_global_param', 'ex_status_activity.status_activity', 'all_global_param.param_code')
@@ -921,15 +931,6 @@ class ExpeditionController extends Controller
         $expeditionActivityList->approval_name = $exStatusActivity['approval_name'];
         $expeditionActivityList->data_json = $expeditionActivityList->toJson();
       
-
-      if(!isset($expeditionActivityList)){
-        return response()->json([
-          'code' => 404,
-          'code_message' => 'Data tidak ditemukan',
-          'code_type' => 'BadRequest',
-          'data'=> null
-        ], 404);
-      }else{
         return response()->json([
           'code' => 200,
           'code_message' => 'Success',
