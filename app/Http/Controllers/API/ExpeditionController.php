@@ -134,7 +134,7 @@ class ExpeditionController extends Controller
                             'ex_status_activity.img as otv_image'
                             )
                             ->orderBy('expedition_activity.updated_at', 'DESC')
-                            ->groupBy('ex_status_activity.ex_id')
+                            // ->groupBy('ex_status_activity.ex_id')
                    ->paginate();
                    
       foreach($expeditionActivityList as $row) {
