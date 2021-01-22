@@ -91,10 +91,10 @@ class ExpeditionController extends Controller
       $platform = (isset($data['from'])) ? $data['from'] : '';
       
       $expeditionActivityList = ExStatusActivity::
-                     leftJoin('all_global_param as global_param_ex', 
+                     join('all_global_param as global_param_ex', 
                      'ex_status_activity.status_approval', 'global_param_ex.param_code')
                    ->join('expedition_activity','ex_status_activity.ex_id' ,'expedition_activity.id')
-                   ->leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
+                   ->join('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
                    ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
@@ -103,6 +103,7 @@ class ExpeditionController extends Controller
                    ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
                    ->leftJoin('ex_master_kenek', 'ex_master_kenek.id', 'expedition_activity.kenek_id')
                    ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
+                  //  ->where('global_param_ex.param_type', 'EX_STATUS_APPROVAL')
                    ->where('expedition_activity.is_deleted','false')
                    ->where(function($query) use($whereField, $whereValue) {
                      if($whereValue) {
@@ -114,9 +115,10 @@ class ExpeditionController extends Controller
                    ->where(function($query) use($platform) {
                     if($platform == 'mobile') {
                         $query->Where('expedition_activity.status_activity','SUBMIT')
-                        ->andWhere('ex_status_activity','<>','APPROVED');
+                        ->where('ex_status_activity.status_approval','<>','APPROVED');
                     }else{
-                        $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
+                        $query->whereIn('expedition_activity.status_activity', 
+                        ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
                     }
                   })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
@@ -124,7 +126,8 @@ class ExpeditionController extends Controller
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 
                             'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name'
                             ,'global_param_ex.param_code as approval_code', 'global_param_ex.param_name as approval_name')
-                   ->orderBy('ex_status_activity.updated_at', 'DESC')
+                            ->orderBy('expedition_activity.updated_at', 'DESC')
+                            ->groupBy('ex_status_activity.ex_id')
                    ->paginate();
                    
                 
