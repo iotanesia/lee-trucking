@@ -56,7 +56,8 @@
                                 <th>Reward Jenis</th>
                                 <th>Min</th>
                                 <th>Max</th>
-                                <th>Action</th>
+                                <th>Bonus</th>
+                                <th align="center">Action</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -128,6 +129,15 @@
                     <label class="form-control-label" for="min">Min</label>
                     <div class="input-group input-group-merge">
                         <input type="text" class="form-control" name="min" id="min" placeholder="Min">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-angle-double-down"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="bonus">bonus</label>
+                    <div class="input-group input-group-merge">
+                        <input type="text" class="form-control" name="bonus" id="bonus" placeholder="bonus">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-angle-double-down"></i></span>
                         </div>

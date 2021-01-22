@@ -419,7 +419,7 @@ function dateFormat(userDate) {
 
 function def(element) {
     if(element == null) {
-        element = "";
+        element = "-";
     }
 
     return element

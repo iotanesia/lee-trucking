@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\ExpeditionActivity;
+use App\Models\Reward;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -79,7 +80,10 @@ class BonusDriverRitController extends Controller
                     ->paginate();
       
       foreach($rewardList as $row) {
-        $row->data_json = $row->toJson();
+          $reward = Reward::where('min', '>=', $row->total_rit)->where('max', '<=', $row->total_rit)->first();
+          $row->reward_jenis = $reward->reward_jenis;
+          $row->bonus = $reward->bonus;
+          $row->data_json = $row->toJson();
       }
       
       if(!isset($rewardList)){
