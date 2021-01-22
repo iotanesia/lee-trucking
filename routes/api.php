@@ -146,6 +146,7 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-expedition', 'prefix' => 'expedition'], function() {
     Route::get('/', 'API\ExpeditionController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\ExpeditionController@getList']);
+    Route::get('get-detail-by-param', ['as' => '-get-detail-by-param', 'uses' => 'API\ExpeditionController@getDetailExpeditionByInvoiceAndNoSuratJalan']);
     Route::get('get-list-approval-ojk', ['as' => '-get-list-approval-ojk', 'uses' => 'API\ExpeditionController@getListApprovalOjk']);
     Route::get('get-list-approval-otv', ['as' => '-get-list-approval-otv', 'uses' => 'API\ExpeditionController@getListApprovalOtv']);
     Route::get('get-list-history-by-param', ['as' => '-get-list-history-by-param', 'uses' => 'API\ExpeditionController@getExpeditionHistoryByNoInvOrNoSuratJalan']);
