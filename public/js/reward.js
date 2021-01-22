@@ -98,6 +98,7 @@ var successLoadreward = (function(responses, dataModel) {
       id = responses.data[i].id;
       min = responses.data[i].min;
       max = responses.data[i].max;
+      bonus = responses.data[i].bonus;
       reward_jenis = responses.data[i].reward_jenis;
       data_json = responses.data[i].data_json;
   
@@ -106,6 +107,7 @@ var successLoadreward = (function(responses, dataModel) {
                      "<td>"+ reward_jenis +"</td>"+
                      "<td>"+ min +"</td>"+
                      "<td>"+ max +"</td>"+
+                     "<td>Rp "+ bonus +"</td>"+
                      "<td align='center'>"+
                        "<div class='btn-group'>"+
                          "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#reward-modal'><i class='fas fa-edit'></i></a>"+

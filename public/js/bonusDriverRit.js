@@ -93,12 +93,17 @@ $("document").ready(function(){
       id = responses.data[i].id;
       driver_name = responses.data[i].driver_name;
       total_rit = responses.data[i].total_rit;
+      bonus = responses.data[i].bonus;
+      reward_jenis = responses.data[i].reward_jenis;
       data_json = responses.data[i].data_json;
 
       tableRows += "<tr>" +
                      "<td>"+ (i + 1) +"</td>"+
                      "<td>"+ driver_name +"</td>"+
                      "<td>"+ def(total_rit) +"</td>"+
+                     "<td>Rp "+ parseInt(total_rit) * 10000 +"</td>"+
+                     "<td>"+ def(reward_jenis) +"</td>"+
+                     "<td>"+  def(bonus)  +"</td>"+
                    "</tr>";
     }
   
