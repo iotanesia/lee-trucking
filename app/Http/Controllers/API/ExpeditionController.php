@@ -52,7 +52,7 @@ class ExpeditionController extends Controller
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);   
         $exStatusActivity = ExStatusActivity::where('ex_status_activity.ex_id',$row->id)
         ->leftJoin('all_global_param', 'ex_status_activity.status_activity', 'all_global_param.param_code')
-        ->orderBy('ex_status_activity.updated_at', 'DESC')
+        ->orderBy('ex_status_activity.id', 'DESC')
         ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.long_lat')->first();
         $row->long_lat = $exStatusActivity['long_lat'];
         $row->approval_code = $exStatusActivity['approval_code'];
@@ -128,7 +128,11 @@ class ExpeditionController extends Controller
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 
                             'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name'
-                            ,'global_param_ex.param_code as approval_code', 'global_param_ex.param_name as approval_name')
+                            ,'global_param_ex.param_code as approval_code', 
+                            'global_param_ex.param_name as approval_name',
+                            'ex_status_activity.no_rek as otv_no_rek', 'ex_status_activity.nominal as otv_nominal',
+                            'ex_status_activity.img as otv_image'
+                            )
                             ->orderBy('expedition_activity.updated_at', 'DESC')
                             ->groupBy('ex_status_activity.ex_id')
                    ->paginate();
@@ -138,11 +142,11 @@ class ExpeditionController extends Controller
         $row->data_json = $row->toJson();
 
 
-        $approvalCode = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
-                        ->leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
-                        ->where('ex_status_activity.ex_id', $row->id)
-                        ->orderBy('ex_status_activity.id', 'DESC')
-                        ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.*')->first();
+        // $approvalCode = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
+        //                 ->leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
+        //                 ->where('ex_status_activity.ex_id', $row->id)
+        //                 ->orderBy('ex_status_activity.id', 'DESC')
+        //                 ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.*')->first();
 
         $allglobalParam = GlobalParam::where('param_code', $row->otv_payment_method)->first();
 
@@ -152,13 +156,13 @@ class ExpeditionController extends Controller
         }else{
         $row->otv_payment_method_name = null;
         }
-
-        $row->approval_code = $approvalCode['approval_code'];
-        $row->approval_name = $approvalCode['approval_name'];
-        $row->otv_no_rek = $approvalCode['no_rek'];
-        $row->otv_nominal = $approvalCode['nominal'];
-        $row->otv_nama_bank = $approvalCode['rek_name'];
-        $row->otv_image = url('/uploads/expedition/'.$approvalCode['img']);
+        
+        // $row->approval_code = $approvalCode['approval_code'];
+        // $row->approval_name = $approvalCode['approval_name'];
+        // $row->otv_no_rek = $approvalCode['no_rek'];
+        // $row->otv_nominal = $approvalCode['nominal'];
+        // $row->otv_nama_bank = $approvalCode['rek_name'];
+        $row->otv_image = url('/uploads/expedition/'.$row->otv_image);
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
         $row->data_json = $row->toJson();
       }
@@ -910,7 +914,7 @@ class ExpeditionController extends Controller
         $expeditionActivityList->jenis_surat_jalan = substr($expeditionActivityList->nomor_surat_jalan, 0, 2);   
         $exStatusActivity = ExStatusActivity::where('ex_status_activity.ex_id',$expeditionActivityList->id)
         ->leftJoin('all_global_param', 'ex_status_activity.status_activity', 'all_global_param.param_code')
-        ->orderBy('ex_status_activity.updated_at', 'DESC')
+        ->orderBy('ex_status_activity.id', 'DESC')
         ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.long_lat')->first();
         $expeditionActivityList->long_lat = $exStatusActivity['long_lat'];
         $expeditionActivityList->approval_code = $exStatusActivity['approval_code'];
