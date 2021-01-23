@@ -402,8 +402,6 @@ class ExpeditionController extends Controller
 
           $exStatusActivity->approval_by = $idUser;
           $exStatusActivity->approval_at = $current_date_time;
-          $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $img;
-          $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $img_tujuan;
 
           if(isset($data['nominal'])){
             if($expeditionActivity->harga_otv == $request->nominal){
@@ -486,6 +484,9 @@ class ExpeditionController extends Controller
 
             $img_tujuan->move($path, $fileName);
           }
+
+          $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $img;
+          $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $img_tujuan;
         }
           if($exStatusActivity->save()){
             if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
