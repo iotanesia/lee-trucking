@@ -46,12 +46,13 @@
                         <thead class="bg-gradient-info text-white">
                         <tr>
                             <th>No</th>
+                            <th>Nomor Surat Jalan</th>
                             <th>Nomor invoice</th>
-                            <th>Truck Plat</th>
                             <th>Driver</th>
                             <th>Tanggal invoice</th>
                             <th>Tanggal PO</th>
                             <th>Tujuan</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -269,61 +270,6 @@
     </div>
 </div>
 <script src="{{asset('js/event.js')}}"></script>
-<script src="{{asset('js/expedition.js')}}"></script>
+<script src="{{asset('js/expedition-tracking.js')}}"></script>
 <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
-<script>
-
-$("document").ready(function() {
-    res = false;
-    accessToken =  window.Laravel.api_token;
-    $("#tujuan").select2({
-        dropdownParent: $("#expedition-modal"),
-        minimumInputLength : 3,
-        placeholder : "Select Tujuan",
-        multiple: false,
-        ajax: {
-            type 	: 'GET',
-            url		: '{{route("api-expedition-get-ojk")}}',
-            data    :  function (params) {
-                        return {
-                            kecamatan: params.term
-                        }},
-            headers	: { "X-CSRF-TOKEN": "{{ csrf_token() }}" },
-            dataType: 'json',
-            quietMillis: 100,
-            headers: {"Authorization": "Bearer " + accessToken},
-            processResults: function (data) {
-                $('#search_marga').attr('disabled', false);
-                var results = [];
-                res = data.data;
-                $.each(data.data, function (x, y) {
-                    results.push({
-                        id: y.id,
-                        text: y.kecamatan +' - '+ y.cabang_name
-                    });
-                });
-
-                return {
-                    results: results,
-                };
-            }
-        }
-    });
-
-    $("#tujuan").on("change", function() {
-        idSelected = $(this).val();
-
-        if(res) {
-            $.each(res, function (x, y) {
-                if(y.id == idSelected) {
-                    $("#ojk").val(y.harga_ojk);
-                    $("#otv").val(y.harga_otv);
-                }
-                
-            });
-        }
-
-    });
-});
-</script>
 @endsection
