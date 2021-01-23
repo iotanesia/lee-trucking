@@ -480,7 +480,7 @@ class ExpeditionController extends Controller
             $path_tujuan = public_path().'/uploads/expedition/' ;
             $oldFile_tujuan = $path_tujuan.$exStatusActivity->ex_id.strtotime(date('YmdHis'));
      
-            $exStatusActivity->img_tujuan = $fileName;
+            $exStatusActivity->img_tujuan = $fileName_tujuan;
 
             $img_tujuan->move($path_tujuan, $fileName_tujuan);
           }
