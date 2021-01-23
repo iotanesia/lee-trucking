@@ -402,8 +402,6 @@ class ExpeditionController extends Controller
 
           $exStatusActivity->approval_by = $idUser;
           $exStatusActivity->approval_at = $current_date_time;
-          $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $img;
-          $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $img_tujuan;
 
           if(isset($data['nominal'])){
             if($expeditionActivity->harga_otv == $request->nominal){
@@ -478,14 +476,17 @@ class ExpeditionController extends Controller
 
             //upload image
             $fileExt = $img_tujuan->extension();
-            $fileName = "IMG-TUJUAN-EXPEDITION-".$exStatusActivity->ex_id.strtotime(date('YmdHis')).".".$fileExt;
-            $path = public_path().'/uploads/expedition/' ;
-            $oldFile = $path.$exStatusActivity->ex_id.strtotime(date('YmdHis'));
+            $fileName_tujuan = "IMG-TUJUAN-EXPEDITION-".$exStatusActivity->ex_id.strtotime(date('YmdHis')).".".$fileExt;
+            $path_tujuan = public_path().'/uploads/expedition/' ;
+            $oldFile_tujuan = $path.$exStatusActivity->ex_id.strtotime(date('YmdHis'));
      
             $exStatusActivity->img_tujuan = $fileName;
 
-            $img_tujuan->move($path, $fileName);
+            $img_tujuan->move($path_tujuan, $fileName_tujuan);
           }
+
+          $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $fileName;
+          $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $fileName_tujuan;
         }
           if($exStatusActivity->save()){
             if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
@@ -507,8 +508,8 @@ class ExpeditionController extends Controller
               }
             }else if($expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN'){
               if($expeditionActivity->harga_otv == $request->nominal){
-                $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $img;
-                $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $img_tujuan;
+                $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $fileName;
+                $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $fileName_tujuan;
                 $exStatusActivity->nominal = $data['nominal'] ? $data['nominal'] :  $lastExActivity->nominal;
                 $exStatusActivity->rek_name = $data['rek_name'] ? $data['rek_name'] :  $lastExActivity->rek_name;
                 $exStatusActivity->no_rek = $data['no_rek'] ? $data['no_rek'] :  $lastExActivity->no_rek;
@@ -533,8 +534,8 @@ class ExpeditionController extends Controller
                 }
 
               }else if($request->nominal < $expeditionActivity->harga_otv){
-                $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $img;
-                $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $img_tujuan;
+                $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $fileName;
+                $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $fileName_tujuan;
                 $exStatusActivity->nominal = isset($data['nominal']) ? $data['nominal'] :  $lastExActivity->nominal;
                 $exStatusActivity->rek_name = isset($data['rek_name']) ? $data['rek_name'] :  $lastExActivity->rek_name;
                 $exStatusActivity->no_rek = isset($data['no_rek']) ? $data['no_rek'] :  $lastExActivity->no_rek;
