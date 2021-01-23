@@ -836,7 +836,6 @@ class ExpeditionController extends Controller
                     ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                     ->where('ex_master_driver.user_id', $user->id)
                     ->where('expedition_activity.is_deleted', 'false')
-                    ->where('expedition_activity.status_activity', 'DRIVER_SELESAI_EKSPEDISI')
                     ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 
