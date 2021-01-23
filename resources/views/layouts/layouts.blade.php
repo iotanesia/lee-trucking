@@ -7,13 +7,13 @@
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
   <title>Viexpedition</title>
-  <link rel="icon" href="assets/img/brand/favicon.png" type="image/png">
+  <link rel="icon" href="{{asset('assets/img/brand/favicon.png')}}" type="image/png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-  <link rel="stylesheet" href="assets/vendor/nucleo/css/nucleo.css" type="text/css">
-  <link rel="stylesheet" href="assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
-  <link rel="stylesheet" href="assets/vendor/select2/dist/css/select2.min.css">
-  <link rel="stylesheet" href="assets/css/argon.css?v=1.1.0" type="text/css">
-  <link rel="stylesheet" href="daterangepicker/daterangepicker.css" type="text/css">
+  <link rel="stylesheet" href="{{asset('assets/vendor/nucleo/css/nucleo.css')}}" type="text/css">
+  <link rel="stylesheet" href="{{asset('assets/vendor/@fortawesome/fontawesome-free/css/all.min.css')}}" type="text/css">
+  <link rel="stylesheet" href="{{asset('assets/vendor/select2/dist/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/css/argon.css?v=1.1.0" type="text/css')}}">
+  <link rel="stylesheet" href="{{asset('daterangepicker/daterangepicker.css')}}" type="text/css">
   
   <style>
   .fixed-footer .app-footer .app-footer__inner{box-shadow:0.3rem -0.46875rem 2.1875rem rgba(4,9,20,0.02),0.3rem -0.9375rem 1.40625rem rgba(4,9,20,0.02),0.3rem -0.25rem 0.53125rem rgba(4,9,20,0.04),0.3rem -0.125rem 0.1875rem rgba(4,9,20,0.02)}
@@ -35,7 +35,7 @@
     font: 14px arial;
   }
   </style>
-  <script src="js/jquery3.5.1.js"></script>
+  <script src="{{asset('js/jquery3.5.1.js')}}"></script>
   <script>
       window.Laravel = {!! json_encode([
       "csrfToken" => csrf_token(),
@@ -160,7 +160,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="assets/img/theme/team-1.jpg" class="avatar rounded-circle">
+                        <img alt="Image placeholder" src="{{asset('assets/img/theme/team-1.jpg')}}" class="avatar rounded-circle">
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -179,7 +179,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="assets/img/theme/team-2.jpg" class="avatar rounded-circle">
+                        <img alt="Image placeholder" src="{{asset('assets/img/theme/team-2.jpg')}}" class="avatar rounded-circle">
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -205,7 +205,7 @@
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="assets/img/theme/team-4.jpg">
+                    <img alt="Image placeholder" src="{{asset('assets/img/theme/team-4.jpg')}}">
                   </span>
                   <div class="media-body ml-2 d-none d-lg-block">
                     <span class="mb-0 text-sm  font-weight-bold">{{Auth::user()->name}}</span>
@@ -273,23 +273,23 @@
     
   <!-- Argon Scripts -->
   <!-- Core -->
-  <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/js-cookie/js.cookie.js"></script>
-  <script src="assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
-  <script src="assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  <script src="{{asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
+  <script src="{{asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{asset('assets/vendor/js-cookie/js.cookie.js')}}"></script>
+  <script src="{{asset('assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js')}}"></script>
+  <script src="{{asset('assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js')}}"></script>
   <!-- Optional JS -->
-  <script src="assets/vendor/chart.js/dist/Chart.min.js"></script>
-  <script src="assets/vendor/chart.js/dist/Chart.extension.js"></script>
+  <script src="{{asset('assets/vendor/chart.js/dist/Chart.min.js')}}"></script>
+  <script src="{{asset('assets/vendor/chart.js/dist/Chart.extension.js')}}"></script>
   <script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
   <script src="{{url('assets/js/fslightbox.js')}}"></script>
-  <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
-  <script src="daterangepicker/moment.min.js"></script>
-  <script src="daterangepicker/daterangepicker.js"></script>
+  <script src="{{asset('assets/vendor/select2/dist/js/select2.min.js')}}"></script>
+  <script src="{{asset('daterangepicker/moment.min.js')}}"></script>
+  <script src="{{asset('daterangepicker/daterangepicker.js')}}"></script>
   <!-- Argon JS -->
-  <script src="assets/js/argon.js?v=1.1.0"></script>
+  <script src="{{asset('assets/js/argon.js?v=1.1.0')}}"></script>
   <!-- Demo JS - remove this in your project -->
-  <script src="assets/js/demo.min.js"></script>
+  <script src="{{asset('assets/js/demo.min.js')}}"></script>
 </body>
 
 </html>
