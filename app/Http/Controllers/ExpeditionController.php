@@ -9,6 +9,7 @@ use App\Models\Driver;
 use App\Models\Kenek;
 use App\Models\GlobalParam;
 use App\Models\ExpeditionActivity;
+use App\Models\ExStatusActivity;
 use Auth;
 
 class ExpeditionController extends Controller
@@ -82,5 +83,14 @@ class ExpeditionController extends Controller
         $data['kenek'] = Kenek::where('is_deleted', 'f')->get();
 
         return view('expedition.approval-otv.index', $data);
+    }
+
+    public function detailTracking($id)
+    {
+        $data['title'] = 'Tracking';
+        $data['expedition'] = ExpeditionActivity::find($id);
+        $data['detail'] = ExStatusActivity::where('ex_id', $id)->orderBy('id', 'ASC')->get();
+
+        return view('expedition.tracking.detail', $data);
     }
 }

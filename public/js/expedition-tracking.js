@@ -250,7 +250,7 @@ $("document").ready(function() {
                      "<td> <span class='badge "+classColor+"'>"+ status_name +"</span></td>"+
                      "<td align='center'>"+
                        "<div class='btn-group'>"+
-                         "<a class='btn btn-warning btn-xs btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#expedition-modal'><i class='fas fa-eye'></i></a>"+
+                         "<a class='btn btn-warning btn-xs btn-sm' href='"+window.Laravel.app_url+"/expedition-tracking/"+id+"'><i class='fas fa-eye'></i></a>"+
                        "</div>"+
                      "</td>"+
                    "</tr>";
