@@ -394,6 +394,8 @@ class ExpeditionController extends Controller
           unset($data['otv_payment_method']);
           // unset($data['status_activity']);
 
+          DB::connection(Auth::user()->schema)->beginTransaction();
+
           foreach($data as $key => $row) {
             $exStatusActivity->{$key} = $row;
           }
@@ -459,32 +461,32 @@ class ExpeditionController extends Controller
               }
             }
           }
-            if(isset($img)){
+          if(isset($img)){
 
               //upload image
               $fileExt = $img->extension();
               $fileName = "IMG-EXPEDITION-".$exStatusActivity->ex_id.strtotime(date('YmdHis')).".".$fileExt;
               $path = public_path().'/uploads/expedition/' ;
               $oldFile = $path.$exStatusActivity->ex_id.strtotime(date('YmdHis'));
-     
+    
               $exStatusActivity->img = $fileName;
 
               $img->move($path, $fileName);
-            }
-            
-            if(isset($img_tujuan)){
-
-              //upload image
-              $fileExt = $img_tujuan->extension();
-              $fileName = "IMG-TUJUAN-EXPEDITION-".$exStatusActivity->ex_id.strtotime(date('YmdHis')).".".$fileExt;
-              $path = public_path().'/uploads/expedition/' ;
-              $oldFile = $path.$exStatusActivity->ex_id.strtotime(date('YmdHis'));
-     
-              $exStatusActivity->img_tujuan = $fileName;
-
-              $img_tujuan->move($path, $fileName);
-            }
           }
+            
+          if(isset($img_tujuan)){
+
+            //upload image
+            $fileExt = $img_tujuan->extension();
+            $fileName = "IMG-TUJUAN-EXPEDITION-".$exStatusActivity->ex_id.strtotime(date('YmdHis')).".".$fileExt;
+            $path = public_path().'/uploads/expedition/' ;
+            $oldFile = $path.$exStatusActivity->ex_id.strtotime(date('YmdHis'));
+     
+            $exStatusActivity->img_tujuan = $fileName;
+
+            $img_tujuan->move($path, $fileName);
+          }
+        }
           if($exStatusActivity->save()){
             if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
               $idCoaSheet = array(30, 27, 29, 26);
@@ -574,13 +576,14 @@ class ExpeditionController extends Controller
               }
             }
         
-        
+            DB::connection(Auth::user()->schema)->commit();
             return response()->json([
               'code' => 200,
               'code_message' => 'Berhasil menyimpan data',
               'code_type' => 'Success',
             ], 200);
           } else {
+            DB::connection(Auth::user()->schema)->rollback();
             return response()->json([
               'code' => 401,
               'code_message' => 'Gagal menyimpan data',
@@ -595,6 +598,7 @@ class ExpeditionController extends Controller
         }
 
         if($expeditionActivity->save()) {
+            DB::connection(Auth::user()->schema)->commit();
             return response()->json([
                 'code' => 200,
                 'code_message' => 'Berhasil menyimpan data',
@@ -602,6 +606,7 @@ class ExpeditionController extends Controller
               ], 200);
 
         } else {
+            DB::connection(Auth::user()->schema)->rollback();
             return response()->json([
                 'code' => 405,
                 'code_message' => 'Method salah',
@@ -610,6 +615,7 @@ class ExpeditionController extends Controller
         }
 
       } else {
+        DB::connection(Auth::user()->schema)->rollback();
         return response()->json([
           'code' => 405,
           'code_message' => 'Method salah',
