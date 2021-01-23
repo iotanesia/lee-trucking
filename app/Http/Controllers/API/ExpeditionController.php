@@ -478,7 +478,7 @@ class ExpeditionController extends Controller
             $fileExt = $img_tujuan->extension();
             $fileName_tujuan = "IMG-TUJUAN-EXPEDITION-".$exStatusActivity->ex_id.strtotime(date('YmdHis')).".".$fileExt;
             $path_tujuan = public_path().'/uploads/expedition/' ;
-            $oldFile_tujuan = $path.$exStatusActivity->ex_id.strtotime(date('YmdHis'));
+            $oldFile_tujuan = $path_tujuan.$exStatusActivity->ex_id.strtotime(date('YmdHis'));
      
             $exStatusActivity->img_tujuan = $fileName;
 
