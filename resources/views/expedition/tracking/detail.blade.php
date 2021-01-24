@@ -43,17 +43,30 @@
                             $icon = 'ni ni-pin-3';
 
                         }elseif($val->status_activity == 'APPROVAL_OJK_DRIVER') {
-                            $color = 'badge-warning';
-                            $icon = 'ni ni-bus-front-12';
+                            $color = 'badge-info';
+                            $icon = 'ni ni-single-02';
 
                         }elseif($val->status_activity == 'SUBMIT') {
                             $color = 'badge-secondary';
-                            $icon = 'ni ni-delivery-fast';
+                            $icon = 'ni ni-notification-70';
+                            $icon = 'ni ni-tag';
 
                         }elseif($val->status_activity == 'DRIVER_SAMPAI_TUJUAN') {
                             $color = 'badge-primary';
                             $icon = 'ni ni-world-2';
-
+                        
+                        }elseif($val->status_activity == 'DRIVER_MENUJU_TUJUAN') {
+                            $color = 'badge-warning';
+                            $icon = 'ni ni-delivery-fast';
+                        
+                        }elseif($val->status_activity == 'DRIVER_SELESAI_EKSPEDISI') {
+                            $color = 'badge-secondary';
+                            $icon = 'ni ni-bus-front-12';
+                        
+                        }elseif($val->status_activity == 'WAITING_OWNER') {
+                            $color = 'badge-info';
+                            $icon = 'ni ni-money-coins';
+                            
                         }elseif($val->status_activity == 'CLOSED_EXPEDITION') {
                             $color = 'badge-success';
                             $icon = 'ni ni-check-bold';
@@ -71,7 +84,6 @@
                             
                         }else{
                             $colorEx = 'badge-warning';
-
                         }
 
                     @endphp
@@ -88,6 +100,12 @@
                             <div class="mt-3">
                                 <span class="badge badge-pill {{$color}}">{{$val->status_activity}}</span>
                                 <span class="badge badge-pill {{$colorEx}}">{{$val->status_approval}}</span>
+                                @if($val->img)
+                                <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top" title="Bukti Transfer"><i class="ni ni-image"></i></span>
+                                @endif
+                                @if($val->img_tujuan)
+                                <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top" title="Gambar Tujuan"><i class="ni ni-album-2"></i></span>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -104,15 +122,15 @@
             <div class="card-body">
               <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
                 <div class="timeline-block">
-                  <span class="timeline-step badge-danger">
-                    <i class="ni ni-bell-55"></i>
+                  <span class="timeline-step {{$color}}">
+                    <i class="{{$icon}}"></i>
                   </span>
                   <div class="timeline-content">
                     <small class="text-light font-weight-bold">{{date('l, d F Y', strtotime($expedition->tgl_inv))}}</small>
                     <h5 class="text-white mt-3 mb-0">{{$expedition->nomor_inv}}</h5>
-                    <p class="text-light text-sm mt-1 mb-0">Pabrik Pesanan : {{$expedition->pabrik_pesanan}}<br>Nama Barang : {{$expedition->nama_barang}}</p>
+                    <p class="text-light text-sm mt-1 mb-0">Pabrik Pesanan : {{$expedition->pabrik_pesanan}}<br>Nama Barang : {{$expedition->nama_barang}} <br>Tujuan : {{$expedition->kabupaten}} - {{$expedition->kecamatan}} : {{$expedition->cabang_name}} </p>
                     <div class="mt-3">
-                      <span class="badge badge-pill badge-danger">{{$expedition->status_activity}}</span>
+                      <span class="badge badge-pill {{$color}}">{{$expedition->status_activity}}</span>
                     </div>
                   </div>
                 </div>
