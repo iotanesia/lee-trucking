@@ -216,7 +216,7 @@
     <div class="modal-dialog modal-lg" role="document" style="max-width: 1600px;">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
-            <h5 class="modal-title text-white" id="exampleModalLabel">Add spareparts</h5>
+            <h5 class="modal-title text-white" id="exampleModalLabel">Add Stok</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -226,69 +226,6 @@
                 <input type="hidden" name="id" id="id">
                 <div class="form-row">
                     <div class="col">
-                        <div class="form-group">
-                            <label class="form-control-label" for="spareparts_name">Spare Part name</label>
-                            <input type="text" class="form-control" name="sparepart_name" id="sparepart_name" placeholder="Spareparts Name">
-                        </div>
-                        
-                        <div class="form-group purchase_type" style="display:none">
-                            <label class="form-control-label" for="purchase_date">Tgl Pembelian</label>
-                            <input type="date" class="form-control" name="purchase_date" id="purchase_date">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-control-label" for="sparepart_status">Status Sparepart</label>
-                            <select name="sparepart_status" id="" class="form-control sparepart_status">
-                            @foreach($status as $row)
-                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
-                            <select name="sparepart_type" id="" class="form-control sparepart_type">
-                            @foreach($type as $row)
-                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
-                            @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-control-label" for="group_sparepart_id">Group Sparepart</label>
-                            <select name="group_sparepart_id" id="" class="form-control group_sparepart_id">
-                            @foreach($group as $row)
-                                <option value="{{$row->id}}">{{$row->group_name}}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-control-label" for="merk_part">Image</label> 
-                            <div id="imagescr">
-                                  <img id="imgScreen" width="40%" src="{{asset('assets/img/add-photo.png')}}" alt="Not Found" style="background-size: cover; max-width : 120px" />
-                                  <input style="margin-left:10px" type="file" name="img_sparepart" required onchange="readURL(this, 1)" value="">
-                              </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label class="form-control-label" for="sparepart_jenis">Jenis Sparepart</label>
-                            <select name="sparepart_jenis" id="sparepart_jenis" class="form-control sparepart_jenis">
-                                <option value=""></option>
-                                @foreach($jenis as $row)
-                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group purchase_type" style="display:none">
-                            <label class="form-control-label" for="due_date">Tgl Jatuh tempo</label>
-                            <input type="date" class="form-control" name="due_date" id="due_date">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-control-label" for="barcode_pabrik">Code Pabrik</label>
-                            <input type="text" name="barcode_pabrik" class="form-control">
-                        </div>
                         <div class="form-group">
                             <label class="form-control-label" for="jumlah_stok">Stok</label>
                             <div class="input-group mb-2">
@@ -300,13 +237,16 @@
                                 </select>
                             </div>
                         </div>
+                    </div>
+                    <div class="col">
+                        <label class="form-control-label" for="amount">Harga</label>
                         <div class="form-group">
-                            <label class="form-control-label" for="merk_part">merk_part</label>
-                            <input type="text" class="form-control" name="merk_part" id="merk_part" placeholder="merk_part">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-control-label" for="amount">Harga</label>
-                            <input type="text" class="form-control" name="amount" id="amount" placeholder="Harga">
+                            <div class="input-group input-group-merge">                            
+                                <input type="text" class="form-control" name="amount" id="amount" placeholder="Harga">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-money-bill-wave-alt"></i></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>                
@@ -320,6 +260,6 @@
 </div>
 
 <script src="{{asset('js/event.js')}}"></script>
-<script src="{{asset('js/spareparts.js')}}"></script>
+<script src="{{asset('js/purchase-spareparts.js')}}"></script>
 @endsection
 

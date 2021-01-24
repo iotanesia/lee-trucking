@@ -178,7 +178,6 @@ $("document").ready(function() {
             $("#expedition-form").find("input[name=status_activity]").val("CLOSED_EXPEDITION");
             
         } else if(group_id == 10 && dataJSON.status_activity == "DRIVER_SELESAI_EKSPEDISI") {
-            alert('aabb');
             $("#expedition-form").find("input[name=status_activity]").val("WAITING_OWNER");
         }
 
