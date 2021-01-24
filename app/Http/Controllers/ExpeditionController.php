@@ -92,7 +92,10 @@ class ExpeditionController extends Controller
                               ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
                               ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
                               ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
-                              ->select('expedition_activity.*', 'ex_wil_kecamatan.kecamatan', 'ex_master_cabang.cabang_name', 'ex_wil_kabupaten.kabupaten')
+                              ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
+                              ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+                              ->leftJoin('ex_master_kenek','expedition_activity.kenek_id', 'ex_master_kenek.id')
+                              ->select('expedition_activity.*', 'ex_wil_kecamatan.kecamatan', 'ex_master_cabang.cabang_name', 'ex_wil_kabupaten.kabupaten', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_kenek.kenek_name')
                               ->find($id);
         $data['detail'] = ExStatusActivity::where('ex_id', $id)->orderBy('id', 'ASC')->get();
 
