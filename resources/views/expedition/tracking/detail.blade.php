@@ -101,10 +101,14 @@
                                 <span class="badge badge-pill {{$color}}">{{$val->status_activity}}</span>
                                 <span class="badge badge-pill {{$colorEx}}">{{$val->status_approval}}</span>
                                 @if($val->img)
-                                <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top" title="Bukti Transfer"><i class="ni ni-image"></i></span>
+                                <a target="_blank" href="{{url('/uploads/expedition/'.$val->img)}}">
+                                    <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top" title="Bukti Transfer"><i class="ni ni-image"></i></span>
+                                </a>
                                 @endif
                                 @if($val->img_tujuan)
-                                <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top" title="Gambar Tujuan"><i class="ni ni-album-2"></i></span>
+                                <a target="_blank" href="{{url('/uploads/expedition/'.$val->img_tujuan)}}">
+                                    <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top" title="Gambar Tujuan"><i class="ni ni-album-2"></i></span>
+                                </a>
                                 @endif
                             </div>
                         </div>
@@ -128,7 +132,7 @@
                   <div class="timeline-content">
                     <small class="text-light font-weight-bold">{{date('l, d F Y', strtotime($expedition->tgl_inv))}}</small>
                     <h5 class="text-white mt-3 mb-0">{{$expedition->nomor_inv}}</h5>
-                    <p class="text-light text-sm mt-1 mb-0">Pabrik Pesanan : {{$expedition->pabrik_pesanan}}<br>Nama Barang : {{$expedition->nama_barang}} <br>Tujuan : {{$expedition->kabupaten}} - {{$expedition->kecamatan}} : {{$expedition->cabang_name}} </p>
+                    <p class="text-light text-sm mt-1 mb-0">Pabrik Pesanan : {{$expedition->pabrik_pesanan}}<br>Nama Barang : {{$expedition->nama_barang}} <br>Tujuan : {{$expedition->kabupaten}} - {{$expedition->kecamatan}} : {{$expedition->cabang_name}} <br> Truck : {{$expedition->truck_name}} - {{$expedition->truck_plat}} <br> Driver : {{$expedition->driver_name}} <br> Kenek : {{$expedition->kenek_name}} </p>
                     <div class="mt-3">
                       <span class="badge badge-pill {{$color}}">{{$expedition->status_activity}}</span>
                     </div>
