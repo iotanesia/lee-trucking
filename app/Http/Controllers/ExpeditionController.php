@@ -88,7 +88,12 @@ class ExpeditionController extends Controller
     public function detailTracking($id)
     {
         $data['title'] = 'Tracking';
-        $data['expedition'] = ExpeditionActivity::find($id);
+        $data['expedition'] = ExpeditionActivity::join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
+                              ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
+                              ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
+                              ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+                              ->select('expedition_activity.*', 'ex_wil_kecamatan.kecamatan', 'ex_master_cabang.cabang_name', 'ex_wil_kabupaten.kabupaten')
+                              ->find($id);
         $data['detail'] = ExStatusActivity::where('ex_id', $id)->orderBy('id', 'ASC')->get();
 
         return view('expedition.tracking.detail', $data);
