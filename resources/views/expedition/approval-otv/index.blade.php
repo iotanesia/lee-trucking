@@ -182,7 +182,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <select name="jenis_surat_jalan" class="form-control" id="jenis_surat_jalan">
+                            <select class="form-control" id="jenis_surat_jalan">
                                 <option value=""></option>
                                 @foreach($sj_type as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>
@@ -198,7 +198,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="jumlah_palet">Tujuan</label>
-                            <select name="ojk_id" class="form-control" id="tujuan"></select>
+                            <select class="form-control" id="tujuan"></select>
                         </div>
                     </div>
                     <div class="col-md-3">                
@@ -250,7 +250,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">Payment Method</label>
-                            <select name="otv_payment_method" id="otv_payment_method" class="form-control">
+                            <select id="otv_payment_method" class="form-control">
                                 <option value=""></option>
                                 @foreach($payment_method as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>
@@ -321,7 +321,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">Supir</label>
-                            <select name="driver_id" id="driver_id" class="form-control">
+                            <select id="driver_id" class="form-control">
                                 <option value=""></option>
                                 @foreach($driver as $row)
                                 <option value="{{$row->id}}">{{$row->driver_name}}</option>
@@ -332,7 +332,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="kenek_id">Kenek</label>
-                            <select name="kenek_id" id="kenek_id" class="form-control">
+                            <select id="kenek_id" class="form-control">
                                 <option value=""></option>
                                 @foreach($kenek as $row)
                                 <option value="{{$row->id}}">{{$row->kenek_name}}</option>

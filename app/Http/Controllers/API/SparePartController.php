@@ -3,9 +3,12 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\CoaActivity;
+use App\Models\CoaMasterSheet;
 use App\Models\SparePart;
 use App\Models\StkHistorySparePart;
+use App\Models\GlobalParam;
+use App\User;
 use Validator;
 use Auth;
 use Carbon\Carbon;
@@ -133,6 +136,21 @@ class SparePartController extends Controller
           $historyStokSparepart->transaction_type = "IN";
           $historyStokSparepart->save();
 
+          $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
+          $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $sparePart->sparepart_type)->first();
+
+          foreach($coaMasterSheet as $key => $value) {
+              $coaActivity = new CoaActivity();
+              $coaActivity->activity_id = $sparePartType->id;
+              $coaActivity->activity_name = $sparePart->sparepart_type;
+              $coaActivity->status = 'ACTIVE';
+              $coaActivity->nominal = $sparePart->amount;
+              $coaActivity->coa_id = $value->id;
+              $coaActivity->created_at = $current_date_time;
+              $coaActivity->created_by = $user_id;
+              $coaActivity->save();
+          }
+
           //upload image
           if($img) {
               $fileExt = $img->extension();
@@ -187,6 +205,7 @@ class SparePartController extends Controller
       
       $current_date_time = Carbon::now()->toDateTimeString(); 
       $user_id = Auth::user()->id;
+
       foreach($data as $key => $row) {
         $sparePart->{$key} = $row;
       }
@@ -231,6 +250,21 @@ class SparePartController extends Controller
             $historyStokSparepart->satuan_type = $sparePart->satuan_type;
             $historyStokSparepart->transaction_type = "IN";
             $historyStokSparepart->save();
+
+            $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
+            $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $sparePart->sparepart_type)->first();
+
+            foreach($coaMasterSheet as $key => $value) {
+                $coaActivity = new CoaActivity();
+                $coaActivity->activity_id = $sparePartType->id;
+                $coaActivity->activity_name = $sparePart->sparepart_type;
+                $coaActivity->status = 'ACTIVE';
+                $coaActivity->nominal = $sparePart->amount;
+                $coaActivity->coa_id = $value->id;
+                $coaActivity->created_at = $current_date_time;
+                $coaActivity->created_by = $user_id;
+                $coaActivity->save();
+            }
         }
 
         return response()->json([

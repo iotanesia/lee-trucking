@@ -235,19 +235,20 @@
                             <label class="form-control-label" for="purchase_date">Tgl Pembelian</label>
                             <input type="date" class="form-control" name="purchase_date" id="purchase_date">
                         </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
+                            <select name="sparepart_type" id="" class="form-control sparepart_type">
+                            @foreach($type as $row)
+                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
                         
                         <div class="form-group">
                             <label class="form-control-label" for="sparepart_status">Status Sparepart</label>
                             <select name="sparepart_status" id="" class="form-control sparepart_status">
                             @foreach($status as $row)
-                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
-                            <select name="sparepart_type" id="" class="form-control sparepart_type">
-                            @foreach($type as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                             @endforeach
                             </select>
