@@ -122,7 +122,7 @@ $("document").ready(function(){
       var dataJSON = JSON.parse(dataJSON);
 
       bindToForm($("#spareparts-modal"), dataJSON);
-
+      $("#spareparts-form").find("input[name=jumlah_stok]").val('');
       $("#spareparts-form").find("input[name=id]").val(dataJSON.id);
       $("#spareparts-modal #btn-submits").attr("el-event", "edit");
       $("#spareparts-form").find("textarea[name=content]").summernote("code", dataJSON.content);
