@@ -111,6 +111,7 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-spareparts', 'prefix' => 'spareparts'], function() {
       Route::get('/', 'API\SparePartController@index');
       Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\SparePartController@getList']);
+      Route::get('get-list-unpaid', ['as' => '-get-list-unpaid', 'uses'  => 'API\SparePartController@getListUnpaid']);
       Route::get('get-sparepart-detail', ['as' => '-get-sparepart-detail', 'uses' => 'API\SparePartController@getListDetail']);
       Route::post('add', ['as' => '-add', 'uses' => 'API\SparePartController@add']);
       Route::post('edit', ['as' => '-edit', 'uses' => 'API\SparePartController@edit']);

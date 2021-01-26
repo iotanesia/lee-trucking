@@ -311,7 +311,7 @@ class BonusDriverRitController extends Controller
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
                     ->select('kenek_id', 'kenek_name', DB::raw('COUNT("kenek_id") AS total_rit'))
                     ->groupBy('kenek_id', 'kenek_name')
-                    ->orderBy('total_rit', 'DESC')->get();
+                    ->orderBy('total_rit', 'DESC')->paginate();
       
       foreach($rewardList as $row) {
           $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->first();
@@ -325,14 +325,14 @@ class BonusDriverRitController extends Controller
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
           'code_type' => 'BadRequest',
-          'data'=> null
+          'result'=> null
         ], 404);
       }else{
         return response()->json([
           'code' => 200,
           'code_message' => 'Success',
           'code_type' => 'Success',
-          'data'=> $rewardList
+          'result'=> $rewardList
         ], 200);
       }
       
