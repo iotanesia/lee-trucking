@@ -152,6 +152,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('get-list-history-by-param', ['as' => '-get-list-history-by-param', 'uses' => 'API\ExpeditionController@getExpeditionHistoryByNoInvOrNoSuratJalan']);
     Route::get('get-list-expedition-driver', ['as' => '-get-list-expedition-driver', 'uses' => 'API\ExpeditionController@getExpeditionHistoryByDriver']);
     Route::get('get-list-expedition-driver-selesai', ['as' => '-get-list-expedition-driver-selesai', 'uses' => 'API\ExpeditionController@getExpeditionHistoryByDriverSelesai']);
+    Route::get('get-list-expedition-by-driver-periode', ['as' => '-get-list-expedition-by-driver-periode', 'uses' => 'API\ExpeditionController@getExpeditionHistoryByIdDriverAndPeriode']);
     Route::get('get-ojk', ['as' => '-get-ojk', 'uses' => 'API\ExpeditionController@getOjk']);
     Route::get('get-kenek', ['as' => '-get-kenek', 'uses' => 'API\ExpeditionController@getKenek']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\ExpeditionController@add']);
@@ -171,6 +172,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/', 'API\BonusDriverRitController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\BonusDriverRitController@getList']);
     Route::get('get-list-by-periode', ['as' => '-get-list-by-periode', 'uses' => 'API\BonusDriverRitController@getListByPeriode']);
+    Route::get('get-kenek-bonus-list-by-periode', ['as' => '-get-kenek-bonus-list-by-periode', 'uses' => 'API\BonusDriverRitController@getKenekBonusListByPeriode']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\BonusDriverRitController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\BonusDriverRitController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\BonusDriverRitController@delete']);
