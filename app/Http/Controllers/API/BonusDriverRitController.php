@@ -255,14 +255,13 @@ class BonusDriverRitController extends Controller
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
                     ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
                     ->groupBy('driver_id', 'driver_name')
-                    ->orderBy('total_rit', 'DESC')->get();
+                    ->orderBy('total_rit', 'DESC')->first();
       
-      foreach($rewardList as $row) {
-          $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->first();
-          $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
-          $row->bonus = $reward ? $reward->bonus : 0;
-          $row->data_json = $row->toJson();
-      }
+          $reward = Reward::where('min', '<=', $rewardList->total_rit)->where('max', '>=', $rewardList->total_rit)->orderBy('min', 'DESC')->first();
+          $rewardList->reward_jenis = $reward ? $reward->reward_jenis : '-';
+          $rewardList->bonus = $reward ? $reward->bonus : 0;
+          $rewardList->data_json = $rewardList->toJson();
+      
       
       if(!isset($rewardList)){
         return response()->json([
