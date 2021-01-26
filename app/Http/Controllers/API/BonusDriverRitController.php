@@ -253,7 +253,6 @@ class BonusDriverRitController extends Controller
                     ->where('expedition_activity.status_activity','CLOSED_EXPEDITION')
                     ->whereYear('expedition_activity.updated_at', $data['year'])
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
-                    // ->whereRaw("expedition_activity.updated_at between CAST('".$firstDate." 00:00:00' AS DATE) AND CAST('".$lastDate." 23:59:59' AS DATE)")
                     ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
                     ->groupBy('driver_id', 'driver_name')
                     ->orderBy('total_rit', 'DESC')->get();
