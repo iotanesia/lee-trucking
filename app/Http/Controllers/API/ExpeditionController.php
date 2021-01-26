@@ -956,7 +956,7 @@ class ExpeditionController extends Controller
                     ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
                     ->leftJoin('ex_master_kenek','expedition_activity.kenek_id', 'ex_master_kenek.id')
                     ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
-                    ->where('ex_master_driver.user_id', $data['idDriver'])
+                    ->where('ex_master_driver.id', $data['idDriver'])
                     ->whereYear('expedition_activity.updated_at', $data['year'])
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
                     ->where('expedition_activity.status_activity', 'CLOSED_EXPEDITION')

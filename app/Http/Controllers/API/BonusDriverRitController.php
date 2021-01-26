@@ -290,4 +290,61 @@ class BonusDriverRitController extends Controller
       ], 405);
     }
   }
+
+  public function getKenekBonusListByPeriode(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $firstDate = date('Y-m-01');
+      $lastDate = date('Y-m-t');
+      $user = Auth::user();
+      $whereField = 'name, no_Reward';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $rewardList = ExpeditionActivity::join('ex_master_kenek', 'expedition_activity.kenek_id', 'ex_master_kenek.id')
+                    ->where(function($query) use($whereField, $whereValue) {
+                        if($whereValue) {
+                            foreach(explode(', ', $whereField) as $idx => $field) {
+                                $query->orWhere($field, '=', $whereValue);
+                            }
+                        }
+                    })
+                    ->where('expedition_activity.status_activity','CLOSED_EXPEDITION')
+                    ->whereYear('expedition_activity.updated_at', $data['year'])
+                    ->whereMonth('expedition_activity.updated_at', $data['month'])
+                    ->select('kenek_id', 'kenek_name', DB::raw('COUNT("kenek_id") AS total_rit'))
+                    ->groupBy('kenek_id', 'kenek_name')
+                    ->orderBy('total_rit', 'DESC')->get();
+      
+      foreach($rewardList as $row) {
+          $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->first();
+          $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
+          $row->bonus = $reward ? $reward->bonus : 0;
+          $row->data_json = $row->toJson();
+      }
+      
+      if(!isset($rewardList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'data'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'data'=> $rewardList
+        ], 200);
+      }
+      
+      
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
+    }
+  }
 }
