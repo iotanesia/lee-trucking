@@ -170,6 +170,7 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-bonusDriverRit', 'prefix' => 'bonusDriverRit'], function() {
     Route::get('/', 'API\BonusDriverRitController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\BonusDriverRitController@getList']);
+    Route::get('get-list-by-periode', ['as' => '-get-list-by-periode', 'uses' => 'API\BonusDriverRitController@getListByPeriode']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\BonusDriverRitController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\BonusDriverRitController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\BonusDriverRitController@delete']);
