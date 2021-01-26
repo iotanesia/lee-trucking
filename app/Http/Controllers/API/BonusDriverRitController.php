@@ -70,7 +70,7 @@ class BonusDriverRitController extends Controller
   public function getListReward(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'name, no_Reward';
+      $whereField = 'ex_master_driver.driver_name, no_Reward';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $rewardList = ExpeditionActivity::join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
                     ->where(function($query) use($whereField, $whereValue) {
