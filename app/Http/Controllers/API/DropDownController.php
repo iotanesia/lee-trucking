@@ -8,6 +8,7 @@ use Auth;
 use App\Models\Driver;
 use App\Models\Kenek;
 use App\Models\Truck;
+use App\Models\Rekening;
 use DB;
 use Validator;
 
@@ -80,6 +81,30 @@ class DropDownController extends Controller
                 'code_message' => 'Success',
                 'code_type' => 'Success',
                 'data'=> $kenekList
+            ], 200);
+        
+        } else {
+            return response()->json([
+                'code' => 405,
+                'code_message' => 'Method salah',
+                'code_type' => 'BadRequest',
+                'data'=> null
+            ], 405);
+        }
+    }
+
+    
+    public function getListRekening(Request $request) {
+        if($request->isMethod('GET')) {
+            $data = $request->all();
+            $rekeningList = Rekening::orderBy('id', 'ASC')
+                         ->get();
+            
+            return response()->json([
+                'code' => 200,
+                'code_message' => 'Success',
+                'code_type' => 'Success',
+                'data'=> $rekeningList
             ], 200);
         
         } else {

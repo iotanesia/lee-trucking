@@ -2,7 +2,7 @@ $("document").ready(function(){
   var accessToken =  window.Laravel.api_token;
 
   $.ajax({
-    url: window.Laravel.app_url + "/api/spareparts/get-list",
+    url: window.Laravel.app_url + "/api/spareparts/get-list-unpaid",
     type: "GET",
     dataType: "json",
     headers: {"Authorization": "Bearer " + accessToken},
@@ -50,6 +50,20 @@ $("document").ready(function(){
       }
     });
   })
+
+    $("#purchase_date").daterangepicker({
+        locale: {
+            format: 'DD-MM-YYYY'
+        },
+        singleDatePicker : true,
+    });
+
+    $("#due_date").daterangepicker({
+        locale: {
+            format: 'DD-MM-YYYY'
+        },
+        singleDatePicker : true,
+    });
 
     $(".sparepart_status").select2({
         placeholder:"Select Status"
@@ -179,7 +193,7 @@ var successLoadspareparts = (function(responses, dataModel) {
                     "<td>"+ jumlah_stok +"</td>"+
                     "<td align='center'>"+
                         "<div class='btn-group'>"+
-                        "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#spareparts-modal'><i class='fas fa-plus'></i></a>"+
+                        "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#spareparts-modal'><i class='fas fa-edit'></i></a>"+
                         "</div>"+
                     "</td>"+
                     "</tr>";
