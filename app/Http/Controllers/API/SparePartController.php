@@ -446,6 +446,7 @@ class SparePartController extends Controller
 
         unset($data['_token']);
         unset($data['id']);
+        unset($data['no_rek']);
         
         $current_date_time = Carbon::now()->toDateTimeString(); 
         $user_id = Auth::user()->id;
@@ -480,6 +481,24 @@ class SparePartController extends Controller
           $historyStokSparepart->due_date = $sparePart->due_date;
           $historyStokSparepart->satuan_type = $sparePart->satuan_type;
           $historyStokSparepart->transaction_type = "IN";
+
+          if(isset($request->no_rek) && $request->no_rek) {
+                $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
+                $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $sparePart->sparepart_type)->first();
+
+                foreach($coaMasterSheet as $key => $value) {
+                    $coaActivity = new CoaActivity();
+                    $coaActivity->activity_id = $sparePartType->id;
+                    $coaActivity->activity_name = $sparePart->sparepart_type;
+                    $coaActivity->status = 'ACTIVE';
+                    $coaActivity->nominal = $sparePart->amount;
+                    $coaActivity->coa_id = $value->id;
+                    $coaActivity->created_at = $current_date_time;
+                    $coaActivity->created_by = $user_id;
+                    $coaActivity->rek_id = $no_rek;
+                    $coaActivity->save();
+                }
+          }
 
           if($historyStokSparepart->save()){
             return response()->json([
