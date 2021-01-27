@@ -186,6 +186,7 @@ Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
   Route::get('get-list-truck', ['as' => '-get-list-truck', 'uses' => 'API\DropDownController@getListTruck']);
   Route::get('get-list-driver', ['as' => '-get-list-driver', 'uses' => 'API\DropDownController@getListDriver']);
   Route::get('get-list-kenek', ['as' => '-get-list-kenek', 'uses' => 'API\DropDownController@getListKenek']);
+  Route::get('get-list-rekening', ['as' => '-get-list-rekening', 'uses' => 'API\DropDownController@getListRekening']);
 });
 
 Route::group(['as' => 'api-global-param', 'prefix' => 'global-param'], function() {
