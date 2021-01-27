@@ -75,7 +75,7 @@ class BonusDriverRitController extends Controller
   public function getListReward(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'name, no_Reward';
+      $whereField = 'ex_master_driver.driver_name, no_Reward';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $rewardList = ExpeditionActivity::join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
                     ->where(function($query) use($whereField, $whereValue) {
@@ -234,6 +234,120 @@ class BonusDriverRitController extends Controller
         'code' => 405,
         'code_message' => 'Method salah',
         'code_type' => 'BadRequest',
+      ], 405);
+    }
+  }
+
+  public function getListByPeriode(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $firstDate = date('Y-m-01');
+      $lastDate = date('Y-m-t');
+      $user = Auth::user();
+      $whereField = 'name, no_Reward';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $rewardList = ExpeditionActivity::join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+                    ->where(function($query) use($whereField, $whereValue) {
+                        if($whereValue) {
+                            foreach(explode(', ', $whereField) as $idx => $field) {
+                                $query->orWhere($field, '=', $whereValue);
+                            }
+                        }
+                    })
+                    ->where('ex_master_driver.user_id', $user->id)
+                    ->where('expedition_activity.status_activity','CLOSED_EXPEDITION')
+                    ->whereYear('expedition_activity.updated_at', $data['year'])
+                    ->whereMonth('expedition_activity.updated_at', $data['month'])
+                    ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
+                    ->groupBy('driver_id', 'driver_name')
+                    ->orderBy('total_rit', 'DESC')->first();
+      
+          $reward = Reward::where('min', '<=', $rewardList->total_rit)->where('max', '>=', $rewardList->total_rit)->orderBy('min', 'DESC')->first();
+          $rewardList->reward_jenis = $reward ? $reward->reward_jenis : '-';
+          $rewardList->bonus = $reward ? $reward->bonus : 0;
+          $rewardList->data_json = $rewardList->toJson();
+      
+      
+      if(!isset($rewardList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'data'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'data'=> $rewardList
+        ], 200);
+      }
+      
+      
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
+    }
+  }
+
+  public function getKenekBonusListByPeriode(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $firstDate = date('Y-m-01');
+      $lastDate = date('Y-m-t');
+      $user = Auth::user();
+      $whereField = 'name, no_Reward';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $rewardList = ExpeditionActivity::join('ex_master_kenek', 'expedition_activity.kenek_id', 'ex_master_kenek.id')
+                    ->where(function($query) use($whereField, $whereValue) {
+                        if($whereValue) {
+                            foreach(explode(', ', $whereField) as $idx => $field) {
+                                $query->orWhere($field, '=', $whereValue);
+                            }
+                        }
+                    })
+                    ->where('expedition_activity.status_activity','CLOSED_EXPEDITION')
+                    ->whereYear('expedition_activity.updated_at', $data['year'])
+                    ->whereMonth('expedition_activity.updated_at', $data['month'])
+                    ->select('kenek_id', 'kenek_name', DB::raw('COUNT("kenek_id") AS total_rit'))
+                    ->groupBy('kenek_id', 'kenek_name')
+                    ->orderBy('total_rit', 'DESC')->paginate();
+      
+      foreach($rewardList as $row) {
+          $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->first();
+          $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
+          $row->bonus = $reward ? $reward->bonus : 0;
+          $row->data_json = $row->toJson();
+      }
+      
+      if(!isset($rewardList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $rewardList
+        ], 200);
+      }
+      
+      
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
       ], 405);
     }
   }
