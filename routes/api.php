@@ -111,6 +111,7 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-spareparts', 'prefix' => 'spareparts'], function() {
       Route::get('/', 'API\SparePartController@index');
       Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\SparePartController@getList']);
+      Route::get('get-list-unpaid', ['as' => '-get-list-unpaid', 'uses' => 'API\SparePartController@getListUnpaid']);
       Route::get('get-sparepart-detail', ['as' => '-get-sparepart-detail', 'uses' => 'API\SparePartController@getListDetail']);
       Route::post('add', ['as' => '-add', 'uses' => 'API\SparePartController@add']);
       Route::post('edit', ['as' => '-edit', 'uses' => 'API\SparePartController@edit']);
@@ -185,6 +186,7 @@ Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
   Route::get('get-list-truck', ['as' => '-get-list-truck', 'uses' => 'API\DropDownController@getListTruck']);
   Route::get('get-list-driver', ['as' => '-get-list-driver', 'uses' => 'API\DropDownController@getListDriver']);
   Route::get('get-list-kenek', ['as' => '-get-list-kenek', 'uses' => 'API\DropDownController@getListKenek']);
+  Route::get('get-list-rekening', ['as' => '-get-list-rekening', 'uses' => 'API\DropDownController@getListRekening']);
 });
 
 Route::group(['as' => 'api-global-param', 'prefix' => 'global-param'], function() {
