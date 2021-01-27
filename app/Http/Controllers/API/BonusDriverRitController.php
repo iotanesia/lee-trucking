@@ -259,14 +259,9 @@ class BonusDriverRitController extends Controller
                     ->whereYear('expedition_activity.updated_at', $data['year'])
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
                     ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
+                    ->whereNotNull('driver_id')
                     ->groupBy('driver_id', 'driver_name')
                     ->orderBy('total_rit', 'DESC')->first();
-      
-          $reward = Reward::where('min', '<=', $rewardList->total_rit)->where('max', '>=', $rewardList->total_rit)->orderBy('min', 'DESC')->first();
-          $rewardList->reward_jenis = $reward ? $reward->reward_jenis : '-';
-          $rewardList->bonus = $reward ? $reward->bonus : 0;
-          $rewardList->data_json = $rewardList->toJson();
-      
       
       if(!isset($rewardList)){
         return response()->json([
@@ -276,6 +271,10 @@ class BonusDriverRitController extends Controller
           'data'=> null
         ], 404);
       }else{
+        $reward = Reward::where('min', '<=', $rewardList->total_rit)->where('max', '>=', $rewardList->total_rit)->orderBy('min', 'DESC')->first();
+        $rewardList->reward_jenis = $reward ? $reward->reward_jenis : '-';
+        $rewardList->bonus = $reward ? $reward->bonus : 0;
+        $rewardList->data_json = $rewardList->toJson();
         return response()->json([
           'code' => 200,
           'code_message' => 'Success',
@@ -315,15 +314,10 @@ class BonusDriverRitController extends Controller
                     ->whereYear('expedition_activity.updated_at', $data['year'])
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
                     ->select('kenek_id', 'kenek_name', DB::raw('COUNT("kenek_id") AS total_rit'))
+                    ->whereNotNull('driver_id')
                     ->groupBy('kenek_id', 'kenek_name')
                     ->orderBy('total_rit', 'DESC')->paginate();
       
-      foreach($rewardList as $row) {
-          $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->first();
-          $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
-          $row->bonus = $reward ? $reward->bonus : 0;
-          $row->data_json = $row->toJson();
-      }
       
       if(!isset($rewardList)){
         return response()->json([
@@ -333,6 +327,12 @@ class BonusDriverRitController extends Controller
           'result'=> null
         ], 404);
       }else{
+        foreach($rewardList as $row) {
+            $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->first();
+            $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
+            $row->bonus = $reward ? $reward->bonus : 0;
+            $row->data_json = $row->toJson();
+        }
         return response()->json([
           'code' => 200,
           'code_message' => 'Success',
