@@ -205,7 +205,7 @@ class SparePartController extends Controller
                 $coaActivity->coa_id = $value->id;
                 $coaActivity->created_at = $current_date_time;
                 $coaActivity->created_by = $user_id;
-                $coaActivity->rek_id = $no_rek;
+                $coaActivity->rek_id = $request->no_rek;
                 $coaActivity->save();
             }  
           }
@@ -325,7 +325,7 @@ class SparePartController extends Controller
                     $coaActivity->coa_id = $value->id;
                     $coaActivity->created_at = $current_date_time;
                     $coaActivity->created_by = $user_id;
-                    $coaActivity->rek_id = $no_rek;
+                    $coaActivity->rek_id = $request->no_rek;
                     $coaActivity->save();
                 }
             }
@@ -495,7 +495,7 @@ class SparePartController extends Controller
                     $coaActivity->coa_id = $value->id;
                     $coaActivity->created_at = $current_date_time;
                     $coaActivity->created_by = $user_id;
-                    $coaActivity->rek_id = $no_rek;
+                    $coaActivity->rek_id = $request->no_rek;
                     $coaActivity->save();
                 }
           }
