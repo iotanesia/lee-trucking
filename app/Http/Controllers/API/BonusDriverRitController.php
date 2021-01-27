@@ -15,6 +15,10 @@ class BonusDriverRitController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
+      $month = '01';
+      $year = '2021';
+      $firstDate = date('Y-m-01', strtotime($year.'-'.$month.'-01'));
+      $lastDate = date('Y-m-t', strtotime($year.'-'.$month.'-01'));
       $firstDate = date('Y-m-01');
       $lastDate = date('Y-m-t');
       $whereField = 'name, no_Reward';
@@ -27,7 +31,8 @@ class BonusDriverRitController extends Controller
                             }
                         }
                     })
-                    ->whereRaw("expedition_activity.created_at between CAST('".$firstDate." 00:00:00' AS DATE) AND CAST('".$lastDate." 23:59:59' AS DATE)")
+                    ->where('status_activity', 'CLOSED_EXPEDITION')
+                    ->whereRaw("expedition_activity.updated_at between CAST('".$firstDate." 00:00:00' AS DATE) AND CAST('".$lastDate." 23:59:59' AS DATE)")
                     ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
                     ->groupBy('driver_id', 'driver_name')
                     ->orderBy('total_rit', 'DESC')

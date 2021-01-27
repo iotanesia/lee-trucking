@@ -147,6 +147,15 @@
                                         <label class="form-control-label" for="purchase_date">Tgl Pembelian</label>
                                         <input type="date" class="form-control" name="purchase_date" id="purchase_date">
                                     </div>
+                                    <div class="form-group no_rek">
+                                        <label class="form-control-label" for="no_rek">Rekening</label>
+                                        <select name="no_rek" id="no_rek" class="form-control no_rek">
+                                            <option value=""></option>
+                                        @foreach($no_rek as $row)
+                                            <option value="{{$row->id}}">{{$row->rek_no}}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <label class="form-control-label" for="jumlah_stok">Stok</label>
                                         <div class="input-group mb-2">
@@ -237,7 +246,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
-                            <select name="sparepart_type" id="sparepart_type" class="form-control sparepart_type">
+                            <select name="sparepart_type" id="sparepart-type" class="form-control sparepart_type">
                             @foreach($type as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                             @endforeach
@@ -246,6 +255,15 @@
                         <div class="form-group purchase_type" style="display:none">
                             <label class="form-control-label" for="purchase_date">Tgl Pembelian</label>
                             <input type="date" class="form-control" name="purchase_date" id="purchase_date">
+                        </div>
+                        <div class="form-group no_rek">
+                            <label class="form-control-label" for="no_rek">Rekening</label>
+                            <select name="no_rek" id="no_rek" class="form-control no_rek">
+                                <option value=""></option>
+                            @foreach($no_rek as $row)
+                                <option value="{{$row->id}}">{{$row->rek_no}}</option>
+                            @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="jumlah_stok">Stok</label>
@@ -275,7 +293,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="sparepart_jenis">Jenis Sparepart</label>
-                            <select name="sparepart_jenis" id="sparepart_jenis" class="form-control sparepart_jenis">                        
+                            <select name="sparepart_jenis" id="sparepart-jenis" class="form-control sparepart_jenis">                        
                             <option value=""></option>
                             @foreach($jenis as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>

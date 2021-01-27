@@ -154,76 +154,75 @@ $("document").ready(function(){
 });
 
 var successLoadspareparts = (function(responses, dataModel) {
-    
-  var tableRows = "";
-  var responses = responses.result.data == undefined ? responses : responses.result;
+    var tableRows = "";
+    var responses = responses.result.data == undefined ? responses : responses.result;
 
-  for(var i = 0; i < responses.data.length; i++) {
-    id = responses.data[i].id;
-    sparepart_name = responses.data[i].sparepart_name;
-    sparepart_jenis = responses.data[i].sparepart_jenis;
-    merk_part = responses.data[i].merk_part;
-    barcode_pabrik = responses.data[i].barcode_pabrik;
-    barcode_gudang = responses.data[i].barcode_gudang;
-    group_name = responses.data[i].group_name;
-    jumlah_stok = responses.data[i].jumlah_stok;
-    data_json = responses.data[i].data_json;
+    for(var i = 0; i < responses.data.length; i++) {
+        id = responses.data[i].id;
+        sparepart_name = responses.data[i].sparepart_name;
+        sparepart_jenis = responses.data[i].sparepart_jenis;
+        merk_part = responses.data[i].merk_part;
+        barcode_pabrik = responses.data[i].barcode_pabrik;
+        barcode_gudang = responses.data[i].barcode_gudang;
+        group_name = responses.data[i].group_name;
+        jumlah_stok = responses.data[i].jumlah_stok;
+        data_json = responses.data[i].data_json;
 
-    tableRows += "<tr>" +
-                   "<td>"+ (i+1) +"</td>"+
-                   "<td>"+ barcode_gudang +"</td>"+
-                   "<td>"+ barcode_pabrik +"</td>"+
-                   "<td>"+ sparepart_name +"</td>"+
-                   "<td>"+ sparepart_jenis +"</td>"+
-                   "<td>"+ group_name +"</td>"+
-                   "<td>"+ merk_part +"</td>"+
-                   "<td>"+ jumlah_stok +"</td>"+
-                   "<td align='center'>"+
-                     "<div class='btn-group'>"+
-                       "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#spareparts-modal'><i class='fas fa-plus'></i></a>"+
-                     "</div>"+
-                   "</td>"+
-                 "</tr>";
-  }
-
-  if(!tableRows) {
-    tableRows += "<tr>" +
-                 "</tr>";
-  }
-
-  $("#table-spareparts tbody").html(tableRows);
-  paginate(responses, 'spareparts');
-  $(".preloader").hide();
-
-  $(".btn-delete").click(function(){
-    var id = $(this).attr("data-id");
-    var confirms =  confirm("Are You sure want to delete this file!");
-    var accessToken =  window.Laravel.api_token;
-
-    if(confirms) {
-      $.ajax({
-        url: window.Laravel.app_url + "/api/spareparts/delete",
-        type: "POST",
-        dataType: "json",
-        data:"id"+"="+id,
-        headers: {"Authorization": "Bearer " + accessToken},
-        crossDomain: true,
-        beforeSend: function( xhr ) { 
-          $('.preloader').show();
-        },
-        success: function(data, textStatus, xhr) {
-          alert('Data berhasil di hapus');
-          $('.preloader').hide();
-          document.getElementById("search-data").click();
-        },
-        error: function(datas, textStatus, xhr) {
-            $('.preloader').hide();
-        }
-      });
+        tableRows += "<tr>" +
+                    "<td>"+ (i+1) +"</td>"+
+                    "<td>"+ barcode_gudang +"</td>"+
+                    "<td>"+ barcode_pabrik +"</td>"+
+                    "<td>"+ sparepart_name +"</td>"+
+                    "<td>"+ sparepart_jenis +"</td>"+
+                    "<td>"+ group_name +"</td>"+
+                    "<td>"+ merk_part +"</td>"+
+                    "<td>"+ jumlah_stok +"</td>"+
+                    "<td align='center'>"+
+                        "<div class='btn-group'>"+
+                        "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#spareparts-modal'><i class='fas fa-plus'></i></a>"+
+                        "</div>"+
+                    "</td>"+
+                    "</tr>";
     }
-  })
 
-  $("#spareparts-scanner-modal #scanner").on('change', function(event) {
+    if(!tableRows) {
+        tableRows += "<tr>" +
+                    "</tr>";
+    }
+
+    $("#table-spareparts tbody").html(tableRows);
+    paginate(responses, 'spareparts');
+    $(".preloader").hide();
+
+    $(".btn-delete").click(function(){
+        var id = $(this).attr("data-id");
+        var confirms =  confirm("Are You sure want to delete this file!");
+        var accessToken =  window.Laravel.api_token;
+
+        if(confirms) {
+        $.ajax({
+            url: window.Laravel.app_url + "/api/spareparts/delete",
+            type: "POST",
+            dataType: "json",
+            data:"id"+"="+id,
+            headers: {"Authorization": "Bearer " + accessToken},
+            crossDomain: true,
+            beforeSend: function( xhr ) { 
+            $('.preloader').show();
+            },
+            success: function(data, textStatus, xhr) {
+            alert('Data berhasil di hapus');
+            $('.preloader').hide();
+            document.getElementById("search-data").click();
+            },
+            error: function(datas, textStatus, xhr) {
+                $('.preloader').hide();
+            }
+        });
+        }
+    })
+
+    $("#spareparts-scanner-modal #scanner").on('change', function(event) {
         $(this).select();
         ids = $(this).val();
         var accessToken =  window.Laravel.api_token;
@@ -237,23 +236,23 @@ var successLoadspareparts = (function(responses, dataModel) {
                 headers: {"Authorization": "Bearer " + accessToken},
                 crossDomain: true,
                 beforeSend: function( xhr ) { 
-                  $('.preloader').show();
+                $('.preloader').show();
                 },
                 success: function(data, textStatus, xhr) {
-                   $("#form-scan").show();
-                   var dataJSON = data.data.data_json;
-                   var dataJSON = JSON.parse(dataJSON);
- 
-                   $("#spareparts-scanner-form").find("input[name=id]").val(dataJSON.id);
-                   $("#spareparts-scanner-form").find("input[name=scanner_form]").attr("disabled", false);
-                   $("#spareparts-scanner-modal #btn-submit").attr("el-event", "edit");
-                   $("#spareparts-scanner-form").find("textarea[name=content]").summernote("code", dataJSON.content);
-                   $("#spareparts-scanner-form").find("input[name='barcode_pabrik']").attr("readonly", true);
-                   
-                   bindToForm($("#spareparts-scanner-modal"), dataJSON);
-                   $("#spareparts-scanner-form").find("input[name=jumlah_stok]").val('');
+                $("#form-scan").show();
+                var dataJSON = data.data.data_json;
+                var dataJSON = JSON.parse(dataJSON);
 
-                   $('.preloader').hide();
+                $("#spareparts-scanner-form").find("input[name=id]").val(dataJSON.id);
+                $("#spareparts-scanner-form").find("input[name=scanner_form]").attr("disabled", false);
+                $("#spareparts-scanner-modal #btn-submit").attr("el-event", "edit");
+                $("#spareparts-scanner-form").find("textarea[name=content]").summernote("code", dataJSON.content);
+                $("#spareparts-scanner-form").find("input[name='barcode_pabrik']").attr("readonly", true);
+                
+                bindToForm($("#spareparts-scanner-modal"), dataJSON);
+                $("#spareparts-scanner-form").find("input[name=jumlah_stok]").val('');
+
+                $('.preloader').hide();
                 },
                 error: function(datas, textStatus, xhr) {
                     alert('Data Belum ada');
@@ -261,32 +260,72 @@ var successLoadspareparts = (function(responses, dataModel) {
                     $("#form-scan").hide();
                     $('.preloader').hide();
                 }
-              });
+            });
         }
-  });
+    });
 
-  $("#spareparts-scanner-modal #scanner").on('focusout', function(event) {
-      $(this).val('');
-  });
+    $("#spareparts-scanner-modal #scanner").on('focusout', function(event) {
+        $(this).val('');
+    });
 
-  $("#spareparts-scanner-form #sparepart_jenis").on('change', function(event) {
-      if($(this).val() == 'NOT_PURCHASE') {
-          $("#spareparts-scanner-form .purchase_type").hide();
-          
-      } else {
-          $("#spareparts-scanner-form .purchase_type").show();
+    $("#spareparts-scanner-form #sparepart_jenis").on('change', function(event) {
+        var typeSparePart = $("#spareparts-scanner-form #sparepart_type").val();
 
-      }
-  });
+        if($(this).val() == 'NOT_PURCHASE') {
+            $("#spareparts-scanner-form .purchase_type").hide();
+            
+        } else {
+            $("#spareparts-scanner-form .purchase_type").show();
 
-  $("#spareparts-form #sparepart_jenis").on('change', function(event) {
-      if($(this).val() == 'NOT_PURCHASE') {
-          $("#spareparts-form .purchase_type").hide();
-          
-      } else {
-          $("#spareparts-form .purchase_type").show();
+        }
 
-      }
-  });
+        if($(this).val() == 'PURCHASE' && typeSparePart == 'PAID_OFF') {
+            $("#spareparts-scanner-form .no_rek").show();
+
+        } else {
+            $("#spareparts-scanner-form .no_rek").hide();
+        }
+    });
+
+    $("#sparepart-jenis").on('change', function(event) {
+        var typeSparePart = $("#sparepart-type").val();
+
+        if($(this).val() == 'NOT_PURCHASE') {
+            $("#spareparts-form .purchase_type").hide();
+            
+        } else {
+            $("#spareparts-form .purchase_type").show();
+
+        }
+
+        if($(this).val() == 'PURCHASE' && typeSparePart == 'PAID_OFF') {
+        $("#spareparts-form .no_rek").show();
+
+        } else {
+        $("#spareparts-form .no_rek").hide();
+        }
+    });
+
+    $("#spareparts-scanner-form #sparepart_type").on('change', function(event) {
+        var jenisSparePart = $("#spareparts-scanner-form #sparepart_jenis").val();
+
+        if($(this).val() == 'PAID_OFF' && jenisSparePart == 'PURCHASE') {
+            $("#spareparts-scanner-form .no_rek").show();
+
+        } else {
+            $("#spareparts-scanner-form .no_rek").hide();
+        }
+    });
+
+    $("#sparepart-type").on('change', function(event) {
+        var jenisSparePart = $("#sparepart-jenis").val();
+
+        if($(this).val() == 'PAID_OFF' && jenisSparePart == 'PURCHASE') {
+        $("#spareparts-form .no_rek").show();
+
+        } else {
+        $("#spareparts-form .no_rek").hide();
+        }
+    });
 
 });

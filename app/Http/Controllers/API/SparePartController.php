@@ -68,6 +68,59 @@ class SparePartController extends Controller
     }
   }
 
+  public function getListUnpaid(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $whereField = 'sparepart_name, group_name, stk_master_sparepart.barcode_pabrik';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
+                                       'stk_master_sparepart.group_sparepart_id')
+                       ->join('all_global_param as sparepart_jenis', 'stk_master_sparepart.sparepart_jenis', 'sparepart_jenis.param_code')
+                       ->where('stk_master_sparepart.is_deleted','=','false')
+                       ->where('stk_master_sparepart.sparepart_type', 'DEBT')
+                       ->where(function($query) use($whereField, $whereValue) {
+                           if($whereValue) {
+                               foreach(explode(', ', $whereField) as $idx => $field) {
+                               $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                               }
+                           }
+                           })
+                       ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
+                       ->orderBy('id', 'ASC')
+                       ->paginate();
+      
+      foreach($sparePartList as $row) {
+        $row->img_sparepart = ($row->img_sparepart) ? url('uploads/sparepart/'.$row->img_sparepart) :url('uploads/sparepart/nia3.png');
+        $row->data_json = $row->toJson();
+      }
+
+      if(!isset($sparePartList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $sparePartList
+        ], 200);
+      }
+      
+      
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
+    }
+  }
+
   public function add(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
@@ -97,6 +150,7 @@ class SparePartController extends Controller
       }else{
         unset($data['_token']);
         unset($data['id']);
+        unset($data['no_rek']);
 
         $current_date_time = Carbon::now()->toDateTimeString(); 
         $user_id = Auth::user()->id;
@@ -135,20 +189,23 @@ class SparePartController extends Controller
           $historyStokSparepart->satuan_type = $sparePart->satuan_type;
           $historyStokSparepart->transaction_type = "IN";
           $historyStokSparepart->save();
+          
+          if(isset($request->no_rek) && $request->no_rek) {
+            $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
+            $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $sparePart->sparepart_type)->first();
 
-          $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
-          $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $sparePart->sparepart_type)->first();
-
-          foreach($coaMasterSheet as $key => $value) {
-              $coaActivity = new CoaActivity();
-              $coaActivity->activity_id = $sparePartType->id;
-              $coaActivity->activity_name = $sparePart->sparepart_type;
-              $coaActivity->status = 'ACTIVE';
-              $coaActivity->nominal = $sparePart->amount;
-              $coaActivity->coa_id = $value->id;
-              $coaActivity->created_at = $current_date_time;
-              $coaActivity->created_by = $user_id;
-              $coaActivity->save();
+            foreach($coaMasterSheet as $key => $value) {
+                $coaActivity = new CoaActivity();
+                $coaActivity->activity_id = $sparePartType->id;
+                $coaActivity->activity_name = $sparePart->sparepart_type;
+                $coaActivity->status = 'ACTIVE';
+                $coaActivity->nominal = $sparePart->amount;
+                $coaActivity->coa_id = $value->id;
+                $coaActivity->created_at = $current_date_time;
+                $coaActivity->created_by = $user_id;
+                $coaActivity->rek_id = $no_rek;
+                $coaActivity->save();
+            }  
           }
 
           //upload image
@@ -202,6 +259,7 @@ class SparePartController extends Controller
       unset($data['_token']);
       unset($data['id']);
       unset($data['scanner_form']);
+      unset($data['no_rek']);
       
       $current_date_time = Carbon::now()->toDateTimeString(); 
       $user_id = Auth::user()->id;
@@ -251,19 +309,23 @@ class SparePartController extends Controller
             $historyStokSparepart->transaction_type = "IN";
             $historyStokSparepart->save();
 
-            $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
-            $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $sparePart->sparepart_type)->first();
+            if(isset($request->no_rek) && $request->no_rek) {
 
-            foreach($coaMasterSheet as $key => $value) {
-                $coaActivity = new CoaActivity();
-                $coaActivity->activity_id = $sparePartType->id;
-                $coaActivity->activity_name = $sparePart->sparepart_type;
-                $coaActivity->status = 'ACTIVE';
-                $coaActivity->nominal = $sparePart->amount;
-                $coaActivity->coa_id = $value->id;
-                $coaActivity->created_at = $current_date_time;
-                $coaActivity->created_by = $user_id;
-                $coaActivity->save();
+                $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
+                $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $sparePart->sparepart_type)->first();
+
+                foreach($coaMasterSheet as $key => $value) {
+                    $coaActivity = new CoaActivity();
+                    $coaActivity->activity_id = $sparePartType->id;
+                    $coaActivity->activity_name = $sparePart->sparepart_type;
+                    $coaActivity->status = 'ACTIVE';
+                    $coaActivity->nominal = $sparePart->amount;
+                    $coaActivity->coa_id = $value->id;
+                    $coaActivity->created_at = $current_date_time;
+                    $coaActivity->created_by = $user_id;
+                    $coaActivity->rek_id = $no_rek;
+                    $coaActivity->save();
+                }
             }
         }
 
