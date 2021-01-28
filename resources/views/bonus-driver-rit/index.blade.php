@@ -1,5 +1,14 @@
 @extends('layouts/layouts')
 @section('content')
+<style>
+.table-condensed thead tr:nth-child(2),
+.table-condensed tbody {
+  display: none
+}
+.daterangepicker select.yearselect{
+    width:60%
+}  
+</style>
     <div class="header bg-gradient-info pb-6">
       <div class="container-fluid">
         <div class="header-body">
@@ -30,6 +39,22 @@
                 <div class="col">
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
                   <h5 class="h3 mb-0">Table {{$title}}</h5>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control m-1" id="tahun-select">
+                        <option value=""></option>
+                        @foreach($tahun as $val)
+                            <option value="{{$val['years']}}">{{$val['years']}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control m-1" id="bulan-select">
+                        <option value=""></option>
+                        @foreach($bulan as $val)
+                            <option value="{{$val}}">{{$val}}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="navbar-search navbar-search-light form-inline mr-sm-3">
                     <div class="form-group mb-0">
@@ -125,5 +150,7 @@
     </div>
 </div>
 <script src="{{asset('js/event.js')}}"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/2.9.0/moment.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker.js"></script>
 <script src="{{asset('js/bonusDriverRit.js')}}"></script>
 @endsection

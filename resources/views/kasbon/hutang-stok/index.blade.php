@@ -53,9 +53,6 @@
                                 <th>Code Gudang</th>
                                 <th>Code Pabrik</th>
                                 <th>Spareparts Name</th>
-                                <th>Spareparts Jenis</th>
-                                <th>Group Name</th>
-                                <th>Merek</th>
                                 <th>Jumlah Stok</th>
                                 <th>Action</th>
                             </tr>

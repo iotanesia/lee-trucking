@@ -61,6 +61,25 @@ $("document").ready(function(){
     $("#bonusDriverRit_category").select2({
         placeholder:"Select Category"
     });
+
+    $("#tahun-select").select2({
+        placeholder:"Select Tahun"
+    });
+
+    $("#bulan-select").select2({
+        placeholder:"Select Bulan"
+    });
+
+    $('#date-picker').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        minDate: '06/01/2013',
+        maxDate: '06/30/2021',      
+        format: 'DD/MM/YYYY'
+      }).on('hide.daterangepicker', function (ev, picker) {
+        $('.table-condensed tbody tr:nth-child(2) td').click();
+        alert(picker.startDate.format('MM/YYYY'));
+      });
   
     $("#bonusDriverRit-modal").on("show.bs.modal", function(e) {
       var invoker = $(e.relatedTarget);
