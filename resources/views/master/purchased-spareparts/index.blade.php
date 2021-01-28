@@ -217,7 +217,7 @@
         </div>
     </div>
   </div>
-  <div class="modal fade" id="spareparts-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="spareparts-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document" style="max-width: 1600px;">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">

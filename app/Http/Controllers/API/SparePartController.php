@@ -75,6 +75,7 @@ class SparePartController extends Controller
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
                                        'stk_master_sparepart.group_sparepart_id')
+                       ->with(['stk_history_stok'])
                        ->join('all_global_param as sparepart_jenis', 'stk_master_sparepart.sparepart_jenis', 'sparepart_jenis.param_code')
                        ->where('stk_master_sparepart.is_deleted','=','false')
                        ->where('stk_master_sparepart.sparepart_type', 'DEBT')
@@ -92,6 +93,7 @@ class SparePartController extends Controller
                        ->paginate();
       
       foreach($sparePartList as $row) {
+        $row->makeVisible('stk_history_stok');
         $row->img_sparepart = ($row->img_sparepart) ? url('uploads/sparepart/'.$row->img_sparepart) :url('uploads/sparepart/nia3.png');
         $row->data_json = $row->toJson();
       }
