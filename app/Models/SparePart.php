@@ -10,6 +10,6 @@ class SparePart extends CompModel
 
   public function stk_history_stok()
   {
-    return $this->hasMany('App\Models\StkHistorySparepart', 'sparepart_id');
+    return $this->hasMany('App\Models\StkHistorySparePart', 'sparepart_id');
   }
 }
