@@ -75,7 +75,11 @@ class SparePartController extends Controller
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
                                        'stk_master_sparepart.group_sparepart_id')
-                       ->with(['stk_history_stok'])
+                       ->with(['stk_history_stok' => function($querys) {
+                            $querys->where('sparepart_jenis', 'PURCHASE')
+                                   ->where('sparepart_type', 'DEBT');
+                            }
+                       ])
                        ->join('all_global_param as sparepart_jenis', 'stk_master_sparepart.sparepart_jenis', 'sparepart_jenis.param_code')
                        ->where('stk_master_sparepart.is_deleted','=','false')
                        ->where('stk_master_sparepart.sparepart_type', 'DEBT')
