@@ -564,6 +564,7 @@ class SparePartController extends Controller
                 $coaActivity->created_at = $current_date_time;
                 $coaActivity->created_by = $user_id;
                 $coaActivity->rek_id = $request->no_rek;
+                $coaActivity->img_paid = $request->img;
                 $coaActivity->save();
             }
 

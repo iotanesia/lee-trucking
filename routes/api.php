@@ -180,6 +180,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\BonusDriverRitController@delete']);
   });
 
+  Route::group(['as' => 'api-stkRepairHeader', 'prefix' => 'stkRepairHeader'], function() {
+    Route::get('/', 'API\StkRepairHeaderController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\StkRepairHeaderController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\StkRepairHeaderController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\StkRepairHeaderController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\StkRepairHeaderController@delete']);
+  });
+
 });
 
 Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
