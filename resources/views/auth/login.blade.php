@@ -110,6 +110,11 @@
                     <input class="form-control" placeholder="Password" name="password" type="password">
                   </div>
                 </div>
+                    @if($errors->any())
+                        <small class="text-danger">
+                            Email & Password doesn't Match 
+                        </small>
+                    @endif
                 <div class="custom-control custom-control-alternative custom-checkbox">
                   <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
                   <label class="custom-control-label" for=" customCheckLogin">
