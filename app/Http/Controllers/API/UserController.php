@@ -117,6 +117,7 @@ class UserController extends Controller
         unset($input['password_confirmation']);
         unset($input['group_id']);
         unset($input['is_active']);
+        unset($input['id']);
 
         foreach($input as $key => $row) {
           $userDetail->{$key} = $row;
@@ -134,6 +135,13 @@ class UserController extends Controller
             'data'=> $user
           ], 200);
 
+        }else {
+          return response()->json([
+            'code' => 400,
+            'code_message' => 'Gagal menyimpan user',
+            'code_type' => 'BadRequest',
+            'data'=> null
+          ], 400);
         }
 
       }else{
