@@ -22,8 +22,10 @@ class ExpeditionController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv';
+    //   dd($data);
+      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv, otv_payment_method';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -39,6 +41,11 @@ class ExpeditionController extends Controller
                        foreach(explode(', ', $whereField) as $idx => $field) {
                          $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                        }
+                     }
+                   })
+                   ->where(function($query) use($whereFilter) {
+                     if($whereFilter) {
+                         $query->where('otv_payment_method', $whereFilter);
                      }
                    })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
