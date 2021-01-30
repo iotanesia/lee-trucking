@@ -536,4 +536,67 @@ class SparePartController extends Controller
       }
   }
 
+  public function paid(Request $request) {
+      if($request->isMethod('POST')) {
+        $data = $request->all();
+        $img = $request->file('img_sparepart');
+        $historyStokSparepart = StkHistorySparePart::find($data['id']);
+
+        unset($data['_token']);
+        unset($data['id']);
+        unset($data['no_rek']);
+
+        $current_date_time = Carbon::now()->toDateTimeString(); 
+        $user_id = Auth::user()->id;
+        $historyStokSparepart->sparepart_type = 'PAID_OFF';
+  
+        if($historyStokSparepart->save()) {
+            $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
+            $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $historyStokSparepart->sparepart_type)->first();
+
+            foreach($coaMasterSheet as $key => $value) {
+                $coaActivity = new CoaActivity();
+                $coaActivity->activity_id = $sparePartType->id;
+                $coaActivity->activity_name = $historyStokSparepart->sparepart_type;
+                $coaActivity->status = 'ACTIVE';
+                $coaActivity->nominal = $historyStokSparepart->amount;
+                $coaActivity->coa_id = $value->id;
+                $coaActivity->created_at = $current_date_time;
+                $coaActivity->created_by = $user_id;
+                $coaActivity->rek_id = $request->no_rek;
+                $coaActivity->save();
+            }
+
+            $checkUpdate = StkHistorySparePart::where('sparepart_jenis', 'PURCHASE')
+                           ->where('sparepart_type', 'DEBT')->where('sparepart_id', $historyStokSparepart->sparepart_id)->count();
+            
+            if(!$checkUpdate) {
+                $sparePart = SparePart::find($historyStokSparepart->sparepart_id);
+                $sparePart->sparepart_type = 'PAID_OFF';
+                $sparePart->save();
+            }
+
+            return response()->json([
+              'code' => 200,
+              'code_message' => 'Berhasil menyimpan data',
+              'code_type' => 'Success',
+            ], 200);
+
+        } else {
+          return response()->json([
+            'code' => 401,
+            'code_message' => 'Gagal menyimpan data',
+            'code_type' => 'BadRequest',
+          ], 401);
+        }
+        
+      } else {
+        return response()->json([
+          'code' => 405,
+          'code_message' => 'Method salah',
+          'code_type' => 'BadRequest',
+        ], 405);
+      }
+  }
+
 }

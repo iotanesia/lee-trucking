@@ -16,6 +16,20 @@ $("document").ready(function(){
     },
   });
 
+  $.ajax({
+    url: window.Laravel.app_url + "/api/drop-down/get-list-rekening",
+    type: "GET",
+    dataType: "json",
+    crossDomain: true,
+    beforeSend: function( xhr ) { 
+        $('.preloader').show();
+    },
+    success: function(data, textStatus, xhr) {
+        $('.preloader').hide();
+        dataDropDown = data.data;
+    },
+  });
+
   $("#btn-submits").click(function(){
     var event = $("#spareparts-modal #btn-submits").attr("el-event");
     var data = new FormData($("#spareparts-form")[0]);
@@ -135,6 +149,40 @@ $("document").ready(function(){
       var dataJSON = invoker.attr("data-json");
       var dataJSON = JSON.parse(dataJSON);
 
+      console.log(dataDropDown);
+
+      if(dataJSON.stk_history_stok !== undefined) {  
+          var tableRows = "";
+
+          for(var i = 0; i < dataJSON.stk_history_stok.length; i++) {
+              id = dataJSON.stk_history_stok[i].id;
+              amount = dataJSON.stk_history_stok[i].amount;
+              sparepart_type = dataJSON.stk_history_stok[i].sparepart_type;
+              jumlah_stok = dataJSON.stk_history_stok[i].jumlah_stok != null ? dataJSON.stk_history_stok[i].jumlah_stok : 0;
+
+              tableRows += "<tr>" +
+                                "<td>"+ (i+1) +" <input type='hidden' value='"+id+"'> </td>"+
+                                "<td>"+ sparepart_type +"</td>"+
+                                "<td>"+ amount +"</td>"+
+                                "<td>"+ jumlah_stok +"</td>"+
+                                "<td>"+ (parseInt(amount) * parseInt(jumlah_stok)) +"</td>"+
+                                "<td> <select name='no_rek' id='no_rek_"+id+"' class='form-control no_rek'>"+optionList(dataDropDown)+"</select></td>"+
+                                "<td align='center'>"+
+                                    "<div class='btn-group'>"+
+                                    "<button type='button' onClick='paid("+id+")' class='btn btn-success btn-sm' href='#'>PAID</button>"+
+                                    "</div>"+
+                                "</td>"+
+                            "</tr>";
+
+          }
+
+        var select = $(".no_rek");
+
+        select.val(null).trigger('change');
+
+            $("#table-spareparts-detail tbody").html(tableRows);
+        }
+
       bindToForm($("#spareparts-modal"), dataJSON);
       $("#spareparts-form").find("input[name=jumlah_stok]").val('');
       $("#spareparts-form").find("input[name=id]").val(dataJSON.id);
@@ -187,9 +235,6 @@ var successLoadspareparts = (function(responses, dataModel) {
                     "<td>"+ barcode_gudang +"</td>"+
                     "<td>"+ barcode_pabrik +"</td>"+
                     "<td>"+ sparepart_name +"</td>"+
-                    "<td>"+ sparepart_jenis +"</td>"+
-                    "<td>"+ group_name +"</td>"+
-                    "<td>"+ merk_part +"</td>"+
                     "<td>"+ jumlah_stok +"</td>"+
                     "<td align='center'>"+
                         "<div class='btn-group'>"+
@@ -214,25 +259,25 @@ var successLoadspareparts = (function(responses, dataModel) {
         var accessToken =  window.Laravel.api_token;
 
         if(confirms) {
-        $.ajax({
-            url: window.Laravel.app_url + "/api/spareparts/delete",
-            type: "POST",
-            dataType: "json",
-            data:"id"+"="+id,
-            headers: {"Authorization": "Bearer " + accessToken},
-            crossDomain: true,
-            beforeSend: function( xhr ) { 
-            $('.preloader').show();
-            },
-            success: function(data, textStatus, xhr) {
-            alert('Data berhasil di hapus');
-            $('.preloader').hide();
-            document.getElementById("search-data").click();
-            },
-            error: function(datas, textStatus, xhr) {
+            $.ajax({
+                url: window.Laravel.app_url + "/api/spareparts/delete",
+                type: "POST",
+                dataType: "json",
+                data:"id"+"="+id,
+                headers: {"Authorization": "Bearer " + accessToken},
+                crossDomain: true,
+                beforeSend: function( xhr ) { 
+                $('.preloader').show();
+                },
+                success: function(data, textStatus, xhr) {
+                alert('Data berhasil di hapus');
                 $('.preloader').hide();
-            }
-        });
+                document.getElementById("search-data").click();
+                },
+                error: function(datas, textStatus, xhr) {
+                    $('.preloader').hide();
+                }
+            });
         }
     })
 
@@ -343,3 +388,52 @@ var successLoadspareparts = (function(responses, dataModel) {
     });
 
 });
+
+function optionList(arrOption, selectedValue) {
+    var options = "<option value=''>select</option>";
+  
+    for(var i = 0; i < arrOption.length; i++) {
+      options += "<option value='" + arrOption[i].id + "' " + (arrOption[i].id == selectedValue ? "selected" : "") + ">" + arrOption[i].rek_no + " - " + arrOption[i].bank_name + " - " + arrOption[i].rek_name +"</option>";
+    }
+  
+    return options;
+}
+
+function paid(id) {
+    var accessToken =  window.Laravel.api_token;
+    var no_rek = $('#no_rek_'+id).val();
+    alert(no_rek);
+    var data = new FormData;
+    data.append("id", id);
+    data.append("no_rek", no_rek);
+    
+    $.ajax({
+        url: window.Laravel.app_url + "/api/spareparts/paid",
+        type: "POST",
+        dataType: "json",
+        data:data,
+        processData: false,
+        contentType: false,
+        headers: {"Authorization": "Bearer " + accessToken},
+        crossDomain: true,
+        beforeSend: function( xhr ) {
+          $('.preloader').show();
+      },
+      success: function(datas, textStatus, xhr) {
+          $("#successModal").modal("show");
+          $("#spareparts-modal").modal("hide");
+          $("#spareparts-scanner-modal").modal("hide");
+          $('.preloader').hide();
+          document.getElementById("search-data").click();
+      },
+      error: function(datas, textStatus, xhr) {
+          $('.preloader').hide();
+          msgError = "";
+          for(var item in datas.responseJSON.errors) {
+            msgError += datas.responseJSON.errors[item][0] + "*";
+          }
+          alert(msgError);
+      }
+    });
+
+}
