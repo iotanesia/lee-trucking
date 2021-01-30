@@ -549,6 +549,7 @@ class SparePartController extends Controller
         $current_date_time = Carbon::now()->toDateTimeString(); 
         $user_id = Auth::user()->id;
         $historyStokSparepart->sparepart_type = 'PAID_OFF';
+        $historyStokSparepart->img_paid = $request->img;
   
         if($historyStokSparepart->save()) {
             $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
@@ -564,7 +565,6 @@ class SparePartController extends Controller
                 $coaActivity->created_at = $current_date_time;
                 $coaActivity->created_by = $user_id;
                 $coaActivity->rek_id = $request->no_rek;
-                $coaActivity->img_paid = $request->img;
                 $coaActivity->save();
             }
 
