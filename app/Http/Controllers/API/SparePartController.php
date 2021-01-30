@@ -549,7 +549,7 @@ class SparePartController extends Controller
 
         if($img_paid) {
             $fileExt = $img_paid->extension();
-            $fileName = "IMG-SPAREPART-".$sparePart->id.'-TSJ-'.date('dmY').".".$fileExt;
+            $fileName = "IMG-SPAREPART-PAID".$historyStokSparepart->id.'-TSJ-'.date('dmY').".".$fileExt;
             $path =  public_path().'/uploads/sparepart/' ;
         }
 
