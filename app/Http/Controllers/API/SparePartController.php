@@ -540,18 +540,29 @@ class SparePartController extends Controller
       if($request->isMethod('POST')) {
         $data = $request->all();
         $img = $request->file('img_sparepart');
+        $img_paid = $request->file('img');
         $historyStokSparepart = StkHistorySparePart::find($data['id']);
 
         unset($data['_token']);
         unset($data['id']);
         unset($data['no_rek']);
 
+        if($img_paid) {
+            $fileExt = $img_paid->extension();
+            $fileName = "IMG-SPAREPART-".$sparePart->id.'-TSJ-'.date('dmY').".".$fileExt;
+            $path =  public_path().'/uploads/sparepart/' ;
+        }
+
         $current_date_time = Carbon::now()->toDateTimeString(); 
         $user_id = Auth::user()->id;
         $historyStokSparepart->sparepart_type = 'PAID_OFF';
-        $historyStokSparepart->img_paid = $request->img;
+        $historyStokSparepart->img_paid = $fileName;
   
         if($historyStokSparepart->save()) {
+            if($img_paid) {
+                $img_paid->move($path, $fileName);
+            }
+
             $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
             $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $historyStokSparepart->sparepart_type)->first();
 
