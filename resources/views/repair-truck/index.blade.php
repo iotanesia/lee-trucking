@@ -1,5 +1,17 @@
 @extends('layouts/layouts')
 @section('content')
+<style>
+.modal-dialog {
+    max-width: 80%;
+    height: 100%;
+}.form-control:disabled, .form-control[readonly] {
+    background-color:#ffffff;
+}
+.select2-container--default.select2-container--disabled .select2-selection--single {
+    background-color: #ffff;
+    cursor: default;
+}
+</style>
     <div class="header bg-gradient-info pb-6">
       <div class="container-fluid">
         <div class="header-body">
@@ -97,7 +109,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add stkRepairHeader</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Add Repair Truck</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -105,19 +117,61 @@
         <div class="modal-body">
             <form role="form" id="stkRepairHeader-form">
                 <input type="hidden" name="id" id="id">
-                <div class="card-body">
-                    <div class="form-group">
-                    <label for="stkRepairHeader_name">stkRepairHeader name</label>
-                    <input type="text" class="form-control" name="stkRepairHeader_name" id="stkRepairHeader_name" placeholder="stkRepairHeader_name">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-bus-front-12"></i></span>
+                                </div>
+                                <input class="form-control" name="truck_name" readonly id="nomor_inv" placeholder="Nomor Invoice" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-building"></i></span>
+                                </div>
+                                <input type="text" name="truck_plat" readonly id="pabrik_pesanan" class="form-control" placeholder="Pabrik Pesanan">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+                                </div>
+                                <input type="text" name="truck_plat" readonly id="nama_barang" class="form-control" placeholder="Nama Barang">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input type="text" name="created_at" readonly id="jumlah_palet" class="form-control" placeholder="Jumlah Palet">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="stkRepairHeader_status">Status Kenek</label>
-                    <select name="stkRepairHeader_status" id="" class="form-control">
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="stkRepairHeader_join_date">Join Date</label>
-                    <input type="date" name="stkRepairHeader_join_date" class="form-control">
+                <button type="button" id="add-row" class="btn btn-success mt-3">Add</button>
+                <div class="row">
+                    <table class="table table-bordered table-striped" id="tblBlock">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Sparepart</th>
+                                <th>Jumlah</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
             </form>
         </div>
@@ -129,4 +183,24 @@
 </div>
 <script src="{{asset('js/event.js')}}"></script>
 <script src="{{asset('js/stkRepairHeader.js')}}"></script>
+<script>
+    var i = 1;
+    $("#add-row").click(function() {
+        var tblBlock = '';
+            tblBlock = `<tr>
+                            <td>`+(i++)+`</td>
+                            <td>
+                                <select name="sparepart_id[]" class="form-control sparepart" id="sparepart">
+                                    <option value=""></option>
+                                    @foreach($sparepart as $val)
+                                    <option value="{{$val->id}}">{{$val->sparepart_name}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td><input type="text" class="form-control"></td>
+                        </tr>`;
+
+        $("#tblBlock tbody").append(tblBlock);
+    });
+</script>
 @endsection

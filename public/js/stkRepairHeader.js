@@ -1,5 +1,9 @@
 $("document").ready(function(){
   var accessToken =  window.Laravel.api_token;
+  
+  $(".sparepart").select2({
+      placeholder:"Select Sparepart"
+  });
 
   $.ajax({
     url: window.Laravel.app_url + "/api/stkRepairHeader/get-list",

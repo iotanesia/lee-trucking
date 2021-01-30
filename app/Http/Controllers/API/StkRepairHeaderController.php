@@ -103,6 +103,7 @@ class StkRepairHeaderController extends Controller
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
+      dd($data);
       $stkRepairHeader = StkRepairHeader::find($data['id']);
       
       $this->validate($request, [

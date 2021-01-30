@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\StkRepairHeader;
 use App\Models\GlobalParam;
+use App\Models\Sparepart;
 use App\Models\Cabang;
 use Auth;
 
@@ -29,6 +30,7 @@ class StkRepairHeaderController extends Controller
     public function index(Request $request)
     {
         $data['title'] = 'Repair Truck';
+        $data['sparepart'] = Sparepart::all();
         return view('repair-truck.index', $data);
     }
 }
