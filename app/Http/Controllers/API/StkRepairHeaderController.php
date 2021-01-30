@@ -17,6 +17,7 @@ class StkRepairHeaderController extends Controller
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $stkRepairHeader = StkRepairHeader::join('ex_master_truck', 'stk_repair_header.truck_id', 'ex_master_truck.id')
                         // ->join('ex_master_driver', 'ex_master_truck.id', 'ex_master_driver.truck_id')
+                        ->with(['stk_history_stok'])
                         ->where(function($query) use($whereField, $whereValue) {
                             if($whereValue) {
                                 foreach(explode(', ', $whereField) as $idx => $field) {
@@ -103,7 +104,6 @@ class StkRepairHeaderController extends Controller
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      dd($data);
       $stkRepairHeader = StkRepairHeader::find($data['id']);
       
       $this->validate($request, [

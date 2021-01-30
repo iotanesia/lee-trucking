@@ -143,7 +143,7 @@ class SparePartController extends Controller
                        })
                        ->where('sparepart_id', $data['id'])
                        ->select('stk_history_stock.*')
-                       ->orderBy('id', 'ASC')
+                       ->orderBy('id', 'DESC')
                        ->paginate();
       
       foreach($sparePartList as $row) {
