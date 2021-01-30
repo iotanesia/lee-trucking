@@ -18,6 +18,30 @@ $("document").ready(function() {
         placeholder:"Select Jenis Surat Jalan"
     });
 
+    $("#filter-select").select2({
+        placeholder:"Select Filter"
+    });
+
+    $("#filter-select").on("change", function() {
+        var filter = $(this).val();
+        $.ajax({
+            url: window.Laravel.app_url + "/api/expedition/get-list",
+            type: "GET",
+            dataType: "json",
+            data: "where_filter"+"="+filter,
+            headers: {"Authorization": "Bearer " + accessToken},
+            crossDomain: true,
+            beforeSend: function( xhr ) { 
+              $('.preloader').show();
+            },
+            success: function(data, textStatus, xhr) {
+              $('.preloader').hide();
+              successLoadexpedition(data);
+            },
+        });
+
+    });
+
     var accessToken =  window.Laravel.api_token;
   
     $.ajax({
@@ -201,6 +225,15 @@ $("document").ready(function() {
       cabang_name = responses.data[i].cabang_name;
       status_name = responses.data[i].status_name;
       approval_name = responses.data[i].approval_name;
+      otv_payment_method = responses.data[i].otv_payment_method;
+
+      if(def(otv_payment_method) !== '-') {
+          var payment = ' - '+otv_payment_method;
+      
+      } else {
+          var payment = '';
+      }
+
       data_json = responses.data[i].data_json;
 
       if(responses.data[i].status_activity == 'SUBMIT') {
@@ -246,7 +279,7 @@ $("document").ready(function() {
                      "<td>"+ dateFormat(tgl_inv) +"</td>"+
                      "<td>"+ dateFormat(tgl_po) +"</td>"+
                      "<td>"+ kabupaten +" - "+ kecamatan +" - "+ cabang_name +"</td>"+
-                     "<td> <span class='badge "+classColor+"'>"+ status_name +"</span></td>"+
+                     "<td> <span class='badge "+classColor+"'>"+ status_name + payment +"</span></td>"+
                      "<td align='center'>"+
                        "<div class='btn-group'>"+
                          "<a class='btn btn-warning btn-xs btn-sm' href='"+window.Laravel.app_url+"/expedition-tracking/"+id+"'><i class='fas fa-eye'></i></a>"+
