@@ -98,6 +98,7 @@ class UserController extends Controller
       unset($input['password_confirmation']);
       unset($input['_token']);
       unset($input['terms']);
+
       $input['password'] = bcrypt($input['password']);
       $input['group_id'] = $request->group_id;
       
@@ -106,6 +107,7 @@ class UserController extends Controller
       $success['name'] =  $user->name;
       $updateUser = User::find($user->id);
       $updateUser->tokens = $success['tokens'];
+
       if($updateUser->save()){
         $userDetail = new UserDetail();
         
@@ -115,12 +117,15 @@ class UserController extends Controller
         unset($input['password_confirmation']);
         unset($input['group_id']);
         unset($input['is_active']);
+
         foreach($input as $key => $row) {
           $userDetail->{$key} = $row;
         }
+
         $userDetail->id_user = $user->id;
         $userDetail->created_at = $current_date_time;
         $userDetail->created_by = $userAuth->id;
+
         if($userDetail->save()) {
           return response()->json([
             'code' => 200,
@@ -128,14 +133,9 @@ class UserController extends Controller
             'code_type' => 'Success',
             'data'=> $user
           ], 200);
-        }else{
-          return response()->json([
-            'code' => 400,
-            'code_message' => 'Gagal menyimpan user',
-            'code_type' => 'BadRequest',
-            'data'=> null
-          ], 400);
+
         }
+
       }else{
           return response()->json([
           'code' => 400,
