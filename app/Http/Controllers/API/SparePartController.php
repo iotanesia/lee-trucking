@@ -129,6 +129,56 @@ class SparePartController extends Controller
     }
   }
 
+  public function getListDetailHistory(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $whereField = 'sparepart_name, group_name, stk_master_sparepart.barcode_pabrik';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $sparePartList = StkHistorySparePart::where(function($query) use($whereField, $whereValue) {
+                           if($whereValue) {
+                               foreach(explode(', ', $whereField) as $idx => $field) {
+                               $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                               }
+                           }
+                       })
+                       ->where('sparepart_id', $data['id'])
+                       ->select('stk_history_stock.*')
+                       ->orderBy('id', 'DESC')
+                       ->paginate();
+      
+      foreach($sparePartList as $row) {
+        $row->makeVisible('stk_history_stok');
+        $row->img_sparepart = ($row->img_sparepart) ? url('uploads/sparepart/'.$row->img_sparepart) :url('uploads/sparepart/nia3.png');
+        $row->data_json = $row->toJson();
+      }
+
+      if(!isset($sparePartList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $sparePartList
+        ], 200);
+      }
+      
+      
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
+    }
+  }
+
   public function add(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
@@ -540,17 +590,29 @@ class SparePartController extends Controller
       if($request->isMethod('POST')) {
         $data = $request->all();
         $img = $request->file('img_sparepart');
+        $img_paid = $request->file('img');
         $historyStokSparepart = StkHistorySparePart::find($data['id']);
 
         unset($data['_token']);
         unset($data['id']);
         unset($data['no_rek']);
 
+        if($img_paid) {
+            $fileExt = $img_paid->extension();
+            $fileName = "IMG-SPAREPART-PAID".$historyStokSparepart->id.'-TSJ-'.date('dmY').".".$fileExt;
+            $path =  public_path().'/uploads/sparepart/' ;
+        }
+
         $current_date_time = Carbon::now()->toDateTimeString(); 
         $user_id = Auth::user()->id;
         $historyStokSparepart->sparepart_type = 'PAID_OFF';
+        $historyStokSparepart->img_paid = $fileName;
   
         if($historyStokSparepart->save()) {
+            if($img_paid) {
+                $img_paid->move($path, $fileName);
+            }
+
             $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
             $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $historyStokSparepart->sparepart_type)->first();
 

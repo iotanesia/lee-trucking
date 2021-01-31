@@ -113,6 +113,7 @@ Route::group(['middleware' => 'auth:api'], function(){
       Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\SparePartController@getList']);
       Route::get('get-list-unpaid', ['as' => '-get-list-unpaid', 'uses' => 'API\SparePartController@getListUnpaid']);
       Route::get('get-sparepart-detail', ['as' => '-get-sparepart-detail', 'uses' => 'API\SparePartController@getListDetail']);
+      Route::get('get-sparepart-detail-history', ['as' => '-get-sparepart-detail-history', 'uses' => 'API\SparePartController@getListDetailHistory']);
       Route::post('add', ['as' => '-add', 'uses' => 'API\SparePartController@add']);
       Route::post('edit', ['as' => '-edit', 'uses' => 'API\SparePartController@edit']);
       Route::post('delete', ['as' => '-delete', 'uses' => 'API\SparePartController@delete']);
@@ -178,6 +179,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('add', ['as' => '-add', 'uses' => 'API\BonusDriverRitController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\BonusDriverRitController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\BonusDriverRitController@delete']);
+  });
+
+  Route::group(['as' => 'api-stkRepairHeader', 'prefix' => 'stkRepairHeader'], function() {
+    Route::get('/', 'API\StkRepairHeaderController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\StkRepairHeaderController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\StkRepairHeaderController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\StkRepairHeaderController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\StkRepairHeaderController@delete']);
   });
 
 });
