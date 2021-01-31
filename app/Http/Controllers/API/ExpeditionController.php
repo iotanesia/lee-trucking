@@ -11,6 +11,7 @@ use App\Models\Kenek;
 use App\Models\CoaActivity;
 use App\Models\Driver;
 use App\Models\UserDetail;
+use App\Models\Notification;
 use App\Models\GlobalParam;
 use App\Models\Group;
 use Auth;
@@ -333,6 +334,21 @@ class ExpeditionController extends Controller
         $exStatusActivity->save();
 
         DB::connection(Auth::user()->schema)->commit();
+        
+        $notification = new Notification();
+        $notification->content_id = $expeditionActivity->id;
+        $notification->content_type = 'list_ekspedisi';
+        $notification->navigate_to_mobile = 'list_ekspedisi';
+        $notification->navigate_to_web = 'list_ekspedisi';
+        $notification->content_title = 'Ekspedisi Baru';
+        $notification->content_body = 'Halo, ada ekspedisi baru nih';
+        $notification->content_img = '';
+        $notification->created_at = $current_date_time;
+        $notification->id_group = 8;
+        $notification->description = '';
+        $notification->id_user_from = idUser;
+
+
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
