@@ -189,6 +189,12 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\StkRepairHeaderController@delete']);
   });
 
+  Route::group(['as' => 'api-notification', 'prefix' => 'notification'], function() {
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\NotificationController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\NotificationController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\NotificationController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\NotificationController@delete']);
+  });
 });
 
 Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {

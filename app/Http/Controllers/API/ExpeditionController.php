@@ -148,7 +148,6 @@ class ExpeditionController extends Controller
 
         if(isset($allglobalParam)){
         $row->otv_payment_method_name = $allglobalParam['param_name'];
-
         }else{
         $row->otv_payment_method_name = null;
         }
@@ -337,24 +336,32 @@ class ExpeditionController extends Controller
         
         $notification = new Notification();
         $notification->content_id = $expeditionActivity->id;
-        $notification->content_type = 'list_ekspedisi';
-        $notification->navigate_to_mobile = 'list_ekspedisi';
+        $notification->content_type = 'expedisi';
+        $notification->navigate_to_mobile = 'approal_ojk';
         $notification->navigate_to_web = 'list_ekspedisi';
-        $notification->content_title = 'Ekspedisi Baru';
-        $notification->content_body = 'Halo, ada ekspedisi baru nih';
+        $notification->content_title = 'Approval OJK';
+        $notification->content_body = 'Ekspedisi '.$expeditionActivity->no_inv. ' membutuhkan approval OJK';
         $notification->content_img = '';
         $notification->created_at = $current_date_time;
         $notification->id_group = 8;
         $notification->description = '';
         $notification->id_user_from = idUser;
 
-
-        return response()->json([
-          'code' => 200,
-          'code_message' => 'Berhasil menyimpan data',
-          'code_type' => 'Success',
-        ], 200);
-      
+        if($notification->save()){
+          return response()->json([
+            'code' => 200,
+            'code_message' => 'Berhasil menyimpan data',
+            'code_type' => 'Success',
+          ], 200);
+        }else{
+          DB::connection(Auth::user()->schema)->rollback();
+          return response()->json([
+            'code' => 401,
+            'code_message' => 'Gagal menyimpan data',
+            'code_type' => 'BadRequest',
+          ], 401);
+        }
+        
       } else {
         DB::connection(Auth::user()->schema)->rollback();
         return response()->json([
@@ -372,6 +379,7 @@ class ExpeditionController extends Controller
       ], 405);
     }
   }
+  
 
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
@@ -506,14 +514,14 @@ class ExpeditionController extends Controller
 
             $img_tujuan->move($path_tujuan, $fileName_tujuan);
           }
-
           $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $fileName;
           $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $fileName_tujuan;
         }
-          if($exStatusActivity->save()){
-            if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
-              $idCoaSheet = array(30, 27, 29, 26);
 
+        if($exStatusActivity->save()){
+            if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
+              
+              $idCoaSheet = array(30, 27, 29, 26);
               foreach($idCoaSheet as $key => $row) {
                 $coaActivity = new CoaActivity();
                 $coaActivity->activity_id = $statusActivityId['id'];
@@ -528,6 +536,7 @@ class ExpeditionController extends Controller
                 $coaActivity->rek_name = $exStatusActivity->rek_name;
                 $coaActivity->save();
               }
+                
             }else if($expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN'){
               if($expeditionActivity->harga_otv == $request->nominal){
                 $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $fileName;
