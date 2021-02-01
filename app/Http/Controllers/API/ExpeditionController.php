@@ -340,7 +340,7 @@ class ExpeditionController extends Controller
         $notification->navigate_to_mobile = 'approal_ojk';
         $notification->navigate_to_web = 'list_ekspedisi';
         $notification->content_title = 'Approval OJK';
-        $notification->content_body = 'Ekspedisi '.$expeditionActivity->no_inv. ' membutuhkan approval OJK';
+        $notification->content_body = 'Ekspedisi '.$expeditionActivity->nomor_inv. ' membutuhkan approval OJK';
         $notification->content_img = '';
         $notification->created_at = $current_date_time;
         $notification->id_group = 8;
