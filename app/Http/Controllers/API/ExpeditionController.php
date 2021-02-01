@@ -345,7 +345,7 @@ class ExpeditionController extends Controller
         $notification->created_at = $current_date_time;
         $notification->id_group = 8;
         $notification->description = '';
-        $notification->id_user_from = idUser;
+        $notification->id_user_from = $idUser;
 
         if($notification->save()){
           return response()->json([
