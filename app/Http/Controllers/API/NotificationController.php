@@ -112,8 +112,9 @@ class NotificationController extends Controller
     public function delete(Request $request){
       if($request->isMethod('POST')) {
           $data = $request->all();
-          $notification = Notification::find($data['id']);
-          if($notification->delete()){
+          $ids = explode(',',$data['id']);
+          $notification = Notification::whereIn('id', $ids)->delete();
+          if($notification){
             return response()->json([
               'code' => 200,
               'code_message' => 'Success',
