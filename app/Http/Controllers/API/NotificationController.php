@@ -26,7 +26,6 @@ class NotificationController extends Controller
         $data = $request->all();
         $notificationList = Notification::
                         where('notification.id_user_to',$user->id)
-                      ->orWhere('notification.id_group',$user->group_id)
                       ->select('notification.*')
                       ->orderBy('created_at', 'desc')
                       ->paginate();
@@ -76,7 +75,6 @@ class NotificationController extends Controller
                 'code' => 404,
                 'code_message' => 'Failed',
                 'code_type' => 'BadRequest',
-                'result'=> null
               ], 404);
             }
           } else {
@@ -84,7 +82,6 @@ class NotificationController extends Controller
               'code' => 405,
               'code_message' => 'Method salah',
               'code_type' => 'BadRequest',
-              'result'=> null
             ], 405);
         }
     }
@@ -127,7 +124,6 @@ class NotificationController extends Controller
               'code' => 404,
               'code_message' => 'Failed',
               'code_type' => 'BadRequest',
-              'result'=> null
             ], 404);
           }
         } else {
@@ -135,41 +131,22 @@ class NotificationController extends Controller
             'code' => 405,
             'code_message' => 'Method salah',
             'code_type' => 'BadRequest',
-            'result'=> null
           ], 405);
       }
     }
 
     public function getCount(Request $request){
       $data['count'] = 0;
-      if($request->isMethod('POST')) {
-          $data = $request->all();
-          $userLogin = Auth::user();
+      $data = $request->all();
+      $userLogin = Auth::user();
 
-         $notificationList = Notification::where('id_user_to',$userLogin->id)->get();
-         $data['count'] = isset($notificationList) ? $notificationList->count() : 0;
-          if($notificationList->count() > 0){
-            return response()->json([
-              'code' => 200,
-              'code_message' => 'Success',
-              'code_type' => 'Success',
-               $data
-            ], 200);
-          }else{
-            return response()->json([
-              'code' => 404,
-              'code_message' => 'Failed',
-              'code_type' => 'BadRequest',
-              $data
-            ], 404);
-          }
-        } else {
-          return response()->json([
-            'code' => 405,
-            'code_message' => 'Method salah',
-            'code_type' => 'BadRequest',
-             $data
-          ], 405);
-      }
+      $notificationList = Notification::where('id_user_to',100)->get();
+      $data['count'] = isset($notificationList) ? $notificationList->count() : 0;
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'data' => $data
+        ], 200);
     }
 }
