@@ -51,7 +51,7 @@ class ExpeditionController extends Controller
                    })
                    ->where(function($query) use($whereNotifId) {
                      if($whereNotifId) {
-                         $query->where('id', $whereNotifId);
+                         $query->where('expedition_activity.id', $whereNotifId);
                      }
                    })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
@@ -135,7 +135,7 @@ class ExpeditionController extends Controller
                                   })
                                   ->where(function($query) use($whereNotifId) {
                                     if($whereNotifId) {
-                                        $query->where('id', $whereNotifId);
+                                        $query->where('expedition_activity.id', $whereNotifId);
                                     }
                                   })
                                 ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
@@ -241,7 +241,7 @@ class ExpeditionController extends Controller
                    })  
                    ->where(function($query) use($whereNotifId) {
                     if($whereNotifId) {
-                        $query->where('id', $whereNotifId);
+                        $query->where('expedition_activity.id', $whereNotifId);
                     }
                   })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
@@ -932,7 +932,7 @@ class ExpeditionController extends Controller
                     }) 
                     ->where(function($query) use($whereNotifId) {
                       if($whereNotifId) {
-                          $query->where('id', $whereNotifId);
+                          $query->where('expedition_activity.id', $whereNotifId);
                       }
                     })
                    ->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 

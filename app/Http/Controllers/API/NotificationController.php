@@ -140,7 +140,7 @@ class NotificationController extends Controller
       $data = $request->all();
       $userLogin = Auth::user();
 
-      $notificationList = Notification::where('id_user_to',$userLogin->id)->get();
+      $notificationList = Notification::where('id_user_to',$userLogin->id)->andWhere('is_read',false)->get();
       $data['count'] = isset($notificationList) ? $notificationList->count() : 0;
         return response()->json([
           'code' => 200,
