@@ -26,6 +26,7 @@ class ExpeditionController extends Controller
       $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv, otv_payment_method';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+      $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -46,6 +47,11 @@ class ExpeditionController extends Controller
                    ->where(function($query) use($whereFilter) {
                      if($whereFilter) {
                          $query->where('otv_payment_method', $whereFilter);
+                     }
+                   })
+                   ->where(function($query) use($whereNotifId) {
+                     if($whereNotifId) {
+                         $query->where('id', $whereNotifId);
                      }
                    })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
@@ -101,7 +107,7 @@ class ExpeditionController extends Controller
       all_global_param.param_name, expedition_activity.nomor_inv';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $platform = (isset($data['from'])) ? $data['from'] : '';
-      
+      $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                                 ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                                 ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -125,6 +131,11 @@ class ExpeditionController extends Controller
                 
                                     }else{
                                         $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
+                                    }
+                                  })
+                                  ->where(function($query) use($whereNotifId) {
+                                    if($whereNotifId) {
+                                        $query->where('id', $whereNotifId);
                                     }
                                   })
                                 ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
@@ -196,6 +207,7 @@ class ExpeditionController extends Controller
       $groupOwner = Group::where('group_name', 'Owner')->first();
       $groupId = Auth::user()->group_id;
 
+      $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -226,7 +238,12 @@ class ExpeditionController extends Controller
                             $query->where('status_activity', 'DRIVER_SELESAI_EKSPEDISI')
                                   ->where('otv_payment_method', 'TUNAI');
                         }
-                   }) 
+                   })  
+                   ->where(function($query) use($whereNotifId) {
+                    if($whereNotifId) {
+                        $query->where('id', $whereNotifId);
+                    }
+                  })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                              'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
@@ -333,35 +350,24 @@ class ExpeditionController extends Controller
         $exStatusActivity->save();
 
         DB::connection(Auth::user()->schema)->commit();
-        
-        $notification = new Notification();
-        $notification->content_id = $expeditionActivity->id;
-        $notification->content_type = 'expedisi';
-        $notification->navigate_to_mobile = 'approal_ojk';
-        $notification->navigate_to_web = 'list_ekspedisi';
-        $notification->content_title = 'Approval OJK';
-        $notification->content_body = 'Ekspedisi '.$expeditionActivity->nomor_inv. ' membutuhkan approval OJK';
-        $notification->content_img = '';
-        $notification->created_at = $current_date_time;
-        $notification->id_group = 8;
-        $notification->description = '';
-        $notification->id_user_from = $idUser;
-
-        if($notification->save()){
-          return response()->json([
-            'code' => 200,
-            'code_message' => 'Berhasil menyimpan data',
-            'code_type' => 'Success',
-          ], 200);
-        }else{
-          DB::connection(Auth::user()->schema)->rollback();
-          return response()->json([
-            'code' => 401,
-            'code_message' => 'Gagal menyimpan data',
-            'code_type' => 'BadRequest',
-          ], 401);
+        $userOwner = User::where('group_id', '8')->get();
+        foreach($userOwner as $key => $row) {
+          $notification = new Notification();
+          $notification->content_id = $expeditionActivity->id;
+          $notification->content_type = 'expedisi';
+          $notification->navigate_to_mobile = 'approal_ojk';
+          $notification->navigate_to_web = 'list_ekspedisi';
+          $notification->content_title = 'Approval OJK';
+          $notification->content_body = 'Ekspedisi '.$expeditionActivity->nomor_inv. ' membutuhkan approval OJK';
+          $notification->content_img = '';
+          $notification->created_at = $current_date_time;
+          $notification->id_group = 8;
+          $notification->id_user_to = $row->id;
+          $notification->description = '';
+          $notification->id_user_from = $idUser;
+          $notification->save();
         }
-        
+      
       } else {
         DB::connection(Auth::user()->schema)->rollback();
         return response()->json([
@@ -903,6 +909,7 @@ class ExpeditionController extends Controller
       $data = $request->all();
       $groupDriver = Group::where('group_name', 'Driver')->first();
       $user = Auth::user();
+      $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -921,6 +928,11 @@ class ExpeditionController extends Controller
                       }else{
                           $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 
                                           'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
+                      }
+                    }) 
+                    ->where(function($query) use($whereNotifId) {
+                      if($whereNotifId) {
+                          $query->where('id', $whereNotifId);
                       }
                     })
                    ->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 

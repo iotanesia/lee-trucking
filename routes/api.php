@@ -191,8 +191,9 @@ Route::group(['middleware' => 'auth:api'], function(){
 
   Route::group(['as' => 'api-notification', 'prefix' => 'notification'], function() {
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\NotificationController@getList']);
-    Route::post('add', ['as' => '-add', 'uses' => 'API\NotificationController@add']);
-    Route::post('edit', ['as' => '-edit', 'uses' => 'API\NotificationController@edit']);
+    Route::get('get-count', ['as' => '-get-count', 'uses' => 'API\NotificationController@getCount']);
+    Route::post('is-read', ['as' => '-is-read', 'uses' => 'API\NotificationController@isRead']);
+    Route::post('read-all', ['as' => '-read-all', 'uses' => 'API\NotificationController@readAll']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\NotificationController@delete']);
   });
 });
