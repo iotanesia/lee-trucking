@@ -195,6 +195,16 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\NotificationController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\NotificationController@delete']);
   });
+
+  Route::group(['as' => 'api-moneyTransactionHeader', 'prefix' => 'moneyTransactionHeader'], function() {
+    Route::get('/', 'API\MoneyTransactionHeaderController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\MoneyTransactionHeaderController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\MoneyTransactionHeaderController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\MoneyTransactionHeaderController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\MoneyTransactionHeaderController@delete']);
+  });
+
+
 });
 
 Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
