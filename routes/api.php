@@ -196,6 +196,16 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('read-all', ['as' => '-read-all', 'uses' => 'API\NotificationController@readAll']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\NotificationController@delete']);
   });
+
+  Route::group(['as' => 'api-moneyTransactionHeader', 'prefix' => 'moneyTransactionHeader'], function() {
+    Route::get('/', 'API\MoneyTransactionHeaderController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\MoneyTransactionHeaderController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\MoneyTransactionHeaderController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\MoneyTransactionHeaderController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\MoneyTransactionHeaderController@delete']);
+  });
+
+
 });
 
 Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
@@ -204,6 +214,7 @@ Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
   Route::get('get-list-driver', ['as' => '-get-list-driver', 'uses' => 'API\DropDownController@getListDriver']);
   Route::get('get-list-kenek', ['as' => '-get-list-kenek', 'uses' => 'API\DropDownController@getListKenek']);
   Route::get('get-list-rekening', ['as' => '-get-list-rekening', 'uses' => 'API\DropDownController@getListRekening']);
+  Route::get('get-list-karyawan', ['as' => '-get-list-karyawan', 'uses' => 'API\DropDownController@getListKaryawan']);
 });
 
 Route::group(['as' => 'api-global-param', 'prefix' => 'global-param'], function() {

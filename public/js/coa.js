@@ -105,12 +105,6 @@ $("document").ready(function(){
                      "<td>"+ coa_status_name +"</td>"+
                      "<td>"+ coa_category_name +"</td>"+
                      "<td>"+ def(parent_coa_name) +"</td>"+
-                     "<td align='center'>"+
-                       "<div class='btn-group'>"+
-                         "<a class='btn btn-slack btn-icon-only btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#coa-modal'><i class='fas fa-edit'></i></a>"+
-                         "<a class='btn btn-danger btn-icon-only btn-sm' href='#' el-event='edit' data-id='"+ id +"' data-url='/api/coa/delete' data-toggle='modal' data-target='#deletedModal'><i class='fa fa-trash'></i></a>"+
-                       "</div>"+
-                     "</td>"+
                    "</tr>";
     }
   
