@@ -427,6 +427,7 @@ class ExpeditionController extends Controller
       $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('id', 'DESC')->first();
       $idUser = Auth::user()->id;
 
+      $factory = new FirebaseService();
       $current_date_time = Carbon::now()->toDateTimeString(); 
 
       $statusActivityParam = $request->update_lates_status;
