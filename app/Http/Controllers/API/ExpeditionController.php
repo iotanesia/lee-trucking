@@ -17,6 +17,8 @@ use App\Models\Group;
 use Auth;
 use DB;
 use Carbon\Carbon;
+use App\Services\FirebaseService;
+// use App\Services\FirebaseServic\Messaging;
 
 class ExpeditionController extends Controller
 {
@@ -311,6 +313,8 @@ class ExpeditionController extends Controller
       $current_date_time = Carbon::now()->toDateTimeString(); 
       DB::connection(Auth::user()->schema)->beginTransaction();
       $expeditionActivity = new ExpeditionActivity;
+      
+      $factory = new FirebaseService();
       $masterOjk = OJK::where('id', $data['ojk_id'])->select('harga_otv', 'harga_ojk')->first();
       $this->validate($request, [
         // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
@@ -351,6 +355,7 @@ class ExpeditionController extends Controller
 
         DB::connection(Auth::user()->schema)->commit();
         $userOwner = User::where('group_id', '8')->get();
+        
         foreach($userOwner as $key => $row) {
           $notification = new Notification();
           $notification->content_id = $expeditionActivity->id;
@@ -366,6 +371,33 @@ class ExpeditionController extends Controller
           $notification->description = '';
           $notification->id_user_from = $idUser;
           $notification->save();
+
+          $notif = array(
+            'title' => $notification->content_title,
+            'body' => $notification->content_body
+          );
+          $datas = array(
+            'content_id' => $notification->content_id,
+            'content_type' => $notification->content_type,
+            'navigate_to_mobile' => $notification->navigate_to_mobile ,
+            'navigate_to_web' => $notification->navigate_to_web,
+            'content_title' => $notification->content_title,
+            'content_body' => $notification->content_body,
+            'content_img' => $notification->content_img,
+            'created_at' => $notification->created_at,
+            'id_group' => $notification->id_group,
+            'id_user_to' => $notification->id_user_to,
+            'description' => $notification->description,
+            'id_user_from' => $notification->id_user_from,
+            'updated_at' => $notification->updated_at,
+            'id' => $notification->id
+          );
+          $requests = array(
+            'tokenFcm' => $row->id_fcm_android,
+            'notif' => $notif,
+            'data' => $datas
+          );
+          $factory->sendNotif($requests);
         }
       
       } else {
@@ -631,6 +663,34 @@ class ExpeditionController extends Controller
               $notification->id_user_from = $userApprove->id;
               $notification->save();
 
+              $userApprovalDetail = User::where('id', $notification->id_user_to)->first();
+              $notif = array(
+                'title' => $notification->content_title,
+                'body' => $notification->content_body
+              );
+              $datas = array(
+                'content_id' => $notification->content_id,
+                'content_type' => $notification->content_type,
+                'navigate_to_mobile' => $notification->navigate_to_mobile ,
+                'navigate_to_web' => $notification->navigate_to_web,
+                'content_title' => $notification->content_title,
+                'content_body' => $notification->content_body,
+                'content_img' => $notification->content_img,
+                'created_at' => $notification->created_at,
+                'id_group' => $notification->id_group,
+                'id_user_to' => $notification->id_user_to,
+                'description' => $notification->description,
+                'id_user_from' => $notification->id_user_from,
+                'updated_at' => $notification->updated_at,
+                'id' => $notification->id
+              );;
+              $requests = array(
+                'tokenFcm' => $userApprovalDetail->id_fcm_android,
+                'notif' => $notif,
+                'data' => $datas
+              );
+              $factory->sendNotif($requests);
+
               $notificationDriver = new Notification();
               $notificationDriver->content_id = $expeditionActivity->id;
               $notificationDriver->content_type = 'expedisi';
@@ -644,6 +704,37 @@ class ExpeditionController extends Controller
               $notificationDriver->description = '';
               $notificationDriver->id_user_from = $userApprove->id;
               $notificationDriver->save();
+
+              $userDriverDetail = User::where('id', $notificationDriver->id_user_to)->first();
+              $notifs = array(
+                'title' => $notificationDriver->content_title,
+                'body' => $notificationDriver->content_body
+              );
+              $datass = array(
+                'content_id' => $notificationDriver->content_id,
+                'content_type' => $notificationDriver->content_type,
+                'navigate_to_mobile' => $notificationDriver->navigate_to_mobile ,
+                'navigate_to_web' => $notificationDriver->navigate_to_web,
+                'content_title' => $notificationDriver->content_title,
+                'content_body' => $notificationDriver->content_body,
+                'content_img' => $notificationDriver->content_img,
+                'created_at' => $notificationDriver->created_at,
+                'id_group' => $notificationDriver->id_group,
+                'id_user_to' => $notificationDriver->id_user_to,
+                'description' => $notificationDriver->description,
+                'id_user_from' => $notificationDriver->id_user_from,
+                'updated_at' => $notificationDriver->updated_at,
+                'id' => $notificationDriver->id
+              );
+
+              
+              $requestss = array(
+                'tokenFcm' => $userDriverDetail->id_fcm_android,
+                'notif' => $notifs,
+                'data' => $datass
+              );
+              $factory->sendNotif($requests);
+
             }else if($exStatusActivity->status_approval == 'REJECTED'){
               $notification = new Notification();
               $notification->content_id = $expeditionActivity->id;
@@ -658,6 +749,35 @@ class ExpeditionController extends Controller
               $notification->description = '';
               $notification->id_user_from = $userApprove->id;
               $notification->save();
+
+              $userRejectedDetail = User::where('id', $notification->id_user_to)->first();
+              $notif = array(
+                'title' => $notification->content_title,
+                'body' => $notification->content_body
+              );
+              $datas = array(
+                'content_id' => $notification->content_id,
+                'content_type' => $notification->content_type,
+                'navigate_to_mobile' => $notification->navigate_to_mobile ,
+                'navigate_to_web' => $notification->navigate_to_web,
+                'content_title' => $notification->content_title,
+                'content_body' => $notification->content_body,
+                'content_img' => $notification->content_img,
+                'created_at' => $notification->created_at,
+                'id_group' => $notification->id_group,
+                'id_user_to' => $notification->id_user_to,
+                'description' => $notification->description,
+                'id_user_from' => $notification->id_user_from,
+                'updated_at' => $notification->updated_at,
+                'id' => $notification->id
+              );;
+              $requests = array(
+                'tokenFcm' => $userRejectedDetail->id_fcm_android,
+                'notif' => $notif,
+                'data' => $datas
+              );
+              $factory->sendNotif($requests);
+
             }else if($exStatusActivity->status_approval == 'REVISION'){
               $notification = new Notification();
               $notification->content_id = $expeditionActivity->id;
@@ -672,6 +792,35 @@ class ExpeditionController extends Controller
               $notification->description = '';
               $notification->id_user_from = $userApprove->id;
               $notification->save();
+
+              $userReivisionDetail = User::where('id', $notification->id_user_to)->first();
+              $notif = array(
+                'title' => $notification->content_title,
+                'body' => $notification->content_body
+              );
+              $datas = array(
+                'content_id' => $notification->content_id,
+                'content_type' => $notification->content_type,
+                'navigate_to_mobile' => $notification->navigate_to_mobile ,
+                'navigate_to_web' => $notification->navigate_to_web,
+                'content_title' => $notification->content_title,
+                'content_body' => $notification->content_body,
+                'content_img' => $notification->content_img,
+                'created_at' => $notification->created_at,
+                'id_group' => $notification->id_group,
+                'id_user_to' => $notification->id_user_to,
+                'description' => $notification->description,
+                'id_user_from' => $notification->id_user_from,
+                'updated_at' => $notification->updated_at,
+                'id' => $notification->id
+              );;
+              $requests = array(
+                'tokenFcm' => $userReivisionDetail->id_fcm_android,
+                'notif' => $notif,
+                'data' => $datas
+              );
+              $factory->sendNotif($requests);
+
             }else if($exStatusActivity->status_activity == 'DRIVER_SELESAI_EKSPEDISI'){
               if($expeditionActivity->otv_payment_method == 'TUNAI'){
                 $userOwner = User::where('group_id', '10')->get();
@@ -685,11 +834,37 @@ class ExpeditionController extends Controller
                   $notification->content_body = 'Expedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah selesai';
                   $notification->content_img = '';
                   $notification->created_at = $current_date_time;
-                  $notification->id_group = 10;
                   $notification->description = '';
                   $notification->id_user_to = $row->id;
                   $notification->id_user_from = $userApprove->id;
                   $notification->save();
+
+                  $notif = array(
+                    'title' => $notification->content_title,
+                    'body' => $notification->content_body
+                  );
+                  $datas = array(
+                    'content_id' => $notification->content_id,
+                    'content_type' => $notification->content_type,
+                    'navigate_to_mobile' => $notification->navigate_to_mobile ,
+                    'navigate_to_web' => $notification->navigate_to_web,
+                    'content_title' => $notification->content_title,
+                    'content_body' => $notification->content_body,
+                    'content_img' => $notification->content_img,
+                    'created_at' => $notification->created_at,
+                    'id_group' => $notification->id_group,
+                    'id_user_to' => $notification->id_user_to,
+                    'description' => $notification->description,
+                    'id_user_from' => $notification->id_user_from,
+                    'updated_at' => $notification->updated_at,
+                    'id' => $notification->id
+                  );
+                  $requests = array(
+                    'tokenFcm' => $row->id_fcm_android,
+                    'notif' => $notif,
+                    'data' => $datas
+                  );
+                  $factory->sendNotif($requests);
                 }
               }else if($expeditionActivity->otv_payment_method == 'NON_TUNAI'){
                 $userOwner = User::where('group_id', '8')->get();
@@ -703,11 +878,37 @@ class ExpeditionController extends Controller
                   $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah selesai';
                   $notification->content_img = '';
                   $notification->created_at = $current_date_time;
-                  $notification->id_group = 8;
                   $notification->description = '';
                   $notification->id_user_to = $row->id;
                   $notification->id_user_from = $userApprove->id;
                   $notification->save();
+
+                  $notif = array(
+                    'title' => $notification->content_title,
+                    'body' => $notification->content_body
+                  );
+                  $datas = array(
+                    'content_id' => $notification->content_id,
+                    'content_type' => $notification->content_type,
+                    'navigate_to_mobile' => $notification->navigate_to_mobile ,
+                    'navigate_to_web' => $notification->navigate_to_web,
+                    'content_title' => $notification->content_title,
+                    'content_body' => $notification->content_body,
+                    'content_img' => $notification->content_img,
+                    'created_at' => $notification->created_at,
+                    'id_group' => $notification->id_group,
+                    'id_user_to' => $notification->id_user_to,
+                    'description' => $notification->description,
+                    'id_user_from' => $notification->id_user_from,
+                    'updated_at' => $notification->updated_at,
+                    'id' => $notification->id
+                  );
+                  $requests = array(
+                    'tokenFcm' => $row->id_fcm_android,
+                    'notif' => $notif,
+                    'data' => $datas
+                  );
+                  $factory->sendNotif($requests);
                 }
               }
             }else if($exStatusActivity->status_activity == 'WAITING_OWNER'){
@@ -722,11 +923,37 @@ class ExpeditionController extends Controller
                 $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' menunggu approval otv';
                 $notification->content_img = '';
                 $notification->created_at = $current_date_time;
-                $notification->id_group = 8;
                 $notification->description = '';
                 $notification->id_user_to = $row->id;
                 $notification->id_user_from = $userApprove->id;
                 $notification->save();
+
+                $notif = array(
+                  'title' => $notification->content_title,
+                  'body' => $notification->content_body
+                );
+                $datas = array(
+                  'content_id' => $notification->content_id,
+                  'content_type' => $notification->content_type,
+                  'navigate_to_mobile' => $notification->navigate_to_mobile ,
+                  'navigate_to_web' => $notification->navigate_to_web,
+                  'content_title' => $notification->content_title,
+                  'content_body' => $notification->content_body,
+                  'content_img' => $notification->content_img,
+                  'created_at' => $notification->created_at,
+                  'id_group' => $notification->id_group,
+                  'id_user_to' => $notification->id_user_to,
+                  'description' => $notification->description,
+                  'id_user_from' => $notification->id_user_from,
+                  'updated_at' => $notification->updated_at,
+                  'id' => $notification->id
+                );
+                $requests = array(
+                  'tokenFcm' => $row->id_fcm_android,
+                  'notif' => $notif,
+                  'data' => $datas
+                );
+                $factory->sendNotif($requests);
               }
             }else if($exStatusActivity->status_activity == 'CLOSED_EXPEDITION'){
               $notification = new Notification();
@@ -742,6 +969,35 @@ class ExpeditionController extends Controller
               $notification->description = '';
               $notification->id_user_from = $userApprove->id;
               $notification->save();
+
+              $userCloseDetail = User::where('id', $notification->id_user_to)->first();
+              $notif = array(
+                'title' => $notification->content_title,
+                'body' => $notification->content_body
+              );
+              $datas = array(
+                'content_id' => $notification->content_id,
+                'content_type' => $notification->content_type,
+                'navigate_to_mobile' => $notification->navigate_to_mobile ,
+                'navigate_to_web' => $notification->navigate_to_web,
+                'content_title' => $notification->content_title,
+                'content_body' => $notification->content_body,
+                'content_img' => $notification->content_img,
+                'created_at' => $notification->created_at,
+                'id_group' => $notification->id_group,
+                'id_user_to' => $notification->id_user_to,
+                'description' => $notification->description,
+                'id_user_from' => $notification->id_user_from,
+                'updated_at' => $notification->updated_at,
+                'id' => $notification->id
+              );;
+              $requests = array(
+                'tokenFcm' => $userCloseDetail->id_fcm_android,
+                'notif' => $notif,
+                'data' => $datas
+              );
+              $factory->sendNotif($requests);
+
             }
             DB::connection(Auth::user()->schema)->commit();
             return response()->json([
@@ -1173,6 +1429,25 @@ class ExpeditionController extends Controller
         'result'=> null
       ], 405);
     }
+  }
+
+  public function testNotif(Request $request){
+      $factory = new FirebaseService();
+      $user = Auth::user();
+      $notif = array(
+        'title' => 'hello',
+        'body' => 'test test test'
+      );
+      $data = array(
+        'title' => 'hello',
+        'description' => 'test test test'
+      );
+      $requests = array(
+        'tokenFcm' => $user->id_fcm_android,
+        'notif' => $notif,
+        'data' => $data
+      );
+      $factory->sendNotif($requests);
   }
 
 }

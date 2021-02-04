@@ -195,6 +195,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('is-read', ['as' => '-is-read', 'uses' => 'API\NotificationController@isRead']);
     Route::post('read-all', ['as' => '-read-all', 'uses' => 'API\NotificationController@readAll']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\NotificationController@delete']);
+    Route::post('tes', ['as' => '-tes', 'uses' => 'API\ExpeditionController@testNotif']);
   });
 
   Route::group(['as' => 'api-moneyTransactionHeader', 'prefix' => 'moneyTransactionHeader'], function() {
