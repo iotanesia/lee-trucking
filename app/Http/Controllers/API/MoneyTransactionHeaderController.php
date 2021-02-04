@@ -137,6 +137,8 @@ class MoneyTransactionHeaderController extends Controller
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
+      $current_date_time = Carbon::now()->toDateTimeString();
+      $user_id = Auth::user()->id;
       $moneyTransactionHeader = MoneyTransactionHeader::find($data['id']);
       $coaActivity = CoaActivity::where('table', 'money_transaction_header')->where('table_id', $data['id'])->delete();
       
