@@ -19,17 +19,18 @@ class MoneyTransactionHeaderController extends Controller
       $whereField = 'MoneyTransactionHeader_plat, MoneyTransactionHeader_name, all_global_param.param_name, ex_master_cabang.cabang_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $moneyTransactionHeaderList = MoneyTransactionHeader::join('public.users', 'users.id', 'money_transaction_header.user_id')
-                   ->leftjoin('coa_master_rekening', 'coa_master_rekening.id', 'money_transaction_header.rek_id') 
-                   ->where(function($query) use($whereField, $whereValue) {
-                     if($whereValue) {
-                       foreach(explode(', ', $whereField) as $idx => $field) {
-                         $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
-                       }
-                     }
-                   })
-                   ->select('money_transaction_header.*', 'users.name as name_user', 'coa_master_rekening.rek_no', 'coa_master_rekening.rek_name')
-                   ->orderBy('money_transaction_header.id', 'ASC')
-                   ->paginate();
+                                    ->with(['money_detail_termin'])
+                                    ->leftjoin('coa_master_rekening', 'coa_master_rekening.id', 'money_transaction_header.rek_id') 
+                                    ->where(function($query) use($whereField, $whereValue) {
+                                        if($whereValue) {
+                                        foreach(explode(', ', $whereField) as $idx => $field) {
+                                            $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
+                                        }
+                                        }
+                                    })
+                                    ->select('money_transaction_header.*', 'users.name as name_user', 'coa_master_rekening.rek_no', 'coa_master_rekening.rek_name')
+                                    ->orderBy('money_transaction_header.id', 'ASC')
+                                    ->paginate();
 
       foreach($moneyTransactionHeaderList as $row) {
         $row->data_json = $row->toJson();
