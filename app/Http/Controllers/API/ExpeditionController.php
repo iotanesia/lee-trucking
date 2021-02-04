@@ -674,48 +674,60 @@ class ExpeditionController extends Controller
               $notification->save();
             }else if($exStatusActivity->status_activity == 'DRIVER_SELESAI_EKSPEDISI'){
               if($expeditionActivity->otv_payment_method == 'TUNAI'){
-                $notification = new Notification();
-                $notification->content_id = $expeditionActivity->id;
-                $notification->content_type = 'expedisi';
-                $notification->navigate_to_mobile = 'approval_otv';
-                $notification->navigate_to_web = 'approval_otv';
-                $notification->content_title = 'Informasi Ekspedisi';
-                $notification->content_body = 'Expedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah selesai';
-                $notification->content_img = '';
-                $notification->created_at = $current_date_time;
-                $notification->id_group = 10;
-                $notification->description = '';
-                $notification->id_user_from = $userApprove->id;
-                $notification->save();
+                $userOwner = User::where('group_id', '10')->get();
+                foreach($userOwner as $key => $row) {
+                  $notification = new Notification();
+                  $notification->content_id = $expeditionActivity->id;
+                  $notification->content_type = 'expedisi';
+                  $notification->navigate_to_mobile = 'approval_otv';
+                  $notification->navigate_to_web = 'approval_otv';
+                  $notification->content_title = 'Informasi Ekspedisi';
+                  $notification->content_body = 'Expedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah selesai';
+                  $notification->content_img = '';
+                  $notification->created_at = $current_date_time;
+                  $notification->id_group = 10;
+                  $notification->description = '';
+                  $notification->id_user_to = $row->id;
+                  $notification->id_user_from = $userApprove->id;
+                  $notification->save();
+                }
               }else if($expeditionActivity->otv_payment_method == 'NON_TUNAI'){
+                $userOwner = User::where('group_id', '8')->get();
+                foreach($userOwner as $key => $row) {
+                  $notification = new Notification();
+                  $notification->content_id = $expeditionActivity->id;
+                  $notification->content_type = 'expedisi';
+                  $notification->navigate_to_mobile = 'approval_otv';
+                  $notification->navigate_to_web = 'approval_otv';
+                  $notification->content_title = 'Informasi Ekspedisi';
+                  $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah selesai';
+                  $notification->content_img = '';
+                  $notification->created_at = $current_date_time;
+                  $notification->id_group = 8;
+                  $notification->description = '';
+                  $notification->id_user_to = $row->id;
+                  $notification->id_user_from = $userApprove->id;
+                  $notification->save();
+                }
+              }
+            }else if($exStatusActivity->status_activity == 'WAITING_OWNER'){
+              $userOwner = User::where('group_id', '8')->get();
+              foreach($userOwner as $key => $row) {
                 $notification = new Notification();
                 $notification->content_id = $expeditionActivity->id;
                 $notification->content_type = 'expedisi';
                 $notification->navigate_to_mobile = 'approval_otv';
                 $notification->navigate_to_web = 'approval_otv';
                 $notification->content_title = 'Informasi Ekspedisi';
-                $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah selesai';
+                $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' menunggu approval otv';
                 $notification->content_img = '';
                 $notification->created_at = $current_date_time;
                 $notification->id_group = 8;
                 $notification->description = '';
+                $notification->id_user_to = $row->id;
                 $notification->id_user_from = $userApprove->id;
                 $notification->save();
               }
-            }else if($exStatusActivity->status_activity == 'WAITING_OWNER'){
-              $notification = new Notification();
-              $notification->content_id = $expeditionActivity->id;
-              $notification->content_type = 'expedisi';
-              $notification->navigate_to_mobile = 'approval_otv';
-              $notification->navigate_to_web = 'approval_otv';
-              $notification->content_title = 'Informasi Ekspedisi';
-              $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' menunggu approval otv';
-              $notification->content_img = '';
-              $notification->created_at = $current_date_time;
-              $notification->id_group = 8;
-              $notification->description = '';
-              $notification->id_user_from = $userApprove->id;
-              $notification->save();
             }else if($exStatusActivity->status_activity == 'CLOSED_EXPEDITION'){
               $notification = new Notification();
               $notification->content_id = $expeditionActivity->id;
