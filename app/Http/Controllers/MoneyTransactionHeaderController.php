@@ -7,6 +7,7 @@ use App\User;
 use App\Models\MoneyTransactionHeader;
 use App\Models\GlobalParam;
 use App\Models\Cabang;
+use App\Models\Rekening;
 use Auth;
 
 class MoneyTransactionHeaderController extends Controller
@@ -29,21 +30,11 @@ class MoneyTransactionHeaderController extends Controller
     public function index(Request $request)
     {
         $data['title'] = 'Pinjaman Karyawan';
+        $data['user'] = User::where('group_id', '<>', 8)->get();
+        $data['no_rek'] = Rekening::where('is_deleted', 'f')->get();
         $data['status'] = GlobalParam::where('param_type', 'TRUCK_STATUS')->get();
         $data['cabangList'] = Cabang::all();
         return view('kasbon.pinjaman-karyawan.index', $data);
-    }
-
-    public function indexTenan(Request $request)
-    {
-        return view('tenan');
-    }
-
-    public function indexTrx(Request $request)
-    {
-        $customerList = Customer::all();
-        $tenanList = Tenan::all();
-        return view('transaksi', compact('customerList', 'tenanList'));
     }
 
 }

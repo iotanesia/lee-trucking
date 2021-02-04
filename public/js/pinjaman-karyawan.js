@@ -75,8 +75,12 @@ $("document").ready(function(){
     placeholder:"Select Status"
   });
 
-  $("#cabang_id").select2({
-    placeholder:"Select Cabang"
+  $("#user_id").select2({
+    placeholder:"Pilih Karyawan"
+  });
+
+  $("#rek_id").select2({
+    placeholder:"Pilih Rekening"
   });
 
   $("#moneyTransactionHeader_date_join").daterangepicker({
@@ -101,7 +105,8 @@ var successLoadmoneyTransactionHeader = (function(responses, dataModel) {
     sisa_pokok = responses.data[i].sisa_pokok;
     status = responses.data[i].status;
     moneyTransactionHeader_date_join = responses.data[i].moneyTransactionHeader_date_join;
-    cabang_id = responses.data[i].cabang_name;
+    rek_no = responses.data[i].rek_no;
+    rek_name = responses.data[i].rek_name;
     data_json = responses.data[i].data_json;
 
     tableRows += "<tr>" +
@@ -109,6 +114,7 @@ var successLoadmoneyTransactionHeader = (function(responses, dataModel) {
                    "<td>"+ def(name_user) +"</td>"+
                    "<td>"+ def(pokok) +"</td>"+
                    "<td>"+ def(sisa_pokok) +"</td>"+
+                   "<td>"+ def(rek_no) +" - "+ def(rek_name) +"</td>"+
                    "<td>"+ def(status) +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+

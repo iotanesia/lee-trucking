@@ -40,12 +40,12 @@
                             <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="moneyTransactionHeader" placeholder="Search Key">
                         </div>
                     </div>
-                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" api-route="get-list-unpaid" el-event="search-data" data-model="moneyTransactionHeader"><i class="fa fa-search"></i></a>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="moneyTransactionHeader"><i class="fa fa-search"></i></a>
                 </div>
               </div>
             </div>
             <div class="card-body">
-                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#ojk-modal">
+                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#moneyTransactionHeader-modal">
                     <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
                 </button>
                 <div class="table-responsive">
@@ -56,6 +56,7 @@
                                 <th>Name</th>
                                 <th>Pinjaman</th>
                                 <th>Sisa Pinjaman</th>
+                                <th>Sumber Dana</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -94,7 +95,54 @@
       </footer>
       
 
-<div class="modal fade" id="moneyTransactionHeader-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="moneyTransactionHeader-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+            <h5 class="modal-title text-white" id="exampleModalLabel">ADD Pinjaman Karyawan</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form role="form" id="moneyTransactionHeader-form">
+                <input type="hidden" name="id" id="id">
+                <div class="card-body">
+                    <div class="form-group">
+                    <label for="moneyTransactionHeader_name">Karyawan</label>
+                    <select name="user_id" id="user_id" class="form-control">
+                        <option value="">Select Karyawan</option>
+                    @foreach($user as $row)
+                        <option value="{{$row->id}}">{{$row->name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="pokok">Jumlah Pinjaman</label>
+                    <input type="text" name="pokok" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="moneyTransactionHeader_name">Sumber Dana</label>
+                    <select name="rek_id" id="rek_id" class="form-control">
+                        <option value="">Select Rekening</option>
+                    @foreach($no_rek as $row)
+                        <option value="{{$row->id}}">{{$row->rek_no}} - {{$row->rek_name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="termin">Termin</label>
+                    <input type="text" name="termin" class="form-control">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" el-event="add" id="btn-submit">Save changes</button>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="moneyTransactionHeader-modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document" style="max-width: 1600px;">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
@@ -104,9 +152,8 @@
             </button>
         </div>
         <div class="modal-body">
-            <form role="form" id="moneyTransactionHeader-form">
+            <form role="form" id="moneyTransactionHeader-detail-form">
                 <input type="hidden" name="id" id="id">
-                <input type="hidden" name="scanner_form" id="scanner_form" value="1">
                 <table class="table table-bordered" id="table-moneyTransactionHeader-detail">
                     <thead class="bg-gradient-primary text-white">
                         <tr>
