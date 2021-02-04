@@ -45,9 +45,9 @@
               </div>
             </div>
             <div class="card-body">
-                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#coa-modal">
+                <!-- <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#coa-modal">
                     <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-                </button>
+                </button> -->
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush table-striped" id="table-coa" data-model="coa" request-url="{{ route('api-coa') }}" on-success-load="successLoadcoa">
                         <thead class="bg-gradient-info text-white">
@@ -58,7 +58,6 @@
                             <th>Status</th>
                             <th>Category</th>
                             <th>Parent Name</th>
-                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody></tbody>
