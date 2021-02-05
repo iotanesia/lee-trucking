@@ -384,7 +384,6 @@ class UserController extends Controller
       $current_date_time = Carbon::now()->toDateTimeString(); 
       if(isset($userDetail)){
         $userDetail->updated_at = $current_date_time;
-        $userDetail->updated_by = $user->id;
         $userDetail->id_fcm_android = $request->id_fcm;
         if($userDetail->save()){
           return response()->json([
