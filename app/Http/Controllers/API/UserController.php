@@ -375,5 +375,42 @@ class UserController extends Controller
       ], 405);
     }
   }
-
+  
+  public function updateFcm(Request $request){
+    if($request->isMethod('POST')) {
+      $user = Auth::user();
+      $userDetail = User::where('id',$user->id)->first();
+      
+      $current_date_time = Carbon::now()->toDateTimeString(); 
+      if(isset($userDetail)){
+        $userDetail->updated_at = $current_date_time;
+        $userDetail->id_fcm_android = $request->id_fcm;
+        if($userDetail->save()){
+          return response()->json([
+            'code' => 200,
+            'code_message' => 'Success',
+            'code_type' => 'Success'
+          ], 200);
+        }else{
+          return response()->json([
+            'code' => 500,
+            'code_message' => 'Fail',
+            'code_type' => 'BadRequest',
+          ], $this->successStatus);
+        }
+      }else{
+          return response()->json([
+            'code' => 404,
+            'code_message' => 'User Tidak Ditemukan',
+            'code_type' => 'BadRequest',
+        ], 404);
+      }
+    }else{
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+      ], 405);
+    }
+  }
 }
