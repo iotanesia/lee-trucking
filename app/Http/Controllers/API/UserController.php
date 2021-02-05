@@ -379,12 +379,11 @@ class UserController extends Controller
   public function updateFcm(Request $request){
     if($request->isMethod('POST')) {
       $user = Auth::user();
-      $userDetail = UserDetail::where('id_user',$user->id)->first();
+      $userDetail = User::where('id',$user->id)->first();
       
       $current_date_time = Carbon::now()->toDateTimeString(); 
       if(isset($userDetail)){
         $userDetail->updated_at = $current_date_time;
-        $userDetail->updated_by = $user->id;
         $userDetail->id_fcm_android = $request->id_fcm;
         if($userDetail->save()){
           return response()->json([
