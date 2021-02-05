@@ -131,7 +131,7 @@ class DropDownController extends Controller
 
             $data['param_type'] = 
             $userList = User::select('id', 'name')
-                        ->where(function($query) use($karyawan) {
+                        ->where(function($query) use($karyawan, $group) {
                             if($karyawan) {
                                 $query->where('group_id', '<>', 8)->get();
 
