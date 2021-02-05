@@ -401,6 +401,12 @@ class ExpeditionController extends Controller
             $factory->sendNotif($requests);
           }
         }
+
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Berhasil menyimpan data',
+          'code_type' => 'Success',
+        ], 200);
       } else {
         DB::connection(Auth::user()->schema)->rollback();
         return response()->json([
