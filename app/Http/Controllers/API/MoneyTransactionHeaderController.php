@@ -28,6 +28,7 @@ class MoneyTransactionHeaderController extends Controller
                                         }
                                         }
                                     })
+                                    ->where('category_name', 'PINJAMAN_KARYAWAN')
                                     ->select('money_transaction_header.*', 'users.name as name_user', 'coa_master_rekening.rek_no', 'coa_master_rekening.rek_name')
                                     ->orderBy('money_transaction_header.id', 'ASC')
                                     ->paginate();
@@ -87,14 +88,14 @@ class MoneyTransactionHeaderController extends Controller
       if($moneyTransactionHeader->save()) {
           $coaMasterSheet = CoaMasterSheet::whereIn('coa_code_sheet', ['PL.0003.01', 'PL.0003.02', 'PL.0003.03', 'PL.0003.04'])->get();
           
-          for ($i=0; $i < $moneyTransactionHeader->termin; $i++) { 
-              $moneyDetailTermin = new MoneyDetailTermin;
-              $moneyDetailTermin->baris_termin = 1;
-              $moneyDetailTermin->nominal_termin = $moneyTransactionHeader->pokok / $moneyTransactionHeader->termin;
-              $moneyDetailTermin->transaksi_header_id = $moneyTransactionHeader->id;
-              $moneyDetailTermin->created_by = Auth::user()->id;
-              $moneyDetailTermin->save();
-          }
+        //   for ($i=0; $i < $moneyTransactionHeader->termin; $i++) { 
+        //       $moneyDetailTermin = new MoneyDetailTermin;
+        //       $moneyDetailTermin->baris_termin = 1;
+        //       $moneyDetailTermin->nominal_termin = $moneyTransactionHeader->pokok / $moneyTransactionHeader->termin;
+        //       $moneyDetailTermin->transaksi_header_id = $moneyTransactionHeader->id;
+        //       $moneyDetailTermin->created_by = Auth::user()->id;
+        //       $moneyDetailTermin->save();
+        //   }
 
           foreach($coaMasterSheet as $key => $value) {
             $coaActivity = new CoaActivity();
@@ -155,17 +156,17 @@ class MoneyTransactionHeaderController extends Controller
       }
 
       if($moneyTransactionHeader->save()) {
-          $moneyDetailTermin = MoneyDetailTermin::where('transaksi_header_id', $moneyTransactionHeader->id)->delete();
+        //   $moneyDetailTermin = MoneyDetailTermin::where('transaksi_header_id', $moneyTransactionHeader->id)->delete();
           $coaMasterSheet = CoaMasterSheet::whereIn('coa_code_sheet', ['PL.0003.01', 'PL.0003.02', 'PL.0003.03', 'PL.0003.04'])->get();
           
-          for ($i=0; $i < $moneyTransactionHeader->termin; $i++) { 
-            $moneyDetailTermin = new MoneyDetailTermin;
-            $moneyDetailTermin->baris_termin = 1;
-            $moneyDetailTermin->nominal_termin = $moneyTransactionHeader->pokok / $moneyTransactionHeader->termin;
-            $moneyDetailTermin->transaksi_header_id = $moneyTransactionHeader->id;
-            $moneyDetailTermin->created_by = Auth::user()->id;
-            $moneyDetailTermin->save();
-          }
+        //   for ($i=0; $i < $moneyTransactionHeader->termin; $i++) { 
+        //     $moneyDetailTermin = new MoneyDetailTermin;
+        //     $moneyDetailTermin->baris_termin = 1;
+        //     $moneyDetailTermin->nominal_termin = $moneyTransactionHeader->pokok / $moneyTransactionHeader->termin;
+        //     $moneyDetailTermin->transaksi_header_id = $moneyTransactionHeader->id;
+        //     $moneyDetailTermin->created_by = Auth::user()->id;
+        //     $moneyDetailTermin->save();
+        //   }
 
           foreach($coaMasterSheet as $key => $value) {
             $coaActivity = new CoaActivity();
