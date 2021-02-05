@@ -63,6 +63,41 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+                    
+<div class="modal fade" id="moneyTransactionHeader-modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 1600px;">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-primary">
+            <h5 class="modal-title text-white" id="exampleModalLabel">Detail Pinjaman</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">    
+            <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#moneyTransactionHeader-modal">
+                <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+            </button>
+            <form role="form" id="moneyTransactionHeader-detail-form">
+                <input type="hidden" name="id" id="id">
+                <table class="table table-bordered" id="table-moneyTransactionHeader-detail">
+                    <thead class="bg-gradient-primary text-white">
+                        <tr>
+                            <th>No</th>
+                            <th>Total pinjaman</th>
+                            <th>Termin</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>              
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" el-event="add" id="btn-submits">Save changes</button>
+        </div>
+    </div>
+</div>
                 </div>
             </div>
             <div class="card-footer py-4">
@@ -95,7 +130,7 @@
       </footer>
       
 
-      <div class="modal fade" id="moneyTransactionHeader-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="moneyTransactionHeader-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">

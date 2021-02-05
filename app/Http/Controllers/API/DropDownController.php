@@ -9,6 +9,7 @@ use App\Models\Driver;
 use App\Models\Kenek;
 use App\Models\Truck;
 use App\Models\Rekening;
+use App\Models\Group;
 use App\User;
 use DB;
 use Validator;
@@ -118,10 +119,26 @@ class DropDownController extends Controller
         }
     }
 
-    public function getListKaryawan(Request $request) {
+    public function getListallUser(Request $request) {
         if($request->isMethod('GET')) {
             $data = $request->all();
-            $userList = User::select('id', 'name')->where('group_id', '<>', 8)->get();
+            $group = Group::where('group_name', $data['param_type'])->first();
+            $karyawan = false;
+
+            if(isset($data['param_type']) && $data['param_type'] == 'Karyawan') {
+                $karyawan = true;
+            }
+
+            $data['param_type'] = 
+            $userList = User::select('id', 'name')
+                        ->where(function($query) use($karyawan) {
+                            if($karyawan) {
+                                $query->where('group_id', '<>', 8)->get();
+
+                            } else {
+                                $query->where('group_id', $group->id)->get();
+                            }
+                        })->get();
             
             return response()->json([
                 'code' => 200,

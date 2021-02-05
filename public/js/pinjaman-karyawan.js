@@ -71,6 +71,50 @@ $("document").ready(function(){
     }
   });
 
+  $("#moneyTransactionHeader-modal-detail").on("show.bs.modal", function(e) {
+    var invoker = $(e.relatedTarget);
+    var tableRows = "";
+
+    if(invoker.attr('el-event') == 'edit') {
+      var dataJSON = invoker.attr("data-json");
+      var dataJSON = JSON.parse(dataJSON);
+      var responses = dataJSON.money_detail_termin;
+
+      for(var i = 0; i < responses.length; i++) {
+        id = responses[i].id;
+        nominal_termin = responses[i].nominal_termin;
+        baris_termin = responses[i].baris_termin ? '<a href="#" class="btn btn-success">Bayar</a>' : '<i class="fas fa-check text-success"></i>';
+    
+        tableRows += "<tr>" +
+                       "<td>"+ (i+1) +"</td>"+
+                       "<td>Rp "+ def(nominal_termin) +"</td>"+
+                       "<td>"+ (i+1) +"</td>"+
+                       "<td>"+ def(baris_termin) +"</td>"+
+                     "</tr>";
+      }
+    
+      if(!tableRows) {
+        tableRows += "<tr>" +
+                     "</tr>";
+      }
+    
+      $("#table-moneyTransactionHeader-detail tbody").html(tableRows);
+
+
+      $("#moneyTransactionHeader-form").find("input[name=id]").val(dataJSON.id);
+      $("#moneyTransactionHeader-modal #btn-submit").attr("el-event", "edit");
+      $("#moneyTransactionHeader-form").find("textarea[name=content]").summernote("code", dataJSON.content);
+      
+      bindToForm($("#moneyTransactionHeader-modal"), dataJSON);
+      
+    } else {
+      $("#moneyTransactionHeader-form").find("input[name=id]").val(null);
+      $("#moneyTransactionHeader-modal #btn-submit").attr("el-event", "add");
+      $("#moneyTransactionHeader-form").find("textarea[name=content]").summernote("code", "");
+      resetForm("#moneyTransactionHeader-form");
+    }
+  });
+
   $("#moneyTransactionHeader_status").select2({
     placeholder:"Select Status"
   });
@@ -119,6 +163,7 @@ var successLoadmoneyTransactionHeader = (function(responses, dataModel) {
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
                        "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-animate-modal='rotateInDownLeft' data-toggle='modal' data-target='#moneyTransactionHeader-modal'><i class='fas fa-edit'></i></a>"+
+                       "<a class='btn btn-warning btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-animate-modal='rotateInDownLeft' data-toggle='modal' data-target='#moneyTransactionHeader-modal-detail'><i class='fas fa-money-bill-wave'></i></a>"+
                        "<a class='btn btn-danger btn-sm' href='#' el-event='edit' data-id='"+ id +"' data-url='/api/moneyTransactionHeader/delete' data-toggle='modal' data-target='#deletedModal'><i class='fa fa-trash'></i></a>"+
                      "</div>"+
                    "</td>"+

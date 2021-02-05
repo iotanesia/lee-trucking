@@ -213,7 +213,7 @@ Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
   Route::get('get-list-driver', ['as' => '-get-list-driver', 'uses' => 'API\DropDownController@getListDriver']);
   Route::get('get-list-kenek', ['as' => '-get-list-kenek', 'uses' => 'API\DropDownController@getListKenek']);
   Route::get('get-list-rekening', ['as' => '-get-list-rekening', 'uses' => 'API\DropDownController@getListRekening']);
-  Route::get('get-list-karyawan', ['as' => '-get-list-karyawan', 'uses' => 'API\DropDownController@getListKaryawan']);
+  Route::get('get-list-all-user', ['as' => '-get-list-all-user', 'uses' => 'API\DropDownController@getListallUser']);
 });
 
 Route::group(['as' => 'api-global-param', 'prefix' => 'global-param'], function() {
