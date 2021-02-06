@@ -211,14 +211,28 @@ class MoneyTransactionHeaderController extends Controller
       if($request->isMethod('POST')) {
           $data = $request->all();
           $moneyDetailTermin = new MoneyDetailTermin;
+          $moneyTransactionHeader = MoneyTransactionHeader::find($data['transaksi_header_id']);
+          $checkBarisLast = MoneyDetailTermin::where('transaksi_header_id', $data['transaksi_header_id'])->orderBy('id', 'DESC')->first();
+          $current_date_time = Carbon::now()->toDateTimeString();
+          $user_id = Auth::user()->id;
+          
+          if($checkBarisLast) {
+              $baris_termin = $checkBarisLast->baris_termin + 1;
+          
+          } else {
+              $baris_termin = 1;
+          }
+
+          unset($data['_token']);
+          unset($data['id']);
 
           foreach($data as $key => $row) {
               $moneyDetailTermin->{$key} = $row;
+              $moneyDetailTermin->baris_termin = $baris_termin;
           }
 
           if($moneyDetailTermin->save()) {
               $coaMasterSheet = CoaMasterSheet::whereIn('coa_code_sheet', ['PL.0003.05', 'PL.0003.06', 'PL.0003.07', 'PL.0003.08'])->get();
-              $moneyTransactionHeader = MoneyTransactionHeader::find($data['transaksi_header_id']);
               $moneyTransactionHeader->sisa_pokok = $moneyTransactionHeader->sisa_pokok - $moneyDetailTermin->nominal_termin;
               $moneyTransactionHeader->save();
 
@@ -236,6 +250,12 @@ class MoneyTransactionHeaderController extends Controller
                   $coaActivity->table_id = $moneyTransactionHeader->id;
                   $coaActivity->save();
               }
+
+              return response()->json([
+                'code' => 200,
+                'code_message' => 'Berhasil menyimpan data',
+                'code_type' => 'Success',
+              ], 200);
           }
   
       } else {

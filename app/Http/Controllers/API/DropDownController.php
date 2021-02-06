@@ -122,30 +122,41 @@ class DropDownController extends Controller
     public function getListallUser(Request $request) {
         if($request->isMethod('GET')) {
             $data = $request->all();
-            $group = Group::where('group_name', $data['param_type'])->first();
+            $group = false;
             $karyawan = false;
-
+            
             if(isset($data['param_type']) && $data['param_type'] == 'Karyawan') {
+                $group = Group::where('group_name', $data['param_type'])->first();
                 $karyawan = true;
             }
 
-            $data['param_type'] = 
-            $userList = User::select('id', 'name')
-                        ->where(function($query) use($karyawan, $group) {
-                            if($karyawan) {
-                                $query->where('group_id', '<>', 8)->get();
+            if($group) {
+                $userList = User::select('id', 'name')
+                            ->where(function($query) use($karyawan, $group) {
+                                if($karyawan) {
+                                    $query->where('group_id', '<>', 8)->get();
+    
+                                } else {
+                                    $query->where('group_id', $group->id)->get();
+                                }
+                            })->get();
+                
+                return response()->json([
+                    'code' => 200,
+                    'code_message' => 'Success',
+                    'code_type' => 'Success',
+                    'data'=> $userList
+                ], 200);
 
-                            } else {
-                                $query->where('group_id', $group->id)->get();
-                            }
-                        })->get();
-            
-            return response()->json([
-                'code' => 200,
-                'code_message' => 'Success',
-                'code_type' => 'Success',
-                'data'=> $userList
-            ], 200);
+            } else {
+                return response()->json([
+                    'code' => 200,
+                    'code_message' => 'Success',
+                    'code_type' => 'Success',
+                    'data'=> []
+                ], 200);
+            }
+
         
         } else {
             return response()->json([
