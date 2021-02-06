@@ -159,7 +159,9 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" id="add-row" class="btn btn-success mt-3">Add</button>
+                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" id="add-row">
+                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+                </button>
                 <div class="row">
                     <table class="table table-bordered table-striped" id="tblBlock">
                         <thead>

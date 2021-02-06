@@ -23,9 +23,9 @@ class MoneyTransactionHeaderController extends Controller
                                     ->leftjoin('coa_master_rekening', 'coa_master_rekening.id', 'money_transaction_header.rek_id') 
                                     ->where(function($query) use($whereField, $whereValue) {
                                         if($whereValue) {
-                                        foreach(explode(', ', $whereField) as $idx => $field) {
-                                            $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
-                                        }
+                                            foreach(explode(', ', $whereField) as $idx => $field) {
+                                                $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
+                                            }
                                         }
                                     })
                                     ->where('category_name', 'PINJAMAN_KARYAWAN')
@@ -34,6 +34,7 @@ class MoneyTransactionHeaderController extends Controller
                                     ->paginate();
 
       foreach($moneyTransactionHeaderList as $row) {
+        $row->total_bayar = count($row->money_detail_termin);
         $row->data_json = $row->toJson();
       }
       
@@ -204,6 +205,46 @@ class MoneyTransactionHeaderController extends Controller
         'code_type' => 'BadRequest',
       ], 405);
     }
+  }
+
+  public function paid(Request $request) {
+      if($request->isMethod('POST')) {
+          $data = $request->all();
+          $moneyDetailTermin = new MoneyDetailTermin;
+
+          foreach($data as $key => $row) {
+              $moneyDetailTermin->{$key} = $row;
+          }
+
+          if($moneyDetailTermin->save()) {
+              $coaMasterSheet = CoaMasterSheet::whereIn('coa_code_sheet', ['PL.0003.05', 'PL.0003.06', 'PL.0003.07', 'PL.0003.08'])->get();
+              $moneyTransactionHeader = MoneyTransactionHeader::find($data['transaksi_header_id']);
+              $moneyTransactionHeader->sisa_pokok = $moneyTransactionHeader->sisa_pokok - $moneyDetailTermin->nominal_termin;
+              $moneyTransactionHeader->save();
+
+              foreach($coaMasterSheet as $key => $value) {
+                  $coaActivity = new CoaActivity();
+                  $coaActivity->activity_id = 52;
+                  $coaActivity->activity_name = 'PINJAMAN_KARYAWAN';
+                  $coaActivity->status = 'ACTIVE';
+                  $coaActivity->nominal = $moneyTransactionHeader->pokok;
+                  $coaActivity->coa_id = $value->id;
+                  $coaActivity->created_at = $current_date_time;
+                  $coaActivity->created_by = $user_id;
+                  $coaActivity->rek_id = $request->rek_id;
+                  $coaActivity->table = 'money_detail_termin';
+                  $coaActivity->table_id = $moneyTransactionHeader->id;
+                  $coaActivity->save();
+              }
+          }
+  
+      } else {
+          return response()->json([
+              'code' => 405,
+              'code_message' => 'Method salah',
+              'code_type' => 'BadRequest',
+          ], 405);
+      }
   }
 
   public function delete(Request $request) {
