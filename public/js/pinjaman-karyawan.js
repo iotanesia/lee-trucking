@@ -50,6 +50,41 @@ $("document").ready(function(){
     });
   })
 
+
+  $("#btn-submits-detail").click(function(){
+    var event = $("#moneyTransactionHeader-modal #btn-submits-detail").attr("el-event");
+    var data = new FormData($("#moneyTransactionHeader-detail-form")[0]);
+    data.append("_token", window.Laravel.csrfToken);
+
+    $.ajax({
+      url: window.Laravel.app_url + "/api/moneyTransactionHeader/paid",
+      type: "POST",
+      dataType: "json",
+      data: data,
+      processData: false,
+      contentType: false,
+      headers: {"Authorization": "Bearer " + accessToken},
+      crossDomain: true,
+      beforeSend: function( xhr ) {
+        $('.preloader').show();
+        },
+        success: function(datas, textStatus, xhr) {
+            $("#successModal").modal("show");
+            $("#moneyTransactionHeader-modal").modal("hide");
+            $('.preloader').hide();
+            document.getElementById("search-data").click();
+
+        },error: function(datas, textStatus, xhr) {
+            $('.preloader').hide();
+            msgError = "";
+            for(var item in datas.responseJSON.errors) {
+            msgError += datas.responseJSON.errors[item][0] + "*";
+            }
+            alert(msgError);
+        }
+    });
+  })
+
   $("#moneyTransactionHeader-modal").on("show.bs.modal", function(e) {
     var invoker = $(e.relatedTarget);
 

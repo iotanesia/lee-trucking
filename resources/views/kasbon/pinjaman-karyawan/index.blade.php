@@ -24,7 +24,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-12">
-          <div class="card" id="moneyTransactionHeader"    >
+          <div class="card" id="moneyTransactionHeader">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
@@ -111,8 +111,8 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" el-event="add" id="btn-submits-detail">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="button" class="btn btn-primary" el-event="add" id="btn-submits-detail">Bayar</button>
         </div>
     </div>
 </div>
@@ -190,8 +190,8 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" el-event="add" id="btn-submit">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="button" class="btn btn-primary" el-event="add" id="btn-submit">Simpan</button>
         </div>
     </div>
 </div>
