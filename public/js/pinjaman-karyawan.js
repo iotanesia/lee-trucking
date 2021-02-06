@@ -78,6 +78,7 @@ $("document").ready(function(){
     if(invoker.attr('el-event') == 'edit') {
       var dataJSON = invoker.attr("data-json");
       var dataJSON = JSON.parse(dataJSON);
+      $('.termin-val').text('Pembayaran Ke - '+(parseInt(dataJSON.total_bayar) + 1));
       var responses = dataJSON.money_detail_termin;
 
       for(var i = 0; i < responses.length; i++) {
@@ -99,9 +100,7 @@ $("document").ready(function(){
       }
     
       $("#table-moneyTransactionHeader-detail tbody").html(tableRows);
-
-
-      $("#moneyTransactionHeader-form").find("input[name=id]").val(dataJSON.id);
+      $("#moneyTransactionHeader-detail-form").find("input[name=transaksi_header_id]").val(dataJSON.id);
       $("#moneyTransactionHeader-modal #btn-submit").attr("el-event", "edit");
       $("#moneyTransactionHeader-form").find("textarea[name=content]").summernote("code", dataJSON.content);
       
@@ -121,6 +120,10 @@ $("document").ready(function(){
 
   $("#user_id").select2({
     placeholder:"Pilih Karyawan"
+  });
+
+  $(".rek_id").select2({
+    placeholder:"Pilih Rekening"
   });
 
   $("#rek_id").select2({

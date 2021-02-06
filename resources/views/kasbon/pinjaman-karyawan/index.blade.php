@@ -65,7 +65,7 @@
                     </table>
                     
 <div class="modal fade" id="moneyTransactionHeader-modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document" style="max-width: 1600px;">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
             <h5 class="modal-title text-white" id="exampleModalLabel">Detail Pinjaman</h5>
@@ -73,28 +73,46 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body">    
-            <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#moneyTransactionHeader-modal">
-                <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-            </button>
+        <div class="modal-body">
             <form role="form" id="moneyTransactionHeader-detail-form">
-                <input type="hidden" name="id" id="id">
-                <table class="table table-bordered" id="table-moneyTransactionHeader-detail">
-                    <thead class="bg-gradient-primary text-white">
-                        <tr>
-                            <th>No</th>
-                            <th>Total pinjaman</th>
-                            <th>Termin</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>              
+                <input type="hidden" name="transaksi_header_id" id="id">
+                <div class="row">
+                    <div class="col-md-9">                
+                        <label class="form-control-label" for="nominal_termin">Nominal Bayar</label>
+                        <div class="form-group">
+                            <div class="input-group input-group-merge">                            
+                                <input class="form-control" name="nominal_termin" placeholder="Nominal" id="nominal_termin">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3"><br><br>
+                        <div class="form-group">
+                            <div class="input-group input-group-merge form-control-label termin-val">
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="moneyTransactionHeader_name" class="form-control-label">Rekening Tujuan</label>
+                            <select name="rek_id" id="rek_id" class="form-control rek_id">
+                                <option value="">Select Rekening</option>
+                                @foreach($no_rek as $row)
+                                <option value="{{$row->id}}">{{$row->rek_no}} - {{$row->rek_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>        
             </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" el-event="add" id="btn-submits">Save changes</button>
+            <button type="button" class="btn btn-primary" el-event="add" id="btn-submits-detail">Save changes</button>
         </div>
     </div>
 </div>
@@ -158,56 +176,22 @@
                 </div>
                 <div class="form-group">
                     <label for="moneyTransactionHeader_name">Sumber Dana</label>
-                    <select name="rek_id" id="rek_id" class="form-control">
+                    <select name="rek_id" class="form-control rek_id">
                         <option value="">Select Rekening</option>
                     @foreach($no_rek as $row)
                         <option value="{{$row->id}}">{{$row->rek_no}} - {{$row->rek_name}}</option>
                     @endforeach
                     </select>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="termin">Termin</label>
                     <input type="text" name="termin" class="form-control">
-                </div>
+                </div> -->
             </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" el-event="add" id="btn-submit">Save changes</button>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="moneyTransactionHeader-modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document" style="max-width: 1600px;">
-        <div class="modal-content">
-            <div class="modal-header bg-gradient-primary">
-            <h5 class="modal-title text-white" id="exampleModalLabel">Add Stok</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form role="form" id="moneyTransactionHeader-detail-form">
-                <input type="hidden" name="id" id="id">
-                <table class="table table-bordered" id="table-moneyTransactionHeader-detail">
-                    <thead class="bg-gradient-primary text-white">
-                        <tr>
-                            <th>No</th>
-                            <th>SparePart Type</th>
-                            <th>Amount</th>
-                            <th>Stok</th>
-                            <th>Total Amount</th>
-                            <th>No Rek</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>              
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" el-event="add" id="btn-submits">Save changes</button>
         </div>
     </div>
 </div>
