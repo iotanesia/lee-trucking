@@ -125,9 +125,12 @@ class DropDownController extends Controller
             $group = false;
             $karyawan = false;
             
-            if(isset($data['param_type']) && $data['param_type'] == 'Karyawan') {
+            if(isset($data['param_type'])) {
+                if($data['param_type'] == 'Karyawan') {
+                    $karyawan = true;
+                }
+
                 $group = Group::where('group_name', $data['param_type'])->first();
-                $karyawan = true;
             }
 
             if($group) {
