@@ -19,7 +19,9 @@ class MoneyTransactionHeaderController extends Controller
       $whereField = 'MoneyTransactionHeader_plat, MoneyTransactionHeader_name, all_global_param.param_name, ex_master_cabang.cabang_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $moneyTransactionHeaderList = MoneyTransactionHeader::join('public.users', 'users.id', 'money_transaction_header.user_id')
-                                    ->with(['money_detail_termin'])
+                                    ->with(['money_detail_termin' => function($query){ 
+                                        $query->leftJoin('coa_master_rekening', 'coa_master_rekening.id', 'money_detail_termin.rek_id')->select('money_detail_termin.*', 'coa_master_rekening.rek_name', 'coa_master_rekening.rek_no',  'coa_master_rekening.id');
+                                    }])
                                     ->leftjoin('coa_master_rekening', 'coa_master_rekening.id', 'money_transaction_header.rek_id') 
                                     ->where(function($query) use($whereField, $whereValue) {
                                         if($whereValue) {
@@ -43,14 +45,14 @@ class MoneyTransactionHeaderController extends Controller
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
           'code_type' => 'BadRequest',
-          'data'=> null
+          'result'=> null
         ], 404);
       }else{
         return response()->json([
           'code' => 200,
           'code_message' => 'Success',
           'code_type' => 'Success',
-          'data'=> $moneyTransactionHeaderList
+          'result'=> $moneyTransactionHeaderList
         ], 200);
       }
     } else {
@@ -58,7 +60,7 @@ class MoneyTransactionHeaderController extends Controller
         'code' => 405,
         'code_message' => 'Method salah',
         'code_type' => 'BadRequest',
-        'data'=> null
+        'result'=> null
       ], 405);
     }
   }
