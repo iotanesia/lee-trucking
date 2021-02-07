@@ -156,6 +156,7 @@ class MoneyTransactionHeaderController extends Controller
       
       foreach($data as $key => $row) {
         $moneyTransactionHeader->{$key} = $row;
+        $moneyTransactionHeader->sisa_pokok = $data['pokok'];
       }
 
       if($moneyTransactionHeader->save()) {
@@ -272,16 +273,18 @@ class MoneyTransactionHeaderController extends Controller
   public function delete(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
+      $coaActivityDelete = CoaActivity::where('table', 'money_detail_termin')->where('table_id', $data['id'])->delete();
+      $MoneyDetailTermin = MoneyDetailTermin::where('transaksi_header_id', $data['id'])->delete();
       $moneyTransactionHeader = MoneyTransactionHeader::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
       $user_id = Auth::user()->id;
 
-      $moneyTransactionHeader->deleted_at = $current_date_time;
-      $moneyTransactionHeader->deleted_by = $user_id;
-      $moneyTransactionHeader->is_deleted = true;
+    //   $moneyTransactionHeader->deleted_at = $current_date_time;
+    //   $moneyTransactionHeader->deleted_by = $user_id;
+    //   $moneyTransactionHeader->is_deleted = true;
 
 
-      if($moneyTransactionHeader->save()){
+      if($moneyTransactionHeader->delete()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',
