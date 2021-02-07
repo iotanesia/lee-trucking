@@ -178,7 +178,7 @@ $("document").ready(function(){
 var successLoadmoneyTransactionHeader = (function(responses, dataModel) {
     
   var tableRows = "";
-  var responses = responses.data.data == undefined ? responses : responses.data;
+  var responses = responses.result.data == undefined ? responses : responses.result;
 
   for(var i = 0; i < responses.data.length; i++) {
     id = responses.data[i].id;
