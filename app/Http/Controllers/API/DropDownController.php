@@ -133,7 +133,7 @@ class DropDownController extends Controller
                 $group = Group::where('group_name', $data['param_type'])->first();
             }
 
-            if($group) {
+            if($group || $karyawan) {
                 $userList = User::select('id', 'name')
                             ->where(function($query) use($karyawan, $group) {
                                 if($karyawan) {
