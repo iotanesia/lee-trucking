@@ -202,10 +202,15 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-moneyTransactionHeader', 'prefix' => 'moneyTransactionHeader'], function() {
     Route::get('/', 'API\MoneyTransactionHeaderController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\MoneyTransactionHeaderController@getList']);
+    Route::get('get-list-modal-usaha', ['as' => '-get-list-modal-usaha', 'uses' => 'API\MoneyTransactionHeaderController@getListModalUsaha']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\MoneyTransactionHeaderController@add']);
+    Route::post('add-modal-usaha', ['as' => '-add-modal-usaha', 'uses' => 'API\MoneyTransactionHeaderController@addModalUsaha']);
     Route::post('paid', ['as' => '-paid', 'uses' => 'API\MoneyTransactionHeaderController@paid']);
+    Route::post('paid-modal-usaha', ['as' => '-paid-modal-usaha', 'uses' => 'API\MoneyTransactionHeaderController@paidModalUsaha']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\MoneyTransactionHeaderController@edit']);
+    Route::post('edit-modal-usaha', ['as' => '-edit-modal-usaha', 'uses' => 'API\MoneyTransactionHeaderController@editModalUsaha']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\MoneyTransactionHeaderController@delete']);
+    Route::post('delete-modal-usaha', ['as' => '-delete-modal-usaha', 'uses' => 'API\MoneyTransactionHeaderController@deleteModalUsaha']);
   });
 
 
