@@ -159,9 +159,11 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" id="add-row">
-                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-                </button>
+                <div class="row col-md-12">
+                    <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" id="add-row">
+                        <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                </div>
                 <div class="row">
                     <table class="table table-bordered table-striped" id="tblBlock">
                         <thead>
@@ -169,6 +171,7 @@
                                 <th>No</th>
                                 <th>Sparepart</th>
                                 <th>Jumlah</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -188,8 +191,9 @@
 <script>
     var i = 1;
     $("#add-row").click(function() {
+        var j = i;
         var tblBlock = '';
-            tblBlock = `<tr>
+            tblBlock = `<tr id="tr-`+i+`">
                             <td>`+(i++)+`</td>
                             <td>
                                 <select name="sparepart_id[]" class="form-control sparepart" id="sparepart">
@@ -200,9 +204,16 @@
                                 </select>
                             </td>
                             <td><input type="text" class="form-control"></td>
+                            <td><a class='btn btn-danger btn-icon-only btn-sm btn-delete' data-id="`+j+`" href='#'><i class='fa fa-trash'></i></a></td>
                         </tr>`;
 
         $("#tblBlock tbody").append(tblBlock);
+        $(".btn-delete").click(function() {
+            var id = $(this).attr("data-id");
+            $("#tr-"+id).remove();
+        });
+
+
     });
 </script>
 @endsection

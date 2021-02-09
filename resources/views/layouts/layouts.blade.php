@@ -234,7 +234,7 @@
         </div>
       </div>
     </nav>
-    <div id="deletedModal" class="modal fade">
+    <div id="deletedModal" class="modal fade" style="z-index:99999">
         <div class="modal-dialog modal-confirm modal-dialog-centered" style="max-width:400px">
             <div class="modal-content">
                 <div class="modal-header flex-column">
@@ -243,7 +243,7 @@
                 </div>
                 <div class="modal-body">
                     <input type="text" hidden  name="id" value="12" id="id_delete">
-                    <p>Do you really want to delete these records? This process cannot be undone.</p>
+                    <p>Data Yang sudah di Hapus tidak dapat di kembalikan lagi.</p>
                 </div>
                 <div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-danger btn-lg btn-deleted">Delete</button>
