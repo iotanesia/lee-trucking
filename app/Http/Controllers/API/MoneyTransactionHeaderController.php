@@ -16,7 +16,7 @@ class MoneyTransactionHeaderController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'MoneyTransactionHeader_plat, MoneyTransactionHeader_name, all_global_param.param_name, ex_master_cabang.cabang_name';
+      $whereField = 'money_transaction_header.category_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $moneyTransactionHeaderList = MoneyTransactionHeader::join('public.users', 'users.id', 'money_transaction_header.user_id')
                                     ->with(['money_detail_termin' => function($query){ 
@@ -68,7 +68,7 @@ class MoneyTransactionHeaderController extends Controller
   public function getListModalUsaha(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'MoneyTransactionHeader_plat, MoneyTransactionHeader_name, all_global_param.param_name, ex_master_cabang.cabang_name';
+      $whereField = 'money_transaction_header.category_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $moneyTransactionHeaderList = MoneyTransactionHeader::join('public.users', 'users.id', 'money_transaction_header.user_id')
                                     ->with(['money_detail_termin' => function($query){ 
