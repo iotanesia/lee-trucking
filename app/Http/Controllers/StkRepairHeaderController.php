@@ -8,6 +8,7 @@ use App\Models\StkRepairHeader;
 use App\Models\GlobalParam;
 use App\Models\Sparepart;
 use App\Models\Cabang;
+use App\Models\Truck;
 use Auth;
 
 class StkRepairHeaderController extends Controller
@@ -31,6 +32,7 @@ class StkRepairHeaderController extends Controller
     {
         $data['title'] = 'Repair Truck';
         $data['sparepart'] = Sparepart::all();
+        $data['truck'] = Truck::all();
         return view('repair-truck.index', $data);
     }
 }

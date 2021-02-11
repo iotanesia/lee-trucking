@@ -65,6 +65,59 @@ class MoneyTransactionHeaderController extends Controller
     }
   }
 
+  public function getListByDriver(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $whereField = 'money_transaction_header.category_name';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $moneyTransactionHeaderList = MoneyTransactionHeader::join('public.users', 'users.id', 'money_transaction_header.user_id')
+                                    ->with(['money_detail_termin' => function($query){ 
+                                        $query->leftJoin('coa_master_rekening', 'coa_master_rekening.id', 'money_detail_termin.rek_id')->select('money_detail_termin.*', 'coa_master_rekening.rek_name', 'coa_master_rekening.rek_no',  'coa_master_rekening.id');
+                                    }])
+                                    ->leftjoin('coa_master_rekening', 'coa_master_rekening.id', 'money_transaction_header.rek_id') 
+                                    ->where(function($query) use($whereField, $whereValue) {
+                                        if($whereValue) {
+                                            foreach(explode(', ', $whereField) as $idx => $field) {
+                                                $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
+                                            }
+                                        }
+                                    })
+                                    ->where('user_id', Auth::user()->id)
+                                    ->where('category_name', 'PINJAMAN_KARYAWAN')
+                                    ->select('money_transaction_header.*', 'users.name as name_user', 'coa_master_rekening.rek_no', 'coa_master_rekening.rek_name')
+                                    ->orderBy('money_transaction_header.id', 'ASC')
+                                    ->paginate();
+
+      foreach($moneyTransactionHeaderList as $row) {
+        $row->total_bayar = count($row->money_detail_termin);
+        $row->data_json = $row->toJson();
+      }
+      
+      if(!isset($moneyTransactionHeaderList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $moneyTransactionHeaderList
+        ], 200);
+      }
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
+    }
+  }
+
   public function getListModalUsaha(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
