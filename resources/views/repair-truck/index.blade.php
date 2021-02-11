@@ -124,59 +124,36 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="ni ni-bus-front-12"></i></span>
                                 </div>
-                                <input class="form-control" name="truck_name" readonly id="nomor_inv" placeholder="Nomor Invoice" type="text">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <div class="input-group input-group-merge">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-building"></i></span>
-                                </div>
-                                <input type="text" name="truck_plat" readonly id="pabrik_pesanan" class="form-control" placeholder="Pabrik Pesanan">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <div class="input-group input-group-merge">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
-                                </div>
-                                <input type="text" name="truck_plat" readonly id="nama_barang" class="form-control" placeholder="Nama Barang">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <div class="input-group input-group-merge">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                </div>
-                                <input type="text" name="created_at" readonly id="jumlah_palet" class="form-control" placeholder="Jumlah Palet">
+                                <select name="truck_id" class="form-control" id="truck_id">
+                                    @foreach($truck as $row)
+                                    <option value="{{$row->id}}">{{$row->truck_name}} - {{$row->truck_plat}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
+                <hr>
                 <div class="row col-md-12">
                     <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" id="add-row">
                         <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
                     </button>
                 </div>
                 <div class="row">
-                    <table class="table table-bordered table-striped" id="tblBlock">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Sparepart</th>
-                                <th>Jumlah</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped" id="tblBlock">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Sparepart</th>
+                                    <th>Jumlah</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </form>
         </div>
@@ -203,7 +180,7 @@
                                     @endforeach
                                 </select>
                             </td>
-                            <td><input type="text" class="form-control"></td>
+                            <td><input type="text" name="" class="form-control"></td>
                             <td><a class='btn btn-danger btn-icon-only btn-sm btn-delete' data-id="`+j+`" href='#'><i class='fa fa-trash'></i></a></td>
                         </tr>`;
 

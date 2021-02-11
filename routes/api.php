@@ -202,6 +202,7 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-moneyTransactionHeader', 'prefix' => 'moneyTransactionHeader'], function() {
     Route::get('/', 'API\MoneyTransactionHeaderController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\MoneyTransactionHeaderController@getList']);
+    Route::get('get-list-by-driver', ['as' => '-get-list-by-driver', 'uses' => 'API\MoneyTransactionHeaderController@getListByDriver']);
     Route::get('get-list-modal-usaha', ['as' => '-get-list-modal-usaha', 'uses' => 'API\MoneyTransactionHeaderController@getListModalUsaha']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\MoneyTransactionHeaderController@add']);
     Route::post('add-modal-usaha', ['as' => '-add-modal-usaha', 'uses' => 'API\MoneyTransactionHeaderController@addModalUsaha']);

@@ -63,6 +63,7 @@ $("document").ready(function(){
 
       $("#stkRepairHeader-form").find("input[name=id]").val(dataJSON.id);
       $("#stkRepairHeader-modal #btn-submit").attr("el-event", "edit");
+      $("#stkRepairHeader-form").find("input[name=truck_id]").attr('readonly', true);
       $("#stkRepairHeader-form").find("textarea[name=content]").summernote("code", dataJSON.content);
       
       bindToForm($("#stkRepairHeader-modal"), dataJSON);
@@ -71,6 +72,7 @@ $("document").ready(function(){
       $("#stkRepairHeader-form").find("input[name=id]").val(null);
       $("#stkRepairHeader-modal #btn-submit").attr("el-event", "add");
       $("#stkRepairHeader-form").find("textarea[name=content]").summernote("code", "");
+      $("#stkRepairHeader-form").find("input").attr('readonly', false);
       resetForm("#stkRepairHeader-form");
     }
   });
