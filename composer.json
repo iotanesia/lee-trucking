@@ -15,6 +15,7 @@
         "illuminate/encryption": "~5.6",
         "illuminate/http": "~5.6",
         "illuminate/support": "~5.6",
+        "jimmyjs/laravel-report-generator": "^2.0",
         "kreait/firebase-php": "^4.44",
         "laravel/framework": "5.6.*",
         "laravel/passport": "v7.3.0",

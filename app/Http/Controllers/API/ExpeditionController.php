@@ -372,7 +372,7 @@ class ExpeditionController extends Controller
           $notification->id_user_from = $idUser;
           $notification->save();
 
-          if($row->id_fcm_android != null || $row->id_fcm_android != ''){
+          if($row->id_fcm_android != null){
             $notif = array(
               'title' => $notification->content_title,
               'body' => $notification->content_body
@@ -673,11 +673,11 @@ class ExpeditionController extends Controller
 
               $userApprovalDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
              
-              if($userApprovalDetail->id_fcm_android != null || $userApprovalDetail->id_fcm_android != ''){
-                 $notif = array(
-                'title' => $notification->content_title,
-                'body' => $notification->content_body
-                );
+              if($userApprovalDetail->id_fcm_android != null){
+                  $notif = array(
+                  'title' => $notification->content_title,
+                  'body' => $notification->content_body
+                  );
                 $datas = array(
                   'content_id' => $notification->content_id,
                   'content_type' => $notification->content_type,
@@ -717,11 +717,11 @@ class ExpeditionController extends Controller
 
               $userDriverDetail = User::where('id', $notificationDriver->id_user_to)->where('id_fcm_android','<>','')->first();
              
-              if($userDriverDetail->id_fcm_android != null || $userDriverDetail->id_fcm_android != ''){
-                $notifs = array(
-                  'title' => $notificationDriver->content_title,
-                  'body' => $notificationDriver->content_body
-                );
+              if($userDriverDetail->id_fcm_android != null){
+                  $notifs = array(
+                    'title' => $notificationDriver->content_title,
+                    'body' => $notificationDriver->content_body
+                  );
                 $datass = array(
                   'content_id' => $notificationDriver->content_id,
                   'content_type' => $notificationDriver->content_type,
@@ -764,7 +764,7 @@ class ExpeditionController extends Controller
 
               $userRejectedDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
               
-              if($userRejectedDetail->id_fcm_android != null || $userRejectedDetail->id_fcm_android != ''){
+              if($userRejectedDetail->id_fcm_android != null){
                 $notif = array(
                   'title' => $notification->content_title,
                   'body' => $notification->content_body
@@ -812,7 +812,7 @@ class ExpeditionController extends Controller
                 'title' => $notification->content_title,
                 'body' => $notification->content_body
               );
-              if($userReivisionDetail->id_fcm_android != null || $userReivisionDetail->id_fcm_android != ''){
+              if($userReivisionDetail->id_fcm_android != null){
                 $datas = array(
                   'content_id' => $notification->content_id,
                   'content_type' => $notification->content_type,
@@ -853,7 +853,7 @@ class ExpeditionController extends Controller
                   $notification->id_user_to = $row->id;
                   $notification->id_user_from = $userApprove->id;
                   $notification->save();
-                  if($row->id_fcm_android != null || $row->id_fcm_android != ''){
+                  if($row->id_fcm_android != null){
                     $notif = array(
                       'title' => $notification->content_title,
                       'body' => $notification->content_body
@@ -898,7 +898,7 @@ class ExpeditionController extends Controller
                   $notification->id_user_to = $row->id;
                   $notification->id_user_from = $userApprove->id;
                   $notification->save();
-                  if($row->id_fcm_android != null || $row->id_fcm_android != ''){
+                  if($row->id_fcm_android != null){
                     $notif = array(
                       'title' => $notification->content_title,
                       'body' => $notification->content_body
@@ -944,7 +944,7 @@ class ExpeditionController extends Controller
                 $notification->id_user_to = $row->id;
                 $notification->id_user_from = $userApprove->id;
                 $notification->save();
-                if($row->id_fcm_android != null || $row->id_fcm_android != ''){
+                if($row->id_fcm_android != null){
                   $notif = array(
                     'title' => $notification->content_title,
                     'body' => $notification->content_body
