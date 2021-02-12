@@ -79,6 +79,10 @@ $("document").ready(function(){
     placeholder:"Select Cabang"
   });
 
+  $("#driver_id").select2({
+    placeholder:"Select Supir"
+  });
+
   $("#truck_date_join").daterangepicker({
     locale: {
         format: 'DD-MM-YYYY'
