@@ -46,3 +46,4 @@ Route::get('/hutang-stok', 'SparePartsController@indexUnpaid')->name('hutang-sto
 Route::get('/repair-truck', 'StkRepairHeaderController@index')->name('repair-truck');
 Route::get('/pinjaman-karyawan', 'MoneyTransactionHeaderController@index')->name('pinjaman-karyawan');
 Route::get('/penanaman-modal', 'MoneyTransactionHeaderController@indexModal')->name('penanaman-modal');
+Route::get('/jurnal-report', 'JurnalController@index')->name('jurnal-report');
