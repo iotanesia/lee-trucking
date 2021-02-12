@@ -1,8 +1,6 @@
 @extends('layouts/layouts')
 
 @section('styles')
-<link rel="stylesheet" href="{{url('/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
 <style>
   .modal-dialog {
       max-width: 80%;
@@ -65,7 +63,7 @@
               </div>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
+                <div class="table-responsive"></div>
                     <table class="table align-items-center table-flush table-striped" id="table-jurnal" son-success-load="successLoadexpedition">
                         <thead class="bg-gradient-info text-white">
                         <tr>
@@ -108,16 +106,7 @@
       </footer>
     </div>
   </div>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="{{url('/plugins/datatables/jquery.dataTables.js') }}"></script>
-  <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"> </script>
-  <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"> </script>
-  <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"> </script>
-  <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"> </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"> </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"> </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"> </script>
-  <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
   <script src="{{asset('js/jurnal-report.js')}}"></script>
+  <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
 @endsection
 

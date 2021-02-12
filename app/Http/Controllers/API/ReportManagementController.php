@@ -45,7 +45,7 @@ class ReportManagementController extends Controller
           foreach($jurnalReportList as $row) {
             $row->data_json = $row->toJson();
           }
-          dd($jurnalReportList);
+
           return datatables($jurnalReportList)->toJson();
       }
     }
