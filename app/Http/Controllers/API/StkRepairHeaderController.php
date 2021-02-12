@@ -155,11 +155,12 @@ class StkRepairHeaderController extends Controller
                   $detail->save();
               }
           }
-        return response()->json([
+
+          return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
           'code_type' => 'Success',
-        ], 200);
+          ], 200);
       
       } else {
         return response()->json([
@@ -181,6 +182,7 @@ class StkRepairHeaderController extends Controller
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
+      $sparepart_detail = $data['sparepart_detail'];
       $stkRepairHeader = StkRepairHeader::find($data['id']);
       
       $this->validate($request, [
@@ -190,12 +192,48 @@ class StkRepairHeaderController extends Controller
       
       unset($data['_token']);
       unset($data['id']);
+      unset($data['sparepart_detail']);
       
       foreach($data as $key => $row) {
         $stkRepairHeader->{$key} = $row;
+        $stkRepairHeader->created_by = Auth::user()->id;
       }
 
       if($stkRepairHeader->save()){
+        if(isset($sparepart_detail)) {
+// dd($sparepart_detail);
+            foreach($sparepart_detail['sparepart_id'] as $key => $row) {
+                $sparepart = SparePart::find($row);
+
+                if(isset($sparepart_detail['id'][$key])) {
+                    $detail = StkHistorySparePart::find($sparepart_detail['id'][$key]);
+                    
+                } else {
+                    $detail = new StkHistorySparePart;
+                }
+
+                if(isset($sparepart_detail['is_deleted'][$key]) && $sparepart_detail['is_deleted'][$key] == 1) {
+                    $detail->delete();
+
+                } else {
+                    $detail->sparepart_name = $sparepart->sparepart_name;
+                    $detail->sparepart_status = $sparepart->sparepart_status;
+                    $detail->sparepart_jenis = $sparepart->sparepart_jenis;
+                    $detail->jumlah_stok = $sparepart_detail['jumlah_stock'][$key];
+                    $detail->created_by = Auth::user()->id;
+                    $detail->barcode_gudang = $sparepart->barcode_gudang;
+                    $detail->barcode_pabrik = $sparepart->barcode_pabrik;
+                    $detail->sparepart_type = $sparepart->sparepart_type;
+                    $detail->sparepart_id = $row;
+                    $detail->amount = $sparepart->amount * $sparepart_detail['jumlah_stock'][$key];
+                    $detail->transaction_type = 'OUT';
+                    $detail->header_id = $stkRepairHeader->id;
+                    $detail->satuan_type = $sparepart->satuan_type;
+                    $detail->save();
+                }
+            }
+        }
+
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -222,15 +260,12 @@ class StkRepairHeaderController extends Controller
   public function delete(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
+      $detail = StkHistorySparePart::where('header_id', $data['id'])->delete();
       $stkRepairHeader = StkRepairHeader::find($data['id']);
-      $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
-      $stkRepairHeader->deleted_at = $current_date_time;
-      $stkRepairHeader->deleted_by = $user_id;
-      $stkRepairHeader->is_deleted = true;
+      $current_date_time = Carbon::now()->toDateTimeString();
 
 
-      if($stkRepairHeader->save()){
+      if($stkRepairHeader->delete()){
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menghapus data',

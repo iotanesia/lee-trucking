@@ -20,6 +20,19 @@ $("document").ready(function(){
     },
   });
 
+  $.ajax({
+      url: window.Laravel.app_url + "/api/spareparts/get-list-all",
+      type: "GET",
+      dataType: "json",
+      headers: {"Authorization": "Bearer " + accessToken},
+      crossDomain: true,
+      beforeSend: function( xhr ) {
+      },
+      success: function(data, textStatus, xhr) {
+          dataSparepart = data.result
+      },
+  });
+
   $("#btn-submit").click(function(){
     var event = $("#stkRepairHeader-modal #btn-submit").attr("el-event");
     var data = new FormData($("#stkRepairHeader-form")[0]);
@@ -61,6 +74,7 @@ $("document").ready(function(){
       var dataJSON = invoker.attr("data-json");
       var dataJSON = JSON.parse(dataJSON);
       var tblBlock = '';
+      var tblBlockSelect = '';
 
       $("#stkRepairHeader-form").find("input[name=id]").val(dataJSON.id);
       $("#stkRepairHeader-modal #btn-submit").attr("el-event", "edit");
@@ -69,24 +83,28 @@ $("document").ready(function(){
       
       bindToForm($("#stkRepairHeader-modal"), dataJSON);
 
-      console.log(dataJSON.stk_history_stok);
-
       for (var i = 0; i < dataJSON.stk_history_stok.length; i++) {
           var responses = dataJSON.stk_history_stok[i];
-          tblBlock = `<tr id="tr-`+i+`">
-                          <td>`+i+`</td>
-                          <td>
-                              <select name="sparepart_detail[sparepart_id][]" class="form-control sparepart" id="sparepart">
-                                  <option value=""></option>
-                                  @foreach($sparepart as $val)
-                                  <option value="{{$val->id}}">{{$val->sparepart_name}}</option>
-                                  @endforeach
-                              </select>
-                          </td>
-                          <td><input type="text" name="sparepart_detail[jumlah_stock][]" value="`+dataJSON.stk_history_stok[i].jumlah_stok+`" class="form-control"></td>
-                          <td><a class='btn btn-danger btn-icon-only btn-sm btn-delete' data-id="`+i+`" href='#'><i class='fa fa-trash'></i></a></td>
-                      </tr>`;
-          
+          var selectBlock = '';
+
+          $.each(dataSparepart, function( k, v) {
+            if(v.id == responses.sparepart_id) {
+              var selected = 'selected';
+            
+            } else {
+              var selected = '';
+            }
+            selectBlock += '<option value="'+v.id+'" '+selected+'> '+v.sparepart_name+' </option>'
+          });
+
+          tblBlock += '<tr id="tr-'+i+'">'+
+                           '<td>'+(i + 1)+'</td>'+
+                           '<td>'+
+                               '<select name="sparepart_detail[sparepart_id][]" class="form-control sparepart-select-opt" id="sparepart'+i+'">'+ selectBlock +'</select>'+
+                           '</td>'+
+                           '<td><input type="text" name="sparepart_detail[jumlah_stock][]" value="'+dataJSON.stk_history_stok[i].jumlah_stok+'" class="form-control"><input type="hidden" name="sparepart_detail[id][]" value="'+dataJSON.stk_history_stok[i].id+'" class="form-control"></td>'+
+                           '<td><a class="btn btn-danger btn-icon-only btn-sm btn-delete" data-id="'+i+'" href="#"><i class="fa fa-trash"></i></a> <input type="hidden" id="isDelete'+i+'" value="0" name="sparepart_detail[is_deleted][]"> </td>'+
+                       '</tr>';
       }
 
       $("#tblBlock tbody").html(tblBlock);
@@ -100,7 +118,26 @@ $("document").ready(function(){
 
       $("#tblBlock tbody").html('');
     }
+
+    $(".btn-delete").click(function() {
+        var idTr = $(this).attr("data-id");
+        $("#tr-"+idTr).hide();
+        $("#isDelete"+idTr).val(1);
+    })
   });
+
+    function optData(idSelect, res) {
+        var opt = '';
+            opt += '<option value="0">--Select SparePart--</option>';
+
+        $.each(res, function( k, v) {
+            opt += '<option value="'+v.id+'"> '+name+' </option>';
+        });
+
+        console.log(opt);
+
+        $(idSelect).html(opt);
+    }
 });
 
 var successLoadstkRepairHeader = (function(responses, dataModel) {
@@ -205,25 +242,4 @@ var successLoadstkRepairHeader = (function(responses, dataModel) {
       },
     });
 })
-
-  function optData(idSelect, res, title) {
-
-    var opt = '';
-        opt += '<option value="0">--Select '+title+'--</option>';
-
-    $.each(res.data, function( k, v) {
-        console.log(v.kabupaten);
-
-        if(title == 'kabupaten') {
-            name = v.kabupaten;
-        
-        } else if(title == 'kecamatan') {
-            name = v.kecamatan;
-        }
-        
-        opt += '<option value="'+v.id+'"> '+name+' </option>';
-    });
-
-    $(idSelect).html(opt);
-  }
 });
