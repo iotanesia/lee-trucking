@@ -77,7 +77,7 @@ class StkRepairHeaderController extends Controller
                                 }
                             }
                         })
-                        ->where('ex_master_driver.id', Auth::user()->id)
+                        ->where('ex_master_driver.user_id', Auth::user()->id)
                         ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
                         ->orderBy('id', 'ASC')
                         ->paginate();
