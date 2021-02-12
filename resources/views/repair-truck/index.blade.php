@@ -173,14 +173,14 @@
             tblBlock = `<tr id="tr-`+i+`">
                             <td>`+(i++)+`</td>
                             <td>
-                                <select name="sparepart_id[]" class="form-control sparepart" id="sparepart">
+                                <select name="sparepart_detail[sparepart_id][]" class="form-control sparepart" id="sparepart">
                                     <option value=""></option>
                                     @foreach($sparepart as $val)
                                     <option value="{{$val->id}}">{{$val->sparepart_name}}</option>
                                     @endforeach
                                 </select>
                             </td>
-                            <td><input type="text" name="" class="form-control"></td>
+                            <td><input type="text" name="sparepart_detail[jumlah_stock][]" class="form-control"></td>
                             <td><a class='btn btn-danger btn-icon-only btn-sm btn-delete' data-id="`+j+`" href='#'><i class='fa fa-trash'></i></a></td>
                         </tr>`;
 

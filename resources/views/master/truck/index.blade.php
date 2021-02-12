@@ -146,6 +146,15 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" for="truck_corporate_asal">Supir</label>
+                    <select name="driver_id" id="driver_id" class="form-control">
+                        <option value=""></option>
+                    @foreach($driverList as $row)
+                        <option value="{{$row->id}}">{{$row->driver_name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" for="truck_date_join">Truck date join</label>
                     <div class="input-group input-group-merge">
                         <input type="text" class="form-control" name="truck_date_join" id="truck_date_join" placeholder="Truck Date Join">

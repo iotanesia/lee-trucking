@@ -7,6 +7,7 @@ use App\User;
 use App\Models\Truck;
 use App\Models\GlobalParam;
 use App\Models\Cabang;
+use App\Models\Driver;
 use Auth;
 
 class TruckController extends Controller
@@ -31,6 +32,7 @@ class TruckController extends Controller
         $data['title'] = 'Truck';
         $data['status'] = GlobalParam::where('param_type', 'TRUCK_STATUS')->get();
         $data['cabangList'] = Cabang::all();
+        $data['driverList'] = Driver::all();
         return view('master.truck.index', $data);
     }
 

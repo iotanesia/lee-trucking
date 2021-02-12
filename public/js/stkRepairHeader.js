@@ -60,6 +60,7 @@ $("document").ready(function(){
     if(invoker.attr('el-event') == 'edit') {
       var dataJSON = invoker.attr("data-json");
       var dataJSON = JSON.parse(dataJSON);
+      var tblBlock = '';
 
       $("#stkRepairHeader-form").find("input[name=id]").val(dataJSON.id);
       $("#stkRepairHeader-modal #btn-submit").attr("el-event", "edit");
@@ -67,6 +68,28 @@ $("document").ready(function(){
       $("#stkRepairHeader-form").find("textarea[name=content]").summernote("code", dataJSON.content);
       
       bindToForm($("#stkRepairHeader-modal"), dataJSON);
+
+      console.log(dataJSON.stk_history_stok);
+
+      for (var i = 0; i < dataJSON.stk_history_stok.length; i++) {
+          var responses = dataJSON.stk_history_stok[i];
+          tblBlock = `<tr id="tr-`+i+`">
+                          <td>`+i+`</td>
+                          <td>
+                              <select name="sparepart_detail[sparepart_id][]" class="form-control sparepart" id="sparepart">
+                                  <option value=""></option>
+                                  @foreach($sparepart as $val)
+                                  <option value="{{$val->id}}">{{$val->sparepart_name}}</option>
+                                  @endforeach
+                              </select>
+                          </td>
+                          <td><input type="text" name="sparepart_detail[jumlah_stock][]" value="`+dataJSON.stk_history_stok[i].jumlah_stok+`" class="form-control"></td>
+                          <td><a class='btn btn-danger btn-icon-only btn-sm btn-delete' data-id="`+i+`" href='#'><i class='fa fa-trash'></i></a></td>
+                      </tr>`;
+          
+      }
+
+      $("#tblBlock tbody").append(tblBlock);
       
     } else {
       $("#stkRepairHeader-form").find("input[name=id]").val(null);

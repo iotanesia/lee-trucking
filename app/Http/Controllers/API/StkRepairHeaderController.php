@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\StkRepairHeader;
+use App\Models\SparePart;
+use App\Models\StkHistorySparePart;
 use Auth;
 use Carbon\Carbon;
 
@@ -16,7 +18,7 @@ class StkRepairHeaderController extends Controller
       $whereField = 'name, no_StkRepairHeader';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $stkRepairHeader = StkRepairHeader::join('ex_master_truck', 'stk_repair_header.truck_id', 'ex_master_truck.id')
-                        // ->join('ex_master_driver', 'ex_master_truck.id', 'ex_master_driver.truck_id')
+                        ->join('ex_master_driver', 'ex_master_truck.driver_id', 'ex_master_driver.id')
                         ->with(['stk_history_stok'])
                         ->where(function($query) use($whereField, $whereValue) {
                             if($whereValue) {
@@ -25,7 +27,7 @@ class StkRepairHeaderController extends Controller
                                 }
                             }
                         })
-                        ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name')
+                        ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
                         ->orderBy('id', 'ASC')
                         ->paginate();
       
@@ -63,6 +65,7 @@ class StkRepairHeaderController extends Controller
   public function add(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
+      $sparepart_detail = $data['sparepart_detail'];
       $stkRepairHeader = new StkRepairHeader;
       
       $this->validate($request, [
@@ -72,12 +75,34 @@ class StkRepairHeaderController extends Controller
 
       unset($data['_token']);
       unset($data['id']);
+      unset($data['sparepart_detail']);
 
       foreach($data as $key => $row) {
         $stkRepairHeader->{$key} = $row;
+        $stkRepairHeader->created_by = Auth::user()->id;
       }
+    //   dd($sparepart_detail['sparepart_id']);
 
-      if($stkRepairHeader->save()){
+      if($stkRepairHeader->save()) {
+          if(isset($sparepart_detail)) {
+              foreach($sparepart_detail['sparepart_id'] as $key => $row) {
+                  $sparepart = SparePart::find($row);
+                  $detail = new StkHistorySparePart;
+                  $detail->sparepart_name = $sparepart->sparepart_name;
+                  $detail->sparepart_status = $sparepart->sparepart_status;
+                  $detail->sparepart_jenis = $sparepart->sparepart_jenis;
+                  $detail->jumlah_stok = $sparepart_detail['jumlah_stock'][$key];
+                  $detail->created_by = Auth::user()->id;
+                  $detail->barcode_gudang = $sparepart->barcode_gudang;
+                  $detail->barcode_pabrik = $sparepart->barcode_pabrik;
+                  $detail->sparepart_type = $sparepart->sparepart_type;
+                  $detail->sparepart_id = $row;
+                  $detail->amount = $sparepart->amount * $sparepart_detail['jumlah_stock'][$key];
+                  $detail->transaction_type = 'OUT';
+                  $detail->header_id = $stkRepairHeader->id;
+                  $detail->save();
+              }
+          }
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
