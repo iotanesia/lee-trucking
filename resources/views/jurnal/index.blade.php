@@ -108,8 +108,8 @@
       </footer>
     </div>
   </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="{{url('/plugins/datatables/jquery.dataTables.js') }}"></script>
-  <script src="{{url('/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
   <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"> </script>
   <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"> </script>
   <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"> </script>
