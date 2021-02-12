@@ -89,7 +89,7 @@ $("document").ready(function(){
           
       }
 
-      $("#tblBlock tbody").append(tblBlock);
+      $("#tblBlock tbody").html(tblBlock);
       
     } else {
       $("#stkRepairHeader-form").find("input[name=id]").val(null);
@@ -97,6 +97,8 @@ $("document").ready(function(){
       $("#stkRepairHeader-form").find("textarea[name=content]").summernote("code", "");
       $("#stkRepairHeader-form").find("input").attr('readonly', false);
       resetForm("#stkRepairHeader-form");
+
+      $("#tblBlock tbody").html('');
     }
   });
 });

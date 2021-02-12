@@ -62,6 +62,57 @@ class StkRepairHeaderController extends Controller
     }
   }
 
+  public function getListByDriver(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $whereField = 'name, no_StkRepairHeader';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $stkRepairHeader = StkRepairHeader::join('ex_master_truck', 'stk_repair_header.truck_id', 'ex_master_truck.id')
+                        ->join('ex_master_driver', 'ex_master_truck.driver_id', 'ex_master_driver.id')
+                        ->with(['stk_history_stok'])
+                        ->where(function($query) use($whereField, $whereValue) {
+                            if($whereValue) {
+                                foreach(explode(', ', $whereField) as $idx => $field) {
+                                    $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                                }
+                            }
+                        })
+                        ->where('ex_master_driver.id', Auth::user()->id)
+                        ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
+                        ->orderBy('id', 'ASC')
+                        ->paginate();
+      
+      foreach($stkRepairHeader as $row) {
+        $row->data_json = $row->toJson();
+      }
+      
+      if(!isset($stkRepairHeader)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $stkRepairHeader
+        ], 200);
+      }
+      
+      
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
+    }
+  }
+
   public function add(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
@@ -100,6 +151,7 @@ class StkRepairHeaderController extends Controller
                   $detail->amount = $sparepart->amount * $sparepart_detail['jumlah_stock'][$key];
                   $detail->transaction_type = 'OUT';
                   $detail->header_id = $stkRepairHeader->id;
+                  $detail->satuan_type = $sparepart->satuan_type;
                   $detail->save();
               }
           }

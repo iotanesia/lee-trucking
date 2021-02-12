@@ -185,6 +185,7 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-stkRepairHeader', 'prefix' => 'stkRepairHeader'], function() {
     Route::get('/', 'API\StkRepairHeaderController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\StkRepairHeaderController@getList']);
+    Route::get('get-list-by-driver', ['as' => '-get-list-by-driver', 'uses' => 'API\StkRepairHeaderController@getListByDriver']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\StkRepairHeaderController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\StkRepairHeaderController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\StkRepairHeaderController@delete']);
