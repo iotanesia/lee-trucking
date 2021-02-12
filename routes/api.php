@@ -216,6 +216,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete-modal-usaha', ['as' => '-delete-modal-usaha', 'uses' => 'API\MoneyTransactionHeaderController@deleteModalUsaha']);
   });
 
+  Route::group(['as' => 'api-report', 'prefix' => 'report'], function() {
+    Route::get('/', 'API\ReportManagementController@index');
+    Route::get('get-jurnal-list', ['as' => '-get-jurnal-list', 'uses' => 'API\ReportManagementController@getListJurnalReport']);
+  });
+
 
 });
 
