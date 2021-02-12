@@ -68,6 +68,57 @@ class SparePartController extends Controller
     }
   }
 
+  public function getListAll(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $whereField = 'sparepart_name, group_name, stk_master_sparepart.barcode_pabrik';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
+                                       'stk_master_sparepart.group_sparepart_id')
+                       ->join('all_global_param as sparepart_jenis', 'stk_master_sparepart.sparepart_jenis', 'sparepart_jenis.param_code')
+                       ->where('stk_master_sparepart.is_deleted','=','false')
+                       ->where(function($query) use($whereField, $whereValue) {
+                           if($whereValue) {
+                               foreach(explode(', ', $whereField) as $idx => $field) {
+                               $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                               }
+                           }
+                           })
+                       ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
+                       ->orderBy('id', 'ASC')
+                       ->get();
+      
+      foreach($sparePartList as $row) {
+        $row->img_sparepart = ($row->img_sparepart) ? url('uploads/sparepart/'.$row->img_sparepart) :url('uploads/sparepart/nia3.png');
+        $row->data_json = $row->toJson();
+      }
+
+      if(!isset($sparePartList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $sparePartList
+        ], 200);
+      }
+      
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
+    }
+  }
+
   public function getListUnpaid(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
