@@ -113,6 +113,7 @@ Route::group(['middleware' => 'auth:api'], function(){
       Route::get('/', 'API\SparePartController@index');
       Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\SparePartController@getList']);
       Route::get('get-list-all', ['as' => '-get-list-all', 'uses' => 'API\SparePartController@getListAll']);
+      Route::get('get-list-all-ban', ['as' => '-get-list-all-ban', 'uses' => 'API\SparePartController@getListAllBan']);
       Route::get('get-list-unpaid', ['as' => '-get-list-unpaid', 'uses' => 'API\SparePartController@getListUnpaid']);
       Route::get('get-sparepart-detail', ['as' => '-get-sparepart-detail', 'uses' => 'API\SparePartController@getListDetail']);
       Route::get('get-sparepart-detail-history', ['as' => '-get-sparepart-detail-history', 'uses' => 'API\SparePartController@getListDetailHistory']);
@@ -194,6 +195,15 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\StkRepairHeaderController@delete']);
   });
 
+  Route::group(['as' => 'api-stkRepairBanHeader', 'prefix' => 'stkRepairBanHeader'], function() {
+    Route::get('/', 'API\StkRepairBanHeaderController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\StkRepairBanHeaderController@getList']);
+    Route::get('get-list-by-driver', ['as' => '-get-list-by-driver', 'uses' => 'API\StkRepairBanHeaderController@getListByDriver']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\StkRepairBanHeaderController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\StkRepairBanHeaderController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\StkRepairBanHeaderController@delete']);
+  });
+
   Route::group(['as' => 'api-notification', 'prefix' => 'notification'], function() {
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\NotificationController@getList']);
     Route::get('get-count', ['as' => '-get-count', 'uses' => 'API\NotificationController@getCount']);
@@ -221,6 +231,11 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-report', 'prefix' => 'report'], function() {
     Route::get('/', 'API\ReportManagementController@index');
     Route::get('get-jurnal-list', ['as' => '-get-jurnal-list', 'uses' => 'API\ReportManagementController@getListJurnalReport']);
+  });
+  
+  Route::group(['as' => 'api-dashboard', 'prefix' => 'dashboard'], function() {
+    Route::get('/', 'API\DashboardController@index');
+    Route::get('get-list', ['as' => '-get-jurnal-list', 'uses' => 'API\DashboardController@getList']);
   });
 
 

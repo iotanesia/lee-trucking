@@ -36,7 +36,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-12">
-          <div class="card" id="stkRepairHeader"    >
+          <div class="card" id="stkRepairBanHeader"    >
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
@@ -49,26 +49,26 @@
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                             </div>
-                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="stkRepairHeader" placeholder="Search Key">
+                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="stkRepairBanHeader" placeholder="Search Key">
                         </div>
                     </div>
-                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="stkRepairHeader"><i class="fa fa-search"></i></a>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="stkRepairBanHeader"><i class="fa fa-search"></i></a>
                 </div>
               </div>
             </div>
             <div class="card-body">
-                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#stkRepairHeader-modal">
+                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#stkRepairBanHeader-modal">
                     <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
                 </button>
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-stkRepairHeader" data-model="stkRepairHeader" request-url="{{ route('api-stkRepairHeader') }}" on-success-load="successLoadstkRepairHeader">
+                    <table class="table align-items-center table-flush table-striped" id="table-stkRepairBanHeader" data-model="stkRepairBanHeader" request-url="{{ route('api-stkRepairBanHeader') }}" on-success-load="successLoadstkRepairBanHeader">
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
-                                <th>Kode Repair</th>
                                 <th>Truk</th>
+                                <th>Plat Nomor</th>
                                 <th>Supir</th>
-                                <th>Tanggal Service</th>
+                                <th>Total Rit</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -106,7 +106,7 @@
       </footer>
     </div>
   </div>
-<div class="modal fade" id="stkRepairHeader-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="stkRepairBanHeader-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -116,7 +116,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <form role="form" id="stkRepairHeader-form">
+            <form role="form" id="stkRepairBanHeader-form">
                 <input type="hidden" name="id" id="id">
                 <div class="row">
                     <div class="col-md-3">
@@ -165,7 +165,7 @@
     </div>
 </div>
 <script src="{{asset('js/event.js')}}"></script>
-<script src="{{asset('js/stkRepairHeader.js')}}"></script>
+<script src="{{asset('js/stkRepairBanHeader.js')}}"></script>
 <script>
     var i = 1;
     $("#add-row").click(function() {

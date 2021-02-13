@@ -364,6 +364,8 @@ class BonusDriverRitController extends Controller
                     ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
                     ->join('ex_wil_provinsi', 'ex_master_ojk.provinsi_id', 'ex_wil_provinsi.id')
                     ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+                    ->join('ex_master_truck', 'ex_master_truck.id', 'expedition_activity.truck_id')
+                    ->join('ex_master_driver', 'ex_master_driver.id', 'expedition_activity.driver_id')
                     ->where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
                             foreach(explode(', ', $whereField) as $idx => $field) {
@@ -376,7 +378,7 @@ class BonusDriverRitController extends Controller
                     ->whereYear('expedition_activity.updated_at', $data['year'])
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
                     ->whereNotNull('ojk_id')
-                    ->select('expedition_activity.*', 'kabupaten', 'kecamatan', 'provinsi', 'cabang_name')
+                    ->select('expedition_activity.*', 'kabupaten', 'kecamatan', 'provinsi', 'cabang_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_name', 'ex_master_truck.truck_plat')
                     ->paginate();
       
       if(!isset($rewardList)){

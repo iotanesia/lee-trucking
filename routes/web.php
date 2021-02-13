@@ -44,6 +44,8 @@ Route::get('/bonus-driver-reward', 'BonusDriverRitController@indexReward')->name
 Route::get('/purchased-sparepart', 'SparePartsController@indexpurchase')->name('spareparts');
 Route::get('/hutang-stok', 'SparePartsController@indexUnpaid')->name('hutang-stok');
 Route::get('/repair-truck', 'StkRepairHeaderController@index')->name('repair-truck');
+Route::get('/repair-ban-truck', 'StkRepairBanHeaderController@index')->name('repair-ban-truck');
 Route::get('/pinjaman-karyawan', 'MoneyTransactionHeaderController@index')->name('pinjaman-karyawan');
 Route::get('/penanaman-modal', 'MoneyTransactionHeaderController@indexModal')->name('penanaman-modal');
 Route::get('/jurnal-report', 'JurnalController@index')->name('jurnal-report');
+Route::get('/dashboard/{schema}', 'DashboardController@index');

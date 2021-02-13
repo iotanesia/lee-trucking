@@ -11,7 +11,7 @@ use App\Models\Cabang;
 use App\Models\Truck;
 use Auth;
 
-class StkRepairHeaderController extends Controller
+class StkRepairBanHeaderController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -30,9 +30,9 @@ class StkRepairHeaderController extends Controller
      */
     public function index(Request $request)
     {
-        $data['title'] = 'Repair Truck';
-        $data['sparepart'] = Sparepart::where('group_sparepart_id', '<>', 5)->get();
+        $data['title'] = 'Repair Ban Truck';
+        $data['sparepart'] = Sparepart::where('group_sparepart_id', 5)->get();
         $data['truck'] = Truck::all();
-        return view('repair-truck.index', $data);
+        return view('repair-ban-truck.index', $data);
     }
 }
