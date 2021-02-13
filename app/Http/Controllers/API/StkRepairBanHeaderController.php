@@ -7,33 +7,34 @@ use App\User;
 use App\Models\StkRepairHeader;
 use App\Models\SparePart;
 use App\Models\StkHistorySparePart;
+use App\Models\Truck;
 use Auth;
 use Carbon\Carbon;
+use DB;
 
-class StkRepairHeaderController extends Controller
+class StkRepairBanHeaderController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
       $whereField = 'name, no_StkRepairHeader';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $stkRepairHeader = StkRepairHeader::join('ex_master_truck', 'stk_repair_header.truck_id', 'ex_master_truck.id')
-                        ->join('ex_master_driver', 'ex_master_truck.driver_id', 'ex_master_driver.id')
-                        ->with(['stk_history_stok'])
-                        ->where(function($query) use($whereField, $whereValue) {
-                            if($whereValue) {
-                                foreach(explode(', ', $whereField) as $idx => $field) {
-                                    $query->orWhere($field, 'LIKE', "%".$whereValue."%");
-                                }
-                            }
-                        })
-                        ->where('kode_repair', 'LIKE', '%RP-%')
-                        ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
-                        ->orderBy('id', 'ASC')
-                        ->paginate();
-      
+      $stkRepairHeader = Truck::join('ex_master_driver', 'ex_master_truck.driver_id', 'ex_master_driver.id')
+                         ->leftJoin('expedition_activity', 'expedition_activity.truck_id', 'ex_master_truck.id')
+                         ->where(function($query) use($whereField, $whereValue) {
+                             if($whereValue) {
+                                 foreach(explode(', ', $whereField) as $idx => $field) {
+                                     $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                                 }
+                             }
+                         })
+                         ->select('ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', DB::raw('COUNT("truck_id") AS total_rit'))
+                         ->groupBy('expedition_activity.truck_id','ex_master_truck.id', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
+                         ->orderBy('ex_master_truck.id', 'ASC')
+                         ->paginate();
+
       foreach($stkRepairHeader as $row) {
-        $row->data_json = $row->toJson();
+          $row->data_json = $row->toJson();
       }
       
       if(!isset($stkRepairHeader)){
@@ -51,7 +52,6 @@ class StkRepairHeaderController extends Controller
           'result'=> $stkRepairHeader
         ], 200);
       }
-      
       
     } else {
       return response()->json([
@@ -82,11 +82,11 @@ class StkRepairHeaderController extends Controller
                         ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
                         ->orderBy('id', 'ASC')
                         ->paginate();
-      
+
       foreach($stkRepairHeader as $row) {
         $row->data_json = $row->toJson();
       }
-      
+
       if(!isset($stkRepairHeader)){
         return response()->json([
           'code' => 404,
@@ -136,11 +136,6 @@ class StkRepairHeaderController extends Controller
     //   dd($sparepart_detail['sparepart_id']);
 
       if($stkRepairHeader->save()) {
-          $code = str_repeat("0", 4 - strlen($stkRepairHeader->id)).$stkRepairHeader->id;
-          $codes = 'RP-'.date('Ymd').$code;
-          $stkRepairHeader->kode_repair = $codes;
-          $stkRepairHeader->save();
-
           if(isset($sparepart_detail)) {
               foreach($sparepart_detail['sparepart_id'] as $key => $row) {
                   $sparepart = SparePart::find($row);

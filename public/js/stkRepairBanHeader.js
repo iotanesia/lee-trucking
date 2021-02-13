@@ -6,7 +6,7 @@ $("document").ready(function(){
   });
 
   $.ajax({
-    url: window.Laravel.app_url + "/api/stkRepairHeader/get-list",
+    url: window.Laravel.app_url + "/api/stkRepairBanHeader/get-list",
     type: "GET",
     dataType: "json",
     headers: {"Authorization": "Bearer " + accessToken},
@@ -16,12 +16,12 @@ $("document").ready(function(){
     },
     success: function(data, textStatus, xhr) {
       $('.preloader').hide();
-      successLoadstkRepairHeader(data);
+      successLoadstkRepairBanHeader(data);
     },
   });
 
   $.ajax({
-      url: window.Laravel.app_url + "/api/spareparts/get-list-all",
+      url: window.Laravel.app_url + "/api/spareparts/get-list-all-ban",
       type: "GET",
       dataType: "json",
       headers: {"Authorization": "Bearer " + accessToken},
@@ -34,12 +34,12 @@ $("document").ready(function(){
   });
 
   $("#btn-submit").click(function(){
-    var event = $("#stkRepairHeader-modal #btn-submit").attr("el-event");
-    var data = new FormData($("#stkRepairHeader-form")[0]);
+    var event = $("#stkRepairBanHeader-modal #btn-submit").attr("el-event");
+    var data = new FormData($("#stkRepairBanHeader-form")[0]);
     data.append("_token", window.Laravel.csrfToken);
 
     $.ajax({
-      url: window.Laravel.app_url + "/api/stkRepairHeader/" + event + "",
+      url: window.Laravel.app_url + "/api/stkRepairBanHeader/" + event + "",
       type: "POST",
       dataType: "json",
       data: data,
@@ -52,7 +52,7 @@ $("document").ready(function(){
     },
     success: function(datas, textStatus, xhr) {
         $("#successModal").modal("show");
-        $("#stkRepairHeader-modal").modal("hide");
+        $("#stkRepairBanHeader-modal").modal("hide");
         $('.preloader').hide();
         document.getElementById("search-data").click();
       },
@@ -67,7 +67,7 @@ $("document").ready(function(){
     });
   })
 
-  $("#stkRepairHeader-modal").on("show.bs.modal", function(e) {
+  $("#stkRepairBanHeader-modal").on("show.bs.modal", function(e) {
     var invoker = $(e.relatedTarget);
 
     if(invoker.attr('el-event') == 'edit') {
@@ -76,12 +76,12 @@ $("document").ready(function(){
       var tblBlock = '';
       var tblBlockSelect = '';
 
-      $("#stkRepairHeader-form").find("input[name=id]").val(dataJSON.id);
-      $("#stkRepairHeader-modal #btn-submit").attr("el-event", "edit");
-      $("#stkRepairHeader-form").find("input[name=truck_id]").attr('readonly', true);
-      $("#stkRepairHeader-form").find("textarea[name=content]").summernote("code", dataJSON.content);
+      $("#stkRepairBanHeader-form").find("input[name=id]").val(dataJSON.id);
+      $("#stkRepairBanHeader-modal #btn-submit").attr("el-event", "edit");
+      $("#stkRepairBanHeader-form").find("input[name=truck_id]").attr('readonly', true);
+      $("#stkRepairBanHeader-form").find("textarea[name=content]").summernote("code", dataJSON.content);
       
-      bindToForm($("#stkRepairHeader-modal"), dataJSON);
+      bindToForm($("#stkRepairBanHeader-modal"), dataJSON);
 
       for (var i = 0; i < dataJSON.stk_history_stok.length; i++) {
           var responses = dataJSON.stk_history_stok[i];
@@ -110,11 +110,11 @@ $("document").ready(function(){
       $("#tblBlock tbody").html(tblBlock);
       
     } else {
-      $("#stkRepairHeader-form").find("input[name=id]").val(null);
-      $("#stkRepairHeader-modal #btn-submit").attr("el-event", "add");
-      $("#stkRepairHeader-form").find("textarea[name=content]").summernote("code", "");
-      $("#stkRepairHeader-form").find("input").attr('readonly', false);
-      resetForm("#stkRepairHeader-form");
+      $("#stkRepairBanHeader-form").find("input[name=id]").val(null);
+      $("#stkRepairBanHeader-modal #btn-submit").attr("el-event", "add");
+      $("#stkRepairBanHeader-form").find("textarea[name=content]").summernote("code", "");
+      $("#stkRepairBanHeader-form").find("input").attr('readonly', false);
+      resetForm("#stkRepairBanHeader-form");
 
       $("#tblBlock tbody").html('');
     }
@@ -140,7 +140,7 @@ $("document").ready(function(){
     }
 });
 
-var successLoadstkRepairHeader = (function(responses, dataModel) {
+var successLoadstkRepairBanHeader = (function(responses, dataModel) {
     
   var tableRows = "";
   var responses = responses.result.data == undefined ? responses : responses.result;
@@ -148,22 +148,19 @@ var successLoadstkRepairHeader = (function(responses, dataModel) {
   for(var i = 0; i < responses.data.length; i++) {
     id = responses.data[i].id;
     truck_name = responses.data[i].truck_name;
-    kode_repair = responses.data[i].kode_repair;
     truck_plat = responses.data[i].truck_plat;
     driver_name = responses.data[i].driver_name;
-    created_at = responses.data[i].created_at;
     data_json = responses.data[i].data_json;
 
     tableRows += "<tr>" +
                    "<td>"+ (i + 1) +"</td>"+
-                   "<td>"+ def(kode_repair) +"</td>"+
-                   "<td>"+ truck_name +" - "+truck_plat+"</td>"+
+                   "<td>"+ truck_name +"</td>"+
+                   "<td>"+ truck_plat +"</td>"+
                    "<td>"+ driver_name +"</td>"+
-                   "<td>"+ created_at +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
-                       "<a class='btn btn-slack btn-icon-only btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#stkRepairHeader-modal'><i class='fas fa-edit'></i></a>"+
-                       "<a class='btn btn-danger btn-icon-only btn-sm' href='#' el-event='edit' data-id='"+ id +"' data-url='/api/stkRepairHeader/delete' data-toggle='modal' data-target='#deletedModal'><i class='fa fa-trash'></i></a>"+
+                       "<a class='btn btn-slack btn-icon-only btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#stkRepairBanHeader-modal'><i class='fas fa-edit'></i></a>"+
+                       "<a class='btn btn-danger btn-icon-only btn-sm' href='#' el-event='edit' data-id='"+ id +"' data-url='/api/stkRepairBanHeader/delete' data-toggle='modal' data-target='#deletedModal'><i class='fa fa-trash'></i></a>"+
                      "</div>"+
                    "</td>"+
                  "</tr>";
@@ -174,8 +171,8 @@ var successLoadstkRepairHeader = (function(responses, dataModel) {
                  "</tr>";
   }
 
-  $("#table-stkRepairHeader tbody").html(tableRows);
-  paginate(responses, 'stkRepairHeader');
+  $("#table-stkRepairBanHeader tbody").html(tableRows);
+  paginate(responses, 'stkRepairBanHeader');
 
   $(".preloader").hide();
 
@@ -186,7 +183,7 @@ var successLoadstkRepairHeader = (function(responses, dataModel) {
 
     if(confirms) {
       $.ajax({
-        url: window.Laravel.app_url + "/api/stkRepairHeader/delete",
+        url: window.Laravel.app_url + "/api/stkRepairBanHeader/delete",
         type: "POST",
         dataType: "json",
         data:"id"+"="+id,
