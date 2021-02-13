@@ -17,6 +17,13 @@ approval otv toko (TUNAI to owner) - DRIVER_SELESAI_EKSPEDISI - Approve (status_
 NOTIF jgn lupa
 
 
+DASHBOARD
+
+-kolom expedisi (total expedisi, on going & closet expedisi)
+-Repair Truck (total truck yg di repair, repair ban & non ban)
+-Total income ()
+
+
 
 
 

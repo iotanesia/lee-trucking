@@ -150,6 +150,7 @@ var successLoadstkRepairBanHeader = (function(responses, dataModel) {
     truck_name = responses.data[i].truck_name;
     truck_plat = responses.data[i].truck_plat;
     driver_name = responses.data[i].driver_name;
+    total_rit = responses.data[i].total_rit;
     data_json = responses.data[i].data_json;
 
     tableRows += "<tr>" +
@@ -157,6 +158,7 @@ var successLoadstkRepairBanHeader = (function(responses, dataModel) {
                    "<td>"+ truck_name +"</td>"+
                    "<td>"+ truck_plat +"</td>"+
                    "<td>"+ driver_name +"</td>"+
+                   "<td>"+ total_rit +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
                        "<a class='btn btn-slack btn-icon-only btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#stkRepairBanHeader-modal'><i class='fas fa-edit'></i></a>"+

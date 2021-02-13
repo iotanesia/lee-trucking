@@ -68,6 +68,7 @@
                                 <th>Truk</th>
                                 <th>Plat Nomor</th>
                                 <th>Supir</th>
+                                <th>Total Rit</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
