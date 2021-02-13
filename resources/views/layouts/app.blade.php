@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="{{asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">`
   <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
   <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <script type="text/javascript" src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
   
@@ -115,7 +117,8 @@
   $.widget.bridge('uibutton', $.ui.button);
 </script>
 
-<script src="{{asset('/plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{asset('plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"> </script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.colVis.min.js"> </script>
 <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"> </script>

@@ -21,7 +21,10 @@
         "laravel/passport": "v7.3.0",
         "laravel/tinker": "^1.0",
         "lcobucci/jwt": "3.3.3",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "^3.1",
+        "yajra/laravel-datatables": "1.5",
+        "yajra/laravel-datatables-buttons": "^4.10",
+        "yajra/laravel-datatables-oracle": "8.0.*"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
