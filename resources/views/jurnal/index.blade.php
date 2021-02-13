@@ -1,11 +1,15 @@
 @extends('layouts/layouts')
-@section('content')
+
+@section('styles')
 <style>
-.modal-dialog {
-    max-width: 80%;
-    height: 100%;
-}
-</style>
+  .modal-dialog {
+      max-width: 80%;
+      height: 100%;
+  }
+  
+  </style>
+@endsection
+@section('content')
     <div class="header bg-gradient-info pb-6">
       <div class="container-fluid">
         <div class="header-body">
@@ -38,31 +42,29 @@
                   <h5 class="h3 mb-0">Table {{$title}}</h5>
                 </div>
                 <div class="col-md-2">
-                    <select class="form-control m-1" id="filter-select">
-                        <option value=""></option>
-                        <option value="TUNAI">TUNAI</option>
-                        <option value="NON_TUNAI">NON TUNAI</option>
-                    </select>
+              
+                  <select data-column="1" class="form-control col-sm-4 filter-satuan" placeholder="Filter berdasarkan kategori jurnal">
+                    <option value=""></option>
+                    <option value="DEBIT"> DEBIT </option>
+                    <option value="CREDIT"> CREDIT </option>
+                </select>
                 </div>
-                <div class="navbar-search navbar-search-light form-inline mr-sm-3">
+                {{-- <div class="navbar-search navbar-search-light form-inline mr-sm-3">
                     <div class="form-group mb-0">
                         <div class="input-group input-group-alternative input-group-merge">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                             </div>
-                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="expedition" placeholder="Search Key">
+                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="jurnal" placeholder="Search Key">
                         </div>
                     </div>
-                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="expedition"><i class="fa fa-search"></i></a>
-                </div>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="jurnal"><i class="fa fa-search"></i></a>
+                </div> --}}
               </div>
             </div>
             <div class="card-body">
-                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#expedition-modal">
-                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-                </button>
-                <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-expedition" data-model="expedition" request-url="{{ route('api-expedition') }}" on-success-load="successLoadexpedition">
+                <div class="table-responsive"></div>
+                    <table class="table align-items-center table-flush table-striped" id="table-jurnal" son-success-load="successLoadexpedition">
                         <thead class="bg-gradient-info text-white">
                         <tr>
                             <th>No</th>
@@ -78,11 +80,6 @@
                         <tbody></tbody>
                     </table>
                 </div>
-            </div>
-            <div class="card-footer py-4">
-                <nav aria-label="...">
-                    <ul class="pagination justify-content-end mb-0"></ul>
-                </nav>
             </div>
           </div>
         </div>
@@ -109,7 +106,7 @@
       </footer>
     </div>
   </div>
-<script src="{{asset('js/event.js')}}"></script>
-<script src="{{asset('js/expedition-tracking.js')}}"></script>
-<script src="assets/vendor/select2/dist/js/select2.min.js"></script>
+  <script src="{{asset('js/jurnal-report.js')}}"></script>
+  <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
 @endsection
+

@@ -20,7 +20,8 @@
         "laravel/framework": "5.6.*",
         "laravel/passport": "v7.3.0",
         "laravel/tinker": "^1.0",
-        "lcobucci/jwt": "3.3.3"
+        "lcobucci/jwt": "3.3.3",
+        "maatwebsite/excel": "^3.1"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
