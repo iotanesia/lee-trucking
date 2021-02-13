@@ -318,28 +318,85 @@ class BonusDriverRitController extends Controller
                     ->whereYear('expedition_activity.updated_at', $data['year'])
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
                     ->whereNotNull('ojk_id')
-                    ->select('ojk_id', 'kabupaten', 'kecamatan', 'provinsi', 'cabang_name', DB::raw('COUNT("cabang_name") AS total_rit'))
+                    ->select('ojk_id', 'kabupaten', 'kecamatan', 'provinsi', 'cabang_name', DB::raw('COUNT("ojk_id") AS total_rit'))
                     ->groupBy('ojk_id', 'kabupaten', 'kecamatan', 'provinsi', 'cabang_name')
-                    ->orderBy('total_rit', 'DESC')->first();
+                    ->paginate();
       
       if(!isset($rewardList)){
         return response()->json([
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
           'code_type' => 'BadRequest',
-          'data'=> null
+          'result'=> null
         ], 404);
+
       }else{
-        $reward = Reward::where('min', '<=', $rewardList->total_rit)->where('max', '>=', $rewardList->total_rit)->orderBy('min', 'DESC')->first();
-        $rewardList->reward_jenis = $reward ? $reward->reward_jenis : '-';
-        $rewardList->bonus = $reward ? $reward->bonus : 0;
-        $rewardList->data_json = $rewardList->toJson();
+
         return response()->json([
           'code' => 200,
           'code_message' => 'Success',
           'code_type' => 'Success',
-          'data'=> $rewardList
+          'result'=> $rewardList
         ], 200);
+      }
+      
+      
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
+    }
+  }
+
+  public function getListByTujuanDetail(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $firstDate = date('Y-m-01');
+      $lastDate = date('Y-m-t');
+      $user = Auth::user();
+      $whereField = 'name, no_Reward';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $rewardList = ExpeditionActivity::join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
+                    ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
+                    ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
+                    ->join('ex_wil_provinsi', 'ex_master_ojk.provinsi_id', 'ex_wil_provinsi.id')
+                    ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+                    ->where(function($query) use($whereField, $whereValue) {
+                        if($whereValue) {
+                            foreach(explode(', ', $whereField) as $idx => $field) {
+                                $query->orWhere($field, '=', $whereValue);
+                            }
+                        }
+                    })
+                    ->where('expedition_activity.ojk_id', $data['ojk_id'])
+                    ->where('expedition_activity.status_activity','CLOSED_EXPEDITION')
+                    ->whereYear('expedition_activity.updated_at', $data['year'])
+                    ->whereMonth('expedition_activity.updated_at', $data['month'])
+                    ->whereNotNull('ojk_id')
+                    ->select('expedition_activity.*', 'kabupaten', 'kecamatan', 'provinsi', 'cabang_name')
+                    ->paginate();
+      
+      if(!isset($rewardList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+
+      }else{
+        foreach($rewardList as $row) {
+            $row->data_json = $row->toJson();
+            return response()->json([
+            'code' => 200,
+            'code_message' => 'Success',
+            'code_type' => 'Success',
+            'result'=> $rewardList
+            ], 200);
+        }
       }
       
       
