@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\UserDetail;
 use Auth;
+use DB;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,24 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        return view('home');
+        $schema = Auth::user()->schema;
+        $totalEx = DB::select('SELECT COUNT(id) AS total FROM '.$schema.'.expedition_activity');
+        $totalClose = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity = 'CLOSED_EXPEDITION'");
+        $totalOnProggres = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity <> 'CLOSED_EXPEDITION'");
+        $totalrepair = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header");
+        $totalrepairBan = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE kode_repair LIKE '%RPBAN-%'");
+        $totalrepairNonBan = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE kode_repair LIKE '%RP-%'");
+        $totaltruck = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".ex_master_truck");
+
+        $data['total_expedisi'] = $totalEx[0];
+        $data['total_on_progress'] = $totalOnProggres[0];
+        $data['total_close'] = $totalClose[0];
+        $data['total_repair'] = $totalrepair[0];
+        $data['total_repairBan'] = $totalrepairBan[0];
+        $data['total_repairNonBan'] = $totalrepairNonBan[0];
+        $data['total_truck'] = $totaltruck[0];
+        // dd($data);
+        return view('home', $data);
     }
 
     public function indexTenan(Request $request)
