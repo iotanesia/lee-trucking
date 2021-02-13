@@ -65,9 +65,10 @@
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
-                                <th>Truck</th>
-                                <th>Kenek</th>
-                                <th>Repair Date</th>
+                                <th>Kode Repair</th>
+                                <th>Truk</th>
+                                <th>Supir</th>
+                                <th>Tanggal Service</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

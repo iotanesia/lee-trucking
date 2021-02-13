@@ -31,7 +31,7 @@ class StkRepairHeaderController extends Controller
     public function index(Request $request)
     {
         $data['title'] = 'Repair Truck';
-        $data['sparepart'] = Sparepart::all();
+        $data['sparepart'] = Sparepart::where('group_sparepart_id', '<>', 5)->get();
         $data['truck'] = Truck::all();
         return view('repair-truck.index', $data);
     }

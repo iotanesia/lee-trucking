@@ -148,6 +148,7 @@ var successLoadstkRepairHeader = (function(responses, dataModel) {
   for(var i = 0; i < responses.data.length; i++) {
     id = responses.data[i].id;
     truck_name = responses.data[i].truck_name;
+    kode_repair = responses.data[i].kode_repair;
     truck_plat = responses.data[i].truck_plat;
     driver_name = responses.data[i].driver_name;
     created_at = responses.data[i].created_at;
@@ -155,6 +156,7 @@ var successLoadstkRepairHeader = (function(responses, dataModel) {
 
     tableRows += "<tr>" +
                    "<td>"+ (i + 1) +"</td>"+
+                   "<td>"+ def(kode_repair) +"</td>"+
                    "<td>"+ truck_name +" - "+truck_plat+"</td>"+
                    "<td>"+ driver_name +"</td>"+
                    "<td>"+ created_at +"</td>"+

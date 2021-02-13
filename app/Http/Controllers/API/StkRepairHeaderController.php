@@ -27,6 +27,7 @@ class StkRepairHeaderController extends Controller
                                 }
                             }
                         })
+                        ->where('kode_repair', 'LIKE', '%RP-%')
                         ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
                         ->orderBy('id', 'ASC')
                         ->paginate();
@@ -135,6 +136,11 @@ class StkRepairHeaderController extends Controller
     //   dd($sparepart_detail['sparepart_id']);
 
       if($stkRepairHeader->save()) {
+          $code = str_repeat("0", 4 - strlen($stkRepairHeader->id)).$stkRepairHeader->id;
+          $codes = 'RP-'.date('Ymd').$code;
+          $stkRepairHeader->kode_repair = $codes;
+          $stkRepairHeader->save();
+
           if(isset($sparepart_detail)) {
               foreach($sparepart_detail['sparepart_id'] as $key => $row) {
                   $sparepart = SparePart::find($row);
