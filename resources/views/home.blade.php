@@ -23,8 +23,8 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Today Expedition</h5>
-                      <span class="h2 font-weight-bold mb-0">897</span>
+                      <h5 class="card-title text-uppercase text-muted mb-0">Total Expedition</h5>
+                      <span class="h2 font-weight-bold mb-0">{{$total_expedisi->total}}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -33,7 +33,8 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                    <span class="text-warning mr-2"><i class="fas fa-spinner"></i> {{$total_on_progress->total}}</span>
+                    <span class="text-success mr-2"></i><i class="fas fa-check"></i> {{$total_close->total}}</span>
                     <span class="text-nowrap">Since last month</span>
                   </p>
                 </div>
@@ -46,16 +47,17 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Repair Truck</h5>
-                      <span class="h2 font-weight-bold mb-0">16</span>
+                      <span class="h2 font-weight-bold mb-0">{{$total_repair->total}}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                        <i class="ni ni-chart-pie-35"></i>
+                        <i class="ni ni-chart-pie-35"></i>               
                       </div>
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                    <span class="text-success mr-2"><i class="fas fa-wrench"></i> {{$total_repairNonBan->total}}</span>
+                    <span class="text-success mr-2"><i class="fas fa-ring"></i> {{$total_repairBan->total}}</span>
                     <span class="text-nowrap">Since last month</span>
                   </p>
                 </div>
@@ -90,7 +92,7 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Total Truck</h5>
-                      <span class="h2 font-weight-bold mb-0">49</span>
+                      <span class="h2 font-weight-bold mb-0">{{$total_truck->total}}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -99,8 +101,8 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap">Since last month</span>
+                    <span class="text-success mr-2"><i class="fas fa-truck"></i></span>
+                    <span class="text-nowrap">All Truck</span>
                   </p>
                 </div>
               </div>
