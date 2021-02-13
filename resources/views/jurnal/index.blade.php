@@ -49,17 +49,7 @@
                     <option value="CREDIT"> CREDIT </option>
                 </select>
                 </div>
-                {{-- <div class="navbar-search navbar-search-light form-inline mr-sm-3">
-                    <div class="form-group mb-0">
-                        <div class="input-group input-group-alternative input-group-merge">
-                            <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-search"></i></span>
-                            </div>
-                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="jurnal" placeholder="Search Key">
-                        </div>
-                    </div>
-                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="jurnal"><i class="fa fa-search"></i></a>
-                </div> --}}
+             
               </div>
             </div>
             <div class="card-body">
@@ -67,17 +57,26 @@
                     <table class="table align-items-center table-flush table-striped" id="table-jurnal" son-success-load="successLoadexpedition">
                         <thead class="bg-gradient-info text-white">
                         <tr>
-                            <th>No</th>
-                            <th>Tanggal Coa</th>
-                            <th>Nama Sheet</th>
+                            <th>Tanggal</th>
+                            <th>Nama Aktiviti</th>
                             <th>Kategori Jurnal</th>
-                            <th>Pembuat</th>
-                            <th>Bank</th>
-                            <th>Pemilik Rekening</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <th>Nama Bank</th>
+                            <th>Nama Rekening</th>
                             <th>Nomor Rekening</th>
+                            <th>Inputter</th>
+                            <th>Source</th>
+                            <th>
                         </tr>
                         </thead>
                         <tbody></tbody>
+                        <tfoot>
+                          <tr>
+                              <th colspan="4" style="text-align:right">Total:</th>
+                              <th></th>
+                          </tr>
+                      </tfoot>
                     </table>
                 </div>
             </div>
@@ -106,7 +105,9 @@
       </footer>
     </div>
   </div>
+  <script src="{{asset('js/event.js')}}"></script>
   <script src="{{asset('js/jurnal-report.js')}}"></script>
   <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
+  <script href="https://cdn.datatables.net/plug-ins/1.10.22/api/sum().js"></script>
 @endsection
 
