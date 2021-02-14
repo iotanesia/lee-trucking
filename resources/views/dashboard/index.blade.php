@@ -27,7 +27,7 @@
             <div class="col-xl-12">
                 <div class="card-body">
                     <div class="row">
-                        <div class="chart">
+                        <div class="chart" style="margin-left:30px">
                             <canvas id="bar-chart" width="400%" height="400%" class="chart-canvas"></canvas>
                             <canvas id="pie-chart" width="400%" height="400%"></canvas>
                         </div>
