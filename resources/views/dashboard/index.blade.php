@@ -28,8 +28,8 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="chart" style="margin-left:20px">
-                            <canvas id="bar-chart" width="350%" height="350%" class="chart-canvas"></canvas>
-                            <canvas id="pie-chart" width="350%" height="350%"></canvas>
+                            <canvas id="bar-chart" width="250%" height="250%" class="chart-canvas"></canvas>
+                            <canvas id="pie-chart" width="250%" height="250%"></canvas>
                         </div>
                     </div>
                 </div>
