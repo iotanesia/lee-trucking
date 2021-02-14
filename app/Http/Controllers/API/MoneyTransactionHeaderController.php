@@ -487,6 +487,11 @@ class MoneyTransactionHeaderController extends Controller
           if($moneyDetailTermin->save()) {
               $coaMasterSheet = CoaMasterSheet::whereIn('coa_code_sheet', ['PL.0003.05', 'PL.0003.06', 'PL.0003.07', 'PL.0003.08'])->get();
               $moneyTransactionHeader->sisa_pokok = $moneyTransactionHeader->sisa_pokok - $moneyDetailTermin->nominal_termin;
+
+              if($moneyTransactionHeader->sisa_pokok <= 0 ) {
+                  $moneyTransactionHeader->status = 'LUNAS';  
+              }
+
               $moneyTransactionHeader->save();
 
               foreach($coaMasterSheet as $key => $value) {
