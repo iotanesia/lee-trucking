@@ -6,7 +6,9 @@
       max-width: 80%;
       height: 100%;
   }
-  
+  .toolbar {
+    float: left;
+}
   </style>
 @endsection
 @section('content')
@@ -54,7 +56,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive"></div>
-                    <table class="table align-items-center table-flush table-striped" id="table-jurnal" son-success-load="successLoadexpedition">
+                    <table class="table align-items-center table-striped" id="table-jurnal" son-success-load="successLoadexpedition">
                         <thead class="bg-gradient-info text-white">
                         <tr>
                             <th>Tanggal</th>
@@ -72,10 +74,27 @@
                         </thead>
                         <tbody></tbody>
                         <tfoot>
-                          <tr>
-                              <th colspan="4" style="text-align:right">Total:</th>
-                              <th></th>
+                          <tr style="font-weight:bold">
+                              <td style="text-align:left">
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
                           </tr>
+                          <tr style="font-weight:bold">
+                            <td style="text-align:left">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr style="font-weight:bold">
+                          <td style="text-align:left">
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                      </tr>
                       </tfoot>
                     </table>
                 </div>
@@ -108,6 +127,5 @@
   <script src="{{asset('js/event.js')}}"></script>
   <script src="{{asset('js/jurnal-report.js')}}"></script>
   <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
-  <script href="https://cdn.datatables.net/plug-ins/1.10.22/api/sum().js"></script>
 @endsection
 
