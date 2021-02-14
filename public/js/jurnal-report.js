@@ -33,19 +33,58 @@
         {"data":"name"},
         {"data":"table"},
     ],
-    
+    "footerCallback": function (row, data, start, end, display) {
+      var api = this.api(), data;
+      
+      // Remove the formatting to get integer data for summation
+      var intVal = function (i) {
+          return typeof i === 'string' ?
+              i.replace(/[\Rp.,]/g, '')*1 :
+              typeof i === 'number' ?
+                  i : 0;
+      };
+      // Total over all pages
+      totalCredit = api
+          .column(4)
+          .data()
+          .reduce(function(a, b) {
+            if((a != NaN || a != 0) && (b != NaN || b != 0)){
+              return intVal(a) + intVal(b);
+            }
+          }, 0);
+      totalDebit = api
+          .column(3)
+          .data()
+          .reduce(function(a, b) {
+            if((a != NaN || a != 0) && (b != NaN || b != 0)){
+              return intVal(a) + intVal(b);
+            }
+          }, 0);
+
+          totalIncome = totalDebit - totalCredit;
+          totalLoss = totalCredit - totalDebit;
+          
+          $('tr:eq(0) td:eq(0)', api.table().footer()).html('Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(0) td:eq(3)', api.table().footer()).html(convertToRupiah(totalDebit));
+          $('tr:eq(0) td:eq(4)', api.table().footer()).html(convertToRupiah(totalCredit));
+
+          $('tr:eq(1) td:eq(0)', api.table().footer()).html('Income (Profit)&nbsp;&nbsp;:');
+          $('tr:eq(1) td:eq(3)', api.table().footer()).html(convertToRupiah(totalIncome));
+
+          $('tr:eq(2) td:eq(0)', api.table().footer()).html('Loss&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(2) td:eq(3)', api.table().footer()).html(convertToRupiah(totalLoss));
+    }
   });
   $('.filter-satuan').change(function () {
     table.column( $(this).data('column'))
     .search( $(this).val() )
     .draw();
   });
-    // $('#table-jurnal').DataTable({
-    //   drawCallback: function () {
-    //     var api = this.api();
-    //     $(api.table().footer()).html(
-    //       api.column(4).data().sum()
-    //     );
-    //   }
-    // });
+  function convertToRupiah(angka)
+  {
+    var rupiah = '';		
+    var angkarev = angka.toString().split('').reverse().join('');
+    for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+    return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+  }
 });
