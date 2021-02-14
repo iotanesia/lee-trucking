@@ -22,18 +22,15 @@
 </head>
  
 <body>
-<div class="header bg-primary pb-6">
-    <div class="container-fluid">
-        <div class="header-body">
-        </div>
-    </div>
-</div>
     <div class="row">
         <div class="row">
             <div class="col-xl-12">
                 <div class="card-body">
-                    <div class="chart">
-                        <canvas id="bar-chart" class="chart-canvas"></canvas>
+                    <div class="row">
+                        <div class="chart">
+                            <canvas id="bar-chart" width="400%" height="400%" class="chart-canvas"></canvas>
+                            <canvas id="pie-chart" width="400%" height="400%"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,15 +40,20 @@
               
 <script src="{{url('assets/chartJs/Chart.min.js')}}"></script>
 <script>
+    var exBln = {!! json_encode($bulan) !!};
+    var exCount = {!! json_encode($total) !!};
+    var total_truck = {!! json_encode($total_truck) !!};
+    var cabang = {!! json_encode($cabang) !!};
     new Chart(document.getElementById("bar-chart"), {
-        type: 'bar',
+        type: 'line',
         data: {
-        labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+        labels: exBln,
         datasets: [
             {
-            label: "Population (millions)",
-            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-            data: [2478,5267,734,784,433]
+            label: "Expedisi",        
+            borderColor: "#3e95cd",
+            data: exCount,        
+            fill: false
             }
         ]
         },
@@ -59,7 +61,25 @@
         legend: { display: false },
         title: {
             display: true,
-            text: 'Predicted world population (millions) in 2050'
+            text: 'Expedisi Per Bulan'
+        }
+        }
+    });
+
+    new Chart(document.getElementById("pie-chart"), {
+        type: 'pie',
+        data: {
+        labels: cabang,
+        datasets: [{
+            label: "Truk",
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+            data: total_truck
+        }]
+        },
+        options: {
+        title: {
+            display: true,
+            text: 'Total Truk'
         }
         }
     });
