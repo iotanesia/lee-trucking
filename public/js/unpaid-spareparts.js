@@ -163,9 +163,9 @@ $("document").ready(function(){
               tableRows += "<tr>" +
                                 "<td>"+ (i+1) +" <input type='hidden' value='"+id+"'> </td>"+
                                 "<td>"+ sparepart_type +"</td>"+
-                                "<td>"+ amount +"</td>"+
+                                "<td>"+ convertToRupiah(amount) +"</td>"+
                                 "<td>"+ jumlah_stok +"</td>"+
-                                "<td>"+ (parseInt(amount) * parseInt(jumlah_stok)) +"</td>"+
+                                "<td>"+ convertToRupiah(parseInt(amount) * parseInt(jumlah_stok)) +"</td>"+
                                 "<td> <select name='no_rek' id='no_rek_"+id+"' class='form-control no_rek'>"+optionList(dataDropDown)+"</select></td>"+
                                 "<td align='center'>"+
                                     "<div class='btn-group'>"+

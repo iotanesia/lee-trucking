@@ -65,7 +65,7 @@ class HomeController extends Controller
         $data['total_repairBan'] = $totalrepairBan[0];
         $data['total_repairNonBan'] = $totalrepairNonBan[0];
         $data['total_truck'] = $totaltruck[0];
-        $data['total_income'] = number_format($totalIncome);
+        $data['total_income'] = number_format($totalIncome,0,',','.');
         // dd($data);
         return view('home', $data);
     }
