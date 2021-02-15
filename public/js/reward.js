@@ -107,7 +107,7 @@ var successLoadreward = (function(responses, dataModel) {
                      "<td>"+ reward_jenis +"</td>"+
                      "<td>"+ min +"</td>"+
                      "<td>"+ max +"</td>"+
-                     "<td>Rp "+ bonus +"</td>"+
+                     "<td>"+ convertToRupiah(bonus) +"</td>"+
                      "<td align='center'>"+
                        "<div class='btn-group'>"+
                          "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#reward-modal'><i class='fas fa-edit'></i></a>"+

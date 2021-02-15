@@ -121,9 +121,9 @@ $("document").ready(function(){
                      "<td>"+ driver_name +"</td>"+
                      "<td>"+ def(total_rit) +"</td>"+
                      "<td>"+ def(reward_jenis) +"</td>"+
-                     "<td>Rp "+ parseInt(total_rit) * 10000 +"</td>"+
-                     "<td>Rp "+  def(bonus)  +"</td>"+
-                     "<td>Rp "+  (parseInt(bonus) + (parseInt(total_rit) * 10000))  +"</td>"+
+                     "<td>"+ convertToRupiah(parseInt(total_rit) * 10000) +"</td>"+
+                     "<td>"+  convertToRupiah(bonus)  +"</td>"+
+                     "<td>"+  convertToRupiah(parseInt(bonus) + (parseInt(total_rit) * 10000))  +"</td>"+
                    "</tr>";
     }
   

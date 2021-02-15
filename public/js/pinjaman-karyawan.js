@@ -195,8 +195,8 @@ var successLoadmoneyTransactionHeader = (function(responses, dataModel) {
     tableRows += "<tr>" +
                    "<td>"+ (i+1) +"</td>"+
                    "<td>"+ def(name_user) +"</td>"+
-                   "<td>"+ def(pokok) +"</td>"+
-                   "<td>"+ def(sisa_pokok) +"</td>"+
+                   "<td>"+ convertToRupiah(pokok) +"</td>"+
+                   "<td>"+ convertToRupiah(sisa_pokok) +"</td>"+
                    "<td>"+ def(rek_no) +" - "+ def(rek_name) +"</td>"+
                    "<td>"+ def(status) +"</td>"+
                    "<td align='center'>"+

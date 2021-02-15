@@ -95,8 +95,8 @@ var successLoadojk = (function(responses, dataModel) {
                    "<td>"+ kabupaten +"</td>"+
                    "<td>"+ kecamatan +"</td>"+
                    "<td>"+ jarak_km +"</td>"+
-                   "<td>"+ harga_ojk +"</td>"+
-                   "<td>"+ harga_otv +"</td>"+
+                   "<td>"+ convertToRupiah(harga_ojk) +"</td>"+
+                   "<td>"+ convertToRupiah(harga_otv) +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
                        "<a class='btn btn-slack btn-icon-only btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#ojk-modal'><i class='fas fa-edit'></i></a>"+

@@ -410,11 +410,17 @@ function readURL(input) {
 }
 
 function dateFormat(userDate) {
-    var dateAr = userDate.split(' ');
-    var date = dateAr[0].split('-');
-    var newDate = date[2]+'-'+date[2]+'-'+date[0];
+    if(userDate !== null ) {
+        var dateAr = userDate.split(' ');
+        var date = dateAr[0].split('-');
+        var newDate = date[2]+'-'+date[2]+'-'+date[0];
+    
+        return newDate
+        
+    } else {
+        return '-';
 
-    return newDate
+    }
 }
 
 function def(element) {
@@ -423,6 +429,19 @@ function def(element) {
     }
 
     return element
+}
+
+function convertToRupiah(angka)
+{
+    if(angka !== null) {
+        var rupiah = '';		
+        var angkarev = angka.toString().split('').reverse().join('');
+        for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+        return 'Rp '+rupiah.split('',rupiah.length-1).reverse().join('');
+    
+    } else {
+        return 'Rp 0';
+    }
 }
 
 $("#btn-search-trigger").on('keypress',function(e) {
