@@ -673,7 +673,7 @@ class ExpeditionController extends Controller
 
               $userApprovalDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
              
-              if($userApprovalDetail->id_fcm_android != null){
+              if(isset($userApprovalDetail)){
                   $notif = array(
                   'title' => $notification->content_title,
                   'body' => $notification->content_body
@@ -717,7 +717,7 @@ class ExpeditionController extends Controller
 
               $userDriverDetail = User::where('id', $notificationDriver->id_user_to)->where('id_fcm_android','<>','')->first();
              
-              if($userDriverDetail->id_fcm_android != null){
+              if(isset($userDriverDetail)){
                   $notifs = array(
                     'title' => $notificationDriver->content_title,
                     'body' => $notificationDriver->content_body
@@ -764,7 +764,7 @@ class ExpeditionController extends Controller
 
               $userRejectedDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
               
-              if($userRejectedDetail->id_fcm_android != null){
+              if(isset($userRejectedDetail)){
                 $notif = array(
                   'title' => $notification->content_title,
                   'body' => $notification->content_body
@@ -812,7 +812,7 @@ class ExpeditionController extends Controller
                 'title' => $notification->content_title,
                 'body' => $notification->content_body
               );
-              if($userReivisionDetail->id_fcm_android != null){
+              if(isset($userReivisionDetail)){
                 $datas = array(
                   'content_id' => $notification->content_id,
                   'content_type' => $notification->content_type,
@@ -988,7 +988,7 @@ class ExpeditionController extends Controller
               $notification->id_user_from = $userApprove->id;
               $notification->save();
 
-              $userCloseDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>',null)->first();
+              $userCloseDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
               if(isset($userCloseDetail)){
                 $notif = array(
                   'title' => $notification->content_title,

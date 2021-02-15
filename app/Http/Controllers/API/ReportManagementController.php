@@ -4,20 +4,11 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
-use App\Models\ExpeditionActivity;
-use App\Models\ExStatusActivity;
-use App\Models\Ojk;
-use App\Models\Kenek;
 use App\Models\CoaActivity;
-use App\Models\Driver;
 use App\Models\UserDetail;
-use App\Models\Notification;
-use App\Models\GlobalParam;
-use App\Models\Group;
 use Auth;
 use DB;
 use Carbon\Carbon;
-use App\Services\FirebaseService;
 // use App\Services\FirebaseServic\Messaging;
 
 class ReportManagementController extends Controller
@@ -40,12 +31,20 @@ class ReportManagementController extends Controller
           ->select('coa_activity.created_at','coa_master_sheet.sheet_name'
                   ,'coa_master_sheet.jurnal_category','public.users.name'
                   ,'coa_master_rekening.bank_name','coa_master_rekening.rek_name'
-                  ,'coa_master_rekening.rek_no');
+                  ,'coa_master_rekening.rek_no','coa_activity.nominal','coa_activity.table_id','coa_activity.table')->orderBy('coa_activity.created_at','DESC')->get();
           
           foreach($jurnalReportList as $row) {
+            $row->activity_name = $row->sheet_name.' ['.$row->table_id.' ]';
+            $row->nominal_debit = null;
+            $row->nominal_credit = null;
+            if($row->jurnal_category == 'DEBIT'){
+              $row->nominal_debit = 'Rp.'. number_format($row->nominal, 0, ',', '.');
+            }else if($row->jurnal_category == 'CREDIT'){
+              $row->nominal_credit = 'Rp.'. number_format($row->nominal, 0, ',', '.');
+            }
             $row->data_json = $row->toJson();
           }
-
+          // dd($jurnalReportList);
           return datatables($jurnalReportList)->toJson();
       }
     }
