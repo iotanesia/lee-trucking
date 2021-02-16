@@ -277,6 +277,10 @@ class ExpeditionController extends Controller
             $row->otv_image = url('/uploads/expedition/'.$approvalCode['img']);
             $row->otv_nominal_kurang_bayar = $approvalCode['nominal_kurang_bayar'];
             $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
+            $row->services = $exStatusActivity['services'];
+            $row->service_charge = $exStatusActivity['service_charge'];
+            $row->status_destination = $exStatusActivity['status_destination'];
+            $row->new_address = $exStatusActivity['new_address'];
             $row->data_json = $row->toJson();
 
       }
