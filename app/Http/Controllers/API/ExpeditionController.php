@@ -591,6 +591,10 @@ class ExpeditionController extends Controller
                 $exStatusActivity->rek_name = $data['rek_name'] ? $data['rek_name'] :  $lastExActivity->rek_name;
                 $exStatusActivity->no_rek = $data['no_rek'] ? $data['no_rek'] :  $lastExActivity->no_rek;
                 $exStatusActivity->long_lat = $data['long_lat'] ? $data['long_lat'] :  $lastExActivity->long_lat;
+                $exStatusActivity->services = $data['services'] ? $data['services'] :  $lastExActivity->services;
+                $exStatusActivity->service_charge = $data['service_charge'] ? $data['service_charge'] :  $lastExActivity->service_charge;
+                $exStatusActivity->status_destination = $data['status_destination'] ? $data['status_destination'] :  $lastExActivity->status_destination;
+                $exStatusActivity->new_address = $data['new_address'] ? $data['new_address'] :  $lastExActivity->new_address;
                 $exStatusActivity->nominal_kurang_bayar = 0;
                 $exStatusActivity->save();
                 $idCoaSheet1 = array(18, 17, 20, 19);
@@ -617,6 +621,10 @@ class ExpeditionController extends Controller
                 $exStatusActivity->rek_name = isset($data['rek_name']) ? $data['rek_name'] :  $lastExActivity->rek_name;
                 $exStatusActivity->no_rek = isset($data['no_rek']) ? $data['no_rek'] :  $lastExActivity->no_rek;
                 $exStatusActivity->long_lat = isset($data['long_lat']) ? $data['long_lat'] :  $lastExActivity->long_lat;
+                $exStatusActivity->services = $data['services'] ? $data['services'] :  $lastExActivity->services;
+                $exStatusActivity->service_charge = $data['service_charge'] ? $data['service_charge'] :  $lastExActivity->service_charge;
+                $exStatusActivity->status_destination = $data['status_destination'] ? $data['status_destination'] :  $lastExActivity->status_destination;
+                $exStatusActivity->new_address = $data['new_address'] ? $data['new_address'] :  $lastExActivity->new_address;
                 $exStatusActivity->nominal_kurang_bayar = $expeditionActivity->harga_otv - $request->nominal;
                 $exStatusActivity->save();
                 $idCoaSheet2 = array(18, 17, 20, 19);
