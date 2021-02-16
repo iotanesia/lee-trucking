@@ -41,7 +41,8 @@ class HomeController extends Controller
         $truck = DB::select("SELECT b.cabang_name, COUNT(a.id) FROM ".$schema.".ex_master_truck AS a JOIN ".$schema.".ex_master_cabang AS b ON a.cabang_id = b.id GROUP BY cabang_id, b.cabang_name");
 
         foreach($truck as $key => $val) {
-            $data[$val->cabang_name] = $val->count;
+            $cabangName = strtolower(str_replace(" ", "_", $val->cabang_name));
+            $data[$cabangName] = $val->count;
         }
         
         foreach($ex as $key => $row) {
