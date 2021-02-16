@@ -462,6 +462,11 @@ class ExpeditionController extends Controller
         $exStatusActivity = new ExStatusActivity();
 
         unset($data['update_lates_status']);
+
+        if(isset($request->harga_otv) || isset($request->harga_ojk)) {
+            $expeditionActivity->harga_otv = $request->harga_otv;
+            $expeditionActivity->harga_ojk = $request->harga_ojk;
+        }
         
         $expeditionActivity->otv_payment_method = $request->otv_payment_method;
         $expeditionActivity->status_activity = $request->status_activity;
@@ -472,6 +477,8 @@ class ExpeditionController extends Controller
           $statusActivityId = GlobalParam::where('param_code', $expeditionActivity->status_activity)->select('id')->first();
               
           unset($data['otv_payment_method']);
+          unset($data['harga_otv']);
+          unset($data['harga_ojk']);
           // unset($data['status_activity']);
 
           DB::connection(Auth::user()->schema)->beginTransaction();
