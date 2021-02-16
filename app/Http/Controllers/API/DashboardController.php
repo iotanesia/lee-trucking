@@ -24,6 +24,8 @@ class DashboardController extends Controller
             $totalrepairBan = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE kode_repair LIKE '%RPBAN-%'");
             $totalrepairNonBan = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE kode_repair LIKE '%RP-%'");
             $totaltruck = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".ex_master_truck");
+            $truck = DB::select("SELECT b.cabang_name, COUNT(a.id) FROM ".$schema.".ex_master_truck AS a JOIN ".$schema.".ex_master_cabang AS b ON a.cabang_id = b.id GROUP BY cabang_id, b.cabang_name");
+        
 
             $data['total_expedisi'] = $totalEx[0]->total;
             $data['total_on_progress'] = $totalOnProggres[0]->total;
@@ -32,6 +34,10 @@ class DashboardController extends Controller
             $data['total_repairBan'] = $totalrepairBan[0]->total;
             $data['total_repairNonBan'] = $totalrepairNonBan[0]->total;
             $data['total_truck'] = $totaltruck[0]->total;
+
+            foreach($truck as $key => $val) {
+                $data[$val->cabang_name] = $val->count;
+            }
             
             return response()->json([
                 'code' => 200,
