@@ -256,7 +256,6 @@ class ExpeditionController extends Controller
             $approvalCode = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
                             ->leftJoin('all_global_param', 'ex_status_activity.status_activity', 'all_global_param.param_code')
                             ->where('ex_status_activity.ex_id', $row->id)
-                            ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                             ->orderBy('ex_status_activity.id', 'DESC')
                             ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.*')->first();
 
