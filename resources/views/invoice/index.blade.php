@@ -77,7 +77,7 @@
                               <td style="text-align:left">
                               <td></td>
                               <td></td>
-                              <td></td>
+                              <td style="text-align:center"></td>
                               <td></td>
                               <td></td>
                               <td></td>
@@ -89,7 +89,7 @@
                             <td style="text-align:left">
                                 <td></td>
                                 <td></td>
-                                <td></td>
+                                <td style="text-align:center"></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -101,25 +101,25 @@
                             <td style="text-align:left">
                                 <td></td>
                                 <td></td>
+                                <td style="text-align:center"></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
+                                <td style="color:#f02e2e;"></td>
                       </tr>
                       <tr style="font-weight:bold">
                         <td style="text-align:left">
                             <td></td>
                             <td></td>
+                            <td style="text-align:center"></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td style="background-color:#f2de68;"></td>
                     </tr>
                       </tfoot>
                     </table>
