@@ -1244,7 +1244,7 @@ class ExpeditionController extends Controller
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
         $exStatusActivity = ExStatusActivity::where('ex_status_activity.ex_id',$row->id)
         ->orderBy('ex_status_activity.updated_at', 'DESC')
-        ->select('ex_status_activity.long_lat','ex_status_activity.img', 'ex_status_activity.img_tujuan')->first();
+        ->select('ex_status_activity.long_lat','ex_status_activity.img', 'ex_status_activity.img_tujuan', 'ex_status_activity.services', 'ex_status_activity.service_charge', 'ex_status_activity.status_destination ', 'ex_status_activity.new_address')->first();
         $row->long_lat = $exStatusActivity['long_lat'];
         $row->img = ($exStatusActivity['img']) ? url('uploads/expedition/'.$exStatusActivity['img']) :'';
         $row->img_tujuan = ($exStatusActivity['img_tujuan']) ? url('uploads/expedition/'.$exStatusActivity['img_tujuan']) :'';
