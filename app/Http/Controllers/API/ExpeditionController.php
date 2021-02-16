@@ -268,6 +268,7 @@ class ExpeditionController extends Controller
             $row->otv_payment_method_name = null;
             }
 
+            $row->id_exAct = $approvalCode['id_exAct'];
             $row->approval_code = $approvalCode['approval_code'];
             $row->approval_name = $approvalCode['approval_name'];
             $row->otv_no_rek = $approvalCode['no_rek'];
