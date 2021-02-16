@@ -566,6 +566,10 @@ class ExpeditionController extends Controller
           }
           $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $fileName;
           $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $fileName_tujuan;
+          $exStatusActivity->services = $data['services'] ? $data['services'] :  $lastExActivity->services;
+          $exStatusActivity->service_charge = $data['service_charge'] ? $data['service_charge'] :  $lastExActivity->service_charge;
+          $exStatusActivity->status_destination = $data['status_destination'] ? $data['status_destination'] :  $lastExActivity->status_destination;
+          $exStatusActivity->new_address = $data['new_address'] ? $data['new_address'] :  $lastExActivity->new_address;
         }
 
         if($exStatusActivity->save()){
