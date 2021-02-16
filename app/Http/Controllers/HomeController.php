@@ -39,7 +39,11 @@ class HomeController extends Controller
         $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
         $ex = DB::select("SELECT date_part('month', updated_at) AS months, COUNT(id) FROM ".$schema.".expedition_activity GROUP BY months");
         $truck = DB::select("SELECT b.cabang_name, COUNT(a.id) FROM ".$schema.".ex_master_truck AS a JOIN ".$schema.".ex_master_cabang AS b ON a.cabang_id = b.id GROUP BY cabang_id, b.cabang_name");
-        // dd($truck);
+
+        foreach($truck as $key => $val) {
+            $data[$val->cabang_name] = $val->count;
+        }
+        
         foreach($ex as $key => $row) {
             $row->months = $month[($row->months - 1)];
             $data['bulan'][] = $row->months;
