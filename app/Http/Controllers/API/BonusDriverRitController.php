@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\ExpeditionActivity;
 use App\Models\Reward;
+use App\Models\Truck;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -39,7 +40,9 @@ class BonusDriverRitController extends Controller
                     ->paginate();
       
       foreach($rewardList as $row) {
-          $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->first();
+          $truck = Truck::where('driver_id', $row->driver_id)->first();
+          $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)->where('status_activity', 'CLOSED_EXPEDITION')->count();
+          $reward = Reward::where('min', '<=', $row->rit_truck)->where('max', '>=', $row->rit_truck)->orderBy('min', 'DESC')->first();
           $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
           $row->bonus = $reward ? $reward->bonus : 0;
           $row->data_json = $row->toJson();
