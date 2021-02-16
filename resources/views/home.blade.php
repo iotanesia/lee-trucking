@@ -333,15 +333,16 @@
     var cabang = {!! json_encode($cabang) !!};
     // console.log(total_truck)
     new Chart(document.getElementById("bar-chart"), {
-        type: 'line',
+        type: 'bar',
         data: {
         labels: exBln,
         datasets: [
             {
             label: "Expedisi",        
             borderColor: "#3e95cd",
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
             data: exCount,        
-            fill: false
+            fill: true
             }
         ]
         },
