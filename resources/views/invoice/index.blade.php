@@ -43,32 +43,32 @@
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
                   <h5 class="h3 mb-0">Table {{$title}}</h5>
                 </div>
-                <div class="col-md-2">
+                {{-- <div class="col-md-2">
               
                   <select data-column="1" class="form-control col-sm-4 filter-satuan" placeholder="Filter berdasarkan kategori jurnal">
                     <option value=""></option>
                     <option value="DEBIT"> DEBIT </option>
                     <option value="CREDIT"> CREDIT </option>
                 </select>
-                </div>
+                </div> --}}
              
               </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive"></div>
-                    <table class="table align-items-center table-striped" id="table-jurnal" son-success-load="successLoadexpedition">
+                    <table class="table align-items-center table-striped" id="table-invoice-bo" son-success-load="successLoadexpedition">
                         <thead class="bg-gradient-info text-white">
                         <tr>
+                            <th>No</th>
                             <th>Tanggal</th>
-                            <th>Nama Aktiviti</th>
-                            <th>Debit</th>
-                            <th>Credit</th>
-                            <th>Nama Bank</th>
-                            <th>Nama Rekening</th>
-                            <th>Nomor Rekening</th>
-                            <th>Inputter</th>
-                            <th>Source</th>
-                            <th>
+                            <th>Surat Jalan</th>
+                            <th>Tujuan</th>
+                            <th>Plat</th>
+                            <th>Qty Palet</th>
+                            <th>Rit</th>
+                            <th>Nama Toko</th>
+                            <th>Harga/Rit</th>
+                            <th>Total</th>
                         </tr>
                         </thead>
                         <tbody></tbody>
@@ -79,21 +79,48 @@
                               <td></td>
                               <td></td>
                               <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
                           </tr>
                           <tr style="font-weight:bold">
                             <td style="text-align:left">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                         </tr>
                         <tr style="font-weight:bold">
-                          <td style="text-align:left">
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
+                            <td style="text-align:left">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                       </tr>
+                      <tr style="font-weight:bold">
+                        <td style="text-align:left">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                    </tr>
                       </tfoot>
                     </table>
                 </div>
@@ -124,7 +151,7 @@
     </div>
   </div>
   <script src="{{asset('js/event.js')}}"></script>
-  <script src="{{asset('js/jurnal-report.js')}}"></script>
+  <script src="{{asset('js/invoice-report.js')}}"></script>
   <script src="assets/vendor/select2/dist/js/select2.min.js"></script>
 @endsection
 

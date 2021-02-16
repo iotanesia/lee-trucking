@@ -231,6 +231,7 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::group(['as' => 'api-report', 'prefix' => 'report'], function() {
     Route::get('/', 'API\ReportManagementController@index');
     Route::get('get-jurnal-list', ['as' => '-get-jurnal-list', 'uses' => 'API\ReportManagementController@getListJurnalReport']);
+    Route::get('get-invoice-bo-list', ['as' => '-get-invoice-bo-list', 'uses' => 'API\ReportManagementController@getListInvoiceBOReport']);
   });
   
   Route::group(['as' => 'api-dashboard', 'prefix' => 'dashboard'], function() {
