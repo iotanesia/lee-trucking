@@ -36,7 +36,8 @@ class DashboardController extends Controller
             $data['total_truck'] = $totaltruck[0]->total;
 
             foreach($truck as $key => $val) {
-                $data[$val->cabang_name] = $val->count;
+                $cabangName = strtolower(str_replace(" ", "_", $val->cabang_name));
+                $data[$cabangName] = $val->count;
             }
             
             return response()->json([
