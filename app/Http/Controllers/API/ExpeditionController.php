@@ -1248,6 +1248,10 @@ class ExpeditionController extends Controller
         $row->long_lat = $exStatusActivity['long_lat'];
         $row->img = ($exStatusActivity['img']) ? url('uploads/expedition/'.$exStatusActivity['img']) :'';
         $row->img_tujuan = ($exStatusActivity['img_tujuan']) ? url('uploads/expedition/'.$exStatusActivity['img_tujuan']) :'';
+        $row->services = ($exStatusActivity['services']) ? url('uploads/expedition/'.$exStatusActivity['services']) :'';
+        $row->service_charge = ($exStatusActivity['service_charge']) ? url('uploads/expedition/'.$exStatusActivity['service_charge']) :'';
+        $row->status_destination = ($exStatusActivity['status_destination']) ? url('uploads/expedition/'.$exStatusActivity['status_destination']) :'';
+        $row->new_address = ($exStatusActivity['new_address']) ? url('uploads/expedition/'.$exStatusActivity['new_address']) :'';
         $row->data_json = $row->toJson();
       }
 
