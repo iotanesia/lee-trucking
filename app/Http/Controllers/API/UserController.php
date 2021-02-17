@@ -164,6 +164,10 @@ class UserController extends Controller
           'password_confirmation' => 'nullable|same:password'
       ]);
 
+      if(isset($input['password'])) {
+        $input['password'] = bcrypt($input['password']);
+      }
+      
       $userAuth = Auth::user();
       $current_date_time = Carbon::now()->toDateTimeString();
       if ($validator->fails()) {
