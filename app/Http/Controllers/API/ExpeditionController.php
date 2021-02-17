@@ -281,6 +281,7 @@ class ExpeditionController extends Controller
             $row->service_charge = $approvalCode['service_charge'];
             $row->status_destination = $approvalCode['status_destination'];
             $row->new_address = $approvalCode['new_address'];
+            $row->extra_price = $exStatusActivity['extra_price'];
             $row->data_json = $row->toJson();
 
       }
@@ -577,6 +578,7 @@ class ExpeditionController extends Controller
           $exStatusActivity->service_charge = isset($data['service_charge']) ? $data['service_charge'] :  $lastExActivity->service_charge;
           $exStatusActivity->status_destination = isset($data['status_destination']) ? $data['status_destination'] :  $lastExActivity->status_destination;
           $exStatusActivity->new_address = isset($data['new_address']) ? $data['new_address'] :  $lastExActivity->new_address;
+          $exStatusActivity->extra_price = isset($data['extra_price']) ? $data['extra_price'] :  $lastExActivity->extra_price;
         }
 
         if($exStatusActivity->save()){
@@ -610,6 +612,7 @@ class ExpeditionController extends Controller
                 $exStatusActivity->service_charge = $data['service_charge'] ? $data['service_charge'] :  $lastExActivity->service_charge;
                 $exStatusActivity->status_destination = $data['status_destination'] ? $data['status_destination'] :  $lastExActivity->status_destination;
                 $exStatusActivity->new_address = $data['new_address'] ? $data['new_address'] :  $lastExActivity->new_address;
+                $exStatusActivity->extra_price = $data['extra_price'] ? $data['extra_price'] :  $lastExActivity->extra_price;
                 $exStatusActivity->nominal_kurang_bayar = 0;
                 $exStatusActivity->save();
                 $idCoaSheet1 = array(18, 17, 20, 19);
@@ -640,6 +643,7 @@ class ExpeditionController extends Controller
                 $exStatusActivity->service_charge = $data['service_charge'] ? $data['service_charge'] :  $lastExActivity->service_charge;
                 $exStatusActivity->status_destination = $data['status_destination'] ? $data['status_destination'] :  $lastExActivity->status_destination;
                 $exStatusActivity->new_address = $data['new_address'] ? $data['new_address'] :  $lastExActivity->new_address;
+                $exStatusActivity->extra_price = $data['extra_price'] ? $data['extra_price'] :  $lastExActivity->extra_price;
                 $exStatusActivity->nominal_kurang_bayar = $expeditionActivity->harga_otv - $request->nominal;
                 $exStatusActivity->save();
                 $idCoaSheet2 = array(18, 17, 20, 19);
@@ -1259,7 +1263,7 @@ class ExpeditionController extends Controller
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
         $exStatusActivity = ExStatusActivity::where('ex_status_activity.ex_id',$row->id)
         ->orderBy('ex_status_activity.updated_at', 'DESC')
-        ->select('ex_status_activity.long_lat','ex_status_activity.img', 'ex_status_activity.img_tujuan', 'ex_status_activity.services', 'ex_status_activity.service_charge', 'ex_status_activity.status_destination', 'ex_status_activity.new_address')->first();
+        ->select('ex_status_activity.long_lat','ex_status_activity.img', 'ex_status_activity.img_tujuan', 'ex_status_activity.services', 'ex_status_activity.service_charge', 'ex_status_activity.status_destination', 'ex_status_activity.new_address', 'ex_status_activity.extra_price')->first();
         $row->long_lat = $exStatusActivity['long_lat'];
         $row->img = ($exStatusActivity['img']) ? url('uploads/expedition/'.$exStatusActivity['img']) :'';
         $row->img_tujuan = ($exStatusActivity['img_tujuan']) ? url('uploads/expedition/'.$exStatusActivity['img_tujuan']) :'';
@@ -1267,6 +1271,7 @@ class ExpeditionController extends Controller
         $row->service_charge = $exStatusActivity['service_charge'];
         $row->status_destination = $exStatusActivity['status_destination'];
         $row->new_address = $exStatusActivity['new_address'];
+        $row->extra_price = $exStatusActivity['extra_price'];
         $row->data_json = $row->toJson();
       }
 
