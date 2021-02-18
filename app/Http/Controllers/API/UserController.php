@@ -312,8 +312,8 @@ class UserController extends Controller
     if(isset($userDetail)){
       $agama = GlobalParam::where('param_code', $userDetail->agama)->select('description')->first();
       $kelamin = GlobalParam::where('param_code', $userDetail->jenis_kelamin)->select('description')->first();
-      $userDetail->agama = $agama->description;
-      $userDetail->jenis_kelamin = $kelamin->description;
+      $userDetail->agama = isset($agama) ? $agama->description : null;
+      $userDetail->jenis_kelamin = isset($kelamin) ? $kelamin->description : null;
       $userDetail->foto_profil = ($userDetail->foto_profil) ? url('uploads/profilephoto/'.$userDetail->foto_profil) :url('uploads/sparepart/nia3.png');
       return response()->json([
         'code' => 200,
