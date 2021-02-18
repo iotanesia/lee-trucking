@@ -7,6 +7,7 @@ use App\User;
 use App\Models\ExpeditionActivity;
 use App\Models\Reward;
 use App\Models\Truck;
+use App\Models\Driver;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -265,14 +266,20 @@ class BonusDriverRitController extends Controller
                     ->whereNotNull('driver_id')
                     ->groupBy('driver_id', 'driver_name')
                     ->orderBy('total_rit', 'DESC')->first();
-      
       if(!isset($rewardList)){
+        $rewardListNullBonus = Driver::where('user_id', $user->id)
+        ->select('id as driver_id', 'driver_name')
+        ->whereNotNull('id')->first();
+        $rewardListNullBonus->total_rit = 0;
+        $rewardListNullBonus->reward_jenis = '-';
+        $rewardListNullBonus->bonus = 0;
+        $rewardListNullBonus->data_json = $rewardListNullBonus->toJson();
         return response()->json([
-          'code' => 404,
-          'code_message' => 'Data tidak ditemukan',
-          'code_type' => 'BadRequest',
-          'data'=> null
-        ], 404);
+          'code' => 200,
+          'code_message' => 'success',
+          'code_type' => 'success',
+          'data'=> $rewardListNullBonus
+        ], 200);
       }else{
         $reward = Reward::where('min', '<=', $rewardList->total_rit)->where('max', '>=', $rewardList->total_rit)->orderBy('min', 'DESC')->first();
         $rewardList->reward_jenis = $reward ? $reward->reward_jenis : '-';
