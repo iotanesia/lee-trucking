@@ -874,7 +874,7 @@ class ExpeditionController extends Controller
                   $notification->navigate_to_mobile = 'approval_otv';
                   $notification->navigate_to_web = 'approval_otv';
                   $notification->content_title = 'Informasi Ekspedisi';
-                  $notification->content_body = 'Expedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah selesai';
+                  $notification->content_body = 'Expedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' menunggu approval penyelesaian';
                   $notification->content_img = '';
                   $notification->created_at = $current_date_time;
                   $notification->description = '';
@@ -919,7 +919,7 @@ class ExpeditionController extends Controller
                   $notification->navigate_to_mobile = 'approval_otv';
                   $notification->navigate_to_web = 'approval_otv';
                   $notification->content_title = 'Informasi Ekspedisi';
-                  $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah selesai';
+                  $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' menunggu approval penyelesaian';
                   $notification->content_img = '';
                   $notification->created_at = $current_date_time;
                   $notification->description = '';
@@ -965,7 +965,7 @@ class ExpeditionController extends Controller
                 $notification->navigate_to_mobile = 'approval_otv';
                 $notification->navigate_to_web = 'approval_otv';
                 $notification->content_title = 'Informasi Ekspedisi';
-                $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' menunggu approval otv';
+                $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' menunggu approval penyelesaian';
                 $notification->content_img = '';
                 $notification->created_at = $current_date_time;
                 $notification->description = '';
