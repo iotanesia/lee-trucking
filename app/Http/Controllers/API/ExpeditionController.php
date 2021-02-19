@@ -693,7 +693,7 @@ class ExpeditionController extends Controller
               $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv. ' telah di approve oleh '.$userApprove->name;
               $notification->content_img = '';
               $notification->created_at = $current_date_time;
-              $notification->id_user_to = $lastExActivity->approval_by;
+              $notification->id_user_to = $expeditionActivity->created_by;
               $notification->description = '';
               $notification->id_user_from = $userApprove->id;
               $notification->save();
