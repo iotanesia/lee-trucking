@@ -765,14 +765,13 @@ class ExpeditionController extends Controller
                   'updated_at' => $notificationDriver->updated_at,
                   'id' => $notificationDriver->id
                 );
-
                 
                 $requestss = array(
                   'tokenFcm' => $userDriverDetail->id_fcm_android,
                   'notif' => $notifs,
                   'data' => $datass
                 );
-                $factory->sendNotif($requests);
+                $factory->sendNotif($requestss);
               }
             }else if($exStatusActivity->status_approval == 'REJECTED'){
               $notification = new Notification();
