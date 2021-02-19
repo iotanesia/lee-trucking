@@ -693,7 +693,7 @@ class ExpeditionController extends Controller
               $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv. ' telah di approve oleh '.$userApprove->name;
               $notification->content_img = '';
               $notification->created_at = $current_date_time;
-              $notification->id_user_to = $lastExActivity->approval_by;
+              $notification->id_user_to = $expeditionActivity->created_by;
               $notification->description = '';
               $notification->id_user_from = $userApprove->id;
               $notification->save();
@@ -765,14 +765,13 @@ class ExpeditionController extends Controller
                   'updated_at' => $notificationDriver->updated_at,
                   'id' => $notificationDriver->id
                 );
-
                 
                 $requestss = array(
                   'tokenFcm' => $userDriverDetail->id_fcm_android,
                   'notif' => $notifs,
                   'data' => $datass
                 );
-                $factory->sendNotif($requests);
+                $factory->sendNotif($requestss);
               }
             }else if($exStatusActivity->status_approval == 'REJECTED'){
               $notification = new Notification();
