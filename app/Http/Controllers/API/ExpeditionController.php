@@ -281,7 +281,7 @@ class ExpeditionController extends Controller
             $row->service_charge = $approvalCode['service_charge'];
             $row->status_destination = $approvalCode['status_destination'];
             $row->new_address = $approvalCode['new_address'];
-            $row->extra_price = $exStatusActivity['extra_price'];
+            $row->extra_price = isset($exStatusActivity['extra_price']) ? $exStatusActivity['extra_price'] : null;
             $row->data_json = $row->toJson();
 
       }
@@ -1272,7 +1272,7 @@ class ExpeditionController extends Controller
         $row->service_charge = $exStatusActivity['service_charge'];
         $row->status_destination = $exStatusActivity['status_destination'];
         $row->new_address = $exStatusActivity['new_address'];
-        $row->extra_price = $exStatusActivity['extra_price'];
+        $row->extra_price = isset($exStatusActivity['extra_price']) ? $exStatusActivity['extra_price'] : null;
         $row->data_json = $row->toJson();
       }
 
