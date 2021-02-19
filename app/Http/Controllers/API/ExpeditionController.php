@@ -683,7 +683,7 @@ class ExpeditionController extends Controller
 
             $driverUser = Driver::where('id', $expeditionActivity->driver_id)->first();
             $userApprove = Auth::user();
-            if($exStatusActivity->status_approval == 'APPROVED'){
+            if($exStatusActivity->status_approval == 'APPROVED' || $expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
 
               $notificationDriver = new Notification();
               $notificationDriver->content_id = $expeditionActivity->id;
