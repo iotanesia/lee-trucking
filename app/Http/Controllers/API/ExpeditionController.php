@@ -60,7 +60,7 @@ class ExpeditionController extends Controller
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 
                             'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
-                   ->orderBy('id', 'ASC')
+                   ->orderBy('id', 'DESC')
                    ->paginate();
       
       foreach($expeditionActivityList as $row) {
@@ -866,8 +866,8 @@ class ExpeditionController extends Controller
               }
             }else if($exStatusActivity->status_activity == 'DRIVER_SELESAI_EKSPEDISI'){
               if($expeditionActivity->otv_payment_method == 'TUNAI'){
-                $userOwner = User::where('group_id', '10')->where('id_fcm_android','<>','')->get();
-                foreach($userOwner as $key => $row) {
+                $userAdmin = User::where('group_id', '10')->where('id_fcm_android','<>','')->get();
+                foreach($userAdmin as $key => $row) {
                   $notification = new Notification();
                   $notification->content_id = $expeditionActivity->id;
                   $notification->content_type = 'expedisi';
@@ -913,46 +913,46 @@ class ExpeditionController extends Controller
               }else if($expeditionActivity->otv_payment_method == 'NON_TUNAI'){
                 $userOwner = User::where('group_id', '8')->where('id_fcm_android','<>','')->get();
                 foreach($userOwner as $key => $row) {
-                  $notification = new Notification();
-                  $notification->content_id = $expeditionActivity->id;
-                  $notification->content_type = 'expedisi';
-                  $notification->navigate_to_mobile = 'approval_otv';
-                  $notification->navigate_to_web = 'approval_otv';
-                  $notification->content_title = 'Informasi Ekspedisi';
-                  $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' menunggu approval penyelesaian';
-                  $notification->content_img = '';
-                  $notification->created_at = $current_date_time;
-                  $notification->description = '';
-                  $notification->id_user_to = $row->id;
-                  $notification->id_user_from = $userApprove->id;
-                  $notification->save();
+                  $notifications = new Notification();
+                  $notifications->content_id = $expeditionActivity->id;
+                  $notifications->content_type = 'expedisi';
+                  $notifications->navigate_to_mobile = 'approval_otv';
+                  $notifications->navigate_to_web = 'approval_otv';
+                  $notifications->content_title = 'Informasi Ekspedisi';
+                  $notifications->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' menunggu approval penyelesaian';
+                  $notifications->content_img = '';
+                  $notifications->created_at = $current_date_time;
+                  $notifications->description = '';
+                  $notifications->id_user_to = $row->id;
+                  $notifications->id_user_from = $userApprove->id;
+                  $notifications->save();
                   if($row->id_fcm_android != null){
-                    $notif = array(
-                      'title' => $notification->content_title,
-                      'body' => $notification->content_body
+                    $notifs = array(
+                      'title' => $notifications->content_title,
+                      'body' => $notifications->content_body
                     );
-                    $datas = array(
-                      'content_id' => $notification->content_id,
-                      'content_type' => $notification->content_type,
-                      'navigate_to_mobile' => $notification->navigate_to_mobile ,
-                      'navigate_to_web' => $notification->navigate_to_web,
-                      'content_title' => $notification->content_title,
-                      'content_body' => $notification->content_body,
-                      'content_img' => $notification->content_img,
-                      'created_at' => $notification->created_at,
-                      'id_group' => $notification->id_group,
-                      'id_user_to' => $notification->id_user_to,
-                      'description' => $notification->description,
-                      'id_user_from' => $notification->id_user_from,
-                      'updated_at' => $notification->updated_at,
-                      'id' => $notification->id
+                    $datass = array(
+                      'content_id' => $notifications->content_id,
+                      'content_type' => $notifications->content_type,
+                      'navigate_to_mobile' => $notifications->navigate_to_mobile ,
+                      'navigate_to_web' => $notifications->navigate_to_web,
+                      'content_title' => $notifications->content_title,
+                      'content_body' => $notifications->content_body,
+                      'content_img' => $notifications->content_img,
+                      'created_at' => $notifications->created_at,
+                      'id_group' => $notifications->id_group,
+                      'id_user_to' => $notifications->id_user_to,
+                      'description' => $notifications->description,
+                      'id_user_from' => $notifications->id_user_from,
+                      'updated_at' => $notifications->updated_at,
+                      'id' => $notifications->id
                     );
-                    $requests = array(
+                    $requestss = array(
                       'tokenFcm' => $row->id_fcm_android,
-                      'notif' => $notif,
-                      'data' => $datas
+                      'notif' => $notifs,
+                      'data' => $datass
                     );
-                    $factory->sendNotif($requests);
+                    $factory->sendNotif($requestss);
                   }
                 }
               }
