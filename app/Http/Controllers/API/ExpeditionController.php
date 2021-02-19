@@ -612,7 +612,7 @@ class ExpeditionController extends Controller
                 $exStatusActivity->service_charge = $data['service_charge'] ? $data['service_charge'] :  $lastExActivity->service_charge;
                 $exStatusActivity->status_destination = $data['status_destination'] ? $data['status_destination'] :  $lastExActivity->status_destination;
                 $exStatusActivity->new_address = $data['new_address'] ? $data['new_address'] :  $lastExActivity->new_address;
-                $exStatusActivity->extra_price = $data['extra_price'] ? $data['extra_price'] :  $lastExActivity->extra_price;
+                $exStatusActivity->extra_price = isset($data['extra_price']) ? $data['extra_price'] :  $lastExActivity->extra_price;
                 $exStatusActivity->nominal_kurang_bayar = 0;
                 $exStatusActivity->save();
                 $idCoaSheet1 = array(18, 17, 20, 19);
@@ -643,7 +643,7 @@ class ExpeditionController extends Controller
                 $exStatusActivity->service_charge = $data['service_charge'] ? $data['service_charge'] :  $lastExActivity->service_charge;
                 $exStatusActivity->status_destination = $data['status_destination'] ? $data['status_destination'] :  $lastExActivity->status_destination;
                 $exStatusActivity->new_address = $data['new_address'] ? $data['new_address'] :  $lastExActivity->new_address;
-                $exStatusActivity->extra_price = $data['extra_price'] ? $data['extra_price'] :  $lastExActivity->extra_price;
+                $exStatusActivity->extra_price = isset($data['extra_price']) ? $data['extra_price'] :  $lastExActivity->extra_price;
                 $exStatusActivity->nominal_kurang_bayar = $expeditionActivity->harga_otv - $request->nominal;
                 $exStatusActivity->save();
                 $idCoaSheet2 = array(18, 17, 20, 19);
