@@ -119,10 +119,10 @@ class UserController extends Controller
         unset($input['is_active']);
         unset($input['id']);
 
-        foreach($input as $key => $row) {
-          $userDetail->{$key} = $row;
-        }
-
+        // foreach($input as $key => $row) {
+        //   $userDetail->{$key} = $row;
+        // }
+        $userDetail->first_name = $request->name;
         $userDetail->id_user = $user->id;
         $userDetail->created_at = $current_date_time;
         $userDetail->created_by = $userAuth->id;
