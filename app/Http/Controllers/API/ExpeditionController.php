@@ -60,7 +60,7 @@ class ExpeditionController extends Controller
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 
                             'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
-                   ->orderBy('id', 'ASC')
+                   ->orderBy('id', 'DESC')
                    ->paginate();
       
       foreach($expeditionActivityList as $row) {
