@@ -81,7 +81,7 @@
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
           <!-- Nav items -->
           <ul class="navbar-nav">
-            @foreach($menus as $key => $row)
+            @foreach($all['menus'] as $key => $row)
             <li class="nav-item">
               @if(!$row->menu_parent && $row->menu_name != 	"Mobile Expedition")
               <a class="nav-link" @if($row->menu_url) href="{{$row->menu_url}}" @else href="#navbar-dashboards-{{$row->id}}" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-dashboards-{{$row->id}}" @endif>
@@ -89,7 +89,7 @@
                 <span class="nav-link-text">{{$row->menu_name}}</span>
               </a>
               @endif
-              @foreach($menus as $keys => $rows)
+              @foreach($all['menus'] as $keys => $rows)
                 @if($rows->menu_parent == $row->id)
                 <div class="collapse" id="navbar-dashboards-{{$rows->menu_parent}}">
                   <ul class="nav nav-sm flex-column">
@@ -156,51 +156,34 @@
               <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right py-0 overflow-hidden">
                 <!-- Dropdown header -->
                 <div class="px-3 py-3">
-                  <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">13</strong> notifications.</h6>
+                  <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">{{$all['notif']->count()}}</strong> notifications.</h6>
                 </div>
                 <!-- List group -->
                 <div class="list-group list-group-flush">
+                  @foreach($all['notif']->get() as $row)
                   <a href="#!" class="list-group-item list-group-item-action">
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="{{asset('assets/img/theme/team-1.jpg')}}" class="avatar rounded-circle">
+                        <!-- <img alt="Image placeholder" src="{{asset('assets/img/theme/team-4.jpg')}}" class="avatar rounded-circle"> -->
                       </div>
                       <div class="col ml--2">
                         <div class="d-flex justify-content-between align-items-center">
                           <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
+                            <h4 class="mb-0 text-sm">{{$row->content_title}}</h4>
                           </div>
                           <div class="text-right text-muted">
-                            <small>2 hrs ago</small>
+                            <small>{{date('d-m-Y H:i:s', strtotime($row->created_at))}}</small>
                           </div>
                         </div>
-                        <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
+                        <p class="text-sm mb-0">{{substr($row->content_body,0,30)}}...</p>
                       </div>
                     </div>
                   </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="{{asset('assets/img/theme/team-2.jpg')}}" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>3 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                      </div>
-                    </div>
-                  </a>
+                  @endforeach
                 </div>
                 <!-- View all -->
-                <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
+                <!-- <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a> -->
               </div>
             </li>
           </ul>
