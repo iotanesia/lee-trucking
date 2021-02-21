@@ -486,6 +486,8 @@ class ExpeditionController extends Controller
         if(isset($request->penagihan_id)) {
             $expeditionActivity->penagihan_id = $request->penagihan_id;
         }
+
+        DB::connection(Auth::user()->schema)->beginTransaction();
         
         $expeditionActivity->otv_payment_method = $request->otv_payment_method;
         $expeditionActivity->status_activity = $request->status_activity;
@@ -498,9 +500,9 @@ class ExpeditionController extends Controller
           unset($data['otv_payment_method']);
           unset($data['harga_otv']);
           unset($data['harga_ojk']);
+          unset($data['kenek_id']);
+          unset($data['penagihan_id']);
           // unset($data['status_activity']);
-
-          DB::connection(Auth::user()->schema)->beginTransaction();
 
           foreach($data as $key => $row) {
             $exStatusActivity->{$key} = $row;
