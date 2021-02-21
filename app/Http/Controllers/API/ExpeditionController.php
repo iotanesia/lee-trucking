@@ -440,7 +440,7 @@ class ExpeditionController extends Controller
       $data = $request->all();
       $expeditionActivity = ExpeditionActivity::find($data['id']);
       $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('created_at', 'DESC')->first();
-      $allExActivity = ExStatusActivity::where('ex_id', $data['id'])->where('status_activity', 'APPROVAL_OJK_DRIVER')->where('status_activity', 'APPROVED')->get();
+      $allExActivity = ExStatusActivity::where('ex_id', $data['id'])->where('status_activity', 'APPROVAL_OJK_DRIVER')->where('status_approval', 'APPROVED')->get();
       $idUser = Auth::user()->id;
 
       $factory = new FirebaseService();
