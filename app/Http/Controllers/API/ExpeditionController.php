@@ -468,6 +468,10 @@ class ExpeditionController extends Controller
             $expeditionActivity->harga_otv = $request->harga_otv;
             $expeditionActivity->harga_ojk = $request->harga_ojk;
         }
+
+        if(isset($request->kenek_id)) {
+            $expeditionActivity->kenek_id = $request->kenek_id;
+        }
         
         $expeditionActivity->otv_payment_method = $request->otv_payment_method;
         $expeditionActivity->status_activity = $request->status_activity;
