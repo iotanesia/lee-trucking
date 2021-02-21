@@ -64,12 +64,20 @@ class TruckController extends Controller
       $truck = new Truck;
       
       $this->validate($request, [
-        // 'no_Truck' => 'required|string|max:255|unique:Truck',
+        'truck_name' => 'required|string|max:255',
         'truck_plat' => 'required|string|max:255',
+        'truck_corporate_asal' => 'required',
+        'truck_status' => 'required',
+        'driver_id' => 'required',
+        'cabang_id' => 'required',
       ]);
 
       unset($data['_token']);
       unset($data['id']);
+      
+      if(issset($data['truck_date_join'])) {
+          $data['truck_date_join'] = date('Y-m-d', strtotime($data['truck_date_join']));
+      }
 
       foreach($data as $key => $row) {
         $truck->{$key} = $row;
@@ -105,12 +113,21 @@ class TruckController extends Controller
       $truck = Truck::find($data['id']);
       
       $this->validate($request, [
-        // 'no_Truck' => 'required|string|max:255|unique:Truck,no_Truck,'.$data['id'].',id',
+        'truck_name' => 'required|string|max:255',
         'truck_plat' => 'required|string|max:255',
+        'truck_corporate_asal' => 'required',
+        'truck_status' => 'required',
+        'driver_id' => 'required',
+        'truck_date_join' => 'required',
+        'cabang_id' => 'required',
       ]);
       
       unset($data['_token']);
       unset($data['id']);
+
+      if(issset($data['truck_date_join'])) {
+        $data['truck_date_join'] = date('Y-m-d', strtotime($data['truck_date_join']));
+      }
       
       foreach($data as $key => $row) {
         $truck->{$key} = $row;

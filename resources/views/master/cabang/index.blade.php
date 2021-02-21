@@ -53,7 +53,7 @@
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
-                                <th>cabangs plat</th>
+                                <th>Cabang Name</th>
                                 <th>Alamat</th>
                                 <th>Action</th>
                             </tr>
