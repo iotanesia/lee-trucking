@@ -33,25 +33,25 @@ $("document").ready(function() {
         placeholder:"Select Jenis Surat Jalan"
     });
 
-    $("#driver_id").on("change", function() {
-        id = $(this).val();
+    // $("#driver_id").on("change", function() {
+    //     id = $(this).val();
 
-        $.ajax({
-            url: window.Laravel.app_url + "/api/expedition/get-kenek",
-            type: "GET",
-            dataType: "json",
-            data: 'id='+id,
-            headers: {"Authorization": "Bearer " + accessToken},
-            crossDomain: true,
-            beforeSend: function( xhr ) { 
-              $('.preloader').show();
-            },
-            success: function(res, textStatus, xhr) {
-              $('.preloader').hide();
-              $("#kenek_id").val(res.data.id).trigger("change");
-            },
-          });
-    });
+    //     $.ajax({
+    //         url: window.Laravel.app_url + "/api/expedition/get-kenek",
+    //         type: "GET",
+    //         dataType: "json",
+    //         data: 'id='+id,
+    //         headers: {"Authorization": "Bearer " + accessToken},
+    //         crossDomain: true,
+    //         beforeSend: function( xhr ) { 
+    //           $('.preloader').show();
+    //         },
+    //         success: function(res, textStatus, xhr) {
+    //           $('.preloader').hide();
+    //           $("#kenek_id").val(res.data.id).trigger("change");
+    //         },
+    //       });
+    // });
 
     var accessToken =  window.Laravel.api_token;
   
