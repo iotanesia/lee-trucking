@@ -188,9 +188,15 @@ class ExpeditionController extends Controller
         $row->data_json = $row->toJson();
       }
 
+      if($platform == 'mobile') {
+         $datasend['current_page'] = $expeditionActivityList->currentPage();
+         $datasend['data'] = $exdatas;
 
-    //   dd($exdatas);
-      if(!isset($exdatas)){
+      } else {
+         $datasend = $expeditionActivityList;
+      }
+
+      if(!isset($datasend)){
         return response()->json([
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
@@ -202,7 +208,7 @@ class ExpeditionController extends Controller
           'code' => 200,
           'code_message' => 'Success',
           'code_type' => 'Success',
-          'result'=> $exdatas
+          'result'=> $datasend
         ], 200);
       }
     } else {
