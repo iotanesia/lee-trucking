@@ -454,7 +454,7 @@ class ExpeditionController extends Controller
       ]);
 
       if($request->status_activity == 'APPROVAL_OJK_DRIVER' && $expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN' && $expeditionActivity->is_approve == 1) {
-          $current_date_time = date('Y-m-d H:i:s', strtotime($lastExActivity->created_at.' +1 hour'))
+          $current_date_time = date('Y-m-d H:i:s', strtotime($lastExActivity->created_at.' +1 hour'));
       }
 
       if($request->status_activity == 'DRIVER_MENUJU_TUJUAN' && !count($allExActivity)) {        
