@@ -438,6 +438,7 @@ class ExpeditionController extends Controller
       $data = $request->all();
       $expeditionActivity = ExpeditionActivity::find($data['id']);
       $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('id', 'DESC')->first();
+      $allExActivity = ExStatusActivity::where('ex_id', $data['id'])->where('status_activity', 'APPROVAL_OJK_DRIVER')->where('status_activity', 'APPROVED')->get();
       $idUser = Auth::user()->id;
 
       $factory = new FirebaseService();
@@ -448,8 +449,16 @@ class ExpeditionController extends Controller
       $this->validate($request, [
         // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity,no_ExpeditionActivity,'.$data['id'].',id',
         // 'ExpeditionActivity_name' => 'required|string|max:255',
-
       ]);
+
+      if($request->status_activity == 'DRIVER_SELESAI_EKSPEDISI' && !count($allExActivity)) {
+          DB::connection(Auth::user()->schema)->rollback();
+          return response()->json([
+              'code' => 405,
+              'code_message' => 'Expedisi belum di Approve, Harap Hubungi Admin',
+              'code_type' => 'BadRequest',
+          ], 405);
+      }
       
       unset($data['_token']);
       unset($data['id']);
@@ -472,6 +481,10 @@ class ExpeditionController extends Controller
 
         if(isset($request->kenek_id)) {
             $expeditionActivity->kenek_id = $request->kenek_id;
+        }
+
+        if(isset($request->penagihan_id)) {
+            $expeditionActivity->penagihan_id = $request->penagihan_id;
         }
         
         $expeditionActivity->otv_payment_method = $request->otv_payment_method;
