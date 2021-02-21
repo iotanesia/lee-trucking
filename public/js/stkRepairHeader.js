@@ -98,7 +98,6 @@ $("document").ready(function(){
           });
 
           tblBlock += '<tr id="tr-'+i+'">'+
-                           '<td>'+(i + 1)+'</td>'+
                            '<td>'+
                                '<select name="sparepart_detail[sparepart_id][]" class="form-control sparepart-select-opt" id="sparepart'+i+'">'+ selectBlock +'</select>'+
                            '</td>'+
