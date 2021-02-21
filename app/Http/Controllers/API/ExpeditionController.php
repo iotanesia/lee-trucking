@@ -412,6 +412,7 @@ class ExpeditionController extends Controller
           'code_message' => 'Berhasil menyimpan data',
           'code_type' => 'Success',
         ], 200);
+
       } else {
         DB::connection(Auth::user()->schema)->rollback();
         return response()->json([
@@ -1242,7 +1243,7 @@ class ExpeditionController extends Controller
                    ->where('expedition_activity.is_deleted', 'false')
                    ->where(function($query) use($groupDriver, $user) {
                       if($user->group_id == $groupDriver->id) {
-                         $query->whereIn('expedition_activity.status_activity', ['APPROVAL_OJK_DRIVER', 
+                         $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 
                                          'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
                       }else{
                           $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 
