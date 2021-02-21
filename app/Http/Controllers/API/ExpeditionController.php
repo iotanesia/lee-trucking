@@ -322,7 +322,8 @@ class ExpeditionController extends Controller
       $factory = new FirebaseService();
       $masterOjk = OJK::where('id', $data['ojk_id'])->select('harga_otv', 'harga_ojk')->first();
       $this->validate($request, [
-        // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
+          'nomor_inv' => 'required|string|max:255|unique:'.Auth::user()->schema.'.expedition_activity',
+          // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
         // 'ExpeditionActivity_name' => 'required|string|max:255',
       ]);
 
