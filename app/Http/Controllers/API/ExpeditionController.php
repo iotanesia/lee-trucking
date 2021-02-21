@@ -436,7 +436,7 @@ class ExpeditionController extends Controller
 
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
-
+      $isUpdate = false;
       $data = $request->all();
       $expeditionActivity = ExpeditionActivity::find($data['id']);
       $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('created_at', 'DESC')->first();
@@ -455,6 +455,7 @@ class ExpeditionController extends Controller
 
       if($request->status_activity == 'APPROVAL_OJK_DRIVER' && $expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN' && $expeditionActivity->is_approve == 1) {
           $current_date_time = date('Y-m-d H:i:s', strtotime($lastExActivity->created_at.' +1 hour'));
+          $isUpdate = true;
       }
 
       if($request->status_activity == 'DRIVER_MENUJU_TUJUAN' && !count($allExActivity)) {        
@@ -1078,10 +1079,13 @@ class ExpeditionController extends Controller
             }
 
 
-            if($request->status_activity == 'APPROVAL_OJK_DRIVER' && $expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN' && $expeditionActivity->is_approve == 1) {        
+            if($isUpdate) {        
                 $expeditionActivity->is_approve = 1;
-                $request->status_activity = 'DRIVER_SAMPAI_TUJUAN';
+                $expeditionActivity->status_activity = 'DRIVER_SAMPAI_TUJUAN';
                 $expeditionActivity->save();
+
+                $exStatusActivity->created_at = $current_date_time;
+                $exStatusActivity->save();
             }
 
             DB::connection(Auth::user()->schema)->commit();
