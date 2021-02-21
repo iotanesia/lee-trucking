@@ -61,6 +61,7 @@ class CabangController extends Controller
       
       $this->validate($request, [
         // 'no_cabang' => 'required|string|max:255|unique:cabang',
+        'nomor_inv' => 'required|string|max:255|unique:'.Auth::user()->schema.'.expedition_activity',
         'cabang_name' => 'required|string|max:255',
       ]);
 
