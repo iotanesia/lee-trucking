@@ -105,6 +105,7 @@ class ExpeditionController extends Controller
   public function getListApprovalOjk(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
+      $exdatas = [];
       $whereField = 'expedition_activity.kabupaten, expedition_activity.kecamatan, expedition_activity.cabang_name, 
       all_global_param.param_name, expedition_activity.nomor_inv';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
