@@ -65,7 +65,10 @@ class DriverController extends Controller
       
       $this->validate($request, [
         // 'no_Driver' => 'required|string|max:255|unique:Driver',
+        'user_id' => 'required|string|max:255|unique:'.Auth::user()->schema.'.ex_master_driver',
         'driver_name' => 'required|string|max:255',
+        'kenek_id' => 'required',
+        'driver_status' => 'required',
       ]);
 
       unset($data['_token']);
@@ -106,7 +109,10 @@ class DriverController extends Controller
       
       $this->validate($request, [
         // 'no_Driver' => 'required|string|max:255|unique:Driver,no_Driver,'.$data['id'].',id',
+        'user_id' => 'required|string|max:255|unique:'.Auth::user()->schema.'.ex_master_driver,user_id,'.$data['id'].',id',
         'driver_name' => 'required|string|max:255',
+        'kenek_id' => 'required',
+        'driver_status' => 'required',
       ]);
       
       unset($data['_token']);

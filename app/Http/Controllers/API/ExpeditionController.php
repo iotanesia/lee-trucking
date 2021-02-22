@@ -68,7 +68,7 @@ class ExpeditionController extends Controller
         $exStatusActivity = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
                             ->leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                             ->where('ex_status_activity.ex_id', $row->id)
-                            ->orderBy('ex_status_activity.id', 'DESC')
+                            ->orderBy('ex_status_activity.created_at', 'DESC')
                             ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.*')->first();
 
         $row->long_lat = $exStatusActivity['long_lat'];
@@ -122,24 +122,25 @@ class ExpeditionController extends Controller
                                 ->where('expedition_activity.is_deleted','false')
                                 ->where(function($query) use($whereField, $whereValue) {
                                     if($whereValue) {
-                                    foreach(explode(', ', $whereField) as $idx => $field) {
-                                        $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
-                                    }
+                                        foreach(explode(', ', $whereField) as $idx => $field) {
+                                            $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
+                                        }
                                     }
                                 })
                                 ->where(function($query) use($platform) {
                                     if($platform == 'mobile') {
-                                        $query->Where('expedition_activity.status_activity','SUBMIT');
+                                        $query->Where('expedition_activity.status_activity', 'SUBMIT');
+                                        $query->orWhere('expedition_activity.is_approve', 1);
                 
                                     }else{
                                         $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
                                     }
-                                  })
-                                  ->where(function($query) use($whereNotifId) {
+                                })
+                                ->where(function($query) use($whereNotifId) {
                                     if($whereNotifId) {
                                         $query->where('expedition_activity.id', $whereNotifId);
                                     }
-                                  })
+                                })
                                 ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                                         'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                                             'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
@@ -154,7 +155,7 @@ class ExpeditionController extends Controller
         $approvalCode = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
                         ->leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                         ->where('ex_status_activity.ex_id', $row->id)
-                        ->orderBy('ex_status_activity.id', 'DESC')
+                        ->orderBy('ex_status_activity.created_at', 'DESC')
                         ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.*')->first();
 
         $allglobalParam = GlobalParam::where('param_code', $row->otv_payment_method)->first();
@@ -256,7 +257,7 @@ class ExpeditionController extends Controller
             $approvalCode = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
                             ->leftJoin('all_global_param', 'ex_status_activity.status_activity', 'all_global_param.param_code')
                             ->where('ex_status_activity.ex_id', $row->id)
-                            ->orderBy('ex_status_activity.id', 'DESC')
+                            ->orderBy('ex_status_activity.created_at', 'DESC')
                             ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.*')->first();
 
             $allglobalParam = GlobalParam::where('param_code', $row->otv_payment_method)->first();
@@ -322,7 +323,8 @@ class ExpeditionController extends Controller
       $factory = new FirebaseService();
       $masterOjk = OJK::where('id', $data['ojk_id'])->select('harga_otv', 'harga_ojk')->first();
       $this->validate($request, [
-        // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
+          'nomor_inv' => 'required|string|max:255|unique:'.Auth::user()->schema.'.expedition_activity',
+          // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
         // 'ExpeditionActivity_name' => 'required|string|max:255',
       ]);
 
@@ -412,6 +414,7 @@ class ExpeditionController extends Controller
           'code_message' => 'Berhasil menyimpan data',
           'code_type' => 'Success',
         ], 200);
+
       } else {
         DB::connection(Auth::user()->schema)->rollback();
         return response()->json([
@@ -433,10 +436,11 @@ class ExpeditionController extends Controller
 
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
-
+      $isUpdate = false;
       $data = $request->all();
       $expeditionActivity = ExpeditionActivity::find($data['id']);
-      $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('id', 'DESC')->first();
+      $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('created_at', 'DESC')->first();
+      $allExActivity = ExStatusActivity::where('ex_id', $data['id'])->where('status_activity', 'APPROVAL_OJK_DRIVER')->where('status_approval', 'APPROVED')->get();
       $idUser = Auth::user()->id;
 
       $factory = new FirebaseService();
@@ -447,8 +451,25 @@ class ExpeditionController extends Controller
       $this->validate($request, [
         // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity,no_ExpeditionActivity,'.$data['id'].',id',
         // 'ExpeditionActivity_name' => 'required|string|max:255',
-
       ]);
+
+      if($request->status_activity == 'APPROVAL_OJK_DRIVER' && $expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN' && $expeditionActivity->is_approve == 1) {
+          $current_date_time = date('Y-m-d H:i:s', strtotime($lastExActivity->created_at.' -1 hour'));
+          $isUpdate = true;
+      }
+
+      if($request->status_activity == 'DRIVER_MENUJU_TUJUAN' && !count($allExActivity)) {        
+          $expeditionActivity->is_approve = 1;
+      }
+
+      if($request->status_activity == 'DRIVER_SELESAI_EKSPEDISI' && !count($allExActivity)) {
+          DB::connection(Auth::user()->schema)->rollback();
+          return response()->json([
+              'code' => 405,
+              'code_message' => 'Expedisi belum di Approve, Harap Hubungi Admin',
+              'code_type' => 'BadRequest',
+          ], 405);
+      }
       
       unset($data['_token']);
       unset($data['id']);
@@ -468,6 +489,16 @@ class ExpeditionController extends Controller
             $expeditionActivity->harga_otv = $request->harga_otv;
             $expeditionActivity->harga_ojk = $request->harga_ojk;
         }
+
+        if(isset($request->kenek_id)) {
+            $expeditionActivity->kenek_id = $request->kenek_id;
+        }
+
+        if(isset($request->penagihan_id)) {
+            $expeditionActivity->penagihan_id = $request->penagihan_id;
+        }
+
+        DB::connection(Auth::user()->schema)->beginTransaction();
         
         $expeditionActivity->otv_payment_method = $request->otv_payment_method;
         $expeditionActivity->status_activity = $request->status_activity;
@@ -480,9 +511,9 @@ class ExpeditionController extends Controller
           unset($data['otv_payment_method']);
           unset($data['harga_otv']);
           unset($data['harga_ojk']);
+          unset($data['kenek_id']);
+          unset($data['penagihan_id']);
           // unset($data['status_activity']);
-
-          DB::connection(Auth::user()->schema)->beginTransaction();
 
           foreach($data as $key => $row) {
             $exStatusActivity->{$key} = $row;
@@ -1046,6 +1077,17 @@ class ExpeditionController extends Controller
                 $factory->sendNotif($requests);
               }
             }
+
+
+            if($isUpdate) {        
+                $expeditionActivity->is_approve = 0;
+                $expeditionActivity->status_activity = 'DRIVER_SAMPAI_TUJUAN';
+                $expeditionActivity->save();
+
+                $exStatusActivity->created_at = $current_date_time;
+                $exStatusActivity->save();
+            }
+
             DB::connection(Auth::user()->schema)->commit();
             return response()->json([
               'code' => 200,
@@ -1238,7 +1280,7 @@ class ExpeditionController extends Controller
                    ->where('expedition_activity.is_deleted', 'false')
                    ->where(function($query) use($groupDriver, $user) {
                       if($user->group_id == $groupDriver->id) {
-                         $query->whereIn('expedition_activity.status_activity', ['APPROVAL_OJK_DRIVER', 
+                         $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 
                                          'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
                       }else{
                           $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 
@@ -1400,7 +1442,7 @@ class ExpeditionController extends Controller
         $expeditionActivityList->jenis_surat_jalan = substr($expeditionActivityList->nomor_surat_jalan, 0, 2);   
         $exStatusActivity = ExStatusActivity::where('ex_status_activity.ex_id',$expeditionActivityList->id)
         ->leftJoin('all_global_param', 'ex_status_activity.status_activity', 'all_global_param.param_code')
-        ->orderBy('ex_status_activity.id', 'DESC')
+        ->orderBy('ex_status_activity.created_at', 'DESC')
         ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.long_lat')->first();
         $expeditionActivityList->long_lat = $exStatusActivity['long_lat'];
         $expeditionActivityList->approval_code = $exStatusActivity['approval_code'];

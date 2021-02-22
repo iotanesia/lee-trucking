@@ -145,7 +145,6 @@
                         <table class="table table-bordered table-striped" id="tblBlock">
                             <thead>
                                 <tr>
-                                    <th>No</th>
                                     <th>Sparepart</th>
                                     <th>Jumlah</th>
                                     <th>Action</th>
@@ -172,7 +171,6 @@
         var j = i;
         var tblBlock = '';
             tblBlock = `<tr id="tr-`+i+`">
-                            <td>`+(i++)+`</td>
                             <td>
                                 <select name="sparepart_detail[sparepart_id][]" class="form-control sparepart" id="sparepart">
                                     <option value=""></option>

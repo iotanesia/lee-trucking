@@ -19,13 +19,20 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             if(Auth::check()) {
                 $schema = Auth::user()->schema.'.';
-                $menus = DB::table($schema.'usr_group_menu')
+                $all['menus'] = DB::table($schema.'usr_group_menu')
                          ->join($schema.'usr_menu', 'usr_group_menu.menu_id', 'usr_menu.id')
                          ->orderBy('sort', 'ASC')
                          ->where('group_id', Auth::user()->group_id)->get();
 
-                View::share('menus', $menus);
+                $all['notif'] = DB::table($schema.'notification')->where(function($query){
+                    $query->where('id_user_to', Auth::user()->id)
+                          ->orWhere('id_group', Auth::user()->group_id);
+                })->where('is_read', 0);
+
+                View::share('all', $all);
             }
+
+
           });
       
     }

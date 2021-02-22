@@ -55,8 +55,8 @@
               </div>
             </div>
             <div class="card-body">
-                <div class="table-responsive"></div>
-                    <table class="table align-items-center table-striped" id="table-jurnal" son-success-load="successLoadexpedition">
+                <div class="">
+                    <table class="table table-responsive align-items-center table-striped" id="table-jurnal" son-success-load="successLoadexpedition" width="100%">
                         <thead class="bg-gradient-info text-white">
                         <tr>
                             <th>Tanggal</th>
