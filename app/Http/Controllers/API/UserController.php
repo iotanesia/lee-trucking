@@ -308,7 +308,6 @@ class UserController extends Controller
   public function detailProfile(){
     $user = Auth::user();
     $userDetail = UserDetail::where('id_user',$user->id)->first();
-    // dd($user->id);
     if(isset($userDetail)){
       $agama = GlobalParam::where('param_code', $userDetail->agama)->select('description')->first();
       $kelamin = GlobalParam::where('param_code', $userDetail->jenis_kelamin)->select('description')->first();
@@ -324,7 +323,7 @@ class UserController extends Controller
     }else{
         return response()->json([
           'code' => 404,
-          'code_message' => 'Detail tidak ditemukan',
+          'code_message' => 'Harap menghubungi admin untuk perubahan datayo',
           'code_type' => 'BadRequest',
           'data'=> null
       ], 404);
