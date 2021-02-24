@@ -231,7 +231,7 @@ class ExpeditionController extends Controller
                    })
                    ->where(function($query) use($groupOwner, $groupId) {
                         if($groupId == $groupOwner->id) {
-                            $query->orWhere('status_activity', 'WAITING_OWNER');
+                            $query->where('status_activity', 'WAITING_OWNER');
                         }
                    })
                    ->where(function($query) use($groupAdmin, $groupId) {
