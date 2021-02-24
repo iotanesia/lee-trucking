@@ -236,7 +236,7 @@ class ExpeditionController extends Controller
                    })
                    ->where(function($query) use($groupAdmin, $groupId) {
                         if($groupId == $groupAdmin->id) {
-                            $query->where('status_activity', 'DRIVER_SELESAI_EKSPEDISI')
+                            $query->where('status_activity', 'DRIVER_SELESAI_EKSPEDISI');
                         }
                    })  
                    ->where(function($query) use($whereNotifId) {
