@@ -397,12 +397,15 @@ class ExpeditionController extends Controller
               'updated_at' => $notification->updated_at,
               'id' => $notification->id
             );
-            $requests = array(
-              'tokenFcm' => $row->id_fcm_android,
-              'notif' => $notif,
-              'data' => $datas
-            );
-            $factory->sendNotif($requests);
+
+            if($row->id_fcm_android) {
+                $requests = array(
+                  'tokenFcm' => $row->id_fcm_android,
+                  'notif' => $notif,
+                  'data' => $datas
+                );
+                $factory->sendNotif($requests);
+            }
           }
         }
 
@@ -750,13 +753,15 @@ class ExpeditionController extends Controller
                   'updated_at' => $notificationDriver->updated_at,
                   'id' => $notificationDriver->id
                 );
-                
-                $requestss = array(
-                  'tokenFcm' => $userDriverDetail->id_fcm_android,
-                  'notif' => $notifs,
-                  'data' => $datass
-                );
-                $factory->sendNotif($requestss);
+
+                if($userDriverDetail->id_fcm_android) {  
+                    $requestss = array(
+                    'tokenFcm' => $userDriverDetail->id_fcm_android,
+                    'notif' => $notifs,
+                    'data' => $datass
+                    );
+                    $factory->sendNotif($requestss);
+                }
               }
 
               $notification = new Notification();
@@ -796,12 +801,15 @@ class ExpeditionController extends Controller
                   'updated_at' => $notification->updated_at,
                   'id' => $notification->id
                 );
-                $requests = array(
-                  'tokenFcm' => $userApprovalDetail->id_fcm_android,
-                  'notif' => $notif,
-                  'data' => $datas
-                );
-                $factory->sendNotif($requests);
+
+                if($userApprovalDetail->id_fcm_android) {
+                    $requests = array(
+                      'tokenFcm' => $userApprovalDetail->id_fcm_android,
+                      'notif' => $notif,
+                      'data' => $datas
+                    );
+                    $factory->sendNotif($requests);
+                }
               }
             }else if($exStatusActivity->status_approval == 'REJECTED'){
               $notification = new Notification();
@@ -840,13 +848,17 @@ class ExpeditionController extends Controller
                   'id_user_from' => $notification->id_user_from,
                   'updated_at' => $notification->updated_at,
                   'id' => $notification->id
-                );;
-                $requests = array(
-                  'tokenFcm' => $userRejectedDetail->id_fcm_android,
-                  'notif' => $notif,
-                  'data' => $datas
                 );
-                $factory->sendNotif($requests);
+
+                if($userRejectedDetail->id_fcm_android) {
+                    $requests = array(
+                    'tokenFcm' => $userRejectedDetail->id_fcm_android,
+                    'notif' => $notif,
+                    'data' => $datas
+                    );
+
+                    $factory->sendNotif($requests);
+                }
               }
             }else if($exStatusActivity->status_approval == 'REVISION'){
               $notification = new Notification();
@@ -884,13 +896,16 @@ class ExpeditionController extends Controller
                   'id_user_from' => $notification->id_user_from,
                   'updated_at' => $notification->updated_at,
                   'id' => $notification->id
-                );;
-                $requests = array(
-                  'tokenFcm' => $userReivisionDetail->id_fcm_android,
-                  'notif' => $notif,
-                  'data' => $datas
                 );
-                $factory->sendNotif($requests);
+
+                if($userReivisionDetail->id_fcm_android) {
+                    $requests = array(
+                      'tokenFcm' => $userReivisionDetail->id_fcm_android,
+                      'notif' => $notif,
+                      'data' => $datas
+                    );
+                    $factory->sendNotif($requests);
+                }
               }
             }else if($exStatusActivity->status_activity == 'DRIVER_SELESAI_EKSPEDISI'){
               if($expeditionActivity->otv_payment_method == 'TUNAI'){
@@ -930,12 +945,15 @@ class ExpeditionController extends Controller
                       'updated_at' => $notification->updated_at,
                       'id' => $notification->id
                     );
-                    $requests = array(
-                      'tokenFcm' => $row->id_fcm_android,
-                      'notif' => $notif,
-                      'data' => $datas
-                    );
-                    $factory->sendNotif($requests);
+
+                    if($row->id_fcm_android) {
+                        $requests = array(
+                          'tokenFcm' => $row->id_fcm_android,
+                          'notif' => $notif,
+                          'data' => $datas
+                        );
+                        $factory->sendNotif($requests);
+                    }
                   }
                 }
               }else if($expeditionActivity->otv_payment_method == 'NON_TUNAI'){
@@ -1021,12 +1039,15 @@ class ExpeditionController extends Controller
                     'updated_at' => $notification->updated_at,
                     'id' => $notification->id
                   );
-                  $requests = array(
-                    'tokenFcm' => $row->id_fcm_android,
-                    'notif' => $notif,
-                    'data' => $datas
-                  );
-                  $factory->sendNotif($requests);
+
+                  if($row->id_fcm_android) {
+                      $requests = array(
+                        'tokenFcm' => $row->id_fcm_android,
+                        'notif' => $notif,
+                        'data' => $datas
+                      );
+                      $factory->sendNotif($requests);
+                  }
                 }
               }
             }else if($exStatusActivity->status_activity == 'CLOSED_EXPEDITION'){
@@ -1065,13 +1086,16 @@ class ExpeditionController extends Controller
                   'id_user_from' => $notification->id_user_from,
                   'updated_at' => $notification->updated_at,
                   'id' => $notification->id
-                );;
-                $requests = array(
-                  'tokenFcm' => $userCloseDetail->id_fcm_android,
-                  'notif' => $notif,
-                  'data' => $datas
                 );
-                $factory->sendNotif($requests);
+
+                if($userCloseDetail->id_fcm_android) {
+                    $requests = array(
+                      'tokenFcm' => $userCloseDetail->id_fcm_android,
+                      'notif' => $notif,
+                      'data' => $datas
+                    );
+                    $factory->sendNotif($requests);
+                }
               }
             }
 
