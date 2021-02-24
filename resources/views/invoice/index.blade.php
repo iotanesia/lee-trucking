@@ -124,6 +124,146 @@
                       </tfoot>
                     </table>
                 </div>
+                <div class="card-body">
+                  <div class="table-responsive"></div>
+                      <table class="table align-items-center table-striped" id="table-invoice-ba" son-success-load="successLoadexpedition">
+                          <thead class="bg-gradient-info text-white">
+                          <tr>
+                              <th>No</th>
+                              <th>Tanggal</th>
+                              <th>Surat Jalan</th>
+                              <th>Tujuan</th>
+                              <th>Plat</th>
+                              <th>Qty Palet</th>
+                              <th>Rit</th>
+                              <th>Nama Toko</th>
+                              <th>Harga/Rit</th>
+                              <th>Total</th>
+                          </tr>
+                          </thead>
+                          <tbody></tbody>
+                          <tfoot>
+                            <tr style="font-weight:bold">
+                                <td style="text-align:left">
+                                <td></td>
+                                <td></td>
+                                <td style="text-align:center"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr style="font-weight:bold">
+                              <td style="text-align:left">
+                                  <td></td>
+                                  <td></td>
+                                  <td style="text-align:center"></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                          </tr>
+                          <tr style="font-weight:bold">
+                              <td style="text-align:left">
+                                  <td></td>
+                                  <td></td>
+                                  <td style="text-align:center"></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td style="color:#f02e2e;"></td>
+                        </tr>
+                        <tr style="font-weight:bold">
+                          <td style="text-align:left">
+                              <td></td>
+                              <td></td>
+                              <td style="text-align:center"></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td style="background-color:#f2de68;"></td>
+                      </tr>
+                        </tfoot>
+                      </table>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive"></div>
+                        <table class="table align-items-center table-striped" id="table-invoice-bj" son-success-load="successLoadexpedition">
+                            <thead class="bg-gradient-info text-white">
+                            <tr>
+                                <th>No</th>
+                                <th>Tanggal</th>
+                                <th>Surat Jalan</th>
+                                <th>Tujuan</th>
+                                <th>Plat</th>
+                                <th>Qty Palet</th>
+                                <th>Rit</th>
+                                <th>Nama Toko</th>
+                                <th>Harga/Rit</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                              <tr style="font-weight:bold">
+                                  <td style="text-align:left">
+                                  <td></td>
+                                  <td></td>
+                                  <td style="text-align:center"></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                              </tr>
+                              <tr style="font-weight:bold">
+                                <td style="text-align:left">
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:center"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                            </tr>
+                            <tr style="font-weight:bold">
+                                <td style="text-align:left">
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:center"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="color:#f02e2e;"></td>
+                          </tr>
+                          <tr style="font-weight:bold">
+                            <td style="text-align:left">
+                                <td></td>
+                                <td></td>
+                                <td style="text-align:center"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="background-color:#f2de68;"></td>
+                        </tr>
+                          </tfoot>
+                        </table>
+                    </div>
             </div>
           </div>
         </div>

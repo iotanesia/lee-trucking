@@ -72,16 +72,151 @@
           $('tr:eq(3) td:eq(9)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
     }
   });
-    // $('.filter-satuan').change(function () {
-    //     table.column( $(this).data('column'))
-    //     .search( $(this).val() )
-    //     .draw();
-    // });
-    table.on( 'order.dt search.dt', function () {
+
+  var tableba = $('#table-invoice-ba').DataTable({
+    processing: true,
+    serverSide: true,
+    dom: 'Blfrtip',
+    buttons : ['csv','pdf', 'excel','print'
+    ],
+    ajax: {
+      url: window.Laravel.app_url + "/api/report/get-invoice-ba-list",
+      type: "GET",
+    //   data: "where_filter"+"="+filter,
+      headers: {"Authorization": "Bearer " + accessToken},
+      crossDomain: true,
+    },
+    columns: [
+        {"data":"data_json"},
+        {"data":"tgl_po"},
+        {"data":"nomor_surat_jalan"},
+        {"data":"kabupaten"},
+        {"data":"truck_plat"},
+        {"data":"jumlah_palet"},
+        {"data":"rit"},
+        {"data":"toko"},
+        {"data":"harga_per_rit"},
+        {"data":"total"},
+    ],
+    "footerCallback": function (row, data, start, end, display) {
+      var api = this.api(), data;
+      
+      // Remove the formatting to get integer data for summation
+      var intVal = function (i) {
+          return typeof i === 'string' ?
+              i.replace(/[\Rp.,]/g, '')*1 :
+              typeof i === 'number' ?
+                  i : 0;
+      };
+      // Total over all pages
+      totalInvoice = api
+          .column(8)
+          .data()
+          .reduce(function(a, b) {
+            if((a != NaN || a != 0) && (b != NaN || b != 0)){
+              return intVal(a) + intVal(b);
+            }
+          }, 0);
+ 
+
+          ppn10 = (totalInvoice*10)/100;
+          pph23 = (totalInvoice*2)/100;
+          totalKeseluruhan = totalInvoice + ppn10 + pph23;
+
+          $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(0) td:eq(9)', api.table().footer()).html(convertToRupiah(totalInvoice));
+
+          $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
+          $('tr:eq(1) td:eq(9)', api.table().footer()).html(convertToRupiah(ppn10));
+
+          $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(2) td:eq(9)', api.table().footer()).html(convertToRupiah(pph23));
+
+          $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(3) td:eq(9)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+    }
+  });
+ 
+  var tablebj = $('#table-invoice-bj').DataTable({
+    processing: true,
+    serverSide: true,
+    dom: 'Blfrtip',
+    buttons : ['csv','pdf', 'excel','print'
+    ],
+    ajax: {
+      url: window.Laravel.app_url + "/api/report/get-invoice-bj-list",
+      type: "GET",
+    //   data: "where_filter"+"="+filter,
+      headers: {"Authorization": "Bearer " + accessToken},
+      crossDomain: true,
+    },
+    columns: [
+        {"data":"data_json"},
+        {"data":"tgl_po"},
+        {"data":"nomor_surat_jalan"},
+        {"data":"kabupaten"},
+        {"data":"truck_plat"},
+        {"data":"jumlah_palet"},
+        {"data":"rit"},
+        {"data":"toko"},
+        {"data":"harga_per_rit"},
+        {"data":"total"},
+    ],
+    "footerCallback": function (row, data, start, end, display) {
+      var api = this.api(), data;
+      
+      // Remove the formatting to get integer data for summation
+      var intVal = function (i) {
+          return typeof i === 'string' ?
+              i.replace(/[\Rp.,]/g, '')*1 :
+              typeof i === 'number' ?
+                  i : 0;
+      };
+      // Total over all pages
+      totalInvoice = api
+          .column(8)
+          .data()
+          .reduce(function(a, b) {
+            if((a != NaN || a != 0) && (b != NaN || b != 0)){
+              return intVal(a) + intVal(b);
+            }
+          }, 0);
+ 
+
+          ppn10 = (totalInvoice*10)/100;
+          pph23 = (totalInvoice*2)/100;
+          totalKeseluruhan = totalInvoice + ppn10 + pph23;
+
+          $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(0) td:eq(9)', api.table().footer()).html(convertToRupiah(totalInvoice));
+
+          $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
+          $('tr:eq(1) td:eq(9)', api.table().footer()).html(convertToRupiah(ppn10));
+
+          $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(2) td:eq(9)', api.table().footer()).html(convertToRupiah(pph23));
+
+          $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(3) td:eq(9)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+    }
+  });
+    table.on('order.dt search.dt', function () {
         table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
             cell.innerHTML = i+1;
         } );
     } ).draw();
+
+    tableba.on('order.dt search.dt', function () {
+      table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+          cell.innerHTML = i+1;
+      } );
+  } ).draw();
+
+  tablebj.on('order.dt search.dt', function () {
+    table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+        cell.innerHTML = i+1;
+    } );
+} ).draw();
   function convertToRupiah(angka)
   {
     var rupiah = '';		

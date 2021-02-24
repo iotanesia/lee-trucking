@@ -232,6 +232,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/', 'API\ReportManagementController@index');
     Route::get('get-jurnal-list', ['as' => '-get-jurnal-list', 'uses' => 'API\ReportManagementController@getListJurnalReport']);
     Route::get('get-invoice-bo-list', ['as' => '-get-invoice-bo-list', 'uses' => 'API\ReportManagementController@getListInvoiceBOReport']);
+    Route::get('get-invoice-ba-list', ['as' => '-get-invoice-ba-list', 'uses' => 'API\ReportManagementController@getListInvoiceBAReport']);
+    Route::get('get-invoice-bj-list', ['as' => '-get-invoice-bj-list', 'uses' => 'API\ReportManagementController@getListInvoiceBJReport']);
   });
   
   Route::group(['as' => 'api-dashboard', 'prefix' => 'dashboard'], function() {
