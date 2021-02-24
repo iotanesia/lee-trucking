@@ -231,15 +231,12 @@ class ExpeditionController extends Controller
                    })
                    ->where(function($query) use($groupOwner, $groupId) {
                         if($groupId == $groupOwner->id) {
-                            $query->where('status_activity', 'DRIVER_SELESAI_EKSPEDISI')
-                                  ->where('otv_payment_method', 'NON_TUNAI')
-                                  ->orWhere('status_activity', 'WAITING_OWNER');
+                            $query->where('status_activity', 'WAITING_OWNER');
                         }
                    })
                    ->where(function($query) use($groupAdmin, $groupId) {
                         if($groupId == $groupAdmin->id) {
-                            $query->where('status_activity', 'DRIVER_SELESAI_EKSPEDISI')
-                                  ->where('otv_payment_method', 'TUNAI');
+                            $query->where('status_activity', 'DRIVER_SELESAI_EKSPEDISI');
                         }
                    })  
                    ->where(function($query) use($whereNotifId) {

@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
                 $all['notif'] = DB::table($schema.'notification')->where(function($query){
                     $query->where('id_user_to', Auth::user()->id)
                           ->orWhere('id_group', Auth::user()->group_id);
-                })->where('is_read', 0);
+                })->where('is_read', 0)->limit(6);
 
                 View::share('all', $all);
             }
