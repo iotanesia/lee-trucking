@@ -40,7 +40,7 @@
             "next": '<i class="fas fa-angle-right"></i>'
         }
     },
-    initComplete: function(){
+    initComplete: function() {
         $('.btn-group > .btn:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-group:not(:last-child) > .btn').css('margin-right','5px');
         $('.dataTables_length, .dataTables_info, .dt-buttons').css('padding-left','0px');
         $('.dataTables_filter ').css('padding-right','0px');
