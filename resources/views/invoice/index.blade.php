@@ -43,15 +43,6 @@
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
                   <h5 class="h3 mb-0">Table {{$title}}</h5>
                 </div>
-                {{-- <div class="col-md-2">
-              
-                  <select data-column="1" class="form-control col-sm-4 filter-satuan" placeholder="Filter berdasarkan kategori jurnal">
-                    <option value=""></option>
-                    <option value="DEBIT"> DEBIT </option>
-                    <option value="CREDIT"> CREDIT </option>
-                </select>
-                </div> --}}
-             
               </div>
             </div>
             <div class="card-body">
