@@ -404,6 +404,54 @@ class ExpeditionController extends Controller
             );
             $factory->sendNotif($requests);
           }
+
+          $driverUser = Driver::where('id', $expeditionActivity->driver_id)->first();
+          $notificationDriver = new Notification();
+          $notificationDriver->content_id = $expeditionActivity->id;
+          $notificationDriver->content_type = 'expedisi';
+          $notificationDriver->navigate_to_mobile = 'driver_expedisi';
+          $notificationDriver->navigate_to_web = 'driver_expedisi';
+          $notificationDriver->content_title = 'Informasi Ekspedisi Baru';
+          $notificationDriver->content_body = 'Tugas ekspedisi baru untuk anda, dengan no invoice '.$expeditionActivity->nomor_inv;
+          $notificationDriver->content_img = '';
+          $notificationDriver->created_at = $current_date_time;
+          $notificationDriver->id_user_to = $driverUser->user_id;
+          $notificationDriver->description = '';
+          $notificationDriver->id_user_from = $idUser;
+          $notificationDriver->save();
+
+          $userDriverDetail = User::where('id', $notificationDriver->id_user_to)->where('id_fcm_android','<>','')->first();
+         
+          if(isset($userDriverDetail)){
+              $notifs = array(
+                'title' => $notificationDriver->content_title,
+                'body' => $notificationDriver->content_body
+              );
+            $datass = array(
+              'content_id' => $notificationDriver->content_id,
+              'content_type' => $notificationDriver->content_type,
+              'navigate_to_mobile' => $notificationDriver->navigate_to_mobile ,
+              'navigate_to_web' => $notificationDriver->navigate_to_web,
+              'content_title' => $notificationDriver->content_title,
+              'content_body' => $notificationDriver->content_body,
+              'content_img' => $notificationDriver->content_img,
+              'created_at' => $notificationDriver->created_at,
+              'id_group' => $notificationDriver->id_group,
+              'id_user_to' => $notificationDriver->id_user_to,
+              'description' => $notificationDriver->description,
+              'id_user_from' => $notificationDriver->id_user_from,
+              'updated_at' => $notificationDriver->updated_at,
+              'id' => $notificationDriver->id
+            );
+            
+            $requestss = array(
+              'tokenFcm' => $userDriverDetail->id_fcm_android,
+              'notif' => $notifs,
+              'data' => $datass
+            );
+            $factory->sendNotif($requestss);
+          }
+
         }
 
         return response()->json([
@@ -711,54 +759,9 @@ class ExpeditionController extends Controller
 
             $driverUser = Driver::where('id', $expeditionActivity->driver_id)->first();
             $userApprove = Auth::user();
-            if($exStatusActivity->status_approval == 'APPROVED' || $expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
-
-              $notificationDriver = new Notification();
-              $notificationDriver->content_id = $expeditionActivity->id;
-              $notificationDriver->content_type = 'expedisi';
-              $notificationDriver->navigate_to_mobile = 'driver_expedisi';
-              $notificationDriver->navigate_to_web = 'driver_expedisi';
-              $notificationDriver->content_title = 'Informasi Ekspedisi Baru';
-              $notificationDriver->content_body = 'Tugas ekspedisi baru untuk anda, dengan no invoice '.$expeditionActivity->nomor_inv;
-              $notificationDriver->content_img = '';
-              $notificationDriver->created_at = $current_date_time;
-              $notificationDriver->id_user_to = $driverUser->user_id;
-              $notificationDriver->description = '';
-              $notificationDriver->id_user_from = $userApprove->id;
-              $notificationDriver->save();
-
-              $userDriverDetail = User::where('id', $notificationDriver->id_user_to)->where('id_fcm_android','<>','')->first();
-             
-              if(isset($userDriverDetail)){
-                  $notifs = array(
-                    'title' => $notificationDriver->content_title,
-                    'body' => $notificationDriver->content_body
-                  );
-                $datass = array(
-                  'content_id' => $notificationDriver->content_id,
-                  'content_type' => $notificationDriver->content_type,
-                  'navigate_to_mobile' => $notificationDriver->navigate_to_mobile ,
-                  'navigate_to_web' => $notificationDriver->navigate_to_web,
-                  'content_title' => $notificationDriver->content_title,
-                  'content_body' => $notificationDriver->content_body,
-                  'content_img' => $notificationDriver->content_img,
-                  'created_at' => $notificationDriver->created_at,
-                  'id_group' => $notificationDriver->id_group,
-                  'id_user_to' => $notificationDriver->id_user_to,
-                  'description' => $notificationDriver->description,
-                  'id_user_from' => $notificationDriver->id_user_from,
-                  'updated_at' => $notificationDriver->updated_at,
-                  'id' => $notificationDriver->id
-                );
-                
-                $requestss = array(
-                  'tokenFcm' => $userDriverDetail->id_fcm_android,
-                  'notif' => $notifs,
-                  'data' => $datass
-                );
-                $factory->sendNotif($requestss);
-              }
-
+            if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
+              if($exStatusActivity->status_approval == 'APPROVED'){
+           
               $notification = new Notification();
               $notification->content_id = $expeditionActivity->id;
               $notification->content_type = 'expedisi';
@@ -892,6 +895,7 @@ class ExpeditionController extends Controller
                 );
                 $factory->sendNotif($requests);
               }
+            }
             }else if($exStatusActivity->status_activity == 'DRIVER_SELESAI_EKSPEDISI'){
               if($expeditionActivity->otv_payment_method == 'TUNAI'){
                 $userAdmin = User::where('group_id', '10')->where('id_fcm_android','<>','')->get();
