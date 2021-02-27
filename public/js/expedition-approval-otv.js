@@ -7,6 +7,10 @@ $("document").ready(function() {
         placeholder:"Select Payment"
     });
 
+    $("#penagihan_id").select2({
+        placeholder:"Select Penagihan"
+    });
+
     $("#truck_id").select2({
         placeholder:"Select Truck"
     });
