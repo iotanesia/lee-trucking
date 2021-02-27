@@ -105,6 +105,7 @@ class UserController extends Controller
       $user = User::create($input);
       $success['tokens'] =  $user->createToken('nApp')->accessToken;
       $success['name'] =  $user->name;
+      $success['is_active'] =  $user->is_active;
       $updateUser = User::find($user->id);
       $updateUser->tokens = $success['tokens'];
 

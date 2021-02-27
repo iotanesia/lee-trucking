@@ -11,7 +11,7 @@
     var table = $('#table-jurnal').DataTable({
     processing: true,
     serverSide: true,
-    lengthChange: false,
+    lengthChange: true,
     dom: 'Blfrtip',
     buttons : ['csv','pdf', 'excel','print'
     ],

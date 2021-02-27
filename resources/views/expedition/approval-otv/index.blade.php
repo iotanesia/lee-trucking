@@ -252,7 +252,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">Payment Method</label>
-                            <select id="otv_payment_method" class="form-control">
+                            <select id="otv_payment_method" name="otv_payment_method" disabled class="form-control">
                                 <option value=""></option>
                                 @foreach($payment_method as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>
@@ -349,7 +349,6 @@
                         <div class="form-group">
                             <label class="form-control-label" for="bank_name">Penagihan</label>
                             <select name="penagihan_id" id="penagihan_id"  class="form-control">
-                                <option value=""></option>
                                 @foreach($cabang as $row)
                                 <option value="{{$row->id}}">{{$row->cabang_name}} </option>
                                 @endforeach
