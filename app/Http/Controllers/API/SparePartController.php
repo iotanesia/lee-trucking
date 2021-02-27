@@ -32,6 +32,7 @@ class SparePartController extends Controller
                                }
                            }
                            })
+                       ->where('type', 'SPAREPART')
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
                        ->orderBy('id', 'ASC')
                        ->paginate();
@@ -84,6 +85,7 @@ class SparePartController extends Controller
                                }
                            }
                            })
+                       ->where('type', 'SPAREPART')
                        ->where('group_sparepart_id', '<>', 5)
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
                        ->orderBy('id', 'ASC')
@@ -136,6 +138,7 @@ class SparePartController extends Controller
                                }
                            }
                            })
+                       ->where('type', 'SPAREPART')
                        ->where('group_sparepart_id', 5)
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
                        ->orderBy('id', 'ASC')
@@ -195,6 +198,7 @@ class SparePartController extends Controller
                                }
                            }
                        })
+                       ->where('type', 'SPAREPART')
                        ->where('stk_master_sparepart.sparepart_jenis', 'PURCHASE')
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
                        ->orderBy('id', 'ASC')
@@ -319,6 +323,7 @@ class SparePartController extends Controller
 
         foreach($data as $key => $row) {
           $sparePart->{$key} = $row;
+          $sparePart->type = 'SPAREPART';
         }
 
         $sparePart->created_at = $current_date_time;
@@ -428,6 +433,7 @@ class SparePartController extends Controller
 
       foreach($data as $key => $row) {
         $sparePart->{$key} = $row;
+        $sparePart->type = 'SPAREPART';
       }
 
       if(isset($img)){
