@@ -141,6 +141,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\StkGroupSparePartController@delete']);
   });
 
+  Route::group(['as' => 'api-warehouse', 'prefix' => 'warehouse'], function() {
+    Route::get('/', 'API\WareHouseController@index');
+    Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\WareHouseController@getList']);
+    Route::post('add', ['as' => '-add', 'uses' => 'API\WareHouseController@add']);
+    Route::post('edit', ['as' => '-edit', 'uses' => 'API\WareHouseController@edit']);
+    Route::post('delete', ['as' => '-delete', 'uses' => 'API\WareHouseController@delete']);
+  });
+
   Route::group(['as' => 'api-ojk', 'prefix' => 'ojk'], function() {
     Route::get('/', 'API\OjkController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\OjkController@getList']);
