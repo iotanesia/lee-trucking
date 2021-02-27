@@ -364,7 +364,7 @@ class ExpeditionController extends Controller
           $notification = new Notification();
           $notification->content_id = $expeditionActivity->id;
           $notification->content_type = 'expedisi';
-          $notification->navigate_to_mobile = 'approal_ojk';
+          $notification->navigate_to_mobile = 'approval_ojk';
           $notification->navigate_to_web = 'list_ekspedisi';
           $notification->content_title = 'Approval OJK';
           $notification->content_body = 'Ekspedisi '.$expeditionActivity->nomor_inv. ' membutuhkan approval OJK';
@@ -398,16 +398,16 @@ class ExpeditionController extends Controller
               'id' => $notification->id
             );
 
-            if($row->id_fcm_android) {
-                $requests = array(
-                  'tokenFcm' => $row->id_fcm_android,
-                  'notif' => $notif,
-                  'data' => $datas
-                );
-                $factory->sendNotif($requests);
-            }
+              if($row->id_fcm_android) {
+                  $requests = array(
+                    'tokenFcm' => $row->id_fcm_android,
+                    'notif' => $notif,
+                    'data' => $datas
+                  );
+                  $factory->sendNotif($requests);
+              }
+            }        
           }
-
           $driverUser = Driver::where('id', $expeditionActivity->driver_id)->first();
           $notificationDriver = new Notification();
           $notificationDriver->content_id = $expeditionActivity->id;
@@ -453,8 +453,6 @@ class ExpeditionController extends Controller
               'data' => $datass
             );
             $factory->sendNotif($requestss);
-          }
-
         }
 
         return response()->json([
