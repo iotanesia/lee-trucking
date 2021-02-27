@@ -90,7 +90,7 @@
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
             <div class="copyright text-center text-lg-left text-muted">
-              &copy; {{date('Y')}} <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Viexpedition</a>
+              &copy; {{date('Y')}} <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Lee-Expedition</a>
             </div>
           </div>
           <div class="col-lg-6">
@@ -114,8 +114,10 @@
             <div class="modal-header bg-gradient-primary">
             <h5 class="modal-title text-white" style="margin-right:50px" id="exampleModalLabel">Expedition</h5>
             <button type="button" class="btn btn-success btn-sm" id="btn-submit" style="border-radius:20px">Approve</button>
-            <button type="button" class="btn btn-warning btn-sm" el-event="edit" style="border-radius:20px" id="btn-revision">Revision</button>
-            <button type="button" class="btn btn-danger btn-sm" el-event="edit" style="border-radius:20px" id="btn-reject">Reject</button>
+            <!-- @if(Auth::user()->group_id != 10) -->
+            <!-- <button type="button" class="btn btn-warning btn-sm" el-event="edit" style="border-radius:20px" id="btn-revision">Revision</button> -->
+            <!-- <button type="button" class="btn btn-danger btn-sm" el-event="edit" style="border-radius:20px" id="btn-reject">Reject</button> -->
+            <!-- @endif -->
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -310,7 +312,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="bank_name">Truck</label>
-                            <select name="truck_id" id="truck_id" class="form-control">
+                            <select disabled name="truck_id" id="truck_id" class="form-control">
                                 <option value=""></option>
                                 @foreach($truck as $row)
                                 <option value="{{$row->id}}">{{$row->truck_plat}} - {{$row->truck_name}} </option>
@@ -321,7 +323,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="ojk">Supir</label>
-                            <select id="driver_id" class="form-control">
+                            <select disabled  id="driver_id" class="form-control">
                                 <option value=""></option>
                                 @foreach($driver as $row)
                                 <option value="{{$row->id}}">{{$row->driver_name}}</option>
@@ -332,10 +334,24 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="form-control-label" for="kenek_id">Kenek</label>
-                            <select id="kenek_id" class="form-control">
+                            <select disabled  id="kenek_id" class="form-control">
                                 <option value=""></option>
                                 @foreach($kenek as $row)
                                 <option value="{{$row->id}}">{{$row->kenek_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr class="bg-info">
+                <div class="row" id="penagihanBlok">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="bank_name">Penagihan</label>
+                            <select name="penagihan_id" id="penagihan_id"  class="form-control">
+                                <option value=""></option>
+                                @foreach($cabang as $row)
+                                <option value="{{$row->id}}">{{$row->cabang_name}} </option>
                                 @endforeach
                             </select>
                         </div>

@@ -90,7 +90,7 @@
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
             <div class="copyright text-center text-lg-left text-muted">
-              &copy; {{date('Y')}} <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Viexpedition</a>
+              &copy; {{date('Y')}} <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Lee-Expedition</a>
             </div>
           </div>
           <div class="col-lg-6">
@@ -340,6 +340,41 @@
                                 <option value="{{$row->id}}">{{$row->kenek_name}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                </div>
+                <hr class="bg-info">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="no_rek">Keterangan</label>
+                            <div class="input-group input-group-merge">
+                                <input class="form-control" name="keterangan" id="no_rek" placeholder="Keterangan">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="bank_name">No Rek</label>
+                            <select name="no_rek" id="no_reks"  class="form-control">
+                                @foreach($no_rek as $row)
+                                <option value="{{$row->id}}">{{$row->rek_no}} - {{$row->rek_name}} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="bank_name">Image</label>
+                            <div class="input-group input-group-merge">
+                                <input type="file" class="form-control" name="bank_name" id="img" placeholder="Nama Bank">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="far fa-images"></i></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
