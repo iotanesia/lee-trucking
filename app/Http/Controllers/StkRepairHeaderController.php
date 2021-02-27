@@ -30,8 +30,8 @@ class StkRepairHeaderController extends Controller
      */
     public function index(Request $request)
     {
-        $tgl = '2020-01-07 19:00:00';
-        dd(date('Y-m-d H:i:s', strtotime($tgl.' +1 hour')));
+        // $tgl = '2020-01-07 19:00:00';
+        // dd(date('Y-m-d H:i:s', strtotime($tgl.' +1 hour')));
         $data['title'] = 'Repair Truck';
         $data['sparepart'] = SparePart::where('group_sparepart_id', '<>', 5)->get();
         $data['truck'] = Truck::all();

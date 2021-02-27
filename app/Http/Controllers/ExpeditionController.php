@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Models\Truck;
+use App\Models\Cabang;
 use App\Models\Driver;
-use App\Models\Kenek;
-use App\Models\GlobalParam;
 use App\Models\ExpeditionActivity;
+use App\Models\GlobalParam;
+use App\Models\Kenek;
+use App\Models\Rekening;
+use App\Models\Truck;
 use App\Models\ExStatusActivity;
 use Auth;
 
@@ -67,6 +69,7 @@ class ExpeditionController extends Controller
         $data['driver'] = Driver::where('is_deleted', 'f')->get();
         $data['truck'] = Truck::where('is_deleted', 'f')->get();
         $data['kenek'] = Kenek::where('is_deleted', 'f')->get();
+        $data['no_rek'] = Rekening::where('is_deleted', 'f')->get();
 
         return view('expedition.approval.index', $data);
     }
@@ -80,6 +83,7 @@ class ExpeditionController extends Controller
         $data['group'] = ExpeditionActivity::where('is_deleted', 'f')->get();
         $data['driver'] = Driver::where('is_deleted', 'f')->get();
         $data['truck'] = Truck::where('is_deleted', 'f')->get();
+        $data['cabang'] = Cabang::where('is_deleted', 'f')->get();
         $data['kenek'] = Kenek::where('is_deleted', 'f')->get();
 
         return view('expedition.approval-otv.index', $data);

@@ -11,6 +11,10 @@ $("document").ready(function() {
         placeholder:"Select Truck"
     });
 
+    $("#no_reks").select2({
+        placeholder:"Select Rekening"
+    });
+
     $("#kenek_id").select2({
         placeholder:"Select Kenek"
     });
@@ -241,6 +245,11 @@ $("document").ready(function() {
       status_name = responses.data[i].status_name;
       approval_name = responses.data[i].approval_name;
       data_json = responses.data[i].data_json;
+
+      responses.data[i].status_activity = 'SUBMIT';
+      status_name = 'SUBMIT';
+      approval_name = 'WAITING APPROVAL';
+      responses.data[i].approval_code = 'WAITING_OWNER';
 
       if(responses.data[i].status_activity == 'SUBMIT') {
           classColor = 'badge-success';

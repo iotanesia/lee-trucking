@@ -24,6 +24,11 @@ DASHBOARD
 -Total income ()
 
 
+Approval ojk tambah keterangan, nomor rekening, upload gambar
+Approval otv owner status_destination == sesuai tidak usah munculkan ojk & otv, extra_price
+Approval otv owner status_destination != sesuai tidak usah munculkan ojk & otv, otv extra_price
+Approval otv owner status_destination != sesuai tidak usah munculkan ojk & otv,`` otv extra_price
+
 
 
 
