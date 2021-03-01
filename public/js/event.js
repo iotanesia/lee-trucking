@@ -364,7 +364,9 @@ $(document).on("click", "a[el-event='show-page']", function(event) {
   var invoker = $(this);
   var dataModel = invoker.closest(".card").attr("id");
   var requestURL = $("table[data-model='" + dataModel + "']").attr("request-url");
-  var url = requestURL + "/get-list";
+  var route = $("table[data-model='" + dataModel + "']").attr("api-route");
+//   alert(route);
+  var url = route == undefined ? requestURL + "/get-list" : requestURL +'/'+ route;
   var data = new FormData();
   var page = invoker.attr("page");
   var onSuccessLoad = $("table[data-model='" + dataModel + "']").attr("on-success-load");

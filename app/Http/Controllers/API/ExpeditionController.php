@@ -133,7 +133,9 @@ class ExpeditionController extends Controller
                                         $query->orWhere('expedition_activity.is_approve', 1);
                 
                                     }else{
-                                        $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
+                                        // $query->whereIn('expedition_activity.status_activity', ['SUBMIT', 'APPROVAL_OJK_DRIVER', 'DRIVER_MENUJU_TUJUAN', 'DRIVER_SAMPAI_TUJUAN']);
+                                        $query->Where('expedition_activity.status_activity', 'SUBMIT');
+                                        $query->orWhere('expedition_activity.is_approve', 1);
                                     }
                                 })
                                 ->where(function($query) use($whereNotifId) {
@@ -144,7 +146,7 @@ class ExpeditionController extends Controller
                                 ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                                         'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                                             'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
-                                ->orderBy('id', 'ASC')
+                                ->orderBy('id', 'DESC')
                                 ->paginate();
                    
       foreach($expeditionActivityList as $row) {

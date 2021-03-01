@@ -14,7 +14,7 @@ use Auth;
 use Carbon\Carbon;
 use DB;
 
-class SparePartController extends Controller
+class WareHouseController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
@@ -32,7 +32,7 @@ class SparePartController extends Controller
                                }
                            }
                            })
-                       ->where('type', 'SPAREPART')
+                       ->where('type', 'GUDANG')
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
                        ->orderBy('id', 'ASC')
                        ->paginate();
@@ -85,7 +85,7 @@ class SparePartController extends Controller
                                }
                            }
                            })
-                       ->where('type', 'SPAREPART')
+                       ->where('type', 'GUDANG')
                        ->where('group_sparepart_id', '<>', 5)
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
                        ->orderBy('id', 'ASC')
@@ -138,7 +138,7 @@ class SparePartController extends Controller
                                }
                            }
                            })
-                       ->where('type', 'SPAREPART')
+                       ->where('type', 'GUDANG')
                        ->where('group_sparepart_id', 5)
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
                        ->orderBy('id', 'ASC')
@@ -198,7 +198,7 @@ class SparePartController extends Controller
                                }
                            }
                        })
-                       ->where('type', 'SPAREPART')
+                       ->where('type', 'GUDANG')
                        ->where('stk_master_sparepart.sparepart_jenis', 'PURCHASE')
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
                        ->orderBy('id', 'ASC')
@@ -323,7 +323,7 @@ class SparePartController extends Controller
 
         foreach($data as $key => $row) {
           $sparePart->{$key} = $row;
-          $sparePart->type = 'SPAREPART';
+          $sparePart->type = 'GUDANG';
         }
 
         $sparePart->created_at = $current_date_time;
@@ -331,59 +331,6 @@ class SparePartController extends Controller
        
 
         if($sparePart->save()){
-          $historyStokSparepart = new StkHistorySparePart();
-          $sparePart->barcode_gudang = $sparePart->id.'-TSJ-'.date('dmY');
-          $historyStokSparepart->sparepart_name = $sparePart->sparepart_name;
-          $historyStokSparepart->sparepart_status = $sparePart->sparepart_status;
-          $historyStokSparepart->sparepart_jenis = $sparePart->sparepart_jenis;
-          $historyStokSparepart->restok_group_sparepart_id = $sparePart->group_sparepart_id;
-          $historyStokSparepart->jumlah_stok = $request->jumlah_stok;
-          $historyStokSparepart->created_by = $sparePart->created_by;
-          $historyStokSparepart->created_at = $sparePart->created_at;
-          $historyStokSparepart->updated_by = $sparePart->updated_by;
-          $historyStokSparepart->updated_at = $sparePart->updated_at;
-          $historyStokSparepart->deleted_by = $sparePart->deleted_by;
-          $historyStokSparepart->deleted_at = $sparePart->deleted_at;
-          $historyStokSparepart->is_deleted = $sparePart->is_deleted;
-          $historyStokSparepart->img_sparepart = $sparePart->img_sparepart;
-          $historyStokSparepart->barcode_gudang = $sparePart->barcode_gudang;
-          $historyStokSparepart->barcode_pabrik = $sparePart->barcode_pabrik;
-          $historyStokSparepart->sparepart_type = $sparePart->sparepart_type;
-          $historyStokSparepart->sparepart_id = $sparePart->id;
-          $historyStokSparepart->amount = $sparePart->amount;
-          $historyStokSparepart->purchase_date = $sparePart->purchase_date;
-          $historyStokSparepart->due_date = $sparePart->due_date;
-          $historyStokSparepart->satuan_type = $sparePart->satuan_type;
-          $historyStokSparepart->transaction_type = "IN";
-          $historyStokSparepart->save();
-          
-          if(isset($request->no_rek) && $request->no_rek) {
-            $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
-            $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $sparePart->sparepart_type)->first();
-
-            foreach($coaMasterSheet as $key => $value) {
-                $coaActivity = new CoaActivity();
-                $coaActivity->activity_id = $sparePartType->id;
-                $coaActivity->activity_name = $sparePart->sparepart_type;
-                $coaActivity->status = 'ACTIVE';
-                $coaActivity->nominal = $sparePart->amount;
-                $coaActivity->coa_id = $value->id;
-                $coaActivity->created_at = $current_date_time;
-                $coaActivity->created_by = $user_id;
-                $coaActivity->rek_id = $request->no_rek;
-                $coaActivity->save();
-            }  
-          }
-
-          //upload image
-          if($img) {
-              $fileExt = $img->extension();
-              $fileName = "IMG-SPAREPART-".$sparePart->id.'-TSJ-'.date('dmY').".".$fileExt;
-              $path =  public_path().'/uploads/sparepart/' ;
-              $sparePart->img_sparepart = $fileName;
-              $sparePart->save();
-              $img->move($path, $fileName);
-          }
 
           DB::connection(Auth::user()->schema)->commit();
 
@@ -433,7 +380,7 @@ class SparePartController extends Controller
 
       foreach($data as $key => $row) {
         $sparePart->{$key} = $row;
-        $sparePart->type = 'SPAREPART';
+        $sparePart->type = 'GUDANG';
       }
 
       if(isset($img)){
@@ -452,50 +399,6 @@ class SparePartController extends Controller
       $historyStokSparepart = new StkHistorySparePart();
 
       if($sparePart->save()) {
-        if(isset($request->scanner_form)) {
-            $historyStokSparepart->sparepart_name = $sparePart->sparepart_name;
-            $historyStokSparepart->sparepart_status = $sparePart->sparepart_status;
-            $historyStokSparepart->sparepart_jenis = $sparePart->sparepart_jenis;
-            $historyStokSparepart->restok_group_sparepart_id = $sparePart->group_sparepart_id;
-            $historyStokSparepart->jumlah_stok = $request->jumlah_stok;
-            $historyStokSparepart->created_by = $sparePart->created_by;
-            $historyStokSparepart->created_at = $sparePart->created_at;
-            $historyStokSparepart->updated_by = $sparePart->updated_by;
-            $historyStokSparepart->updated_at = $sparePart->updated_at;
-            $historyStokSparepart->deleted_by = $sparePart->deleted_by;
-            $historyStokSparepart->deleted_at = $sparePart->deleted_at;
-            $historyStokSparepart->is_deleted = $sparePart->is_deleted;
-            $historyStokSparepart->img_sparepart = $sparePart->img_sparepart;
-            $historyStokSparepart->barcode_gudang = $sparePart->barcode_gudang;
-            $historyStokSparepart->barcode_pabrik = $sparePart->barcode_pabrik;
-            $historyStokSparepart->sparepart_type = $sparePart->sparepart_type;
-            $historyStokSparepart->sparepart_id = $sparePart->id;
-            $historyStokSparepart->amount = $sparePart->amount;
-            $historyStokSparepart->purchase_date = $sparePart->purchase_date;
-            $historyStokSparepart->due_date = $sparePart->due_date;
-            $historyStokSparepart->satuan_type = $sparePart->satuan_type;
-            $historyStokSparepart->transaction_type = "IN";
-            $historyStokSparepart->save();
-
-            if(isset($request->no_rek) && $request->no_rek) {
-
-                $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
-                $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $sparePart->sparepart_type)->first();
-
-                foreach($coaMasterSheet as $key => $value) {
-                    $coaActivity = new CoaActivity();
-                    $coaActivity->activity_id = $sparePartType->id;
-                    $coaActivity->activity_name = $sparePart->sparepart_type;
-                    $coaActivity->status = 'ACTIVE';
-                    $coaActivity->nominal = $sparePart->amount;
-                    $coaActivity->coa_id = $value->id;
-                    $coaActivity->created_at = $current_date_time;
-                    $coaActivity->created_by = $user_id;
-                    $coaActivity->rek_id = $request->no_rek;
-                    $coaActivity->save();
-                }
-            }
-        }
 
         return response()->json([
           'code' => 200,
@@ -625,60 +528,12 @@ class SparePartController extends Controller
         $sparePart->updated_by = $user_id;
   
         if($sparePart->save()){
-          $historyStokSparepart->sparepart_name = $sparePart->sparepart_name;
-          $historyStokSparepart->sparepart_status = $sparePart->sparepart_status;
-          $historyStokSparepart->sparepart_jenis = $sparePart->sparepart_jenis;
-          $historyStokSparepart->restok_group_sparepart_id = $sparePart->group_sparepart_id;
-          $historyStokSparepart->jumlah_stok = $sparePart->jumlah_stok;
-          $historyStokSparepart->created_by = $sparePart->created_by;
-          $historyStokSparepart->created_at = $sparePart->created_at;
-          $historyStokSparepart->updated_by = $sparePart->updated_by;
-          $historyStokSparepart->updated_at = $sparePart->updated_at;
-          $historyStokSparepart->deleted_by = $sparePart->deleted_by;
-          $historyStokSparepart->deleted_at = $sparePart->deleted_at;
-          $historyStokSparepart->is_deleted = $sparePart->is_deleted;
-          $historyStokSparepart->img_sparepart = $sparePart->img_sparepart;
-          $historyStokSparepart->barcode_gudang = $sparePart->barcode_gudang;
-          $historyStokSparepart->barcode_pabrik = $sparePart->barcode_pabrik;
-          $historyStokSparepart->sparepart_type = $sparePart->sparepart_type;
-          $historyStokSparepart->sparepart_id = $sparePart->id;
-          $historyStokSparepart->amount = $sparePart->amount;
-          $historyStokSparepart->purchase_date = $sparePart->purchase_date;
-          $historyStokSparepart->due_date = $sparePart->due_date;
-          $historyStokSparepart->satuan_type = $sparePart->satuan_type;
-          $historyStokSparepart->transaction_type = "IN";
-
-          if(isset($request->no_rek) && $request->no_rek) {
-                $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
-                $sparePartType = GlobalParam::where('param_type', 'SPAREPART_TYPE')->where('param_code', $sparePart->sparepart_type)->first();
-
-                foreach($coaMasterSheet as $key => $value) {
-                    $coaActivity = new CoaActivity();
-                    $coaActivity->activity_id = $sparePartType->id;
-                    $coaActivity->activity_name = $sparePart->sparepart_type;
-                    $coaActivity->status = 'ACTIVE';
-                    $coaActivity->nominal = $sparePart->amount;
-                    $coaActivity->coa_id = $value->id;
-                    $coaActivity->created_at = $current_date_time;
-                    $coaActivity->created_by = $user_id;
-                    $coaActivity->rek_id = $request->no_rek;
-                    $coaActivity->save();
-                }
-          }
-
-          if($historyStokSparepart->save()){
-            return response()->json([
-              'code' => 200,
-              'code_message' => 'Berhasil menyimpan data',
-              'code_type' => 'Success',
-            ], 200);
-          }else{
             return response()->json([
               'code' => 401,
               'code_message' => 'Gagal menyimpan data',
               'code_type' => 'BadRequest',
             ], 401);
-          }
+          
         } else {
           return response()->json([
             'code' => 401,

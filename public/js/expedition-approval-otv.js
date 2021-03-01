@@ -7,6 +7,10 @@ $("document").ready(function() {
         placeholder:"Select Payment"
     });
 
+    $("#penagihan_id").select2({
+        placeholder:"Select Penagihan"
+    });
+
     $("#truck_id").select2({
         placeholder:"Select Truck"
     });
@@ -179,6 +183,13 @@ $("document").ready(function() {
             
         } else if(group_id == 10 && dataJSON.status_activity == "DRIVER_SELESAI_EKSPEDISI") {
             $("#expedition-form").find("input[name=status_activity]").val("WAITING_OWNER");
+        }
+
+        if(dataJSON.otv_payment_method == 'NON_TUNAI') {
+            $('#penagihanBlok').show();
+
+        } else {
+            $('#penagihanBlok').hide();
         }
 
         $("#expedition-modal #tujuan").html("<option value='"+dataJSON.ojk_id+"'>"+kabupaten +" - "+ kecamatan +" - "+ cabang_name +"</option>").trigger("change");
