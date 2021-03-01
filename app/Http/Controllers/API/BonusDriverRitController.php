@@ -269,7 +269,7 @@ class BonusDriverRitController extends Controller
       if(!isset($rewardList)){
         $rewardListNullBonus = Driver::where('user_id', $user->id)
         ->select('id as driver_id', 'driver_name')
-        ->whereNotNull('id')->first();
+        ->where('is_deleted', false)->first();
         if(isset($rewardListNullBonus)){
           $rewardListNullBonus->total_rit = 0;
           $rewardListNullBonus->reward_jenis = '-';
