@@ -270,16 +270,25 @@ class BonusDriverRitController extends Controller
         $rewardListNullBonus = Driver::where('user_id', $user->id)
         ->select('id as driver_id', 'driver_name')
         ->whereNotNull('id')->first();
-        $rewardListNullBonus->total_rit = 0;
-        $rewardListNullBonus->reward_jenis = '-';
-        $rewardListNullBonus->bonus = 0;
-        $rewardListNullBonus->data_json = $rewardListNullBonus->toJson();
-        return response()->json([
-          'code' => 200,
-          'code_message' => 'success',
-          'code_type' => 'success',
-          'data'=> $rewardListNullBonus
-        ], 200);
+        if(isset($rewardListNullBonus)){
+          $rewardListNullBonus->total_rit = 0;
+          $rewardListNullBonus->reward_jenis = '-';
+          $rewardListNullBonus->bonus = 0;
+          $rewardListNullBonus->data_json = $rewardListNullBonus->toJson();
+          return response()->json([
+            'code' => 200,
+            'code_message' => 'success',
+            'code_type' => 'success',
+            'data'=> $rewardListNullBonus
+          ], 200);
+        }else{
+          return response()->json([
+            'code' => 500,
+            'code_message' => 'Anda belum terdaftar sebagai User Driver, Silahkan hubungi admin',
+            'code_type' => 'BadRequest',
+            'data'=> null
+          ], 500);
+        }
       }else{
         $reward = Reward::where('min', '<=', $rewardList->total_rit)->where('max', '>=', $rewardList->total_rit)->orderBy('min', 'DESC')->first();
         $rewardList->reward_jenis = $reward ? $reward->reward_jenis : '-';
