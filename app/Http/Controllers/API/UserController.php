@@ -166,77 +166,132 @@ class UserController extends Controller
 
   public function edit(Request $request)
   {
-      $input = $request->all();
-      $validator = Validator::make($request->all(), [
-          'name' => 'required',
-          'email' => 'required|email|unique:users,email,'.$input['id'].',id',
-          'password' => 'nullable',
-          'password_confirmation' => 'nullable|same:password'
-      ]);
+    $input = $request->all();
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email,'.$input['id'].',id',
+        'password' => 'nullable',
+        'password_confirmation' => 'nullable|same:password'
+    ]);
 
-      if(isset($input['password'])) {
-        $input['password'] = bcrypt($input['password']);
-      }
-      
-      $userAuth = Auth::user();
-      $current_date_time = Carbon::now()->toDateTimeString();
-      if ($validator->fails()) {
+    if(isset($input['password'])) {
+      $input['password'] = bcrypt($input['password']);
+    }
+    
+    $userAuth = Auth::user();
+    $current_date_time = Carbon::now()->toDateTimeString();
+    if ($validator->fails()) {
+      return response()->json([
+        'code' => 401,
+        'code_message' => 'Fail',
+        'code_type' => 'BadRequest',
+        'data'=> null
+      ], 401);      
+    }
+
+    $user = User::find($input['id']);
+    
+    unset($input['_token']);
+    unset($input['password_confirmation']);
+    unset($input['first_name']);
+    unset($input['last_name']);
+    unset($input['nomor_hp']);
+    unset($input['jenis_kelamin']);
+    unset($input['tgl_lahir']);
+    unset($input['agama']);
+    unset($input['no_rek']);
+    unset($input['nama_bank']);
+    unset($input['nama_rekening']);
+
+    foreach($input as $key => $row) {
+        if($row) {
+            $user->{$key} = $row;
+        }
+    }
+
+    if($user->save()){
+      $userDetail = UserDetail::where('id_user', $input['id'])->first();
+      isset($request->first_name) && $request->first_name ? $userDetail->first_name = $request->first_name : null;
+      isset($request->last_name) && $request->last_name ? $userDetail->last_name = $request->last_name : null;
+      isset($request->nomor_hp) && $request->nomor_hp ? $userDetail->nomor_hp = $request->nomor_hp : null;
+      isset($request->jenis_kelamin) && $request->jenis_kelamin ? $userDetail->jenis_kelamin = $request->jenis_kelamin : null;
+      isset($request->tgl_lahir) && $request->tgl_lahir ? $userDetail->tgl_lahir = $request->tgl_lahir : null;
+      isset($request->agama) && $request->agama ? $userDetail->agama = $request->agama : null;
+      isset($request->no_rek) && $request->no_rek ? $userDetail->no_rek = $request->no_rek : null;
+      isset($request->nama_bank) && $request->nama_bank ? $userDetail->nama_bank = $request->nama_bank : null;
+      isset($request->nama_rekening) && $request->nama_rekening ? $userDetail->nama_rekening = $request->nama_rekening : null;
+      $userDetail->id_user = $user->id;
+      $userDetail->save();
+
+      return response()->json([
+          'code' => 200,
+          'code_message' => 'Berhasil menyimpan data',
+          'code_type' => 'Success',
+        ], 200);
+
+    }else{
         return response()->json([
-          'code' => 401,
-          'code_message' => 'Fail',
-          'code_type' => 'BadRequest',
-          'data'=> null
-        ], 401);      
-      }
+        'code' => 400,
+        'code_message' => 'Gagal menyimpan user',
+        'code_type' => 'BadRequest',
+        'data'=> null
+      ], 400);
+    }         
+  }
 
-      $user = User::find($input['id']);
-      
-      unset($input['_token']);
-      unset($input['password_confirmation']);
-      unset($input['first_name']);
-      unset($input['last_name']);
-      unset($input['nomor_hp']);
-      unset($input['jenis_kelamin']);
-      unset($input['tgl_lahir']);
-      unset($input['agama']);
-      unset($input['no_rek']);
-      unset($input['nama_bank']);
-      unset($input['nama_rekening']);
-  
-      foreach($input as $key => $row) {
-          if($row) {
-              $user->{$key} = $row;
-          }
-      }
+  public function editProfile(Request $request) {
+    $input = $request->all();
+    // $validator = Validator::make($request->all(), [
+    //     'name' => 'required',
+    //     'email' => 'required|email|unique:users,email,'.$input['id'].',id',
+    //     'password' => 'nullable',
+    //     'password_confirmation' => 'nullable|same:password'
+    // ]);
 
-      if($user->save()){
-        $userDetail = UserDetail::where('id_user', $input['id'])->first();
-        isset($request->first_name) && $request->first_name ? $userDetail->first_name = $request->first_name : null;
-        isset($request->last_name) && $request->last_name ? $userDetail->last_name = $request->last_name : null;
-        isset($request->nomor_hp) && $request->nomor_hp ? $userDetail->nomor_hp = $request->nomor_hp : null;
-        isset($request->jenis_kelamin) && $request->jenis_kelamin ? $userDetail->jenis_kelamin = $request->jenis_kelamin : null;
-        isset($request->tgl_lahir) && $request->tgl_lahir ? $userDetail->tgl_lahir = $request->tgl_lahir : null;
-        isset($request->agama) && $request->agama ? $userDetail->agama = $request->agama : null;
-        isset($request->no_rek) && $request->no_rek ? $userDetail->no_rek = $request->no_rek : null;
-        isset($request->nama_bank) && $request->nama_bank ? $userDetail->nama_bank = $request->nama_bank : null;
-        isset($request->nama_rekening) && $request->nama_rekening ? $userDetail->nama_rekening = $request->nama_rekening : null;
-        $userDetail->id_user = $user->id;
-        $userDetail->save();
+    $user = Auth::user();
 
+    
+    $current_date_time = Carbon::now()->toDateTimeString();
+    // if ($validator->fails()) {
+    //   return response()->json([
+    //     'code' => 401,
+    //     'code_message' => 'Fail',
+    //     'code_type' => 'BadRequest',
+    //     'data'=> null
+    //   ], 401);      
+    // }
+
+    $userDetail = UserDetail::where('id_user',$user->id)->first();
+    unset($input['_token']);
+    unset($input['password_confirmation']);
+    if(isset($userDetail)){
+    foreach($input as $key => $row) {
+        if($row) {
+            $userDetail->{$key} = $row;
+        }
+    }
+
+    if($userDetail->save()){
+      return response()->json([
+          'code' => 200,
+          'code_message' => 'Berhasil menyimpan data',
+          'code_type' => 'Success',
+        ], 200);
+
+    }else{
         return response()->json([
-            'code' => 200,
-            'code_message' => 'Berhasil menyimpan data',
-            'code_type' => 'Success',
-          ], 200);
-
-      }else{
-          return response()->json([
-          'code' => 400,
-          'code_message' => 'Gagal menyimpan user',
-          'code_type' => 'BadRequest',
-          'data'=> null
-        ], 400);
-      }       
+        'code' => 400,
+        'code_message' => 'Gagal menyimpan user',
+        'code_type' => 'BadRequest',
+      ], 400);
+    }  
+  }else{
+      return response()->json([
+      'code' => 400,
+      'code_message' => 'Gagal menyimpan user',
+      'code_type' => 'BadRequest',
+    ], 400);
+  }
   }
 
   public function details()

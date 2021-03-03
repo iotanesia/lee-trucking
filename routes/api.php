@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\UserController@getList']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\UserController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\UserController@edit']);
+    Route::post('edit-profile', ['as' => '-edit', 'uses' => 'API\UserController@editProfile']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\UserController@delete']);
     Route::post('updatePhotoProfile', ['as' => '-updateProfile', 'uses' => 'API\UserController@updatePhotoProfile']);
     Route::post('updatePassword', ['as' => '-updatePassword', 'uses' => 'API\UserController@updatePassword']);

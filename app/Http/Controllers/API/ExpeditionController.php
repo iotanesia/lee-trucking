@@ -366,7 +366,7 @@ class ExpeditionController extends Controller
           $notification = new Notification();
           $notification->content_id = $expeditionActivity->id;
           $notification->content_type = 'expedisi';
-          $notification->navigate_to_mobile = 'approal_ojk';
+          $notification->navigate_to_mobile = 'approval_ojk';
           $notification->navigate_to_web = 'list_ekspedisi';
           $notification->content_title = 'Approval OJK';
           $notification->content_body = 'Ekspedisi '.$expeditionActivity->nomor_inv. ' membutuhkan approval OJK';
@@ -400,15 +400,61 @@ class ExpeditionController extends Controller
               'id' => $notification->id
             );
 
-            if($row->id_fcm_android) {
-                $requests = array(
-                  'tokenFcm' => $row->id_fcm_android,
-                  'notif' => $notif,
-                  'data' => $datas
-                );
-                $factory->sendNotif($requests);
-            }
+              if($row->id_fcm_android) {
+                  $requests = array(
+                    'tokenFcm' => $row->id_fcm_android,
+                    'notif' => $notif,
+                    'data' => $datas
+                  );
+                  $factory->sendNotif($requests);
+              }
+            }        
           }
+          $driverUser = Driver::where('id', $expeditionActivity->driver_id)->first();
+          $notificationDriver = new Notification();
+          $notificationDriver->content_id = $expeditionActivity->id;
+          $notificationDriver->content_type = 'expedisi';
+          $notificationDriver->navigate_to_mobile = 'driver_expedisi';
+          $notificationDriver->navigate_to_web = 'driver_expedisi';
+          $notificationDriver->content_title = 'Informasi Ekspedisi Baru';
+          $notificationDriver->content_body = 'Tugas ekspedisi baru untuk anda, dengan no invoice '.$expeditionActivity->nomor_inv;
+          $notificationDriver->content_img = '';
+          $notificationDriver->created_at = $current_date_time;
+          $notificationDriver->id_user_to = $driverUser->user_id;
+          $notificationDriver->description = '';
+          $notificationDriver->id_user_from = $idUser;
+          $notificationDriver->save();
+
+          $userDriverDetail = User::where('id', $notificationDriver->id_user_to)->where('id_fcm_android','<>','')->first();
+         
+          if(isset($userDriverDetail)){
+              $notifs = array(
+                'title' => $notificationDriver->content_title,
+                'body' => $notificationDriver->content_body
+              );
+            $datass = array(
+              'content_id' => $notificationDriver->content_id,
+              'content_type' => $notificationDriver->content_type,
+              'navigate_to_mobile' => $notificationDriver->navigate_to_mobile ,
+              'navigate_to_web' => $notificationDriver->navigate_to_web,
+              'content_title' => $notificationDriver->content_title,
+              'content_body' => $notificationDriver->content_body,
+              'content_img' => $notificationDriver->content_img,
+              'created_at' => $notificationDriver->created_at,
+              'id_group' => $notificationDriver->id_group,
+              'id_user_to' => $notificationDriver->id_user_to,
+              'description' => $notificationDriver->description,
+              'id_user_from' => $notificationDriver->id_user_from,
+              'updated_at' => $notificationDriver->updated_at,
+              'id' => $notificationDriver->id
+            );
+            
+            $requestss = array(
+              'tokenFcm' => $userDriverDetail->id_fcm_android,
+              'notif' => $notifs,
+              'data' => $datass
+            );
+            $factory->sendNotif($requestss);
         }
 
         return response()->json([
@@ -716,197 +762,151 @@ class ExpeditionController extends Controller
 
             $driverUser = Driver::where('id', $expeditionActivity->driver_id)->first();
             $userApprove = Auth::user();
-            if($exStatusActivity->status_approval == 'APPROVED' || $expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
+            if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
+              if($exStatusActivity->status_approval == 'APPROVED'){
+            
+                $notification = new Notification();
+                $notification->content_id = $expeditionActivity->id;
+                $notification->content_type = 'expedisi';
+                $notification->navigate_to_mobile = 'list_expedisi';
+                $notification->navigate_to_web = 'list_expedisi';
+                $notification->content_title = 'Informasi Approval Ekspedisi';
+                $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv. ' telah di approve oleh '.$userApprove->name;
+                $notification->content_img = '';
+                $notification->created_at = $current_date_time;
+                $notification->id_user_to = $expeditionActivity->created_by;
+                $notification->description = '';
+                $notification->id_user_from = $userApprove->id;
+                $notification->save();
 
-              $notificationDriver = new Notification();
-              $notificationDriver->content_id = $expeditionActivity->id;
-              $notificationDriver->content_type = 'expedisi';
-              $notificationDriver->navigate_to_mobile = 'driver_expedisi';
-              $notificationDriver->navigate_to_web = 'driver_expedisi';
-              $notificationDriver->content_title = 'Informasi Ekspedisi Baru';
-              $notificationDriver->content_body = 'Tugas ekspedisi baru untuk anda, dengan no invoice '.$expeditionActivity->nomor_inv;
-              $notificationDriver->content_img = '';
-              $notificationDriver->created_at = $current_date_time;
-              $notificationDriver->id_user_to = $driverUser->user_id;
-              $notificationDriver->description = '';
-              $notificationDriver->id_user_from = $userApprove->id;
-              $notificationDriver->save();
-
-              $userDriverDetail = User::where('id', $notificationDriver->id_user_to)->where('id_fcm_android','<>','')->first();
-             
-              if(isset($userDriverDetail)){
-                  $notifs = array(
-                    'title' => $notificationDriver->content_title,
-                    'body' => $notificationDriver->content_body
-                  );
-                $datass = array(
-                  'content_id' => $notificationDriver->content_id,
-                  'content_type' => $notificationDriver->content_type,
-                  'navigate_to_mobile' => $notificationDriver->navigate_to_mobile ,
-                  'navigate_to_web' => $notificationDriver->navigate_to_web,
-                  'content_title' => $notificationDriver->content_title,
-                  'content_body' => $notificationDriver->content_body,
-                  'content_img' => $notificationDriver->content_img,
-                  'created_at' => $notificationDriver->created_at,
-                  'id_group' => $notificationDriver->id_group,
-                  'id_user_to' => $notificationDriver->id_user_to,
-                  'description' => $notificationDriver->description,
-                  'id_user_from' => $notificationDriver->id_user_from,
-                  'updated_at' => $notificationDriver->updated_at,
-                  'id' => $notificationDriver->id
-                );
-
-                if($userDriverDetail->id_fcm_android) {  
-                    $requestss = array(
-                    'tokenFcm' => $userDriverDetail->id_fcm_android,
-                    'notif' => $notifs,
-                    'data' => $datass
+                $userApprovalDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
+              
+                if(isset($userApprovalDetail)){
+                    $notif = array(
+                    'title' => $notification->content_title,
+                    'body' => $notification->content_body
                     );
-                    $factory->sendNotif($requestss);
-                }
-              }
-
-              $notification = new Notification();
-              $notification->content_id = $expeditionActivity->id;
-              $notification->content_type = 'expedisi';
-              $notification->navigate_to_mobile = 'list_expedisi';
-              $notification->navigate_to_web = 'list_expedisi';
-              $notification->content_title = 'Informasi Approval Ekspedisi';
-              $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv. ' telah di approve oleh '.$userApprove->name;
-              $notification->content_img = '';
-              $notification->created_at = $current_date_time;
-              $notification->id_user_to = $expeditionActivity->created_by;
-              $notification->description = '';
-              $notification->id_user_from = $userApprove->id;
-              $notification->save();
-
-              $userApprovalDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
-             
-              if(isset($userApprovalDetail)){
-                  $notif = array(
-                  'title' => $notification->content_title,
-                  'body' => $notification->content_body
+                  $datas = array(
+                    'content_id' => $notification->content_id,
+                    'content_type' => $notification->content_type,
+                    'navigate_to_mobile' => $notification->navigate_to_mobile ,
+                    'navigate_to_web' => $notification->navigate_to_web,
+                    'content_title' => $notification->content_title,
+                    'content_body' => $notification->content_body,
+                    'content_img' => $notification->content_img,
+                    'created_at' => $notification->created_at,
+                    'id_group' => $notification->id_group,
+                    'id_user_to' => $notification->id_user_to,
+                    'description' => $notification->description,
+                    'id_user_from' => $notification->id_user_from,
+                    'updated_at' => $notification->updated_at,
+                    'id' => $notification->id
                   );
-                $datas = array(
-                  'content_id' => $notification->content_id,
-                  'content_type' => $notification->content_type,
-                  'navigate_to_mobile' => $notification->navigate_to_mobile ,
-                  'navigate_to_web' => $notification->navigate_to_web,
-                  'content_title' => $notification->content_title,
-                  'content_body' => $notification->content_body,
-                  'content_img' => $notification->content_img,
-                  'created_at' => $notification->created_at,
-                  'id_group' => $notification->id_group,
-                  'id_user_to' => $notification->id_user_to,
-                  'description' => $notification->description,
-                  'id_user_from' => $notification->id_user_from,
-                  'updated_at' => $notification->updated_at,
-                  'id' => $notification->id
-                );
 
-                if($userApprovalDetail->id_fcm_android) {
-                    $requests = array(
-                      'tokenFcm' => $userApprovalDetail->id_fcm_android,
+                  if($userApprovalDetail->id_fcm_android) {
+                      $requests = array(
+                        'tokenFcm' => $userApprovalDetail->id_fcm_android,
+                        'notif' => $notif,
+                        'data' => $datas
+                      );
+                      $factory->sendNotif($requests);
+                  }
+                }
+              }else if($exStatusActivity->status_approval == 'REJECTED'){
+                $notification = new Notification();
+                $notification->content_id = $expeditionActivity->id;
+                $notification->content_type = 'expedisi';
+                $notification->navigate_to_mobile = 'list_expedisi';
+                $notification->navigate_to_web = 'list_ekspedisi';
+                $notification->content_title = 'Informasi Approval Ekspedisi';
+                $notification->content_body = 'Expedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah di reject oleh '.$userApprove->name;
+                $notification->content_img = '';
+                $notification->created_at = $current_date_time;
+                $notification->id_user_to = $expeditionActivity->user_id;
+                $notification->description = '';
+                $notification->id_user_from = $userApprove->id;
+                $notification->save();
+
+                $userRejectedDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
+                
+                if(isset($userRejectedDetail)){
+                  $notif = array(
+                    'title' => $notification->content_title,
+                    'body' => $notification->content_body
+                  );
+                  $datas = array(
+                    'content_id' => $notification->content_id,
+                    'content_type' => $notification->content_type,
+                    'navigate_to_mobile' => $notification->navigate_to_mobile ,
+                    'navigate_to_web' => $notification->navigate_to_web,
+                    'content_title' => $notification->content_title,
+                    'content_body' => $notification->content_body,
+                    'content_img' => $notification->content_img,
+                    'created_at' => $notification->created_at,
+                    'id_group' => $notification->id_group,
+                    'id_user_to' => $notification->id_user_to,
+                    'description' => $notification->description,
+                    'id_user_from' => $notification->id_user_from,
+                    'updated_at' => $notification->updated_at,
+                    'id' => $notification->id
+                  );
+
+                  if($userRejectedDetail->id_fcm_android) {
+                      $requests = array(
+                      'tokenFcm' => $userRejectedDetail->id_fcm_android,
                       'notif' => $notif,
                       'data' => $datas
-                    );
-                    $factory->sendNotif($requests);
-                }
-              }
-            }else if($exStatusActivity->status_approval == 'REJECTED'){
-              $notification = new Notification();
-              $notification->content_id = $expeditionActivity->id;
-              $notification->content_type = 'expedisi';
-              $notification->navigate_to_mobile = 'list_expedisi';
-              $notification->navigate_to_web = 'list_ekspedisi';
-              $notification->content_title = 'Informasi Approval Ekspedisi';
-              $notification->content_body = 'Expedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah di reject oleh '.$userApprove->name;
-              $notification->content_img = '';
-              $notification->created_at = $current_date_time;
-              $notification->id_user_to = $expeditionActivity->user_id;
-              $notification->description = '';
-              $notification->id_user_from = $userApprove->id;
-              $notification->save();
+                      );
 
-              $userRejectedDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
-              
-              if(isset($userRejectedDetail)){
+                      $factory->sendNotif($requests);
+                  }
+                }
+              }else if($exStatusActivity->status_approval == 'REVISION'){
+                $notification = new Notification();
+                $notification->content_id = $expeditionActivity->id;
+                $notification->content_type = 'expedisi';
+                $notification->navigate_to_mobile = 'list_expedisi';
+                $notification->navigate_to_web = 'list_ekspedisi';
+                $notification->content_title = 'Informasi Approval Ekspedisi';
+                $notification->content_body = 'Expedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah di revisi oleh '.$userApprove->name;
+                $notification->content_img = '';
+                $notification->created_at = $current_date_time;
+                $notification->id_user_to = $expeditionActivity->user_id;
+                $notification->description = '';
+                $notification->id_user_from = $userApprove->id;
+                $notification->save();
+
+                $userReivisionDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
                 $notif = array(
                   'title' => $notification->content_title,
                   'body' => $notification->content_body
                 );
-                $datas = array(
-                  'content_id' => $notification->content_id,
-                  'content_type' => $notification->content_type,
-                  'navigate_to_mobile' => $notification->navigate_to_mobile ,
-                  'navigate_to_web' => $notification->navigate_to_web,
-                  'content_title' => $notification->content_title,
-                  'content_body' => $notification->content_body,
-                  'content_img' => $notification->content_img,
-                  'created_at' => $notification->created_at,
-                  'id_group' => $notification->id_group,
-                  'id_user_to' => $notification->id_user_to,
-                  'description' => $notification->description,
-                  'id_user_from' => $notification->id_user_from,
-                  'updated_at' => $notification->updated_at,
-                  'id' => $notification->id
-                );
+                if(isset($userReivisionDetail)){
+                  $datas = array(
+                    'content_id' => $notification->content_id,
+                    'content_type' => $notification->content_type,
+                    'navigate_to_mobile' => $notification->navigate_to_mobile ,
+                    'navigate_to_web' => $notification->navigate_to_web,
+                    'content_title' => $notification->content_title,
+                    'content_body' => $notification->content_body,
+                    'content_img' => $notification->content_img,
+                    'created_at' => $notification->created_at,
+                    'id_group' => $notification->id_group,
+                    'id_user_to' => $notification->id_user_to,
+                    'description' => $notification->description,
+                    'id_user_from' => $notification->id_user_from,
+                    'updated_at' => $notification->updated_at,
+                    'id' => $notification->id
+                  );
 
-                if($userRejectedDetail->id_fcm_android) {
-                    $requests = array(
-                    'tokenFcm' => $userRejectedDetail->id_fcm_android,
-                    'notif' => $notif,
-                    'data' => $datas
-                    );
-
-                    $factory->sendNotif($requests);
-                }
-              }
-            }else if($exStatusActivity->status_approval == 'REVISION'){
-              $notification = new Notification();
-              $notification->content_id = $expeditionActivity->id;
-              $notification->content_type = 'expedisi';
-              $notification->navigate_to_mobile = 'list_expedisi';
-              $notification->navigate_to_web = 'list_ekspedisi';
-              $notification->content_title = 'Informasi Approval Ekspedisi';
-              $notification->content_body = 'Expedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah di revisi oleh '.$userApprove->name;
-              $notification->content_img = '';
-              $notification->created_at = $current_date_time;
-              $notification->id_user_to = $expeditionActivity->user_id;
-              $notification->description = '';
-              $notification->id_user_from = $userApprove->id;
-              $notification->save();
-
-              $userReivisionDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
-              $notif = array(
-                'title' => $notification->content_title,
-                'body' => $notification->content_body
-              );
-              if(isset($userReivisionDetail)){
-                $datas = array(
-                  'content_id' => $notification->content_id,
-                  'content_type' => $notification->content_type,
-                  'navigate_to_mobile' => $notification->navigate_to_mobile ,
-                  'navigate_to_web' => $notification->navigate_to_web,
-                  'content_title' => $notification->content_title,
-                  'content_body' => $notification->content_body,
-                  'content_img' => $notification->content_img,
-                  'created_at' => $notification->created_at,
-                  'id_group' => $notification->id_group,
-                  'id_user_to' => $notification->id_user_to,
-                  'description' => $notification->description,
-                  'id_user_from' => $notification->id_user_from,
-                  'updated_at' => $notification->updated_at,
-                  'id' => $notification->id
-                );
-
-                if($userReivisionDetail->id_fcm_android) {
-                    $requests = array(
-                      'tokenFcm' => $userReivisionDetail->id_fcm_android,
-                      'notif' => $notif,
-                      'data' => $datas
-                    );
-                    $factory->sendNotif($requests);
+                  if($userReivisionDetail->id_fcm_android) {
+                      $requests = array(
+                        'tokenFcm' => $userReivisionDetail->id_fcm_android,
+                        'notif' => $notif,
+                        'data' => $datas
+                      );
+                      $factory->sendNotif($requests);
+                  }
                 }
               }
             }else if($exStatusActivity->status_activity == 'DRIVER_SELESAI_EKSPEDISI'){
