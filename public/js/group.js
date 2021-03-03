@@ -101,7 +101,8 @@ $("document").ready(function(){
                      "<td>"+ group_name +"</td>"+
                      "<td align='center'>"+
                        "<div class='btn-group'>"+
-                         "<a class='btn btn-slack btn-icon-only btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#group-modal'><i class='fas fa-edit'></i></a>"+
+                         "<a class='btn btn-warning btn-icon-only btn-sm' href='"+window.Laravel.app_url +"/role/"+id+"'><i class='fas fa-list'></i></a>"+
+                         "<a class='btn btn-slack btn-icon-only btn-sm' href='' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#group-modal'><i class='fas fa-edit'></i></a>"+
                          "<a class='btn btn-danger btn-icon-only btn-sm btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
                        "</div>"+
                      "</td>"+

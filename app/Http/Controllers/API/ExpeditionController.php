@@ -514,7 +514,7 @@ class ExpeditionController extends Controller
           DB::connection(Auth::user()->schema)->rollback();
           return response()->json([
               'code' => 405,
-              'code_message' => 'Expedisi belum di Approve, Harap Hubungi Admin',
+              'code_message' => 'Expedisi belum di Approve oleh Owner, Harap Hubungi Owner',
               'code_type' => 'BadRequest',
           ], 405);
       }
