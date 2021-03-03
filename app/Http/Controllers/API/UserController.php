@@ -158,12 +158,12 @@ class UserController extends Controller
   public function edit(Request $request)
   {
       $input = $request->all();
-      $validator = Validator::make($request->all(), [
-          'name' => 'required',
-          'email' => 'required|email|unique:users,email,'.$input['id'].',id',
-          'password' => 'nullable',
-          'password_confirmation' => 'nullable|same:password'
-      ]);
+      // $validator = Validator::make($request->all(), [
+      //     'name' => 'required',
+      //     'email' => 'required|email|unique:users,email,'.$input['id'].',id',
+      //     'password' => 'nullable',
+      //     'password_confirmation' => 'nullable|same:password'
+      // ]);
 
       if(isset($input['password'])) {
         $input['password'] = bcrypt($input['password']);
