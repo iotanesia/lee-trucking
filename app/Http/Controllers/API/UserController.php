@@ -120,13 +120,22 @@ class UserController extends Controller
         unset($input['is_active']);
         unset($input['id']);
 
-        // foreach($input as $key => $row) {
-        //   $userDetail->{$key} = $row;
-        // }
-        $userDetail->first_name = $request->name;
+        $userDetail->first_name = isset($request->first_name) && $request->first_name ? $request->first_name : $request->name;
+        $userDetail->last_name = $request->last_name;
+        $userDetail->nomor_hp = $request->nomor_hp;
+        $userDetail->jenis_kelamin = $request->jenis_kelamin;
+        $userDetail->tgl_lahir = $request->tgl_lahir;
+        $userDetail->agama = $request->agama;
+        $userDetail->no_rek = $request->no_rek;
+        $userDetail->nama_bank = $request->nama_bank;
+        $userDetail->nama_rekening = $request->nama_rekening;
         $userDetail->id_user = $user->id;
         $userDetail->created_at = $current_date_time;
         $userDetail->created_by = $userAuth->id;
+
+        // foreach($input as $key => $row) {
+        //   $userDetail->{$key} = $row;
+        // }
 
         if($userDetail->save()) {
           return response()->json([
@@ -184,6 +193,15 @@ class UserController extends Controller
       
       unset($input['_token']);
       unset($input['password_confirmation']);
+      unset($input['first_name']);
+      unset($input['last_name']);
+      unset($input['nomor_hp']);
+      unset($input['jenis_kelamin']);
+      unset($input['tgl_lahir']);
+      unset($input['agama']);
+      unset($input['no_rek']);
+      unset($input['nama_bank']);
+      unset($input['nama_rekening']);
   
       foreach($input as $key => $row) {
           if($row) {
@@ -192,6 +210,19 @@ class UserController extends Controller
       }
 
       if($user->save()){
+        $userDetail = UserDetail::where('id_user', $input['id'])->first();
+        isset($request->first_name) && $request->first_name ? $userDetail->first_name = $request->first_name : null;
+        isset($request->last_name) && $request->last_name ? $userDetail->last_name = $request->last_name : null;
+        isset($request->nomor_hp) && $request->nomor_hp ? $userDetail->nomor_hp = $request->nomor_hp : null;
+        isset($request->jenis_kelamin) && $request->jenis_kelamin ? $userDetail->jenis_kelamin = $request->jenis_kelamin : null;
+        isset($request->tgl_lahir) && $request->tgl_lahir ? $userDetail->tgl_lahir = $request->tgl_lahir : null;
+        isset($request->agama) && $request->agama ? $userDetail->agama = $request->agama : null;
+        isset($request->no_rek) && $request->no_rek ? $userDetail->no_rek = $request->no_rek : null;
+        isset($request->nama_bank) && $request->nama_bank ? $userDetail->nama_bank = $request->nama_bank : null;
+        isset($request->nama_rekening) && $request->nama_rekening ? $userDetail->nama_rekening = $request->nama_rekening : null;
+        $userDetail->id_user = $user->id;
+        $userDetail->save();
+
         return response()->json([
             'code' => 200,
             'code_message' => 'Berhasil menyimpan data',

@@ -56,6 +56,15 @@ class UserController extends Controller
 
       unset($data['_token']);
       unset($data['id']);
+      unset($data['first_name']);
+      unset($data['last_name']);
+      unset($data['nomor_hp']);
+      unset($data['jenis_kelamin']);
+      unset($data['tgl_lahir']);
+      unset($data['agama']);
+      unset($data['no_rek']);
+      unset($data['nama_bank']);
+      unset($data['nama_rekening']);
 
       foreach($data as $key => $row) {
         $customer->{$key} = $row;
