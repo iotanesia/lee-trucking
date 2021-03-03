@@ -1,5 +1,11 @@
 @extends('layouts/layouts')
 @section('content')
+<style>
+.modal-dialog {
+    max-width: 80%;
+    height: 100%;
+}
+</style>
     <div class="header bg-gradient-info pb-6">
       <div class="container-fluid">
         <div class="header-body">
@@ -100,38 +106,116 @@
             <form role="form" id="user-form">
                 <input type="hidden" name="id" id="id">
                 <div class="card-body">
-                    <div class="form-group">
-                        <label for="user_name">Username</label>
-                        <input type="text" class="form-control" name="name" id="user_name" placeholder="user_name">
+                    <div class="row">    
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="user_name">Username</label>
+                                <input type="text" class="form-control" name="name" id="user_name" placeholder="user_name">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="email">Email</label>
+                                <input type="email" class="form-control" name="email" id="email" placeholder="email">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="user_parent">Group</label>
+                                <select name="group_id" id="group_id" class="form-control">
+                                    <option value=""></option>
+                                    @foreach($group as $row)
+                                    <option value="{{$row->id}}">{{$row->group_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="email">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="password">Password</label>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="password">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="password_confirmation">Password Confirmation</label>
+                                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="password_confirmation">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="user_parent">Status</label>
+                                <select name="is_active" id="is_active" class="form-control">
+                                    <option value="1">Active</option>
+                                    <option value="0">Not Active</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="password">
+                    <hr>
+                    <div class="row">    
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="first_name">First name</label>
+                                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first_name">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="last_name">Last name</label>
+                                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last_name">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="nomor_hp">Nomor HP</label>
+                                <input type="text" class="form-control" name="nomor_hp" id="nomor_hp" placeholder="nomor_hp">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="password_confirmation">Password Confirmation</label>
-                        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="password_confirmation">
+                    <div class="row">    
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="jenis_kelamin">Jenis Kelamin</label>
+                                <input type="text" class="form-control" name="jenis_kelamin" id="jenis_kelamin" placeholder="jenis_kelamin">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="tgl_lahir">Tgl Lahir</label>
+                                <input type="text" class="form-control" name="tgl_lahir" id="tgl_lahir" placeholder="tgl_lahir">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="agama">Agama</label>
+                                <input type="text" class="form-control" name="agama" id="agama" placeholder="agama">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="user_parent">Group</label>
-                        <select name="group_id" id="group_id" class="form-control">
-                            <option value=""></option>
-                            @foreach($group as $row)
-                            <option value="{{$row->id}}">{{$row->group_name}}</option>
-                            @endforeach
-                        </select>
+                    <div class="row">    
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="no_rek">No Rekening</label>
+                                <input type="text" class="form-control" name="no_rek" id="no_rek" placeholder="no_rek">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="nama_bank">Nama Bank</label>
+                                <input type="text" class="form-control" name="nama_bank" id="nama_bank" placeholder="nama_bank">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="nama_rekening">Nama Rekening</label>
+                                <input type="text" class="form-control" name="nama_rekening" id="nama_rekening" placeholder="nama_rekening">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="user_parent">Status</label>
-                        <select name="is_active" id="is_active" class="form-control">
-                            <option value="1">Active</option>
-                            <option value="0">Not Active</option>
-                        </select>
-                    </div>
+                </div>
             </form>
         </div>
         <div class="modal-footer">

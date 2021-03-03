@@ -49,7 +49,8 @@ class DropDownController extends Controller
             $data = $request->all();
             $driverList = Driver::join('all_global_param', 'ex_master_driver.driver_status', 'all_global_param.id')
                           ->leftJoin('ex_master_kenek', 'ex_master_driver.kenek_id', 'ex_master_kenek.id')
-                          ->select('ex_master_driver.*', 'all_global_param.param_name as status_name', 'ex_master_kenek.kenek_name')
+                          ->join('usr_detail', 'usr_detail.id_user', 'ex_master_driver.id_user')
+                          ->select('ex_master_driver.*', 'all_global_param.param_name as status_name', 'ex_master_kenek.kenek_name', 'usr_detail.no_rek', 'usr_detail.nama_bank', 'usr_detail.nama_rekening')
                           ->orderBy('id', 'ASC')
                           ->get();
             
