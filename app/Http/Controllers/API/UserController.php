@@ -165,33 +165,30 @@ class UserController extends Controller
       //     'password_confirmation' => 'nullable|same:password'
       // ]);
 
-      if(isset($input['password'])) {
-        $input['password'] = bcrypt($input['password']);
-      }
+      $user = Auth::user();
+  
       
-      $userAuth = Auth::user();
       $current_date_time = Carbon::now()->toDateTimeString();
-      if ($validator->fails()) {
-        return response()->json([
-          'code' => 401,
-          'code_message' => 'Fail',
-          'code_type' => 'BadRequest',
-          'data'=> null
-        ], 401);      
-      }
+      // if ($validator->fails()) {
+      //   return response()->json([
+      //     'code' => 401,
+      //     'code_message' => 'Fail',
+      //     'code_type' => 'BadRequest',
+      //     'data'=> null
+      //   ], 401);      
+      // }
 
-      $user = User::find($input['id']);
-      
+      $userDetail = UserDetail::where('id_user',$user->id)->first();
       unset($input['_token']);
       unset($input['password_confirmation']);
-  
+      if(isset($userDetail)){
       foreach($input as $key => $row) {
           if($row) {
-              $user->{$key} = $row;
+              $userDetail->{$key} = $row;
           }
       }
 
-      if($user->save()){
+      if($userDetail->save()){
         return response()->json([
             'code' => 200,
             'code_message' => 'Berhasil menyimpan data',
@@ -203,9 +200,15 @@ class UserController extends Controller
           'code' => 400,
           'code_message' => 'Gagal menyimpan user',
           'code_type' => 'BadRequest',
-          'data'=> null
         ], 400);
-      }       
+      }  
+    }else{
+        return response()->json([
+        'code' => 400,
+        'code_message' => 'Gagal menyimpan user',
+        'code_type' => 'BadRequest',
+      ], 400);
+    }            
   }
 
   public function details()
