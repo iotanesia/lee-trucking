@@ -151,8 +151,8 @@ class ExpeditionController extends Controller
                    
       foreach($expeditionActivityList as $row) {
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
+        $row->driverAction = $row->status_activity !== "SUBMIT" ? true : false;
         $row->data_json = $row->toJson();
-
 
         $approvalCode = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
                         ->leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
@@ -163,9 +163,10 @@ class ExpeditionController extends Controller
         $allglobalParam = GlobalParam::where('param_code', $row->otv_payment_method)->first();
 
         if(isset($allglobalParam)){
-        $row->otv_payment_method_name = $allglobalParam['param_name'];
-        }else{
-        $row->otv_payment_method_name = null;
+            $row->otv_payment_method_name = $allglobalParam['param_name'];
+        
+        } else {
+            $row->otv_payment_method_name = null;
         }
 
         $row->approval_code = $approvalCode['approval_code'];

@@ -196,7 +196,7 @@ $("document").ready(function() {
         $("#expedition-form").find("textarea[name=content]").summernote("code", dataJSON.content);
 
         if(dataJSON.status_activity !== "SUBMIT") {
-            $("#expedition-modal #btn-submit").hide();
+            // $("#expedition-modal #btn-submit").hide();
             $("#expedition-modal #btn-reject").hide();
             $("#expedition-modal #btn-revision").hide();
             
