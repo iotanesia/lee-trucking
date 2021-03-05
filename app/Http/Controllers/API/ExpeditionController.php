@@ -151,7 +151,7 @@ class ExpeditionController extends Controller
                    
       foreach($expeditionActivityList as $row) {
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
-        $row->driverAction = $row->status_activity !== "SUBMIT" ? true : false;
+        $row->driver_action = $row->status_activity !== "SUBMIT" ? true : false; 
         $row->data_json = $row->toJson();
 
         $approvalCode = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
