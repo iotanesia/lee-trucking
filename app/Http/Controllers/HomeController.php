@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\UserDetail;
+use App\Models\GlobalParam;
+use App\Models\Group;
 use Auth;
 use DB;
 
@@ -84,13 +86,57 @@ class HomeController extends Controller
     {
         $customerList = Customer::all();
         $tenanList = Tenan::all();
-        return view('transaksi', compact('customerList', 'tenanList'));
+        return view('transaksi', compact('customerList', 'tenanList', 'jk', 'agama'));
     }
 
     public function myProfile(Request $request)
     {
         $data['user_detail'] = UserDetail::where('id_user', Auth::user()->id)->first();
+        $data['group'] = GROUP::find(Auth::user()->group_id);
+
+        if($data['group']['group__name'] == 'driver') {
+        }
+
+        $data['jk'] = GlobalParam::where('param_type', 'JENIS_KELAMIN')->get();
+        $data['agama'] = GlobalParam::where('param_type', 'AGAMA')->get();
         return view('my_profile', $data);
+    }
+
+    public function updateProfile(Request $request) {
+        $data = $request->all();
+        unset($data['name']);
+        unset($data['email']);
+        unset($data['_token']);
+        unset($data['user_id']);
+        unset($data['foto_profil']);
+
+        if(isset($data['tgl_lahir'])) {
+            $data['tgl_lahir'] = date('Y-m-d', strtotime($data['tgl_lahir']));
+        }
+
+        $user_detail = UserDetail::where('id_user', $request->user_id)->first();
+        // dd($request->user_id);
+        // dd($data);
+        if(isset($request->foto_profil)){
+            //upload image
+            $img = $request->foto_profil;
+            $fileExt = $img->extension();
+            $fileName = "IMG-PROFILE-".$request->first_name."-".$request->id.".".$fileExt;
+            $path = public_path().'/uploads/profilephoto/' ;
+  
+            $user_detail->foto_profil = $fileName;
+
+            $img->move($path, $fileName);
+        }
+
+        foreach($data as $key => $val) {
+            $user_detail->$key = $val;
+        }
+        // die;
+        $user_detail->save();
+        
+        return redirect('my-profile');
+
     }
 
 }
