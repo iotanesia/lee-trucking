@@ -1,5 +1,13 @@
 @extends('layouts/layouts')
 @section('content')
+<style>
+.card-img-top {
+    width: 100%;
+    border-top-left-radius: calc(.375rem - 1px);
+    border-top-right-radius: calc(.375rem - 1px);
+    height: 450px;
+}
+</style>
     <div class="header pb-6 d-flex align-items-center" style="min-height: 500px; background-size: cover; background-position: center top;">
       <!-- Mask -->
       <span class="mask bg-gradient-default opacity-8"></span>
@@ -18,12 +26,12 @@
       <div class="row">
         <div class="col-xl-4 order-xl-2">
           <div class="card card-profile">
-            <img src="../../assets/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
+            <img src="{{url('/assets/img/LOGO PNG CMYK 300 DPI-01.png')}}" width="10" alt="Image placeholder" class="card-img-top">
             <div class="row justify-content-center">
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                    <img src="../../assets/img/theme/team-4.jpg" class="rounded-circle">
+                    <img src="@if($user_detail['foto_profil']) {{url('uploads/profilephoto/'.$user_detail['foto_profil'])}} @else ../../assets/img/theme/team-4.jpg @endif" class="rounded-circle">
                   </a>
                 </div>
               </div>
@@ -45,65 +53,20 @@
                 {{Auth::user()->name}}<span class="font-weight-light"></span>
                 </h5>
                 <div class="h5 font-weight-300">
-                  <i class="ni location_pin mr-2"></i>Jakarta
+                  <i class="ni location_pin mr-2"></i>{{$group->group_name}} 
                 </div>
                 <div class="h5 mt-4">
-                  <i class="ni business_briefcase-24 mr-2"></i> - 
+                  <i class="ni business_briefcase-24 mr-2"></i> 
                 </div>
                 <div>
-                  <i class="ni education_hat mr-2"></i>PT 
+                  <i class="ni education_hat mr-2"></i>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="col-xl-8 order-xl-1">
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="card bg-gradient-info border-0">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0 text-white">Total traffic</h5>
-                      <span class="h2 font-weight-bold mb-0 text-white">350,897</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
-                        <i class="ni ni-active-40"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-white mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap text-light">Since last month</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="card bg-gradient-danger border-0">
-                <!-- Card body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0 text-white">Performance</h5>
-                      <span class="h2 font-weight-bold mb-0 text-white">49,65%</span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-white text-dark rounded-circle shadow">
-                        <i class="ni ni-spaceship"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-white mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap text-light">Since last month</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          
           <div class="card">
             <div class="card-header">
               <div class="row align-items-center">
@@ -111,13 +74,14 @@
                   <h3 class="mb-0">Edit profile </h3>
                 </div>
                 <div class="col-4 text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+                  <!-- <a href="#!" class="btn btn-sm btn-primary">Settings</a> -->
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <form action="{{url('/update-profile')}}" method="POST">
+              <form action="{{url('/update-profile')}}" method="POST" enctype="multipart/form-data">
               @csrf
+                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                 <h6 class="heading-small text-muted mb-4">User information</h6>
                 <div class="pl-lg-4">
                   <div class="row">
@@ -152,13 +116,23 @@
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-first-name">Jenis Kelain</label>
-                        <input type="text" id="input-first-name" class="form-control" placeholder="Jenis Kelamin" name="jenis_kelamin" value="{{$user_detail['jenis_kelamin']}}">
+                        <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
+                            <option value=""></option>
+                            @foreach($jk as $row)
+                            <option value="{{$row->id}}" @if($user_detail['jenis_kelamin'] == $row->id) selected @endif>{{$row->param_name}}</option>
+                            @endforeach
+                        </select>
                       </div>
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label" for="input-last-name">Agama</label>
-                        <input type="text" id="input-last-name" class="form-control" placeholder="Last name" name="last_name" value="{{$user_detail['agama']}}">
+                        <select name="agama" id="agama" class="form-control">
+                            <option value=""></option>
+                            @foreach($agama as $row)
+                            <option value="{{$row->id}}" @if($user_detail['agama'] == $row->id) selected @endif>{{$row->param_name}}</option>
+                            @endforeach
+                        </select>
                       </div>
                     </div>
                     <div class="col-lg-4">
@@ -205,7 +179,20 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="form-control-label" for="input-address">Alamat</label>
-                        <textarea id="input-address" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text"> </textarea>
+                        <textarea id="input-address" class="form-control" placeholder="Home Address" name="alamat" type="text"> {{$user_detail['alamat']}} </textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4" />
+                <!-- Address -->
+                <h6 class="heading-small text-muted mb-4">Upload Foto</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-city">Foto</label>
+                        <input type="file" id="input-city" class="form-control" name="foto_profil">
                       </div>
                     </div>
                   </div>
@@ -234,6 +221,7 @@
   
 <script src="{{asset('daterangepicker/moment.min.js')}}"></script>
 <script src="{{asset('daterangepicker/daterangepicker.js')}}"></script>
+<script src="assets/vendor/select2/dist/js/select2.min.js"></script>
 <script src="{{asset('js/event.js')}}"></script>
 <script>
     $("#tgl_lahir").daterangepicker({
@@ -241,6 +229,12 @@
             format: 'DD-MM-YYYY'
         },
         singleDatePicker : true,
+    });
+    $("#agama").select2({
+        placeholder:"Select Agama"
+    });
+    $("#jenis_kelamin").select2({
+        placeholder:"Select Jenis Kelamin"
     });
 </script>
 @endsection
