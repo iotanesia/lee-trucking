@@ -152,50 +152,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xl-4">
-          <!-- Members list group card -->
-          <div class="card">
-            <!-- Card header -->
-            <div class="card-header">
-              <!-- Title -->
-              <h5 class="h3 mb-0">Supir Rit Terbanyak</h5>
-            </div>
-            <!-- Card body -->
-            <div class="card-body">
-              <!-- List group -->
-              <ul class="list-group list-group-flush list my--3">
-                @foreach($driver as $key => $row)
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="assets/img/theme/team-4.jpg">
-                      </a>
-                    </div>
-                    <div class="col ml--2">
-                      <h4 class="mb-0">
-                        <a href="#!">{{$row->driver_name}}</a>
-                      </h4>
-                      @if($row->driver_status == 8)
-                      <span class="text-success">●</span>
-                      <small>Available</small>
-                      @else
-                      <span class="text-danger">●</span>
-                      <small>Not Available</small>
-                      @endif
-                    </div>
-                    <div class="col-auto">
-                    {{$row->total_rit}}
-                    </div>
-                  </div>
-                </li>
-                @endforeach
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4">
+        <div class="col-xl-6">
           <!-- Checklist -->
           <div class="card">
             <!-- Card header -->
@@ -204,7 +161,44 @@
               <h5 class="h3 mb-0">Truck Rit Terbanyak</h5>
             </div>
             <!-- Card body -->
-            <div class="card-body p-0">
+            <div class="card-body">
+              <!-- List group -->
+              <ul class="list-group list-group-flush" data-toggle="checklist">
+                @foreach($driver as $key => $row)
+                <li class="checklist-entry list-group-item flex-column align-items-start py-4 px-4">
+                  <div class="checklist-item checklist-item-info">
+                    <div class="checklist-info">
+                      <h5 class="checklist-title mb-0">{{$row->driver_name}}</h5>
+                      @if($row->driver_status == 8)
+                      <span class="text-success">●</span>
+                      <small>Available</small>
+                      @else
+                      <span class="text-danger">●</span>
+                      <small>Not Available</small>
+                      @endif
+                    </div>
+                    <div>
+                      <div class="custom-control custom-checkbox custom-checkbox-warning">
+                      {{$row->total_rit}}
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                @endforeach
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6">
+          <!-- Checklist -->
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header">
+              <!-- Title -->
+              <h5 class="h3 mb-0">Truck Rit Terbanyak</h5>
+            </div>
+            <!-- Card body -->
+            <div class="card-body">
               <!-- List group -->
               <ul class="list-group list-group-flush" data-toggle="checklist">
                 @foreach($truckRit as $rows)
