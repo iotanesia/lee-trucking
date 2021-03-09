@@ -79,7 +79,11 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
+                    @if($total_income < 0)
+                    <span class="text-danger mr-2"><i class="fa fa-arrow-down"></i></span>
+                    @else
                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i></span>
+                    @endif
                     <span class="text-nowrap">Current Month</span>
                   </p>
                 </div>
