@@ -114,7 +114,7 @@ var successLoadtruck = (function(responses, dataModel) {
                    "<td>"+ def(truck_plat) +"</td>"+
                    "<td>"+ def(truck_status) +"</td>"+
                    "<td>"+ def(truck_corporate_asal) +"</td>"+
-                   "<td>"+ def(truck_date_join) +"</td>"+
+                   "<td>"+ dateFormat(truck_date_join) +"</td>"+
                    "<td>"+ def(cabang_id) +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
