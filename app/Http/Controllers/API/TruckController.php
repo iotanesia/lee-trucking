@@ -75,7 +75,7 @@ class TruckController extends Controller
       unset($data['_token']);
       unset($data['id']);
       
-      if(issset($data['truck_date_join'])) {
+      if(isset($data['truck_date_join'])) {
           $data['truck_date_join'] = date('Y-m-d', strtotime($data['truck_date_join']));
       }
 
@@ -125,7 +125,7 @@ class TruckController extends Controller
       unset($data['_token']);
       unset($data['id']);
 
-      if(issset($data['truck_date_join'])) {
+      if(isset($data['truck_date_join'])) {
         $data['truck_date_join'] = date('Y-m-d', strtotime($data['truck_date_join']));
       }
       
