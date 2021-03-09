@@ -472,6 +472,7 @@ class WareHouseController extends Controller
                           }
                         }
                       })
+                      ->where('type', 'GUDANG')
                       ->first();
       
       if(!isset($sparePartList)){
