@@ -49,7 +49,7 @@
                     <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
                 </button>
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-group-sparepart" api-route="get-list-pagination" data-model="group-sparepart" request-url="{{ route('api-group-sparepart') }}" on-success-load="successLoadgroup-sparepart">
+                    <table class="table align-items-center table-flush table-striped" id="table-group-sparepart" api-route="get-list-pagination" data-model="group-sparepart" request-url="{{ route('api-group-sparepart') }}" on-success-load="successLoadgroupsparepart">
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>N0</th>
