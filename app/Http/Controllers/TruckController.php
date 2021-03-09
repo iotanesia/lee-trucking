@@ -31,8 +31,8 @@ class TruckController extends Controller
     {
         $data['title'] = 'Truck';
         $data['status'] = GlobalParam::where('param_type', 'TRUCK_STATUS')->get();
-        $data['cabangList'] = Cabang::all();
-        $data['driverList'] = Driver::all();
+        $data['cabangList'] = Cabang::where('is_deleted', 'false')->get();
+        $data['driverList'] = Driver::where('is_deleted', 'false')->get();
         return view('master.truck.index', $data);
     }
 
