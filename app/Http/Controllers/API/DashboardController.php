@@ -17,10 +17,10 @@ class DashboardController extends Controller
     public function getList(Request $request) {
         if($request->isMethod('GET')) {
             $schema = Auth::user()->schema;
-            $totalEx = DB::select('SELECT COUNT(id) AS total FROM '.$schema.'.expedition_activity');
+            $totalEx = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE EXTRACT(MONTH FROM updated_at) = ".$bln."  AND EXTRACT(YEAR FROM updated_at) = ".$thn."");
             $totalClose = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity = 'CLOSED_EXPEDITION'");
             $totalOnProggres = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity <> 'CLOSED_EXPEDITION'");
-            $totalrepair = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header");
+            $totalrepair = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE EXTRACT(MONTH FROM updated_at) = ".$bln."  AND EXTRACT(YEAR FROM updated_at) = ".$thn."");
             $totalrepairBan = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE kode_repair LIKE '%RPBAN-%'");
             $totalrepairNonBan = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE kode_repair LIKE '%RP-%'");
             $totaltruck = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".ex_master_truck");
