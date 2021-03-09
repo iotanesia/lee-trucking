@@ -35,7 +35,7 @@
                   <p class="mt-3 mb-0 text-sm">
                     <span class="text-warning mr-2"><i class="fas fa-spinner"></i> {{$total_on_progress->total}}</span>
                     <span class="text-success mr-2"></i><i class="fas fa-check"></i> {{$total_close->total}}</span>
-                    <span class="text-nowrap">Since last month</span>
+                    <span class="text-nowrap">Current Month</span>
                   </p>
                 </div>
               </div>
@@ -58,7 +58,7 @@
                   <p class="mt-3 mb-0 text-sm">
                     <span class="text-success mr-2"><i class="fas fa-wrench"></i> {{$total_repairNonBan->total}}</span>
                     <span class="text-success mr-2"><i class="fas fa-ring"></i> {{$total_repairBan->total}}</span>
-                    <span class="text-nowrap">Since last month</span>
+                    <span class="text-nowrap">Current Month</span>
                   </p>
                 </div>
               </div>
@@ -80,7 +80,7 @@
                   </div>
                   <p class="mt-3 mb-0 text-sm">
                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i></span>
-                    <span class="text-nowrap">Since last month</span>
+                    <span class="text-nowrap">Current Month</span>
                   </p>
                 </div>
               </div>
