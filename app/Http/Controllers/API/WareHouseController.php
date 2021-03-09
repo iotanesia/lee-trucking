@@ -23,7 +23,6 @@ class WareHouseController extends Controller
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
                                        'stk_master_sparepart.group_sparepart_id')
-                       ->join('all_global_param as sparepart_jenis', 'stk_master_sparepart.sparepart_jenis', 'sparepart_jenis.param_code')
                        ->where('stk_master_sparepart.is_deleted','=','false')
                        ->where(function($query) use($whereField, $whereValue) {
                            if($whereValue) {
@@ -290,6 +289,7 @@ class WareHouseController extends Controller
   public function add(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
+      $data['amount'] = str_replace('.', '', $data['amount']);
       $img = $request->file('img_sparepart');
       $sparePart = new SparePart;
 
@@ -298,11 +298,9 @@ class WareHouseController extends Controller
       $validator = Validator::make($request->all(), [
         'sparepart_name' => 'required|string|max:255',
         'sparepart_status' => 'required',
-        'sparepart_jenis' => 'required',
         'jumlah_stok' => 'required',
         'group_sparepart_id' => 'required',
         'barcode_pabrik' => 'required',
-        'sparepart_type' => 'required',
         'merk_part' => 'required',
       ]);
 

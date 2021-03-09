@@ -36,7 +36,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-12">
-          <div class="card" id="expedition"    >
+          <div class="card" id="expedition">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
