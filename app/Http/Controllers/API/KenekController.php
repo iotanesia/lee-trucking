@@ -23,6 +23,7 @@ class KenekController extends Controller
                        }
                      }
                    })
+                   ->where('ex_master_kenek.is_deleted', 'false')
                    ->select('ex_master_kenek.*', 'all_global_param.param_name as status_name')
                    ->orderBy('id', 'ASC')
                    ->paginate();

@@ -22,6 +22,7 @@ class RewardController extends Controller
                           }
                         }
                       })
+                      ->where('is_deleted', 'false')
                       ->orderBy('id', 'ASC')
                       ->paginate();
       

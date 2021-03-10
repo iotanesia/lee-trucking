@@ -326,6 +326,17 @@ class SparePartController extends Controller
           $sparePart->type = 'SPAREPART';
         }
 
+        if(isset($img)){
+            //upload image
+            $fileExt = $img->extension();
+            $fileName = "IMG-SPAREPART-".$sparePart->barcode_gudang.".".$fileExt;
+            $path = public_path().'/uploads/sparepart/' ;
+            $oldFile = $path.$sparePart->barcode_gudang;
+   
+            $sparePart->img_sparepart = $fileName;
+            $img->move($path, $fileName);
+         }
+
         $sparePart->created_at = $current_date_time;
         $sparePart->created_by = $user_id;
        

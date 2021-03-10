@@ -324,6 +324,17 @@ class WareHouseController extends Controller
           $sparePart->type = 'GUDANG';
         }
 
+        if(isset($img)){
+            //upload image
+            $fileExt = $img->extension();
+            $fileName = "IMG-SPAREPART-".$sparePart->barcode_gudang.".".$fileExt;
+            $path = public_path().'/uploads/sparepart/' ;
+            $oldFile = $path.$sparePart->barcode_gudang;
+   
+            $sparePart->img_sparepart = $fileName;
+            $img->move($path, $fileName);
+         }
+
         $sparePart->created_at = $current_date_time;
         $sparePart->created_by = $user_id;
        
@@ -483,7 +494,7 @@ class WareHouseController extends Controller
           'data'=> null
         ], 404);
       }else{
-        $sparePartList->img_sparepart = ($sparePartList->img_sparepart) ? url('uploads/sparepart/'.$sparePartList->img_sparepart) :url('uploads/sparepart/nia3.png');
+        $sparePartList->img_sparepart = ($sparePartList->img_sparepart) ? url('uploads/sparepart/'.$sparePartList->img_sparepart) : url('uploads/sparepart/nia3.png');
         $sparePartList->data_json = $sparePartList->toJson();
         return response()->json([
           'code' => 200,
