@@ -1,6 +1,5 @@
 @extends('layouts/layouts')
-
-@section('styles')
+@section('content')
 <style>
   .modal-dialog {
       max-width: 80%;
@@ -8,10 +7,14 @@
   }
   .toolbar {
     float: left;
-}
+  } 
+  .card .table td, .card .table th {
+    padding-left: 1.2rem !important;
+    padding-right: 1.2rem !important;
+    padding-top: 0.7rem !important;
+    padding-bottom: 0.7rem !important;
+  }
   </style>
-@endsection
-@section('content')
     <div class="header bg-gradient-info pb-6">
       <div class="container-fluid">
         <div class="header-body">
@@ -41,12 +44,32 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
-                  <h5 class="h3 mb-0">Table {{$title}}</h5>
+                  <h5 class="h3 mb-0">Table {{$title}}</h5><br/>
+                  <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm">
+                    <li class="nav-item submenu">
+                        <a class="nav-link active show" id="user-ad" data-toggle="tab" href="#ad" role="tab" aria-selected="true">BO</a>
+                    </li>
+                    <li class="nav-item submenu">
+                        <a class="nav-link" id="user-up" data-toggle="tab" href="#up" role="tab" aria-selected="false">BA</a>
+                    </li>
+                    <li class="nav-item submenu">
+                        <a class="nav-link" id="user-ud" data-toggle="tab" href="#ud" role="tab" aria-selected="false">BJ</a>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
             <div class="card-body">
-                <div class="">
+            <div class="tab-content">
+              <div id="ad" class="tab-pane in active">
+                    <div class="input-group input-group-alternative input-group-merge col-md-4" 
+                        style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                      </div>
+                      <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                    </div>
+                    <br/>
                     <table class="table table-responsive align-items-center table-striped" id="table-invoice-bo" son-success-load="successLoadexpedition" width="100%">
                         <thead class="bg-gradient-info text-white">
                         <tr>
@@ -115,7 +138,15 @@
                       </tfoot>
                     </table>
                 </div>
-                <div class="">
+                <div id="up" class="tab-pane in fade">
+                    <div class="input-group input-group-alternative input-group-merge col-md-4" 
+                          style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        </div>
+                        <input class="form-control" name="dateRangeBA" placeholder="Pilih Rentang Tanggal" type="text" style="text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                    </div>
+                    <br/>
                     <table class="table table-responsive align-items-center table-striped" id="table-invoice-ba" son-success-load="successLoadexpedition" width="100%">
                         <thead class="bg-gradient-info text-white">
                         <tr>
@@ -184,7 +215,15 @@
                         </tfoot>
                         </table>
                     </div>
-                    <div class="">
+                    <div id="ud" class="tab-pane fade">
+                      <div class="input-group input-group-alternative input-group-merge col-md-4" 
+                          style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        </div>
+                        <input class="form-control" name="dateRangeBJ" placeholder="Pilih Rentang Tanggal" type="text" style="text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                      </div>
+                      <br/>
                         <table class="table table-responsive align-items-center table-striped" id="table-invoice-bj" son-success-load="successLoadexpedition" width="100%">
                             <thead class="bg-gradient-info text-white">
                             <tr>
@@ -214,49 +253,15 @@
                                   <td></td>
                                   <td></td>
                               </tr>
-                              <tr style="font-weight:bold">
-                                <td style="text-align:left">
-                                    <td></td>
-                                    <td></td>
-                                    <td style="text-align:center"></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                            </tr>
-                            <tr style="font-weight:bold">
-                                <td style="text-align:left">
-                                    <td></td>
-                                    <td></td>
-                                    <td style="text-align:center"></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td style="color:#f02e2e;"></td>
-                          </tr>
-                          <tr style="font-weight:bold">
-                            <td style="text-align:left">
-                                <td></td>
-                                <td></td>
-                                <td style="text-align:center"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td style="background-color:#f2de68;"></td>
-                        </tr>
                           </tfoot>
                         </table>
                 </div>
             </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
       <!-- Footer -->
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
