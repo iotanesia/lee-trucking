@@ -67,6 +67,7 @@ class StkGroupSparePartController extends Controller
                                         }
                                     }
                                 })
+                            ->where('stk_master_group_sparepart.is_deleted', 'false')
                             ->select('stk_master_group_sparepart.*', 'all_global_param.param_name as group_status_name')
                             ->orderBy('group_name', 'ASC')
                             ->paginate();

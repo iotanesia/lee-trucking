@@ -35,7 +35,7 @@
                   <p class="mt-3 mb-0 text-sm">
                     <span class="text-warning mr-2"><i class="fas fa-spinner"></i> {{$total_on_progress->total}}</span>
                     <span class="text-success mr-2"></i><i class="fas fa-check"></i> {{$total_close->total}}</span>
-                    <span class="text-nowrap">Since last month</span>
+                    <span class="text-nowrap">Current Month</span>
                   </p>
                 </div>
               </div>
@@ -58,7 +58,7 @@
                   <p class="mt-3 mb-0 text-sm">
                     <span class="text-success mr-2"><i class="fas fa-wrench"></i> {{$total_repairNonBan->total}}</span>
                     <span class="text-success mr-2"><i class="fas fa-ring"></i> {{$total_repairBan->total}}</span>
-                    <span class="text-nowrap">Since last month</span>
+                    <span class="text-nowrap">Current Month</span>
                   </p>
                 </div>
               </div>
@@ -79,8 +79,12 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
+                    @if($total_income < 0)
+                    <span class="text-danger mr-2"><i class="fa fa-arrow-down"></i></span>
+                    @else
                     <span class="text-success mr-2"><i class="fa fa-arrow-up"></i></span>
-                    <span class="text-nowrap">Since last month</span>
+                    @endif
+                    <span class="text-nowrap">Current Month</span>
                   </p>
                 </div>
               </div>
@@ -148,50 +152,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xl-4">
-          <!-- Members list group card -->
-          <div class="card">
-            <!-- Card header -->
-            <div class="card-header">
-              <!-- Title -->
-              <h5 class="h3 mb-0">Supir Rit Terbanyak</h5>
-            </div>
-            <!-- Card body -->
-            <div class="card-body">
-              <!-- List group -->
-              <ul class="list-group list-group-flush list my--3">
-                @foreach($driver as $key => $row)
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="assets/img/theme/team-4.jpg">
-                      </a>
-                    </div>
-                    <div class="col ml--2">
-                      <h4 class="mb-0">
-                        <a href="#!">{{$row->driver_name}}</a>
-                      </h4>
-                      @if($row->driver_status == 8)
-                      <span class="text-success">●</span>
-                      <small>Available</small>
-                      @else
-                      <span class="text-danger">●</span>
-                      <small>Not Available</small>
-                      @endif
-                    </div>
-                    <div class="col-auto">
-                    {{$row->total_rit}}
-                    </div>
-                  </div>
-                </li>
-                @endforeach
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4">
+        <div class="col-xl-6">
           <!-- Checklist -->
           <div class="card">
             <!-- Card header -->
@@ -200,7 +161,44 @@
               <h5 class="h3 mb-0">Truck Rit Terbanyak</h5>
             </div>
             <!-- Card body -->
-            <div class="card-body p-0">
+            <div class="card-body">
+              <!-- List group -->
+              <ul class="list-group list-group-flush" data-toggle="checklist">
+                @foreach($driver as $key => $row)
+                <li class="checklist-entry list-group-item flex-column align-items-start py-4 px-4">
+                  <div class="checklist-item checklist-item-info">
+                    <div class="checklist-info">
+                      <h5 class="checklist-title mb-0">{{$row->driver_name}}</h5>
+                      @if($row->driver_status == 8)
+                      <span class="text-success">●</span>
+                      <small>Available</small>
+                      @else
+                      <span class="text-danger">●</span>
+                      <small>Not Available</small>
+                      @endif
+                    </div>
+                    <div>
+                      <div class="custom-control custom-checkbox custom-checkbox-warning">
+                      {{$row->total_rit}}
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                @endforeach
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6">
+          <!-- Checklist -->
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header">
+              <!-- Title -->
+              <h5 class="h3 mb-0">Truck Rit Terbanyak</h5>
+            </div>
+            <!-- Card body -->
+            <div class="card-body">
               <!-- List group -->
               <ul class="list-group list-group-flush" data-toggle="checklist">
                 @foreach($truckRit as $rows)
@@ -218,86 +216,6 @@
                   </div>
                 </li>
                 @endforeach
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4">
-          <!-- Progress track -->
-          <div class="card">
-            <!-- Card header -->
-            <div class="card-header">
-              <!-- Title -->
-              <h5 class="h3 mb-0">Progress track</h5>
-            </div>
-            <!-- Card body -->
-            <div class="card-body">
-              <!-- List group -->
-              <ul class="list-group list-group-flush list my--3">
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="assets/img/theme/bootstrap.jpg">
-                      </a>
-                    </div>
-                    <div class="col">
-                      <h5>Argon Design System</h5>
-                      <div class="progress progress-xs mb-0">
-                        <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="assets/img/theme/angular.jpg">
-                      </a>
-                    </div>
-                    <div class="col">
-                      <h5>Angular Now UI Kit PRO</h5>
-                      <div class="progress progress-xs mb-0">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="assets/img/theme/sketch.jpg">
-                      </a>
-                    </div>
-                    <div class="col">
-                      <h5>Black Dashboard</h5>
-                      <div class="progress progress-xs mb-0">
-                        <div class="progress-bar bg-red" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="assets/img/theme/react.jpg">
-                      </a>
-                    </div>
-                    <div class="col">
-                      <h5>React Material Dashboard</h5>
-                      <div class="progress progress-xs mb-0">
-                        <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
               </ul>
             </div>
           </div>

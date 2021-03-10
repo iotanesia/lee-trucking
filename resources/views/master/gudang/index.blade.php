@@ -24,7 +24,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-12">
-          <div class="card" id="spareparts"    >
+          <div class="card" id="warehouse">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
@@ -37,31 +37,30 @@
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                             </div>
-                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="sparepart" placeholder="Search Key">
+                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="warehouse" placeholder="Search Key">
                         </div>
                     </div>
-                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="sparepart"><i class="fa fa-search"></i></a>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="warehouse"><i class="fa fa-search"></i></a>
                 </div>
               </div>
             </div>
             <div class="card-body">
-                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#spareparts-modal">
+                <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#warehouse-modal">
                     <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
                 </button>
-                <a class="btn btn-icon btn-success mb-2" type="button" data-toggle="modal" data-target="#spareparts-scanner-modal">
+                <a class="btn btn-icon btn-success mb-2" type="button" data-toggle="modal" data-target="#warehouse-scanner-modal">
                     <span class="btn-inner--icon"><i class="fas fa-barcode text-black"></i></span>
                     <span class="btn-inner--text text-white">Scanner</span>
                 </a>
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-spareparts" api-route="get-list" data-model="sparepart" request-url="{{ route('api-spareparts') }}" on-success-load="successLoadspareparts">
+                    <table class="table align-items-center table-flush table-striped" id="table-warehouse" api-route="get-list" request-url="{{ route('api-warehouse') }}" data-model="warehouse" on-success-load="successLoadwarehouse">
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
                                 <th>Code Gudang</th>
                                 <th>Code Pabrik</th>
-                                <th>Spareparts Name</th>
-                                <th>Spareparts Jenis</th>
-                                <th>Group Name</th>
+                                <th>Item Name</th>
+                                <th>Group Item</th>
                                 <th>Merek</th>
                                 <th>Jumlah Stok</th>
                                 <th>Action</th>
@@ -100,11 +99,11 @@
         </div>
       </footer>
       
-      <div id="spareparts-scanner-modal" class="modal fade animated" role="dialog">
+      <div id="warehouse-scanner-modal" class="modal fade animated" role="dialog">
             <div class="modal-dialog" style="max-width: 1600px;">
                 <div class="modal-content">
                     <div class="modal-header bg-gradient-primary">
-                    <h5 class="modal-title text-white" id="exampleModalLabel">Scan spareparts</h5>
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Scan Gudang</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -118,38 +117,17 @@
                     </div>
                     <hr>
                     <div id="form-scan" style="display:none">
-                        <form role="form" id="spareparts-scanner-form">
+                        <form role="form" id="warehouse-scanner-form">
                             <input type="hidden" name="id" id="id">
                             <input type="hidden" name="scanner_form" id="scanner_form" value="1" disabled>
                             <div class="form-row">
                                 <div class="col">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="spareparts_name">Spare Part name</label>
-                                        <input type="text" class="form-control" name="sparepart_name" id="sparepart_name" placeholder="Spareparts Name">
+                                        <label class="form-control-label" for="warehouse_name">Item name</label>
+                                        <input type="text" class="form-control" name="sparepart_name" id="sparepart_name" placeholder="warehouse Name">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
-                                        <select name="sparepart_type" id="sparepart_type" class="form-control sparepart_type">
-                                        @foreach($type as $row)
-                                            <option value="{{$row->param_code}}">{{$row->param_name}}</option>
-                                        @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group purchase_type" style="display:none">
-                                        <label class="form-control-label" for="purchase_date">Tgl Pembelian</label>
-                                        <input type="date" class="form-control" name="purchase_date" id="purchase_date">
-                                    </div>
-                                    <div class="form-group no_rek">
-                                        <label class="form-control-label" for="no_rek">Rekening</label>
-                                        <select name="no_rek" id="no_rek" class="form-control no_rek">
-                                            <option value=""></option>
-                                        @foreach($no_rek as $row)
-                                            <option value="{{$row->id}}">{{$row->rek_no}}</option>
-                                        @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="sparepart_status">Status Sparepart</label>
+                                        <label class="form-control-label" for="sparepart_status">Status Item</label>
                                         <select name="sparepart_status" id="sparepart_status" class="form-control sparepart_status">
                                         @foreach($status as $row)
                                             <option value="{{$row->param_code}}">{{$row->param_name}}</option>
@@ -178,20 +156,7 @@
                                         <input type="text" name="barcode_pabrik" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-control-label" for="sparepart_jenis">Jenis Sparepart</label>
-                                        <select name="sparepart_jenis" id="sparepart_jenis" class="form-control sparepart_jenis">                        
-                                        <option value=""></option>
-                                        @foreach($jenis as $row)
-                                            <option value="{{$row->param_code}}">{{$row->param_name}}</option>
-                                        @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group purchase_type" style="display:none">
-                                        <label class="form-control-label" for="due_date">Tgl Jatuh Tempo</label>
-                                        <input type="date" class="form-control" name="due_date" id="due_date">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="group_sparepart_id">Group Sparepart</label>
+                                        <label class="form-control-label" for="group_sparepart_id">Group Item</label>
                                         <select name="group_sparepart_id" id="group_sparepart_id" class="form-control group_sparepart_id">
                                             <option value=""></option>
                                         @foreach($group as $row)
@@ -221,49 +186,27 @@
         </div>
     </div>
   </div>
-  <div class="modal fade" id="spareparts-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="warehouse-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document" style="max-width: 1600px;">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
-            <h5 class="modal-title text-white" id="exampleModalLabel">Add spareparts</h5>
+            <h5 class="modal-title text-white" id="exampleModalLabel">Tambah Item Gudang</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-            <form role="form" id="spareparts-form">
+            <form role="form" id="warehouse-form">
                 <input type="hidden" name="id" id="id">
                 <div class="form-row">
                     <div class="col">
                         <div class="form-group">
-                            <label class="form-control-label" for="spareparts_name">Spare Part name</label>
-                            <input type="text" class="form-control" name="sparepart_name" id="sparepart_name" placeholder="Spareparts Name">
+                            <label class="form-control-label" for="warehouse_name">Item name</label>
+                            <input type="text" class="form-control" name="sparepart_name" id="sparepart_name" placeholder="warehouse Name">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
-                            <select name="sparepart_type" id="sparepart-type" class="form-control sparepart_type">
-                            @foreach($type as $row)
-                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group no_rek">
-                            <label class="form-control-label" for="no_rek">Rekening</label>
-                            <select name="no_rek" id="no_rek" class="form-control no_rek">
-                                <option value=""></option>
-                            @foreach($no_rek as $row)
-                                <option value="{{$row->id}}">{{$row->rek_no}}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group purchase_type" style="display:none">
-                            <label class="form-control-label" for="purchase_date">Tgl Pembelian</label>
-                            <input type="date" class="form-control" name="purchase_date" id="purchase_date">
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-control-label" for="sparepart_status">Status Sparepart</label>
+                            <label class="form-control-label" for="sparepart_status">Status Item</label>
                             <select name="sparepart_status" id="" class="form-control sparepart_status">
                             @foreach($status as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>
@@ -272,7 +215,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="form-control-label" for="group_sparepart_id">Group Sparepart</label>
+                            <label class="form-control-label" for="group_sparepart_id">Group Item</label>
                             <select name="group_sparepart_id" id="" class="form-control group_sparepart_id">
                             @foreach($group as $row)
                                 <option value="{{$row->id}}">{{$row->group_name}}</option>
@@ -291,20 +234,6 @@
                         <div class="form-group">
                             <label class="form-control-label" for="barcode_pabrik">Code Pabrik</label>
                             <input type="text" name="barcode_pabrik" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-control-label" for="sparepart_jenis">Jenis Sparepart</label>
-                            <select name="sparepart_jenis" id="sparepart-jenis" class="form-control sparepart_jenis">
-                                <option value=""></option>
-                                @foreach($jenis as $row)
-                                <option value="{{$row->param_code}}">{{$row->param_name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group purchase_type" style="display:none">
-                            <label class="form-control-label" for="due_date">Tgl Jatuh tempo</label>
-                            <input type="date" class="form-control" name="due_date" id="due_date">
                         </div>
 
                         <div class="form-group">
@@ -338,6 +267,6 @@
 </div>
 
 <script src="{{asset('js/event.js')}}"></script>
-<script src="{{asset('js/spareparts.js')}}"></script>
+<script src="{{asset('js/warehouse.js')}}"></script>
 @endsection
 

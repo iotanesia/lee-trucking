@@ -25,6 +25,7 @@ class DriverController extends Controller
                         }
                       }
                     })
+                    ->where('ex_master_driver.is_deleted', 'false')
                     ->select('ex_master_driver.*', 'all_global_param.param_name as status_name', 'ex_master_kenek.kenek_name')
                     ->orderBy('id', 'ASC')
                     ->paginate();
