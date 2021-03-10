@@ -56,6 +56,8 @@ class ReportManagementController extends Controller
         $data = $request->all();
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = $data['start_date'];
+        $endDate = $data['end_date'];
         $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
@@ -64,7 +66,8 @@ class ReportManagementController extends Controller
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
                 ,'expedition_activity.toko','expedition_activity.harga_otv')
-                ->groupBy('expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+                ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
+               ->groupBy('expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
                 ,'expedition_activity.toko','expedition_activity.harga_otv')->get();
@@ -83,6 +86,8 @@ class ReportManagementController extends Controller
         $data = $request->all();
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = $data['start_date'];
+        $endDate = $data['end_date'];
         $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
@@ -91,6 +96,7 @@ class ReportManagementController extends Controller
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
                 ,'expedition_activity.toko','expedition_activity.harga_otv')
+                ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
                 ->groupBy('expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
@@ -110,6 +116,8 @@ class ReportManagementController extends Controller
         $data = $request->all();
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = $data['start_date'];
+        $endDate = $data['end_date'];
         $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
@@ -118,6 +126,7 @@ class ReportManagementController extends Controller
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
                 ,'expedition_activity.toko','expedition_activity.harga_otv')
+                ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
                 ->groupBy('expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
