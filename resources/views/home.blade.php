@@ -135,7 +135,7 @@
           </div>
         </div>
         <div class="col-xl-4">
-          <div class="card">
+          <div class="card" style="height:600px">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
@@ -269,7 +269,14 @@
         title: {
             display: true,
             text: 'Expedisi Per Bulan'
-        }
+        },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                       beginAtZero: true
+                    }
+                }]
+            }
         }
     });
 
@@ -284,10 +291,10 @@
         }]
         },
         options: {
-        title: {
-            display: true,
-            text: 'Total Truk'
-        }
+            title: {
+                display: true,
+                text: 'Total Truk'
+            }
         }
     });
 </script>

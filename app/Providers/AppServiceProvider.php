@@ -19,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             if(Auth::check()) {
                 $schema = Auth::user()->schema.'.';
+                $all['user_detail'] = DB::table($schema.'usr_detail')->where('id_user', Auth::user()->id)->first();
+                // dd($all);
                 $all['menus'] = DB::table($schema.'usr_group_menu')
                          ->join($schema.'usr_menu', 'usr_group_menu.menu_id', 'usr_menu.id')
                          ->orderBy('sort', 'ASC')

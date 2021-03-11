@@ -770,7 +770,7 @@ class ExpeditionController extends Controller
                 $notification->content_id = $expeditionActivity->id;
                 $notification->content_type = 'expedisi';
                 $notification->navigate_to_mobile = 'list_expedisi';
-                $notification->navigate_to_web = 'list_expedisi';
+                $notification->navigate_to_web = 'approval-ojk-driver';
                 $notification->content_title = 'Informasi Approval Ekspedisi';
                 $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv. ' telah di approve oleh '.$userApprove->name;
                 $notification->content_img = '';
@@ -1058,7 +1058,7 @@ class ExpeditionController extends Controller
               $notification->content_id = $expeditionActivity->id;
               $notification->content_type = 'expedisi';
               $notification->navigate_to_mobile = 'list_expedisi';
-              $notification->navigate_to_web = 'list_expedisi';
+              $notification->navigate_to_web = 'approval-ojk-driver';
               $notification->content_title = 'Informasi Ekspedisi';
               $notification->content_body = 'Ekspedisi dengan nomor invoice '.$expeditionActivity->nomor_inv.' telah selesai';
               $notification->content_img = '';
