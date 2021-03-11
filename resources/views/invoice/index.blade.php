@@ -76,12 +76,21 @@
                   </button>
                 </form>
                 <br/> --}}
-                    <div class="input-group input-group-alternative input-group-merge col-md-4" 
-                        style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                   <form id="form-export-bo" method="get" action="{{url('export-bo')}}">
+                      <div class="input-group input-group-alternative input-group-merge col-md-4" 
+                          style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        </div>
+                          <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                      
                       </div>
-                      <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                   </form>
+                    <br/>
+                    <div id="tag-cloud-widget">  
+                      <div class="content">  
+                        <a href="#" onclick="($('#form-export-bo').submit())" class="btn btn-primary" id="export-bo">Export</a>
+                      </div>
                     </div>
                     <br/>
                     <table class="table table-responsive align-items-center table-striped" id="table-invoice-bo" son-success-load="successLoadexpedition" width="100%">
@@ -153,12 +162,20 @@
                     </table>
                 </div>
                 <div id="up" class="tab-pane in fade">
+                  <form id="form-export-ba" method="get" action="{{url('export-ba')}}">
                     <div class="input-group input-group-alternative input-group-merge col-md-4" 
                           style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
                         <div class="input-group-prepend">
                           <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                         </div>
                         <input class="form-control" name="dateRangeBA" placeholder="Pilih Rentang Tanggal" type="text" style="text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                    </div>
+                  </form>
+                    <br/>
+                    <div id="tag-cloud-widget">  
+                      <div class="content">  
+                        <a href="#" onclick="($('#form-export-ba').submit())" class="btn btn-primary" id="export-ba">Export</a>
+                      </div>
                     </div>
                     <br/>
                     <table class="table table-responsive align-items-center table-striped" id="table-invoice-ba" son-success-load="successLoadexpedition" width="100%">
@@ -230,12 +247,20 @@
                         </table>
                     </div>
                     <div id="ud" class="tab-pane fade">
-                      <div class="input-group input-group-alternative input-group-merge col-md-4" 
-                          style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                      <form id="form-export-bj" method="get" action="{{url('export-bj')}}">
+                        <div class="input-group input-group-alternative input-group-merge col-md-4" 
+                            style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                          </div>
+                          <input class="form-control" name="dateRangeBJ" placeholder="Pilih Rentang Tanggal" type="text" style="text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                         </div>
-                        <input class="form-control" name="dateRangeBJ" placeholder="Pilih Rentang Tanggal" type="text" style="text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                      </form>
+                      <br/>
+                      <div id="tag-cloud-widget">  
+                        <div class="content">  
+                          <a href="#" onclick="($('#form-export-bj').submit())" class="btn btn-primary" id="export-bj">Export</a>
+                        </div>
                       </div>
                       <br/>
                         <table class="table table-responsive align-items-center table-striped" id="table-invoice-bj" son-success-load="successLoadexpedition" width="100%">
