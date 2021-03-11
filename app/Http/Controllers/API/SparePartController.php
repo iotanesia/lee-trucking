@@ -321,11 +321,6 @@ class SparePartController extends Controller
         $current_date_time = Carbon::now()->toDateTimeString(); 
         $user_id = Auth::user()->id;
 
-        foreach($data as $key => $row) {
-          $sparePart->{$key} = $row;
-          $sparePart->type = 'SPAREPART';
-        }
-
         if(isset($img)){
             //upload image
             $fileExt = $img->extension();
@@ -335,7 +330,12 @@ class SparePartController extends Controller
    
             $sparePart->img_sparepart = $fileName;
             $img->move($path, $fileName);
-         }
+        }
+
+        foreach($data as $key => $row) {
+          $sparePart->{$key} = $row;
+          $sparePart->type = 'SPAREPART';
+        }
 
         $sparePart->created_at = $current_date_time;
         $sparePart->created_by = $user_id;
