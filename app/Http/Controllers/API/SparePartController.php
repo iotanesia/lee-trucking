@@ -338,7 +338,7 @@ class SparePartController extends Controller
 
         $sparePart->created_at = $current_date_time;
         $sparePart->created_by = $user_id;
-       
+
         if($sparePart->save()){
           $historyStokSparepart = new StkHistorySparePart();
           $sparePart->barcode_gudang = $sparePart->id.'-TSJ-'.date('dmY');
@@ -382,16 +382,6 @@ class SparePartController extends Controller
                 $coaActivity->rek_id = $request->no_rek;
                 $coaActivity->save();
             }  
-          }
-
-          //upload image
-          if($img) {
-              $fileExt = $img->extension();
-              $fileName = "IMG-SPAREPART-".$sparePart->id.'-TSJ-'.date('dmY').".".$fileExt;
-              $path =  public_path().'/uploads/sparepart/' ;
-              $sparePart->img_sparepart = $fileName;
-              $sparePart->save();
-              $img->move($path, $fileName);
           }
 
           DB::connection(Auth::user()->schema)->commit();
