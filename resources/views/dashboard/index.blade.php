@@ -59,11 +59,18 @@
         ]
         },
         options: {
-        legend: { display: false },
-        title: {
-            display: true,
-            text: 'Expedisi Per Bulan'
-        }
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'Expedisi Per Bulan'
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                       beginAtZero: true
+                    }
+                }]
+            }
         }
     });
 
