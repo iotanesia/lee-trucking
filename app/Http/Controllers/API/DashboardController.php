@@ -17,6 +17,8 @@ class DashboardController extends Controller
     public function getList(Request $request) {
         if($request->isMethod('GET')) {
             $schema = Auth::user()->schema;
+            $bln = date('m');
+            $thn = date('Y');
             $totalEx = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE EXTRACT(MONTH FROM updated_at) = ".$bln."  AND EXTRACT(YEAR FROM updated_at) = ".$thn."");
             $totalClose = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity = 'CLOSED_EXPEDITION'");
             $totalOnProggres = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity <> 'CLOSED_EXPEDITION'");
@@ -25,6 +27,9 @@ class DashboardController extends Controller
             $totalrepairNonBan = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE kode_repair LIKE '%RP-%'");
             $totaltruck = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".ex_master_truck");
             $truck = DB::select("SELECT b.cabang_name, COUNT(a.id) FROM ".$schema.".ex_master_truck AS a JOIN ".$schema.".ex_master_cabang AS b ON a.cabang_id = b.id GROUP BY cabang_id, b.cabang_name");
+            $debit = DB::select("SELECT SUM(a.nominal) AS total_income FROM ".$schema.".coa_activity AS a JOIN ".$schema.".coa_master_sheet AS b ON a.coa_id = b.id WHERE report_active = 'True' AND b.jurnal_category = 'DEBIT' AND EXTRACT(MONTH FROM a.created_at) = ".$bln."  AND EXTRACT(YEAR FROM a.created_at) = ".$thn." ");
+            $credit = DB::select("SELECT SUM(a.nominal) AS total_income FROM ".$schema.".coa_activity AS a JOIN ".$schema.".coa_master_sheet AS b ON a.coa_id = b.id WHERE report_active = 'True' AND b.jurnal_category = 'CREDIT' AND EXTRACT(MONTH FROM a.created_at) = ".$bln."  AND EXTRACT(YEAR FROM a.created_at) = ".$thn." ");
+            $totalIncome = $debit[0]->total_income - $credit[0]->total_income;
 
             $data['total_expedisi'] = $totalEx[0]->total;
             $data['total_on_progress'] = $totalOnProggres[0]->total;
@@ -33,6 +38,7 @@ class DashboardController extends Controller
             $data['total_repairBan'] = $totalrepairBan[0]->total;
             $data['total_repairNonBan'] = $totalrepairNonBan[0]->total;
             $data['total_truck'] = $totaltruck[0]->total;
+            $data['total_income'] = number_format($totalIncome,0,',','.');
 
             foreach($truck as $key => $val) {
                 $cabangName = strtolower(str_replace(" ", "_", $val->cabang_name));
