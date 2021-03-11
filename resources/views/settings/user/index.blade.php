@@ -179,7 +179,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="form-control-label" for="jenis_kelamin">Jenis Kelamin</label>
-                                <input type="text" class="form-control" name="jenis_kelamin" id="jenis_kelamin" placeholder="jenis_kelamin">
+                                <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
+                                    <option value=""></option>
+                                    @foreach($jk as $row)
+                                    <option value="{{$row->id}}">{{$row->param_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -191,7 +196,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="form-control-label" for="agama">Agama</label>
-                                <input type="text" class="form-control" name="agama" id="agama" placeholder="agama">
+                                <select name="agama" id="agama" class="form-control">
+                                    <option value=""></option>
+                                    @foreach($agama as $row)
+                                    <option value="{{$row->id}}">{{$row->param_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>

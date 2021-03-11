@@ -211,16 +211,35 @@ class UserController extends Controller
 
     if($user->save()){
       $userDetail = UserDetail::where('id_user', $input['id'])->first();
-      isset($request->first_name) && $request->first_name ? $userDetail->first_name = $request->first_name : null;
-      isset($request->last_name) && $request->last_name ? $userDetail->last_name = $request->last_name : null;
-      isset($request->nomor_hp) && $request->nomor_hp ? $userDetail->nomor_hp = $request->nomor_hp : null;
-      isset($request->jenis_kelamin) && $request->jenis_kelamin ? $userDetail->jenis_kelamin = $request->jenis_kelamin : null;
-      isset($request->tgl_lahir) && $request->tgl_lahir ? $userDetail->tgl_lahir = $request->tgl_lahir : null;
-      isset($request->agama) && $request->agama ? $userDetail->agama = $request->agama : null;
-      isset($request->no_rek) && $request->no_rek ? $userDetail->no_rek = $request->no_rek : null;
-      isset($request->nama_bank) && $request->nama_bank ? $userDetail->nama_bank = $request->nama_bank : null;
-      isset($request->nama_rekening) && $request->nama_rekening ? $userDetail->nama_rekening = $request->nama_rekening : null;
-      $userDetail->id_user = $user->id;
+      
+      if($userDetail) {
+          isset($request->first_name) && $request->first_name ? $userDetail->first_name = $request->first_name : null;
+          isset($request->last_name) && $request->last_name ? $userDetail->last_name = $request->last_name : null;
+          isset($request->nomor_hp) && $request->nomor_hp ? $userDetail->nomor_hp = $request->nomor_hp : null;
+          isset($request->jenis_kelamin) && $request->jenis_kelamin ? $userDetail->jenis_kelamin = $request->jenis_kelamin : null;
+          isset($request->tgl_lahir) && $request->tgl_lahir ? $userDetail->tgl_lahir = $request->tgl_lahir : null;
+          isset($request->agama) && $request->agama ? $userDetail->agama = $request->agama : null;
+          isset($request->no_rek) && $request->no_rek ? $userDetail->no_rek = $request->no_rek : null;
+          isset($request->nama_bank) && $request->nama_bank ? $userDetail->nama_bank = $request->nama_bank : null;
+          isset($request->nama_rekening) && $request->nama_rekening ? $userDetail->nama_rekening = $request->nama_rekening : null;
+          $userDetail->id_user = $user->id;
+          
+        } else {
+          $userDetail = new UserDetail;
+
+          isset($request->first_name) && $request->first_name ? $userDetail->first_name = $request->first_name : null;
+          isset($request->last_name) && $request->last_name ? $userDetail->last_name = $request->last_name : null;
+          isset($request->nomor_hp) && $request->nomor_hp ? $userDetail->nomor_hp = $request->nomor_hp : null;
+          isset($request->jenis_kelamin) && $request->jenis_kelamin ? $userDetail->jenis_kelamin = $request->jenis_kelamin : null;
+          isset($request->tgl_lahir) && $request->tgl_lahir ? $userDetail->tgl_lahir = $request->tgl_lahir : null;
+          isset($request->agama) && $request->agama ? $userDetail->agama = $request->agama : null;
+          isset($request->no_rek) && $request->no_rek ? $userDetail->no_rek = $request->no_rek : null;
+          isset($request->nama_bank) && $request->nama_bank ? $userDetail->nama_bank = $request->nama_bank : null;
+          isset($request->nama_rekening) && $request->nama_rekening ? $userDetail->nama_rekening = $request->nama_rekening : null;
+          $userDetail->id_user = $user->id;
+
+      }
+
       $userDetail->save();
 
       return response()->json([
@@ -309,9 +328,10 @@ class UserController extends Controller
   public function getList(Request $request) {
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $whereField = 'name, email, usr_groups.group_name';
+        $whereField = 'users.name, users.email, usr_groups.group_name';
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $userList = User::join(Auth::user()->schema.'.usr_group as usr_groups', 'users.group_id', 'usr_groups.id')
+                    ->leftjoin(Auth::user()->schema.'.usr_detail as usr_details', 'users.id', 'usr_details.id_user')
                     ->where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
                             foreach(explode(', ', $whereField) as $idx => $field) {
@@ -319,7 +339,7 @@ class UserController extends Controller
                             }
                         }
                     })
-                    ->select('users.*', 'usr_groups.group_name')
+                    ->select('users.*', 'usr_groups.group_name', 'usr_details.first_name', 'usr_details.last_name', 'usr_details.alamat', 'usr_details.tgl_lahir', 'usr_details.nomor_hp', 'usr_details.keterangan', 'usr_details.jenis_kelamin', 'usr_details.agama', 'usr_details.id_user', 'usr_details.foto_profil', 'usr_details.no_rek', 'usr_details.nama_bank', 'usr_details.nama_rekening')
                     ->orderBy('users.id', 'ASC')
                     ->paginate();
         
