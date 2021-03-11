@@ -317,6 +317,7 @@ class SparePartController extends Controller
         unset($data['_token']);
         unset($data['id']);
         unset($data['no_rek']);
+        unset($data['img_sparepart']);
 
         $current_date_time = Carbon::now()->toDateTimeString(); 
         $user_id = Auth::user()->id;
@@ -325,9 +326,7 @@ class SparePartController extends Controller
             //upload image
             $fileExt = $img->extension();
             $fileName = "IMG-SPAREPART-".$sparePart->barcode_gudang.".".$fileExt;
-            $path = public_path().'/uploads/sparepart/' ;
-            $oldFile = $path.$sparePart->barcode_gudang;
-   
+            $path = public_path().'/uploads/sparepart/';
             $sparePart->img_sparepart = $fileName;
             $img->move($path, $fileName);
         }
@@ -340,7 +339,6 @@ class SparePartController extends Controller
         $sparePart->created_at = $current_date_time;
         $sparePart->created_by = $user_id;
        
-
         if($sparePart->save()){
           $historyStokSparepart = new StkHistorySparePart();
           $sparePart->barcode_gudang = $sparePart->id.'-TSJ-'.date('dmY');
