@@ -343,6 +343,9 @@
 <script>
 
 $("document").ready(function() {
+    $("#search-data").val('asad');
+    alert($("#search-data").val());
+    document.getElementById("search-data").click();
     res = false;
     accessToken =  window.Laravel.api_token;
     $("#tujuan").select2({
