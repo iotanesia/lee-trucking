@@ -62,6 +62,20 @@
             <div class="card-body">
             <div class="tab-content">
               <div id="ad" class="tab-pane in active">
+                {{-- <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+                  <div class="form-group mb-0" style="border-radius:0.5rem;box-shadow: 0 1px 3px rgb(50 50 93 / 65%), 0 1px 0 rgb(0 0 0 / 2%);">
+                    <div class="input-group input-group-alternative input-group-merge" style="border-radius:0.5rem;">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                      </div>
+                      <input class="form-control" placeholder="Nomor Invoice" type="text">
+                    </div>
+                  </div>
+                  <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </form>
+                <br/> --}}
                     <div class="input-group input-group-alternative input-group-merge col-md-4" 
                         style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
                       <div class="input-group-prepend">
