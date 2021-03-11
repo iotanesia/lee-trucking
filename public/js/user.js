@@ -68,7 +68,22 @@ $("document").ready(function(){
     $("#user_category").select2({
         placeholder:"Select Category"
     });
-  
+
+    $("#tgl_lahir").daterangepicker({
+        locale: {
+            format: 'DD-MM-YYYY'
+        },
+        singleDatePicker : true,
+    });
+
+    $("#agama").select2({
+        placeholder:"Select Agama"
+    });
+
+    $("#jenis_kelamin").select2({
+        placeholder:"Select Jenis Kelamin"
+    });
+
     $("#user-modal").on("show.bs.modal", function(e) {
       var invoker = $(e.relatedTarget);
   
