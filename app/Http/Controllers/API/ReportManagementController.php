@@ -140,4 +140,6 @@ class ReportManagementController extends Controller
           return datatables($data)->toJson();
       }
     }
+
+    
 }

@@ -54,3 +54,5 @@ Route::get('/penanaman-modal', 'MoneyTransactionHeaderController@indexModal')->n
 Route::get('/jurnal-report', 'JurnalController@index')->name('jurnal-report');
 Route::get('/invoice-report', 'InvoiceController@index')->name('invoice-report');
 Route::get('/dashboard/{schema}', 'DashboardController@index');
+//export excel
+// Route::get('/dashboard/{schema}', 'DashboardController@index');
