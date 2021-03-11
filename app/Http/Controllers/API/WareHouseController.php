@@ -537,13 +537,13 @@ class WareHouseController extends Controller
         $sparePart->updated_at = $current_date_time;
         $sparePart->updated_by = $user_id;
   
-        if($sparePart->save()){
+        if($sparePart->save()){ 
             return response()->json([
-              'code' => 401,
-              'code_message' => 'Gagal menyimpan data',
-              'code_type' => 'BadRequest',
-            ], 401);
-          
+                'code' => 200,
+                'code_message' => 'Berhasil menyimpan data',
+                'code_type' => 'Success',
+            ], 200);
+
         } else {
           return response()->json([
             'code' => 401,
