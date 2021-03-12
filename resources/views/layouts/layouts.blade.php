@@ -161,7 +161,7 @@
                 <!-- List group -->
                 <div class="list-group list-group-flush">
                   @foreach($all['notif']->get() as $row)
-                  <a href="#!" class="list-group-item list-group-item-action">
+                  <a href="{{url($row->navigate_to_web)}}" class="list-group-item list-group-item-action">
                     <div class="row align-items-center">
                       <div class="col-auto">
                         <!-- Avatar -->
@@ -192,7 +192,7 @@
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="{{asset('assets/img/theme/team-4.jpg')}}">
+                    <img alt="Image placeholder" src="@if(isset($all['user_detail']->foto_profil)) {{url('uploads/profilephoto/'.$all['user_detail']->foto_profil)}} @else ../../assets/img/theme/team-4.jpg @endif">
                   </span>
                   <div class="media-body ml-2 d-none d-lg-block">
                     <span class="mb-0 text-sm  font-weight-bold">{{Auth::user()->name}}</span>

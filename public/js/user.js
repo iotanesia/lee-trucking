@@ -68,7 +68,22 @@ $("document").ready(function(){
     $("#user_category").select2({
         placeholder:"Select Category"
     });
-  
+
+    $("#tgl_lahir").daterangepicker({
+        locale: {
+            format: 'DD-MM-YYYY'
+        },
+        singleDatePicker : true,
+    });
+
+    $("#agama").select2({
+        placeholder:"Select Agama"
+    });
+
+    $("#jenis_kelamin").select2({
+        placeholder:"Select Jenis Kelamin"
+    });
+
     $("#user-modal").on("show.bs.modal", function(e) {
       var invoker = $(e.relatedTarget);
   
@@ -77,9 +92,12 @@ $("document").ready(function(){
         var dataJSON = JSON.parse(dataJSON);
   
         $("#user-form").find("input[name=id]").val(dataJSON.id);
+        $("#user-form").find("input[name=no_rek]").val(dataJSON.no_rek);
+        $("#user-form").find("input[name=nama_bank]").val(dataJSON.nama_bank);
+        $("#user-form").find("input[name=nama_rekening]").val(dataJSON.nama_rekening);
         $("#user-modal #btn-submit").attr("el-event", "edit");
         $("#user-form").find("textarea[name=content]").summernote("code", dataJSON.content);
-        
+
         bindToForm($("#user-modal"), dataJSON);
         
       } else {

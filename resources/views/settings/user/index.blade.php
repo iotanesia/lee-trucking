@@ -75,16 +75,16 @@
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
             <div class="copyright text-center text-lg-left text-muted">
-              &copy; {{date('Y')}} <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Lee-Tracking</a>
+              &copy; {{date('Y')}} <a href="http://liexpedition.com/" class="font-weight-bold ml-1" target="_blank">Lee-Tracking</a>
             </div>
           </div>
           <div class="col-lg-6">
             <ul class="nav nav-footer justify-content-center justify-content-lg-end">
               <li class="nav-item">
-                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Contact</a>
+                <a href="http://liexpedition.com/" class="nav-link" target="_blank">Contact</a>
               </li>
               <li class="nav-item">
-                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+                <a href="http://liexpedition.com//presentation" class="nav-link" target="_blank">About Us</a>
               </li>
             </ul>
           </div>
@@ -179,7 +179,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="form-control-label" for="jenis_kelamin">Jenis Kelamin</label>
-                                <input type="text" class="form-control" name="jenis_kelamin" id="jenis_kelamin" placeholder="jenis_kelamin">
+                                <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
+                                    <option value=""></option>
+                                    @foreach($jk as $row)
+                                    <option value="{{$row->id}}">{{$row->param_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -191,7 +196,12 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="form-control-label" for="agama">Agama</label>
-                                <input type="text" class="form-control" name="agama" id="agama" placeholder="agama">
+                                <select name="agama" id="agama" class="form-control">
+                                    <option value=""></option>
+                                    @foreach($agama as $row)
+                                    <option value="{{$row->id}}">{{$row->param_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>

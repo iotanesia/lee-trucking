@@ -135,7 +135,7 @@
           </div>
         </div>
         <div class="col-xl-4">
-          <div class="card">
+          <div class="card" style="height:600px">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
@@ -226,16 +226,16 @@
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
             <div class="copyright text-center text-lg-left text-muted">
-              &copy; {{date('Y')}} <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Lee-Tracking</a>
+              &copy; {{date('Y')}} <a href="http://liexpedition.com/" class="font-weight-bold ml-1" target="_blank">Lee-Tracking</a>
             </div>
           </div>
           <div class="col-lg-6">
             <ul class="nav nav-footer justify-content-center justify-content-lg-end">
               <li class="nav-item">
-                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Contact</a>
+                <a href="http://liexpedition.com/" class="nav-link" target="_blank">Contact</a>
               </li>
               <li class="nav-item">
-                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+                <a href="http://liexpedition.com//presentation" class="nav-link" target="_blank">About Us</a>
               </li>
             </ul>
           </div>
@@ -269,7 +269,14 @@
         title: {
             display: true,
             text: 'Expedisi Per Bulan'
-        }
+        },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                       beginAtZero: true
+                    }
+                }]
+            }
         }
     });
 
@@ -284,10 +291,10 @@
         }]
         },
         options: {
-        title: {
-            display: true,
-            text: 'Total Truk'
-        }
+            title: {
+                display: true,
+                text: 'Total Truk'
+            }
         }
     });
 </script>

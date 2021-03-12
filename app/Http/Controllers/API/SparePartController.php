@@ -317,29 +317,27 @@ class SparePartController extends Controller
         unset($data['_token']);
         unset($data['id']);
         unset($data['no_rek']);
+        unset($data['img_sparepart']);
 
         $current_date_time = Carbon::now()->toDateTimeString(); 
         $user_id = Auth::user()->id;
+
+        if(isset($img)){
+            //upload image
+            $fileExt = $img->extension();
+            $fileName = "IMG-SPAREPART-".$sparePart->barcode_gudang.".".$fileExt;
+            $path = public_path().'/uploads/sparepart/';
+            $sparePart->img_sparepart = $fileName;
+            $img->move($path, $fileName);
+        }
 
         foreach($data as $key => $row) {
           $sparePart->{$key} = $row;
           $sparePart->type = 'SPAREPART';
         }
 
-        if(isset($img)){
-            //upload image
-            $fileExt = $img->extension();
-            $fileName = "IMG-SPAREPART-".$sparePart->barcode_gudang.".".$fileExt;
-            $path = public_path().'/uploads/sparepart/' ;
-            $oldFile = $path.$sparePart->barcode_gudang;
-   
-            $sparePart->img_sparepart = $fileName;
-            $img->move($path, $fileName);
-         }
-
         $sparePart->created_at = $current_date_time;
         $sparePart->created_by = $user_id;
-       
 
         if($sparePart->save()){
           $historyStokSparepart = new StkHistorySparePart();
@@ -384,16 +382,6 @@ class SparePartController extends Controller
                 $coaActivity->rek_id = $request->no_rek;
                 $coaActivity->save();
             }  
-          }
-
-          //upload image
-          if($img) {
-              $fileExt = $img->extension();
-              $fileName = "IMG-SPAREPART-".$sparePart->id.'-TSJ-'.date('dmY').".".$fileExt;
-              $path =  public_path().'/uploads/sparepart/' ;
-              $sparePart->img_sparepart = $fileName;
-              $sparePart->save();
-              $img->move($path, $fileName);
           }
 
           DB::connection(Auth::user()->schema)->commit();

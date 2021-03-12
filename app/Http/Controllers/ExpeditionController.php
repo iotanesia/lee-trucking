@@ -38,7 +38,8 @@ class ExpeditionController extends Controller
         $data['sj_type'] = GlobalParam::where('param_type', 'SJ_TYPE')->get();
         $data['payment_method'] = GlobalParam::where('param_type', 'PAYMENT_METHOD')->get();
         $data['group'] = ExpeditionActivity::where('is_deleted', 'f')->get();
-        $data['driver'] = Driver::where('is_deleted', 'f')->get();
+        $status_driver = GlobalParam::where('param_type', 'DRIVER_STATUS')->where('param_code', 'ACTIVE')->first();
+        $data['driver'] = Driver::where('is_deleted', 'f')->where('driver_status', $status_driver->id)->get();
         $data['truck'] = Truck::where('is_deleted', 'f')->get();
         $data['kenek'] = Kenek::where('is_deleted', 'f')->get();
 
