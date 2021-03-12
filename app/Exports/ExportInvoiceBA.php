@@ -71,7 +71,7 @@ protected $endDate;
     {
         return [
             AfterSheet::class    => function(AfterSheet $event) {
-                $cellRange = 'A1:W1'; // All headers
+                $cellRange = 'C4:W4'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
             },
         ];
@@ -91,5 +91,10 @@ protected $endDate;
             'Rp.'. number_format($data->harga_otv, 0, ',', '.'),
             'Rp.'. number_format(($data->rit*$data->harga_otv), 0, ',', '.')
         ];
+    }
+
+    public function startCell(): string
+    {
+        return 'C4';
     }
 }
