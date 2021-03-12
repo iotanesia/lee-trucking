@@ -335,7 +335,7 @@ class UserController extends Controller
                     ->where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
                             foreach(explode(', ', $whereField) as $idx => $field) {
-                            $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                            $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                             }
                         }
                     })
