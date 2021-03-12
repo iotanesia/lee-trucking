@@ -62,36 +62,47 @@
             <div class="card-body">
             <div class="tab-content">
               <div id="ad" class="tab-pane in active">
-                {{-- <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-                  <div class="form-group mb-0" style="border-radius:0.5rem;box-shadow: 0 1px 3px rgb(50 50 93 / 65%), 0 1px 0 rgb(0 0 0 / 2%);">
-                    <div class="input-group input-group-alternative input-group-merge" style="border-radius:0.5rem;">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                      </div>
-                      <input class="form-control" placeholder="Nomor Invoice" type="text">
-                    </div>
-                  </div>
-                  <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                  </button>
-                </form>
-                <br/> --}}
-                   <form id="form-export-bo" method="get" action="{{url('export-bo')}}">
-                      <div class="input-group input-group-alternative input-group-merge col-md-4" 
+                <div class="row">
+                    <form id="form-export-bo" class="col-md-4" method="get" action="{{url('export-bo')}}">
+                      <input class="form-control" name="tipeFile" id="tipeFile" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                     
+                      <div class="input-group input-group-alternative input-group-merge" 
                           style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                        <div class="input-group-prepend">
+                        <div class="input-group-prepend" style="margin-left: 10px;">
                           <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                         </div>
-                          <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
-                      
+                          <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                       </div>
-                   </form>
-                    <br/>
-                    <div id="tag-cloud-widget">  
+                    </form>
+                    <div id="tag-cloud-widget" class="col-md-2">  
                       <div class="content">  
-                        <a href="#" onclick="($('#form-export-bo').submit())" class="btn btn-primary" id="export-bo">Export</a>
+                        <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="fas fa-file-export"></i>
+                            </span>
+                            <div class="media-body d-none d-lg-block" style="margin-top: 4px;margin-right: 20px;text-align:center">
+                              <span class="mb-0 text-sm  font-weight-bold">Eksport</span>
+                            </div>
+                          </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-left">
+                          <div class="dropdown-header noti-title">
+                            <h6 class="text-overflow m-0">Eksport</h6>
+                          </div>
+                          <a href="#" id="is-excel" class="dropdown-item" onclick="($('#form-export-bo').submit())">
+                            <i class="fas fa-file-excel"></i>
+                            <span>Excel</span>
+                          </a>
+                          <div class="dropdown-divider"></div>
+                          <a href="#" id="is-pdf" class="dropdown-item" onclick="($('#form-export-bo').submit())">
+                          <i class="fas fa-file-pdf"></i>
+                            <span>PDF</span>
+                          </a>
+                        </div>
                       </div>
                     </div>
+                  </div>
                     <br/>
                     <table class="table table-responsive align-items-center table-striped" id="table-invoice-bo" son-success-load="successLoadexpedition" width="100%">
                         <thead class="bg-gradient-info text-white">

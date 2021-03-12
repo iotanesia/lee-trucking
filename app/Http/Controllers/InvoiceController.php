@@ -56,15 +56,21 @@ class InvoiceController extends Controller
 
     public function exportExcelBO(Request $request){
        
-        // dd($request);
         $date = $request->dateRangeBO;
         $dates = explode('-',$date);
         
         $startDate = Date('Y-m-d',strtotime($dates[0]));
         $endDate =  Date('Y-m-d',strtotime($dates[1]));
-        $nameExcel = 'Invoice BO '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
-        return Excel::download(new ExportInvoiceBO($startDate, $endDate), $nameExcel.'.xlsx');
-  
+        setlocale(LC_TIME, 'id_ID');
+        Carbon::setLocale('id');
+        
+        $namaFile = 'Invoice BO '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
+        // if($request->tipeFile == "excel"){
+            return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.xlsx');
+        // }else if($request->tipeFile == "pdf"){
+        //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
+        // }
+        
     }
 
     public function exportExcelBA(Request $request){
