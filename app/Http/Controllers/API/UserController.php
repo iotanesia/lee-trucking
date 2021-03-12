@@ -217,7 +217,7 @@ class UserController extends Controller
           isset($request->last_name) && $request->last_name ? $userDetail->last_name = $request->last_name : null;
           isset($request->nomor_hp) && $request->nomor_hp ? $userDetail->nomor_hp = $request->nomor_hp : null;
           isset($request->jenis_kelamin) && $request->jenis_kelamin ? $userDetail->jenis_kelamin = $request->jenis_kelamin : null;
-          isset($request->tgl_lahir) && $request->tgl_lahir ? $userDetail->tgl_lahir = $request->tgl_lahir : null;
+          isset($request->tgl_lahir) && $request->tgl_lahir ? $userDetail->tgl_lahir = date('Y-m-d', strtotime($request->tgl_lahir)) : null;
           isset($request->agama) && $request->agama ? $userDetail->agama = $request->agama : null;
           isset($request->no_rek) && $request->no_rek ? $userDetail->no_rek = $request->no_rek : null;
           isset($request->nama_bank) && $request->nama_bank ? $userDetail->nama_bank = $request->nama_bank : null;
