@@ -56,7 +56,7 @@ class ExpeditionController extends Controller
                          $query->where('expedition_activity.id', $whereNotifId);
                      }
                    })
-                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
+                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.id as status_code', 
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 
                             'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
