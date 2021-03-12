@@ -4,8 +4,8 @@
 * Argon Dashboard PRO v1.1.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Product Page: http://liexpedition.com//product/argon-dashboard-pro
+* Copyright 2019 Creative Tim (http://liexpedition.com/)
 
 * Coded by Creative Tim
 
@@ -140,7 +140,7 @@
       <div class="row align-items-center justify-content-xl-between">
         <div class="col-xl-6">
           <div class="copyright text-center text-xl-left text-muted">
-            &copy; {{date('Y')}} <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Lee-Tracking</a>
+            &copy; {{date('Y')}} <a href="http://liexpedition.com/" class="font-weight-bold ml-1" target="_blank">Lee-Tracking</a>
           </div>
         </div>
         <div class="col-xl-6">
