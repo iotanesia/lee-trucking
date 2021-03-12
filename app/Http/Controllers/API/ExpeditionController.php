@@ -29,6 +29,7 @@ class ExpeditionController extends Controller
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
       $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
+      $statusCode = isset($data['status_code']) ? $data['status_code'] : false;
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -56,7 +57,12 @@ class ExpeditionController extends Controller
                          $query->where('expedition_activity.id', $whereNotifId);
                      }
                    })
-                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.id as status_code', 
+                   ->where(function($query) use($statusCode) {
+                     if($statusCode) {
+                         $query->where('expedition_activity.status_activity', $statusCode);
+                     }
+                   })
+                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code', 
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 
                             'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')

@@ -94,7 +94,7 @@ $("document").ready(function(){
         $("#user-form").find("input[name=id]").val(dataJSON.id);
         $("#user-modal #btn-submit").attr("el-event", "edit");
         $("#user-form").find("textarea[name=content]").summernote("code", dataJSON.content);
-        
+        console.log(dataJSON);
         bindToForm($("#user-modal"), dataJSON);
         
       } else {
