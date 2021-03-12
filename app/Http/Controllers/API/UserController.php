@@ -339,6 +339,7 @@ class UserController extends Controller
                             }
                         }
                     })
+                    ->where('users.is_deleted', 'false')
                     ->select('users.*', 'usr_groups.group_name', 'usr_details.first_name', 'usr_details.last_name', 'usr_details.alamat', 'usr_details.tgl_lahir', 'usr_details.nomor_hp', 'usr_details.keterangan', 'usr_details.jenis_kelamin', 'usr_details.agama', 'usr_details.id_user', 'usr_details.foto_profil', 'usr_details.no_rek', 'usr_details.nama_bank', 'usr_details.nama_rekening')
                     ->orderBy('users.id', 'ASC')
                     ->paginate();
@@ -522,5 +523,40 @@ class UserController extends Controller
         'code_type' => 'BadRequest',
       ], 405);
     }
+  }
+
+  public function delete(Request $request) {
+    if($request->isMethod('POST')) {
+        $data = $request->all();
+        $user = User::find($data['id']);
+        $current_date_time = Carbon::now()->toDateTimeString(); 
+        $user_id = Auth::user()->id;
+        $user->deleted_at = $current_date_time;
+        $user->deleted_by = $user_id;
+        $user->is_deleted = true;
+  
+  
+        if($user->save()){
+          return response()->json([
+            'code' => 200,
+            'code_message' => 'Berhasil menghapus data',
+            'code_type' => 'Success',
+          ], 200);
+        
+        } else {
+          return response()->json([
+            'code' => 401,
+            'code_message' => 'Gagal menghapus data',
+            'code_type' => 'BadRequest',
+          ], 401);
+        }
+        
+      } else {
+        return response()->json([
+          'code' => 405,
+          'code_message' => 'Method salah',
+          'code_type' => 'BadRequest',
+        ], 405);
+      }
   }
 }
