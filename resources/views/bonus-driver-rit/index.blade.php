@@ -51,8 +51,8 @@
                 <div class="col-md-2">
                     <select class="form-control m-1" id="bulan-select">
                         <option value=""></option>
-                        @foreach($bulan as $val)
-                            <option value="{{$val}}">{{$val}}</option>
+                        @foreach($bulan as $key => $val)
+                            <option value="{{$key}}">{{$val}}</option>
                         @endforeach
                     </select>
                 </div>

@@ -17,13 +17,10 @@ class BonusDriverRitController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $month = '04';
-      $year = '2021';
+      $month = isset($data['bulan']) ? $data['bulan'] : date('m');
+      $year = isset($data['tahun']) ? $data['tahun'] : date('Y');
       $firstDate = date('Y-m-01', strtotime($year.'-'.$month.'-01'));
       $lastDate = date('Y-m-t', strtotime($year.'-'.$month.'-01'));
-    //   dd($lastDate);
-      $firstDate = date('Y-m-01');
-      $lastDate = date('Y-m-t');
       $whereField = 'name, no_Reward';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $rewardList = ExpeditionActivity::join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -41,14 +38,20 @@ class BonusDriverRitController extends Controller
                     ->orderBy('total_rit', 'DESC')
                     ->paginate();
 
+                    
+    //   dd($rewardList);
+
       foreach($rewardList as $row) {
           $truck = Truck::where('driver_id', $row->driver_id)->first();
-          $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)->where('status_activity', 'CLOSED_EXPEDITION')->count();
-          $row->truck = $truck->truck_plat.' - '.$truck->truck_name;
-          $reward = Reward::where('min', '<=', $row->rit_truck)->where('max', '>=', $row->rit_truck)->orderBy('min', 'DESC')->where('is_deleted', 'false')->first();
-          $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
-          $row->bonus = $reward ? $reward->bonus : 0;
-          $row->data_json = $row->toJson();
+        //   dump($truck);
+          if($truck) {
+              $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)->where('status_activity', 'CLOSED_EXPEDITION')->count();
+              $row->truck = $truck->truck_plat.' - '.$truck->truck_name;
+              $reward = Reward::where('min', '<=', $row->rit_truck)->where('max', '>=', $row->rit_truck)->orderBy('min', 'DESC')->where('is_deleted', 'false')->first();
+              $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
+              $row->bonus = $reward ? $reward->bonus : 0;
+              $row->data_json = $row->toJson();
+          }
       }
       
       if(!isset($rewardList)){
