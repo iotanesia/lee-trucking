@@ -149,6 +149,7 @@ $("document").ready(function(){
       $("#spareparts-form").find("select[name=sparepart_type]").attr("disabled", false);
       $("#spareparts-form").find("select[name=satuan_type]").attr("disabled", false);
       $("#spareparts-form").find("input[name=amount]").attr("disabled", false);
+      $("#spareparts-form #imgScreen").attr("src", '');
       resetForm("#spareparts-form");
     }
   });

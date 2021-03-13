@@ -37,10 +37,10 @@
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                             </div>
-                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="sparepart" placeholder="Search Key">
+                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="spareparts" placeholder="Search Key">
                         </div>
                     </div>
-                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="sparepart"><i class="fa fa-search"></i></a>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="spareparts"><i class="fa fa-search"></i></a>
                 </div>
               </div>
             </div>
@@ -130,6 +130,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
                                         <select name="sparepart_type" id="sparepart_type" class="form-control sparepart_type">
+                                        <option value=""></option>
                                         @foreach($type as $row)
                                             <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                                         @endforeach
@@ -151,6 +152,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="sparepart_status">Status Sparepart</label>
                                         <select name="sparepart_status" id="sparepart_status" class="form-control sparepart_status">
+                                            <option value=""></option>
                                         @foreach($status as $row)
                                             <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                                         @endforeach
@@ -243,6 +245,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
                             <select name="sparepart_type" id="sparepart-type" class="form-control sparepart_type">
+                            <option value=""></option>
                             @foreach($type as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                             @endforeach
@@ -265,6 +268,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="sparepart_status">Status Sparepart</label>
                             <select name="sparepart_status" id="" class="form-control sparepart_status">
+                            <option value=""></option>
                             @foreach($status as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                             @endforeach
@@ -274,6 +278,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="group_sparepart_id">Group Sparepart</label>
                             <select name="group_sparepart_id" id="" class="form-control group_sparepart_id">
+                            <option value=""></option>
                             @foreach($group as $row)
                                 <option value="{{$row->id}}">{{$row->group_name}}</option>
                             @endforeach
