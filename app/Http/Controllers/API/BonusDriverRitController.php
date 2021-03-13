@@ -471,7 +471,7 @@ class BonusDriverRitController extends Controller
         ], 404);
       }else{
         foreach($rewardList as $row) {
-            $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->first();
+            $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->where('is_deleted', 'false')->first();
             $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
             $row->bonus = $reward ? $reward->bonus : 0;
             $row->data_json = $row->toJson();
