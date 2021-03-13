@@ -18,7 +18,6 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 use App\Services\FirebaseService;
-use Validator;
 // use App\Services\FirebaseServic\Messaging;
 
 class ExpeditionController extends Controller
@@ -329,22 +328,11 @@ class ExpeditionController extends Controller
       
       $factory = new FirebaseService();
       $masterOjk = OJK::where('id', $data['ojk_id'])->select('harga_otv', 'harga_ojk')->first();
-    //   $this->validate($request, [
-    //       'nomor_inv' => 'required|string|max:255|unique:'.Auth::user()->schema.'.expedition_activity',
-    //       // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
-    //     // 'ExpeditionActivity_name' => 'required|string|max:255',
-    //   ]);
-    //   $rules = ['nomor_inv' => 'required|string|max:255|unique:'.Auth::user()->schema.'.expedition_activity',];
-    //   $validator = Validator::make($data, $rules);
-      
-    //   if($validator->fails()) {
-    //      return response()->json([
-    //         'code' => 405,
-    //         'code_message' => 'Nomor Invoice sudah ada',
-    //         'code_type' => 'BadRequest',
-    //         'result'=> null
-    //      ]);
-    //   }
+      $this->validate($request, [
+          'nomor_inv' => 'required|string|max:255|unique:'.Auth::user()->schema.'.expedition_activity',
+          // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
+        // 'ExpeditionActivity_name' => 'required|string|max:255',
+      ]);
 
       unset($data['_token']);
       unset($data['id']);
