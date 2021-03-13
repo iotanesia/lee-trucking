@@ -18,6 +18,7 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 use App\Services\FirebaseService;
+use Validator;
 // use App\Services\FirebaseServic\Messaging;
 
 class ExpeditionController extends Controller
