@@ -299,9 +299,9 @@ class SparePartController extends Controller
         'sparepart_name' => 'required|string|max:255',
         'sparepart_status' => 'required',
         'sparepart_jenis' => 'required',
-        'jumlah_stok' => 'required',
+        'jumlah_stok' => 'nullable',
         'group_sparepart_id' => 'required',
-        'barcode_pabrik' => 'required',
+        'barcode_pabrik' => 'nullable',
         'sparepart_type' => 'required',
         'merk_part' => 'required',
       ]);

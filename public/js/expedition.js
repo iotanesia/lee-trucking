@@ -161,10 +161,13 @@ $("document").ready(function() {
                      "<td>"+ dateFormat(tgl_po) +"</td>"+
                      "<td>"+ kabupaten +" - "+ kecamatan +" - "+ cabang_name +"</td>"+
                      "<td align='center'>"+
-                       "<div class='btn-group'>"+
-                         "<a class='btn btn-success btn-xs btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#expedition-modal'><i class='fas fa-edit'></i></a>"+
-                         "<a class='btn btn-danger btn-xs btn-delete btn-sm' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
-                       "</div>"+
+                       "<div class='btn-group'>";
+                       if(responses.data[i].status_activity == "SUBMIT") {
+
+                        tableRows += "<a class='btn btn-success btn-xs btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#expedition-modal'><i class='fas fa-edit'></i></a>"+
+                                     "<a class='btn btn-danger btn-xs btn-delete btn-sm' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>";
+                       }
+      tableRows +=     "</div>"+
                      "</td>"+
                    "</tr>";
     }
