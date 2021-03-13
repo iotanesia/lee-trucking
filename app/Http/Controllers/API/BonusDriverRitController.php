@@ -400,7 +400,9 @@ class BonusDriverRitController extends Controller
                     ->select('expedition_activity.*', 'kabupaten', 'kecamatan', 'provinsi', 'cabang_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_name', 'ex_master_truck.truck_plat')
                     ->paginate();
       
+                    // dd($rewardList);
       if(!isset($rewardList)){
+        //   dd('aa');
         return response()->json([
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
@@ -409,15 +411,17 @@ class BonusDriverRitController extends Controller
         ], 404);
 
       }else{
+        //   dd('bb');
         foreach($rewardList as $row) {
             $row->data_json = $row->toJson();
-            return response()->json([
-            'code' => 200,
-            'code_message' => 'Success',
-            'code_type' => 'Success',
-            'result'=> $rewardList
-            ], 200);
         }
+
+        return response()->json([
+        'code' => 200,
+        'code_message' => 'Success',
+        'code_type' => 'Success',
+        'result'=> $rewardList
+        ], 200);
       }
       
       
