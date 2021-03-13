@@ -64,6 +64,17 @@ $("document").ready(function(){
 
     $("#tahun-select").select2({
         placeholder:"Select Tahun"
+
+    }).on('select2:select', function (e) {
+        var data = e.params.data;
+        var tahun = $("#tahun-select").val();
+        var bulan = $("#bulan-select").val();
+
+        alert(tahun);
+        
+        if(tahun && bulan != '') {
+            alert($("#tahun-select").val());
+        }
     });
 
     $("#bulan-select").select2({
