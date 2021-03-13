@@ -334,7 +334,7 @@ class ExpeditionController extends Controller
     //       // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
     //     // 'ExpeditionActivity_name' => 'required|string|max:255',
     //   ]);
-      $rules = ['nomor_inv' => 'required|string|max:255|unique:'.Auth::user()->schema.'.expedition_activity',];
+      $rules = ['nomor_inv' => 'required|string|max:255|iunique:'.Auth::user()->schema.'.expedition_activity',];
       $validator = Validator::make($data, $rules);
       
       if($validator->fails()) {

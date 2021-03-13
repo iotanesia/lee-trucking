@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Auth;
 use DB;
 use View;
+use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +37,23 @@ class AppServiceProvider extends ServiceProvider
 
 
           });
+
+
+          Validator::extend('iunique', function ($attribute, $value, $parameters, $validator) {
+            // dd($attribute, $value, $parameters, $validator);
+            $count = DB::table($parameters[0])
+                     ->where($attribute, $value)
+                     ->where('is_deleted', false);
+
+            if(!$count->count()) {
+                return true;
+                
+            } else {
+                $validator->addReplacer('iunique', function($message) use($attribute) {
+                    return str_replace('validation.iunique', 'The '. ucfirst($attribute).' has already been taken', $message);
+                });
+            }
+        });
       
     }
 
