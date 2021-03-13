@@ -2,7 +2,7 @@
 @section('content')
 <style>
 .modal-dialog {
-    max-width: 50%;
+    max-width: 60%;
     height: 100%;
 }
 </style>
