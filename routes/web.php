@@ -58,3 +58,5 @@ Route::get('/dashboard/{schema}', 'DashboardController@index');
 Route::get('/export-bo', 'InvoiceController@exportExcelBO')->name('export-bo');
 Route::get('/export-ba', 'InvoiceController@exportExcelBA')->name('export-ba');
 Route::get('/export-bj', 'InvoiceController@exportExcelBJ')->name('export-bj');
+
+Route::get('/getbarcode/{code}', 'SparePartsController@getBarcode');
