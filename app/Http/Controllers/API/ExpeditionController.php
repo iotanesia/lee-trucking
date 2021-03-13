@@ -343,7 +343,7 @@ class ExpeditionController extends Controller
             'code_message' => 'Nomor Invoice sudah ada',
             'code_type' => 'BadRequest',
             'result'=> null
-         ]);
+         ],405);
       }
 
       unset($data['_token']);
