@@ -111,6 +111,8 @@ $("document").ready(function(){
     for(var i = 0; i < responses.data.length; i++) {
       id = responses.data[i].id;
       driver_name = responses.data[i].driver_name;
+      rit_truck = responses.data[i].rit_truck;
+      truck = responses.data[i].truck;
       total_rit = responses.data[i].total_rit;
       bonus = responses.data[i].bonus;
       reward_jenis = responses.data[i].reward_jenis;
@@ -119,7 +121,9 @@ $("document").ready(function(){
       tableRows += "<tr>" +
                      "<td>"+ (i + 1) +"</td>"+
                      "<td>"+ driver_name +"</td>"+
+                     "<td>"+ truck +"</td>"+
                      "<td>"+ def(total_rit) +"</td>"+
+                     "<td>"+ def(rit_truck) +"</td>"+
                      "<td>"+ def(reward_jenis) +"</td>"+
                      "<td>"+ convertToRupiah(parseInt(total_rit) * 10000) +"</td>"+
                      "<td>"+  convertToRupiah(bonus)  +"</td>"+

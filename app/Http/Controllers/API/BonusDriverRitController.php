@@ -17,10 +17,11 @@ class BonusDriverRitController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $month = '01';
+      $month = '04';
       $year = '2021';
       $firstDate = date('Y-m-01', strtotime($year.'-'.$month.'-01'));
       $lastDate = date('Y-m-t', strtotime($year.'-'.$month.'-01'));
+    //   dd($lastDate);
       $firstDate = date('Y-m-01');
       $lastDate = date('Y-m-t');
       $whereField = 'name, no_Reward';
@@ -39,11 +40,12 @@ class BonusDriverRitController extends Controller
                     ->groupBy('driver_id', 'driver_name')
                     ->orderBy('total_rit', 'DESC')
                     ->paginate();
-      
+
       foreach($rewardList as $row) {
           $truck = Truck::where('driver_id', $row->driver_id)->first();
           $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)->where('status_activity', 'CLOSED_EXPEDITION')->count();
-          $reward = Reward::where('min', '<=', $row->rit_truck)->where('max', '>=', $row->rit_truck)->orderBy('min', 'DESC')->first();
+          $row->truck = $truck->truck_plat.' - '.$truck->truck_name;
+          $reward = Reward::where('min', '<=', $row->rit_truck)->where('max', '>=', $row->rit_truck)->orderBy('min', 'DESC')->where('is_deleted', 'false')->first();
           $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
           $row->bonus = $reward ? $reward->bonus : 0;
           $row->data_json = $row->toJson();
