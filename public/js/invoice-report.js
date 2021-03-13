@@ -471,21 +471,18 @@
     return [year, month, day].join('-');
   }
 
-  // $("#tag-cloud-widget .content a").click(function(e) {
-  //   e.preventDefault();
-  //   alert("masuk");
-  //   $.ajax({
-  //     url: window.Laravel.app_url+"/export-bo?start_date="+startDateBO+"&end_date="+endDateBO,
-  //     type: 'GET',
-  //     dataType: 'json',
-  //     // success: function(response){ // What to do if we succeed
-  //     //     alert("berhasil");
-  //     // },
-  //     // error: function(response){
-  //     //   alert("gagal");
-  //     // }
-  //   });
-  //   // return false;
-  // });
+  $("#is-pdf").click(function(e) {
+    e.preventDefault();
+   
+    $("#tipeFile").val("pdf");
+    // return false;
+  });
+
+  $("#is-excel").click(function(e) {
+    e.preventDefault();
+    $("#tipeFile").val("excel");
+   
+    // return false;
+  });
  
 });
