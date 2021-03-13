@@ -71,7 +71,28 @@ $("document").ready(function(){
         placeholder:"Select Group"
     });
 
-  $("#driver_join_date").daterangepicker({
+  $("#purchase_date").daterangepicker({
+    locale: {
+        format: 'DD-MM-YYYY'
+    },
+    singleDatePicker : true,
+  });
+
+  $("#purchase_dates").daterangepicker({
+    locale: {
+        format: 'DD-MM-YYYY'
+    },
+    singleDatePicker : true,
+  });
+
+  $("#due_date").daterangepicker({
+    locale: {
+        format: 'DD-MM-YYYY'
+    },
+    singleDatePicker : true,
+  });
+
+  $("#due_dates").daterangepicker({
     locale: {
         format: 'DD-MM-YYYY'
     },
