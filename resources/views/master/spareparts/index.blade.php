@@ -1,5 +1,11 @@
 @extends('layouts/layouts')
 @section('content')
+<style>
+.modal-dialog {
+    max-width: 50%;
+    height: 100%;
+}
+</style>
     <div class="header bg-gradient-info pb-6">
       <div class="container-fluid">
         <div class="header-body">
@@ -101,7 +107,7 @@
       </footer>
       
       <div id="spareparts-scanner-modal" class="modal fade animated" role="dialog">
-            <div class="modal-dialog" style="max-width: 1600px;">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header bg-gradient-primary">
                     <h5 class="modal-title text-white" id="exampleModalLabel">Scan spareparts</h5>
@@ -138,7 +144,7 @@
                                     </div>
                                     <div class="form-group purchase_type" style="display:none">
                                         <label class="form-control-label" for="purchase_date">Tgl Pembelian</label>
-                                        <input type="date" class="form-control" name="purchase_date" id="purchase_date">
+                                        <input type="text" class="form-control" name="purchase_date" placeholder="Select Date" id="purchase_dates">
                                     </div>
                                     <div class="form-group no_rek">
                                         <label class="form-control-label" for="no_rek">Rekening</label>
@@ -190,7 +196,7 @@
                                     </div>
                                     <div class="form-group purchase_type" style="display:none">
                                         <label class="form-control-label" for="due_date">Tgl Jatuh Tempo</label>
-                                        <input type="date" class="form-control" name="due_date" id="due_date">
+                                        <input type="date" class="form-control" name="due_date" id="due_dates" placeholder="Select Date">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-control-label" for="group_sparepart_id">Group Sparepart</label>
@@ -224,7 +230,7 @@
     </div>
   </div>
   <div class="modal fade" id="spareparts-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document" style="max-width: 1600px;">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
             <h5 class="modal-title text-white" id="exampleModalLabel">Add spareparts</h5>
@@ -262,7 +268,7 @@
                         </div>
                         <div class="form-group purchase_type" style="display:none">
                             <label class="form-control-label" for="purchase_date">Tgl Pembelian</label>
-                            <input type="date" class="form-control" name="purchase_date" id="purchase_date">
+                            <input type="text" class="form-control" name="purchase_date" placeholder="Select Date" id="purchase_date">
                         </div>
 
                         <div class="form-group">
@@ -309,7 +315,7 @@
 
                         <div class="form-group purchase_type" style="display:none">
                             <label class="form-control-label" for="due_date">Tgl Jatuh tempo</label>
-                            <input type="date" class="form-control" name="due_date" id="due_date">
+                            <input type="text" class="form-control" name="due_date" placeholder="Select Date" id="due_date">
                         </div>
 
                         <div class="form-group">
