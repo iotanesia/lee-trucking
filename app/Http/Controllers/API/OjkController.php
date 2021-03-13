@@ -29,7 +29,8 @@ class OjkController extends Controller
                    }
                  })
                  ->select('ex_master_ojk.*', 'ex_wil_kabupaten.kabupaten', 'ex_wil_kecamatan.kecamatan', 'ex_wil_provinsi.provinsi', 'ex_master_cabang.cabang_name')
-                 ->orderBy('id', 'ASC')
+                 ->orderBy('ex_wil_kabupaten.kabupaten', 'ASC')
+                 ->orderBy('ex_wil_kecamatan.kecamatan', 'ASC')
                  ->paginate(10);
 				 
       foreach($ojkList as $row) {
