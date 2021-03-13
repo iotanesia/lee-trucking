@@ -69,16 +69,52 @@ $("document").ready(function(){
         var data = e.params.data;
         var tahun = $("#tahun-select").val();
         var bulan = $("#bulan-select").val();
-
-        alert(tahun);
         
-        if(tahun && bulan != '') {
-            alert($("#tahun-select").val());
+        if(tahun != '' && bulan != '') {
+            var accessToken =  window.Laravel.api_token;
+  
+            $.ajax({
+                url: window.Laravel.app_url + "/api/bonusDriverRit/get-list?tahun="+tahun+"&bulan="+bulan+"",
+                type: "GET",
+                dataType: "json",
+                headers: {"Authorization": "Bearer " + accessToken},
+                crossDomain: true,
+                beforeSend: function( xhr ) { 
+                    $('.preloader').show();
+                },
+                success: function(data, textStatus, xhr) {
+                    $('.preloader').hide();
+                    successLoadbonusDriverRit(data);
+                },
+            });
         }
     });
 
     $("#bulan-select").select2({
         placeholder:"Select Bulan"
+    }).on('select2:select', function (e) {
+        var data = e.params.data;
+        var tahun = $("#tahun-select").val();
+        var bulan = $("#bulan-select").val();
+        
+        if(tahun != '' && bulan != '') {
+            var accessToken =  window.Laravel.api_token;
+  
+            $.ajax({
+                url: window.Laravel.app_url + "/api/bonusDriverRit/get-list?tahun="+tahun+"&bulan="+bulan+"",
+                type: "GET",
+                dataType: "json",
+                headers: {"Authorization": "Bearer " + accessToken},
+                crossDomain: true,
+                beforeSend: function( xhr ) { 
+                    $('.preloader').show();
+                },
+                success: function(data, textStatus, xhr) {
+                    $('.preloader').hide();
+                    successLoadbonusDriverRit(data);
+                },
+            });
+        }
     });
 
     $('#date-picker').daterangepicker({
