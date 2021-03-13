@@ -53,7 +53,7 @@
                     <span class="btn-inner--text text-white">Scanner</span>
                 </a>
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-spareparts" api-route="get-list" data-model="sparepart" request-url="{{ route('api-spareparts') }}" on-success-load="successLoadspareparts">
+                    <table class="table align-items-center table-flush table-striped" id="table-spareparts" api-route="get-list" data-model="spareparts" request-url="{{ route('api-spareparts') }}" on-success-load="successLoadspareparts">
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
