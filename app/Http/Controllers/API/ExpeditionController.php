@@ -153,7 +153,7 @@ class ExpeditionController extends Controller
                                 ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                                         'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                                             'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
-                                ->orderBy('updated_at', 'DESC')
+                                ->orderBy('expedition_activity.updated_at', 'DESC')
                                 ->paginate();
                    
       foreach($expeditionActivityList as $row) {
@@ -257,7 +257,7 @@ class ExpeditionController extends Controller
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                              'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
-                   ->orderBy('id', 'ASC')
+                   ->orderBy('expedition_activity.updated_at', 'DESC')
                    ->paginate();
       
       foreach($expeditionActivityList as $key => $row) {
