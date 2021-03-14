@@ -783,7 +783,6 @@ class ExpeditionController extends Controller
             $userApprove = Auth::user();
             if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
               if($exStatusActivity->status_approval == 'APPROVED'){
-            
                 $notification = new Notification();
                 $notification->content_id = $expeditionActivity->id;
                 $notification->content_type = 'expedisi';
@@ -801,10 +800,10 @@ class ExpeditionController extends Controller
                 $userApprovalDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
               
                 if(isset($userApprovalDetail)){
-                    $notif = array(
+                  $notif = array(
                     'title' => $notification->content_title,
                     'body' => $notification->content_body
-                    );
+                  );
                   $datas = array(
                     'content_id' => $notification->content_id,
                     'content_type' => $notification->content_type,
@@ -822,7 +821,7 @@ class ExpeditionController extends Controller
                     'id' => $notification->id
                   );
 
-                  if(isset($userApprovalDetail->id_fcm_android)) {
+                  if($userApprovalDetail->id_fcm_android != null || $userApprovalDetail->id_fcm_android != '') {
                       $requests = array(
                         'tokenFcm' => $userApprovalDetail->id_fcm_android,
                         'notif' => $notif,
@@ -870,7 +869,7 @@ class ExpeditionController extends Controller
                     'id' => $notification->id
                   );
 
-                  if(isset($userRejectedDetail->id_fcm_android)) {
+                  if($userRejectedDetail->id_fcm_android != null || $userRejectedDetail->id_fcm_android != '') {
                       $requests = array(
                       'tokenFcm' => $userRejectedDetail->id_fcm_android,
                       'notif' => $notif,
@@ -896,11 +895,12 @@ class ExpeditionController extends Controller
                 $notification->save();
 
                 $userReivisionDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
+              
+                if(isset($userReivisionDetail)){
                 $notif = array(
                   'title' => $notification->content_title,
                   'body' => $notification->content_body
                 );
-                if(isset($userReivisionDetail)){
                   $datas = array(
                     'content_id' => $notification->content_id,
                     'content_type' => $notification->content_type,
@@ -918,7 +918,7 @@ class ExpeditionController extends Controller
                     'id' => $notification->id
                   );
 
-                  if($userReivisionDetail->id_fcm_android) {
+                  if($userReivisionDetail->id_fcm_android != null || $userReivisionDetail->id_fcm_android != '') {
                       $requests = array(
                         'tokenFcm' => $userReivisionDetail->id_fcm_android,
                         'notif' => $notif,
@@ -945,7 +945,7 @@ class ExpeditionController extends Controller
                   $notification->id_user_to = $row->id;
                   $notification->id_user_from = $userApprove->id;
                   $notification->save();
-                  if($row->id_fcm_android != null){
+                  if($row->id_fcm_android != null || $row->id_fcm_android != ''){
                     $notif = array(
                       'title' => $notification->content_title,
                       'body' => $notification->content_body
@@ -967,14 +967,13 @@ class ExpeditionController extends Controller
                       'id' => $notification->id
                     );
 
-                    if(isset($row->id_fcm_android)) {
                         $requests = array(
                           'tokenFcm' => $row->id_fcm_android,
                           'notif' => $notif,
                           'data' => $datas
                         );
                         $factory->sendNotif($requests);
-                    }
+                    
                   }
                 }
               }else if($expeditionActivity->otv_payment_method == 'NON_TUNAI'){
@@ -993,7 +992,7 @@ class ExpeditionController extends Controller
                   $notifications->id_user_to = $row->id;
                   $notifications->id_user_from = $userApprove->id;
                   $notifications->save();
-                  if(isset($row->id_fcm_android)){
+                  if($row->id_fcm_android != null || $row->id_fcm_android != ''){
                     $notifs = array(
                       'title' => $notifications->content_title,
                       'body' => $notifications->content_body
@@ -1039,7 +1038,7 @@ class ExpeditionController extends Controller
                 $notification->id_user_to = $row->id;
                 $notification->id_user_from = $userApprove->id;
                 $notification->save();
-                if(isset($row->id_fcm_android)){
+                if($row->id_fcm_android != null || $row->id_fcm_android != ''){
                   $notif = array(
                     'title' => $notification->content_title,
                     'body' => $notification->content_body
@@ -1061,14 +1060,13 @@ class ExpeditionController extends Controller
                     'id' => $notification->id
                   );
 
-                  if(isset($row->id_fcm_android)) {
-                      $requests = array(
-                        'tokenFcm' => $row->id_fcm_android,
-                        'notif' => $notif,
-                        'data' => $datas
-                      );
-                      $factory->sendNotif($requests);
-                  }
+                  $requests = array(
+                    'tokenFcm' => $row->id_fcm_android,
+                    'notif' => $notif,
+                    'data' => $datas
+                  );
+                  $factory->sendNotif($requests);
+                  
                 }
               }
             }else if($exStatusActivity->status_activity == 'CLOSED_EXPEDITION'){
@@ -1087,7 +1085,7 @@ class ExpeditionController extends Controller
               $notification->save();
 
               $userCloseDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
-              if(isset($userCloseDetail)){
+              if($row->id_fcm_android != null || $row->id_fcm_android != ''){
                 $notif = array(
                   'title' => $notification->content_title,
                   'body' => $notification->content_body
@@ -1109,14 +1107,13 @@ class ExpeditionController extends Controller
                   'id' => $notification->id
                 );
 
-                if(isset($userCloseDetail->id_fcm_android)) {
                     $requests = array(
                       'tokenFcm' => $userCloseDetail->id_fcm_android,
                       'notif' => $notif,
                       'data' => $datas
                     );
                     $factory->sendNotif($requests);
-                }
+                
               }
             }
 
