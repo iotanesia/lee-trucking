@@ -123,6 +123,7 @@ Route::group(['middleware' => 'auth:api'], function(){
       Route::post('delete', ['as' => '-delete', 'uses' => 'API\SparePartController@delete']);
       Route::post('update-stok', ['as' => '-update-stok', 'uses' => 'API\SparePartController@updateStok']);
       Route::post('paid', ['as' => '-paid', 'uses' => 'API\SparePartController@paid']);
+      Route::post('barcode', ['as' => '-barcode', 'uses' => 'API\SparePartController@barcode']);
   });
   
   Route::group(['as' => 'api-restok-sparepart', 'prefix' => 'restok-sparepart'], function() {
