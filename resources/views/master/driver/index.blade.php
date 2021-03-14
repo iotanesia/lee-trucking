@@ -94,7 +94,67 @@
     </div>
   </div>
   
-
+<div class="modal fade" id="driver-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-primary">
+            <h5 class="modal-title text-white" id="exampleModalLabel">Driver</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form role="form" id="driver-form">
+            <input type="hidden" name="id" id="id">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="SS">Select User</label>
+                    <select name="user_id" id="user_id" class="form-control">
+                    <option value=""></option>
+                    @foreach($users as $row)
+                        <option value="{{$row->id}}">{{$row->name}} - {{$row->email}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                    <div class="form-group">
+                    <label for="driver_name">Driver name</label>
+                    <input type="text" class="form-control" name="driver_name" id="driver_name" placeholder="Driver name">
+                </div>
+                <div class="form-group">
+                    <label for="driver_status">Status Driver</label>
+                    <select name="driver_status" id="driver_status" class="form-control">
+                        <option value=""></option>
+                    @foreach($status as $row)
+                        <option value="{{$row->id}}">{{$row->param_name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="kenek_id">Kenek</label>
+                    <select name="kenek_id" id="kenek_id" class="form-control">
+                        <option value=""></option>
+                    @foreach($kenekList as $row)
+                        <option value="{{$row->id}}">{{$row->kenek_name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="driver_join_date">Join Date</label>
+                    <div class="input-group input-group-merge">
+                        <input type="text" name="driver_join_date" id="driver_join_date" class="form-control" placeholder="Driver Date Join">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" el-event="add" id="btn-submit">Save changes</button>
+        </div>
+    </div>
+</div>
 <script src="{{asset('js/event.js')}}"></script>
 <script src="{{asset('js/driver.js')}}"></script>
 @endsection
