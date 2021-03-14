@@ -1273,12 +1273,13 @@ class ExpeditionController extends Controller
                     })
                    ->select('ex_status_activity.*', 'all_global_param.param_name as approval_name',  
                     DB::raw('CONCAT(usr_detail.first_name, \' \', usr_detail.last_name) AS approved_by'))
-                   ->orderBy('approval_at', 'DESC')
+                   ->orderBy('expedition_activity.updated_at', 'DESC')
                    ->paginate();
       
       foreach($expeditionActivityList as $row) {
       
         $row->img = ($row->img) ? url('uploads/expedition/'.$row->img) :url('uploads/sparepart/nia3.png');
+        $row->created_at = $row->updated_at;
         $row->img_tujuan = ($row->img_tujuan ) ? url('uploads/expedition/'.$row->img_tujuan) :url('uploads/sparepart/nia3.png');
  
         $row->data_json = $row->toJson();
