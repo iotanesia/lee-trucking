@@ -106,7 +106,7 @@
                   </div>
                   <p class="mt-3 mb-0 text-sm">
                     <span class="text-success mr-2"><i class="fas fa-truck"></i></span>
-                    <span class="text-nowrap">Cabang TSJ = {{$cabang_tsj}} Cabang Dawuan = {{$cabang_dawuan}}</span>
+                    <span class="text-nowrap">Cabang TSJ = {{$cabang_tsj_truck}} Cabang Dawuan = {{$cabang_dawuan_fuso}}</span>
                   </p>
                 </div>
               </div>
