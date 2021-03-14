@@ -520,8 +520,9 @@ class ExpeditionController extends Controller
         // 'ExpeditionActivity_name' => 'required|string|max:255',
       ]);
 
-      if($request->status_activity == 'APPROVAL_OJK_DRIVER' && $expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN' && $expeditionActivity->is_approve == 1) {
+      if($request->status_activity == 'APPROVAL_OJK_DRIVER' && $expeditionActivity->is_approve == 1  && ($expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN' || $expeditionActivity->status_activity == 'DRIVER_MENUJU_TUJUAN')) {
           $current_date_time = date('Y-m-d H:i:s', strtotime($lastExActivity->created_at.' -1 hour'));
+          $statusDinamis = $expeditionActivity->status_activity;
           $isUpdate = true;
       }
 
@@ -1120,7 +1121,7 @@ class ExpeditionController extends Controller
 
             if($isUpdate) {        
                 $expeditionActivity->is_approve = 0;
-                $expeditionActivity->status_activity = 'DRIVER_SAMPAI_TUJUAN';
+                $expeditionActivity->status_activity = $statusDinamis;
                 $expeditionActivity->save();
 
                 $exStatusActivity->created_at = $current_date_time;
@@ -1272,12 +1273,13 @@ class ExpeditionController extends Controller
                     })
                    ->select('ex_status_activity.*', 'all_global_param.param_name as approval_name',  
                     DB::raw('CONCAT(usr_detail.first_name, \' \', usr_detail.last_name) AS approved_by'))
-                   ->orderBy('approval_at', 'DESC')
+                   ->orderBy('ex_status_activity.updated_at', 'DESC')
                    ->paginate();
       
       foreach($expeditionActivityList as $row) {
       
         $row->img = ($row->img) ? url('uploads/expedition/'.$row->img) :url('uploads/sparepart/nia3.png');
+        $row->created_at = $row->updated_at;
         $row->img_tujuan = ($row->img_tujuan ) ? url('uploads/expedition/'.$row->img_tujuan) :url('uploads/sparepart/nia3.png');
  
         $row->data_json = $row->toJson();
