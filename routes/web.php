@@ -54,9 +54,12 @@ Route::get('/penanaman-modal', 'MoneyTransactionHeaderController@indexModal')->n
 Route::get('/jurnal-report', 'JurnalController@index')->name('jurnal-report');
 Route::get('/invoice-report', 'InvoiceController@index')->name('invoice-report');
 Route::get('/dashboard/{schema}', 'DashboardController@index');
-//export excel
+//export excel invoice
 Route::get('/export-bo', 'InvoiceController@exportExcelBO')->name('export-bo');
 Route::get('/export-ba', 'InvoiceController@exportExcelBA')->name('export-ba');
 Route::get('/export-bj', 'InvoiceController@exportExcelBJ')->name('export-bj');
 
 Route::get('/getbarcode/{code}', 'SparePartsController@getBarcode');
+
+//repair truck
+Route::get('/repair-truck-report', 'RepairTruckReportController@index')->name('repair-truck-report');
