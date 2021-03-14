@@ -43,10 +43,10 @@ class DashboardController extends Controller
             $data['total_income'] = number_format($totalIncome,0,',','.');
 
             foreach($truck as $key => $val) {
-                if($val->val->cabang_name == 'Cabang TSJ TRUCK') {
+                if($val->cabang_name == 'Cabang TSJ TRUCK') {
                     $data['cabang_tsj'] = $val->count;
                 
-                } elseif($val->val->cabang_name == 'Cabang Dawuan FUSO') {
+                } elseif($val->cabang_name == 'Cabang Dawuan FUSO') {
                     $data['cabang_dawuan'] = $val->count;
                 }
             }
