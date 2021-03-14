@@ -139,6 +139,8 @@ $("document").ready(function(){
     var src = '{{asset("assets/img/add-photo.png")}}';
 
     if(invoker.attr('el-event') == 'edit') {
+      $("#spareparts-modal #exampleModalLabel").html('Edit Sparepart');
+      $("#spareparts-form").show();
       var dataJSON = invoker.attr("data-json");
       var dataJSON = JSON.parse(dataJSON);
 
@@ -156,9 +158,18 @@ $("document").ready(function(){
       $("#spareparts-form").find("select[name=satuan_type]").attr("disabled", true);
       $("#spareparts-form").find("input[name=amount]").attr("disabled", true);
       $("#spareparts-form #imgScreen").attr("src", dataJSON.img_sparepart);
+      $("#spareparts-modal #form-barcode").hide();
+      $("#spareparts-modal .modal-footer").show();
       
-      
+    } else if(invoker.attr('el-event') == 'barcode') {
+        $("#spareparts-modal #form-barcode").show();
+        $("#spareparts-modal #exampleModalLabel").html('Barcode');
+        $("#spareparts-modal #spareparts-form").hide();
+        $("#spareparts-modal .modal-footer").hide();
+
     } else {
+      $("#spareparts-modal #exampleModalLabel").html('Add Sparepart');
+      $("#spareparts-form").show();
       $("#spareparts-form").find("input[name=id]").val(null);
       $("#spareparts-modal #btn-submits").attr("el-event", "add");
       $("#spareparts-form").find("textarea[name=content]").summernote("code", "");
@@ -171,6 +182,8 @@ $("document").ready(function(){
       $("#spareparts-form").find("select[name=satuan_type]").attr("disabled", false);
       $("#spareparts-form").find("input[name=amount]").attr("disabled", false);
       $("#spareparts-form #imgScreen").attr("src", '');
+      $("#spareparts-modal #form-barcode").hide();
+      $("#spareparts-modal .modal-footer").show();
       resetForm("#spareparts-form");
     }
   });
@@ -211,8 +224,11 @@ var successLoadspareparts = (function(responses, dataModel) {
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
                        "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#spareparts-modal'><i class='fas fa-edit'></i></a>"+
-                       "<a class='btn btn-danger btn-sm btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>"+
-                     "</div>"+
+                       "<a class='btn btn-danger btn-sm btn-delete' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>";
+                        if(barcode_gudang != null) {
+          tableRows += "<a target='_blank' class='btn btn-warning btn-sm btn-barcode' href='#' data-toggle='modal' data-target='#spareparts-modal' el-event='barcode' data-id='"+ barcode_gudang +"'><i class='fa fa-barcode'></i></a>";
+                        }
+    tableRows +=     "</div>"+
                    "</td>"+
                  "</tr>";
   }
@@ -252,6 +268,31 @@ var successLoadspareparts = (function(responses, dataModel) {
         }
       });
     }
+  })
+
+  $(".btn-barcode").click(function(){
+    var id = $(this).attr("data-id");
+    var accessToken =  window.Laravel.api_token;
+
+    $.ajax({
+        url: window.Laravel.app_url + "/api/spareparts/barcode",
+        type: "POST",
+        dataType: "html",
+        data:"id"+"="+id,
+        headers: {"Authorization": "Bearer " + accessToken},
+        crossDomain: true,
+        beforeSend: function( xhr ) { 
+            $('.preloader').show();
+        },
+        success: function(data, textStatus, xhr) {
+            console.log(data);
+            $('.preloader').hide();
+            $('#form-barcode').html('<center>'+data+'</center>');
+        },
+        error: function(datas, textStatus, xhr) {
+            $('.preloader').hide();
+        }
+    });
   })
 
   $("#spareparts-scanner-modal #scanner").on('change', function(event) {
