@@ -2,7 +2,7 @@ $("document").ready(function(){
   var accessToken =  window.Laravel.api_token;
 
   $.ajax({
-    url: window.Laravel.app_url + "/api/cabang/get-list",
+    url: window.Laravel.app_url + "/api/cabangs/get-list",
     type: "GET",
     dataType: "json",
     headers: {"Authorization": "Bearer " + accessToken},
@@ -22,7 +22,7 @@ $("document").ready(function(){
     data.append("_token", window.Laravel.csrfToken);
 
     $.ajax({
-      url: window.Laravel.app_url + "/api/cabang/" + event + "",
+      url: window.Laravel.app_url + "/api/cabangs/" + event + "",
       type: "POST",
       dataType: "json",
       data: data,
