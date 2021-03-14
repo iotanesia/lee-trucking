@@ -62,18 +62,26 @@
             <div class="card-body">
             <div class="tab-content">
               <div id="ad" class="tab-pane in active">
+                <form id="form-export-bo" method="get" action="{{url('export-bo')}}">
                 <div class="row">
-                    <form id="form-export-bo" class="col-md-4" method="get" action="{{url('export-bo')}}">
-                      <input class="form-control" name="tipeFile" id="tipeFile" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
-                     
-                      <div class="input-group input-group-alternative input-group-merge" 
-                          style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                        <div class="input-group-prepend" style="margin-left: 10px;">
-                          <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                      <div class="col-md-4">
+                        <input class="form-control" name="tipeFileBO" id="tipeFileBO" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                        <input class="form-control" name="noInvoiceBO" id="noInvoiceBO" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                        <div class="input-group input-group-alternative input-group-merge" 
+                            style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                          <div class="input-group-prepend" style="margin-left: 10px;">
+                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                          </div>
+                            <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                         </div>
-                          <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                       </div>
-                    </form>
+                      <div class="col-md-2" >
+                        <select class="form-control" id="filter-select-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                            <option value="">Semua</option>
+                            <option value="TUNAI">TUNAI</option>
+                            <option value="NON_TUNAI">NON TUNAI</option>
+                        </select>
+                      </div>
                     <div id="tag-cloud-widget" class="col-md-2">  
                       <div class="content">  
                         <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -90,12 +98,12 @@
                           <div class="dropdown-header noti-title">
                             <h6 class="text-overflow m-0">Eksport</h6>
                           </div>
-                          <a href="#" id="is-excel" class="dropdown-item" onclick="($('#form-export-bo').submit())">
+                          <a href="#" id="is-excel-bo" class="dropdown-item" data-toggle="modal" data-target="#modal-export-bo">
                             <i class="fas fa-file-excel"></i>
                             <span>Excel</span>
                           </a>
                           <div class="dropdown-divider"></div>
-                          <a href="#" id="is-pdf" class="dropdown-item" onclick="($('#form-export-bo').submit())">
+                          <a href="#" id="is-pdf-bo" class="dropdown-item" data-toggle="modal" data-target="#modal-export-bo">
                           <i class="fas fa-file-pdf"></i>
                             <span>PDF</span>
                           </a>
@@ -103,6 +111,7 @@
                       </div>
                     </div>
                   </div>
+                </form>
                     <br/>
                     <table class="table table-responsive align-items-center table-striped" id="table-invoice-bo" son-success-load="successLoadexpedition" width="100%">
                         <thead class="bg-gradient-info text-white">
@@ -174,20 +183,55 @@
                 </div>
                 <div id="up" class="tab-pane in fade">
                   <form id="form-export-ba" method="get" action="{{url('export-ba')}}">
-                    <div class="input-group input-group-alternative input-group-merge col-md-4" 
-                          style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    <div class="row">
+                          <div class="col-md-4">
+                            <input class="form-control" name="tipeFileBA" id="tipeFileBA" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            <input class="form-control" name="noInvoiceBA" id="noInvoiceBA" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            <div class="input-group input-group-alternative input-group-merge" 
+                                style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                              <div class="input-group-prepend" style="margin-left: 10px;">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                              </div>
+                                <input class="form-control" name="dateRangeBA" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            </div>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-select-ba" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="TUNAI">TUNAI</option>
+                                <option value="NON_TUNAI">NON TUNAI</option>
+                            </select>
+                          </div>
+                        <div id="tag-cloud-widget" class="col-md-2">  
+                          <div class="content">  
+                            <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fas fa-file-export"></i>
+                                </span>
+                                <div class="media-body d-none d-lg-block" style="margin-top: 4px;margin-right: 20px;text-align:center">
+                                  <span class="mb-0 text-sm  font-weight-bold">Eksport</span>
+                                </div>
+                              </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left">
+                              <div class="dropdown-header noti-title">
+                                <h6 class="text-overflow m-0">Eksport</h6>
+                              </div>
+                              <a href="#" id="is-excel-ba" class="dropdown-item" data-toggle="modal" data-target="#modal-export-ba">
+                                <i class="fas fa-file-excel"></i>
+                                <span>Excel</span>
+                              </a>
+                              <div class="dropdown-divider"></div>
+                              <a href="#" id="is-pdf-ba" class="dropdown-item" data-toggle="modal" data-target="#modal-export-ba">
+                              <i class="fas fa-file-pdf"></i>
+                                <span>PDF</span>
+                              </a>
+                            </div>
+                          </div>
                         </div>
-                        <input class="form-control" name="dateRangeBA" placeholder="Pilih Rentang Tanggal" type="text" style="text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
-                    </div>
-                  </form>
-                    <br/>
-                    <div id="tag-cloud-widget">  
-                      <div class="content">  
-                        <a href="#" onclick="($('#form-export-ba').submit())" class="btn btn-primary" id="export-ba">Export</a>
                       </div>
-                    </div>
+                    </form>
                     <br/>
                     <table class="table table-responsive align-items-center table-striped" id="table-invoice-ba" son-success-load="successLoadexpedition" width="100%">
                         <thead class="bg-gradient-info text-white">
@@ -259,20 +303,55 @@
                     </div>
                     <div id="ud" class="tab-pane fade">
                       <form id="form-export-bj" method="get" action="{{url('export-bj')}}">
-                        <div class="input-group input-group-alternative input-group-merge col-md-4" 
-                            style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        <div class="row">
+                              <div class="col-md-4">
+                                <input class="form-control" name="tipeFileBJ" id="tipeFileBJ" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                                <input class="form-control" name="noInvoiceBJ" id="noInvoiceBJ" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                                <div class="input-group input-group-alternative input-group-merge" 
+                                    style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                  <div class="input-group-prepend" style="margin-left: 10px;">
+                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                  </div>
+                                    <input class="form-control" name="dateRangeBJ" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                                </div>
+                              </div>
+                              <div class="col-md-2" >
+                                <select class="form-control" id="filter-select-bj" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                    <option value="">Semua</option>
+                                    <option value="TUNAI">TUNAI</option>
+                                    <option value="NON_TUNAI">NON TUNAI</option>
+                                </select>
+                              </div>
+                            <div id="tag-cloud-widget" class="col-md-2">  
+                              <div class="content">  
+                                <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                      <i class="fas fa-file-export"></i>
+                                    </span>
+                                    <div class="media-body d-none d-lg-block" style="margin-top: 4px;margin-right: 20px;text-align:center">
+                                      <span class="mb-0 text-sm  font-weight-bold">Eksport</span>
+                                    </div>
+                                  </div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-left">
+                                  <div class="dropdown-header noti-title">
+                                    <h6 class="text-overflow m-0">Eksport</h6>
+                                  </div>
+                                  <a href="#" id="is-excel-bj" class="dropdown-item" data-toggle="modal" data-target="#modal-export-bj">
+                                    <i class="fas fa-file-excel"></i>
+                                    <span>Excel</span>
+                                  </a>
+                                  <div class="dropdown-divider"></div>
+                                  <a href="#" id="is-pdf-bj" class="dropdown-item" data-toggle="modal" data-target="#modal-export-bj">
+                                  <i class="fas fa-file-pdf"></i>
+                                    <span>PDF</span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                          <input class="form-control" name="dateRangeBJ" placeholder="Pilih Rentang Tanggal" type="text" style="text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
-                        </div>
-                      </form>
-                      <br/>
-                      <div id="tag-cloud-widget">  
-                        <div class="content">  
-                          <a href="#" onclick="($('#form-export-bj').submit())" class="btn btn-primary" id="export-bj">Export</a>
-                        </div>
-                      </div>
+                        </form>
                       <br/>
                         <table class="table table-responsive align-items-center table-striped" id="table-invoice-bj" son-success-load="successLoadexpedition" width="100%">
                             <thead class="bg-gradient-info text-white">
@@ -301,7 +380,7 @@
                                   <td></td>
                                   <td></td>
                                   <td></td>
-                                  <td></td>
+                                  <td style="background-color:#f2de68;"></td>
                               </tr>
                           </tfoot>
                         </table>
@@ -332,6 +411,83 @@
           </div>
         </div>
       </footer>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-export-bo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width:30% !important; margin:auto !important;">
+            <div class="modal-header bg-gradient-primary">
+              <h5 class="modal-title text-white" id="exampleModalLabel">Nomor Invoice</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="form-no-invoice-bo">
+                <input type="hidden" name="id" id="id">
+                  <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="no-invoice-bo" id="no-invoice-bo" placeholder="Nomor Invoice">
+                    </div>
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-bo" onclick="($('#form-export-bo').submit())">Eksport</a>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-export-ba" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width:30% !important; margin:auto !important;">
+            <div class="modal-header bg-gradient-primary">
+              <h5 class="modal-title text-white" id="exampleModalLabel">Nomor Invoice</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="form-no-invoice-ba">
+                <input type="hidden" name="id" id="id">
+                  <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="no-invoice-ba" id="no-invoice-ba" placeholder="Nomor Invoice">
+                    </div>
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-ba" onclick="($('#form-export-ba').submit())">Eksport</a>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-export-bj" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width:30% !important; margin:auto !important;">
+            <div class="modal-header bg-gradient-primary">
+              <h5 class="modal-title text-white" id="exampleModalLabel">Nomor Invoice</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="form-no-invoice-bj">
+                <input type="hidden" name="id" id="id">
+                  <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="no-invoice-bj" id="no-invoice-bj" placeholder="Nomor Invoice">
+                    </div>
+                  </div>
+                </form>
+            </div>
+        <div class="modal-footer">
+            <a type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-bj" onclick="($('#form-export-bj').submit())">Eksport</a>
+        </div>
     </div>
   </div>
   <script src="{{asset('js/event.js')}}"></script>

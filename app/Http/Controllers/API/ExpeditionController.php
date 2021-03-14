@@ -810,7 +810,7 @@ class ExpeditionController extends Controller
                     'id' => $notification->id
                   );
 
-                  if($userApprovalDetail->id_fcm_android) {
+                  if(isset($userApprovalDetail->id_fcm_android)) {
                       $requests = array(
                         'tokenFcm' => $userApprovalDetail->id_fcm_android,
                         'notif' => $notif,
@@ -858,7 +858,7 @@ class ExpeditionController extends Controller
                     'id' => $notification->id
                   );
 
-                  if($userRejectedDetail->id_fcm_android) {
+                  if(isset($userRejectedDetail->id_fcm_android)) {
                       $requests = array(
                       'tokenFcm' => $userRejectedDetail->id_fcm_android,
                       'notif' => $notif,
@@ -955,7 +955,7 @@ class ExpeditionController extends Controller
                       'id' => $notification->id
                     );
 
-                    if($row->id_fcm_android) {
+                    if(isset($row->id_fcm_android)) {
                         $requests = array(
                           'tokenFcm' => $row->id_fcm_android,
                           'notif' => $notif,
@@ -981,7 +981,7 @@ class ExpeditionController extends Controller
                   $notifications->id_user_to = $row->id;
                   $notifications->id_user_from = $userApprove->id;
                   $notifications->save();
-                  if($row->id_fcm_android != null){
+                  if(isset($row->id_fcm_android)){
                     $notifs = array(
                       'title' => $notifications->content_title,
                       'body' => $notifications->content_body
@@ -1027,7 +1027,7 @@ class ExpeditionController extends Controller
                 $notification->id_user_to = $row->id;
                 $notification->id_user_from = $userApprove->id;
                 $notification->save();
-                if($row->id_fcm_android != null){
+                if(isset($row->id_fcm_android)){
                   $notif = array(
                     'title' => $notification->content_title,
                     'body' => $notification->content_body
@@ -1049,7 +1049,7 @@ class ExpeditionController extends Controller
                     'id' => $notification->id
                   );
 
-                  if($row->id_fcm_android) {
+                  if(isset($row->id_fcm_android)) {
                       $requests = array(
                         'tokenFcm' => $row->id_fcm_android,
                         'notif' => $notif,
@@ -1097,7 +1097,7 @@ class ExpeditionController extends Controller
                   'id' => $notification->id
                 );
 
-                if($userCloseDetail->id_fcm_android) {
+                if(isset($userCloseDetail->id_fcm_android)) {
                     $requests = array(
                       'tokenFcm' => $userCloseDetail->id_fcm_android,
                       'notif' => $notif,

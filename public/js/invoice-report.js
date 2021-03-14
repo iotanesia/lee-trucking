@@ -1,7 +1,7 @@
   
   $(document).ready(function() {  
-    var accessToken =  window.Laravel.api_token;
-    // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
+    // var accessToken =  window.Laravel.api_token;
+    var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
    
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
     var firstDay = new Date(y, m, 1);
@@ -24,6 +24,7 @@
       data: function (d) {
         d.start_date = startDateBO;
         d.end_date = endDateBO;
+        d.filter = $("#filter-select-bo").val();
     },
       headers: {"Authorization": "Bearer " + accessToken},
       crossDomain: true,
@@ -109,6 +110,7 @@
         data: function (d) {
           d.start_date = startDateBA;
           d.end_date = endDateBA;
+          d.filter = $("#filter-select-ba").val();
         },
         headers: {"Authorization": "Bearer " + accessToken},
         crossDomain: true,
@@ -193,6 +195,7 @@
       type: "GET",data: function (d) {
         d.start_date = startDateBJ;
         d.end_date = endDateBJ;
+        d.filter = $("#filter-select-bj").val();
       },
       headers: {"Authorization": "Bearer " + accessToken},
       crossDomain: true,
@@ -428,6 +431,19 @@
     });
   });
 
+  $("#filter-select-bo").on("change", function() {
+    $('#table-invoice-bo').DataTable().ajax.reload();
+  });
+
+  $("#filter-select-ba").on("change", function() {
+    $('#table-invoice-ba').DataTable().ajax.reload();
+  });
+
+  $("#filter-select-bj").on("change", function() {
+    $('#table-invoice-bj').DataTable().ajax.reload();
+  });
+
+
   function formatDate(date) {
     var d = new Date(date),
         bulan = d.getMonth(),
@@ -471,18 +487,71 @@
     return [year, month, day].join('-');
   }
 
-  $("#is-pdf").click(function(e) {
+  $("#is-pdf-bo").click(function(e) {
     e.preventDefault();
    
-    $("#tipeFile").val("pdf");
+    $("#tipeFileBO").val("pdf");
     // return false;
   });
 
-  $("#is-excel").click(function(e) {
+  $("#is-excel-bo").click(function(e) {
     e.preventDefault();
-    $("#tipeFile").val("excel");
+    // alert("excel");
+    $("#tipeFileBO").val("excel");
    
     // return false;
   });
  
+  $("#is-pdf-ba").click(function(e) {
+    e.preventDefault();
+   
+    $("#tipeFileBA").val("pdf");
+    // return false;
+  });
+
+  $("#is-excel-ba").click(function(e) {
+    e.preventDefault();
+    $("#tipeFileBA").val("excel");
+   
+    // return false;
+  });
+ 
+  $("#is-pdf-bj").click(function(e) {
+    e.preventDefault();
+   
+    $("#tipeFileBJ").val("pdf");
+    // return false;
+  });
+
+  $("#is-excel-bj").click(function(e) {
+    e.preventDefault();
+    $("#tipeFileBJ").val("excel");
+   
+    // return false;
+  });
+
+  $('#no-invoice-bo').on('input',function(e){
+    $('#noInvoiceBO').val($('#no-invoice-bo').val());
+    if(!($('#no-invoice-bo').val().trim())){
+      $('#btn-export-bo').css('display','none');
+    }else{
+      $('#btn-export-bo').css('display','block');
+    }
+  });
+  $('#no-invoice-ba').on('input',function(e){
+    $('#noInvoiceBA').val($('#no-invoice-ba').val());
+    if(!($('#no-invoice-ba').val().trim())){
+      $('#btn-export-ba').css('display','none');
+    }else{
+      $('#btn-export-ba').css('display','block');
+    }
+  });
+  $('#no-invoice-bj').on('input',function(e){
+    $('#noInvoiceBJ').val($('#no-invoice-bJ').val());
+    if(!($('#no-invoice-bj').val().trim())){
+      $('#btn-export-bj').css('display','none');
+    }else{
+      $('#btn-export-bj').css('display','block');
+    }
+  });
 });
