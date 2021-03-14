@@ -120,6 +120,10 @@ class UserController extends Controller
         unset($input['is_active']);
         unset($input['id']);
 
+        if(isset($request->tgl_lahir) && $request->tgl_lahir) {
+            $request->tgl_lahir = date('Y-m-d', strtotime($request->tgl_lahir));
+        }
+
         $userDetail->first_name = isset($request->first_name) && $request->first_name ? $request->first_name : $request->name;
         $userDetail->last_name = $request->last_name;
         $userDetail->nomor_hp = $request->nomor_hp;
