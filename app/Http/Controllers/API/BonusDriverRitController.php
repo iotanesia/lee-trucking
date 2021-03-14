@@ -17,12 +17,10 @@ class BonusDriverRitController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $month = '01';
-      $year = '2021';
+      $month = isset($data['bulan']) ? $data['bulan'] : date('m');
+      $year = isset($data['tahun']) ? $data['tahun'] : date('Y');
       $firstDate = date('Y-m-01', strtotime($year.'-'.$month.'-01'));
       $lastDate = date('Y-m-t', strtotime($year.'-'.$month.'-01'));
-      $firstDate = date('Y-m-01');
-      $lastDate = date('Y-m-t');
       $whereField = 'name, no_Reward';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $rewardList = ExpeditionActivity::join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -39,14 +37,21 @@ class BonusDriverRitController extends Controller
                     ->groupBy('driver_id', 'driver_name')
                     ->orderBy('total_rit', 'DESC')
                     ->paginate();
-      
+
+                    
+    //   dd($rewardList);
+
       foreach($rewardList as $row) {
           $truck = Truck::where('driver_id', $row->driver_id)->first();
-          $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)->where('status_activity', 'CLOSED_EXPEDITION')->count();
-          $reward = Reward::where('min', '<=', $row->rit_truck)->where('max', '>=', $row->rit_truck)->orderBy('min', 'DESC')->first();
-          $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
-          $row->bonus = $reward ? $reward->bonus : 0;
-          $row->data_json = $row->toJson();
+        //   dump($truck);
+          if($truck) {
+              $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)->where('status_activity', 'CLOSED_EXPEDITION')->count();
+              $row->truck = $truck->truck_plat.' - '.$truck->truck_name;
+              $reward = Reward::where('min', '<=', $row->rit_truck)->where('max', '>=', $row->rit_truck)->orderBy('min', 'DESC')->where('is_deleted', 'false')->first();
+              $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
+              $row->bonus = $reward ? $reward->bonus : 0;
+              $row->data_json = $row->toJson();
+          }
       }
       
       if(!isset($rewardList)){
@@ -400,7 +405,9 @@ class BonusDriverRitController extends Controller
                     ->select('expedition_activity.*', 'kabupaten', 'kecamatan', 'provinsi', 'cabang_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_name', 'ex_master_truck.truck_plat')
                     ->paginate();
       
+                    // dd($rewardList);
       if(!isset($rewardList)){
+        //   dd('aa');
         return response()->json([
           'code' => 404,
           'code_message' => 'Data tidak ditemukan',
@@ -409,15 +416,17 @@ class BonusDriverRitController extends Controller
         ], 404);
 
       }else{
+        //   dd('bb');
         foreach($rewardList as $row) {
             $row->data_json = $row->toJson();
-            return response()->json([
-            'code' => 200,
-            'code_message' => 'Success',
-            'code_type' => 'Success',
-            'result'=> $rewardList
-            ], 200);
         }
+
+        return response()->json([
+        'code' => 200,
+        'code_message' => 'Success',
+        'code_type' => 'Success',
+        'result'=> $rewardList
+        ], 200);
       }
       
       
@@ -465,7 +474,7 @@ class BonusDriverRitController extends Controller
         ], 404);
       }else{
         foreach($rewardList as $row) {
-            $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->first();
+            $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->where('is_deleted', 'false')->first();
             $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
             $row->bonus = $reward ? $reward->bonus : 0;
             $row->data_json = $row->toJson();

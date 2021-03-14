@@ -1,5 +1,11 @@
 @extends('layouts/layouts')
 @section('content')
+<style>
+.modal-dialog {
+    max-width: 60%;
+    height: 100%;
+}
+</style>
     <div class="header bg-gradient-info pb-6">
       <div class="container-fluid">
         <div class="header-body">
@@ -37,10 +43,10 @@
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                             </div>
-                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="sparepart" placeholder="Search Key">
+                            <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="spareparts" placeholder="Search Key">
                         </div>
                     </div>
-                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="sparepart"><i class="fa fa-search"></i></a>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="spareparts"><i class="fa fa-search"></i></a>
                 </div>
               </div>
             </div>
@@ -53,7 +59,7 @@
                     <span class="btn-inner--text text-white">Scanner</span>
                 </a>
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-spareparts" api-route="get-list" data-model="sparepart" request-url="{{ route('api-spareparts') }}" on-success-load="successLoadspareparts">
+                    <table class="table align-items-center table-flush table-striped" id="table-spareparts" api-route="get-list" data-model="spareparts" request-url="{{ route('api-spareparts') }}" on-success-load="successLoadspareparts">
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
@@ -101,7 +107,7 @@
       </footer>
       
       <div id="spareparts-scanner-modal" class="modal fade animated" role="dialog">
-            <div class="modal-dialog" style="max-width: 1600px;">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header bg-gradient-primary">
                     <h5 class="modal-title text-white" id="exampleModalLabel">Scan spareparts</h5>
@@ -130,6 +136,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
                                         <select name="sparepart_type" id="sparepart_type" class="form-control sparepart_type">
+                                        <option value=""></option>
                                         @foreach($type as $row)
                                             <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                                         @endforeach
@@ -137,7 +144,7 @@
                                     </div>
                                     <div class="form-group purchase_type" style="display:none">
                                         <label class="form-control-label" for="purchase_date">Tgl Pembelian</label>
-                                        <input type="date" class="form-control" name="purchase_date" id="purchase_date">
+                                        <input type="text" class="form-control" name="purchase_date" placeholder="Select Date" id="purchase_dates">
                                     </div>
                                     <div class="form-group no_rek">
                                         <label class="form-control-label" for="no_rek">Rekening</label>
@@ -151,6 +158,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="sparepart_status">Status Sparepart</label>
                                         <select name="sparepart_status" id="sparepart_status" class="form-control sparepart_status">
+                                            <option value=""></option>
                                         @foreach($status as $row)
                                             <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                                         @endforeach
@@ -188,7 +196,7 @@
                                     </div>
                                     <div class="form-group purchase_type" style="display:none">
                                         <label class="form-control-label" for="due_date">Tgl Jatuh Tempo</label>
-                                        <input type="date" class="form-control" name="due_date" id="due_date">
+                                        <input type="date" class="form-control" name="due_date" id="due_dates" placeholder="Select Date">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-control-label" for="group_sparepart_id">Group Sparepart</label>
@@ -222,7 +230,7 @@
     </div>
   </div>
   <div class="modal fade" id="spareparts-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document" style="max-width: 1600px;">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
             <h5 class="modal-title text-white" id="exampleModalLabel">Add spareparts</h5>
@@ -243,6 +251,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="sparepart_type">Type Sparepart</label>
                             <select name="sparepart_type" id="sparepart-type" class="form-control sparepart_type">
+                            <option value=""></option>
                             @foreach($type as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                             @endforeach
@@ -259,12 +268,13 @@
                         </div>
                         <div class="form-group purchase_type" style="display:none">
                             <label class="form-control-label" for="purchase_date">Tgl Pembelian</label>
-                            <input type="date" class="form-control" name="purchase_date" id="purchase_date">
+                            <input type="text" class="form-control" name="purchase_date" placeholder="Select Date" id="purchase_date">
                         </div>
 
                         <div class="form-group">
                             <label class="form-control-label" for="sparepart_status">Status Sparepart</label>
                             <select name="sparepart_status" id="" class="form-control sparepart_status">
+                            <option value=""></option>
                             @foreach($status as $row)
                                 <option value="{{$row->param_code}}">{{$row->param_name}}</option>
                             @endforeach
@@ -274,6 +284,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="group_sparepart_id">Group Sparepart</label>
                             <select name="group_sparepart_id" id="" class="form-control group_sparepart_id">
+                            <option value=""></option>
                             @foreach($group as $row)
                                 <option value="{{$row->id}}">{{$row->group_name}}</option>
                             @endforeach
@@ -304,7 +315,7 @@
 
                         <div class="form-group purchase_type" style="display:none">
                             <label class="form-control-label" for="due_date">Tgl Jatuh tempo</label>
-                            <input type="date" class="form-control" name="due_date" id="due_date">
+                            <input type="text" class="form-control" name="due_date" placeholder="Select Date" id="due_date">
                         </div>
 
                         <div class="form-group">
@@ -329,6 +340,7 @@
                     </div>
                 </div>                
             </form>
+            <div id="form-barcode"></div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

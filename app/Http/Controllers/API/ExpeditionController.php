@@ -18,6 +18,7 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 use App\Services\FirebaseService;
+use Validator;
 // use App\Services\FirebaseServic\Messaging;
 
 class ExpeditionController extends Controller
@@ -152,7 +153,7 @@ class ExpeditionController extends Controller
                                 ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                                         'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                                             'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
-                                ->orderBy('id', 'DESC')
+                                ->orderBy('expedition_activity.updated_at', 'DESC')
                                 ->paginate();
                    
       foreach($expeditionActivityList as $row) {
@@ -256,7 +257,7 @@ class ExpeditionController extends Controller
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                              'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
-                   ->orderBy('id', 'ASC')
+                   ->orderBy('expedition_activity.updated_at', 'DESC')
                    ->paginate();
       
       foreach($expeditionActivityList as $key => $row) {
@@ -328,11 +329,22 @@ class ExpeditionController extends Controller
       
       $factory = new FirebaseService();
       $masterOjk = OJK::where('id', $data['ojk_id'])->select('harga_otv', 'harga_ojk')->first();
-      $this->validate($request, [
-          'nomor_inv' => 'required|string|max:255|unique:'.Auth::user()->schema.'.expedition_activity',
-          // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
-        // 'ExpeditionActivity_name' => 'required|string|max:255',
-      ]);
+    //   $this->validate($request, [
+    //       'nomor_inv' => 'required|string|max:255|unique:'.Auth::user()->schema.'.expedition_activity',
+    //       // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
+    //     // 'ExpeditionActivity_name' => 'required|string|max:255',
+    //   ]);
+      $rules = ['nomor_inv' => 'required|string|max:255|iunique:'.Auth::user()->schema.'.expedition_activity',];
+      $validator = Validator::make($data, $rules);
+      
+      if($validator->fails()) {
+         return response()->json([
+            'code' => 405,
+            'code_message' => 'Nomor Invoice sudah ada',
+            'code_type' => 'BadRequest',
+            'result'=> null
+         ],405);
+      }
 
       unset($data['_token']);
       unset($data['id']);

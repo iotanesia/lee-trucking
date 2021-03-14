@@ -13,6 +13,7 @@ use Validator;
 use Auth;
 use Carbon\Carbon;
 use DB;
+use DNS1D;
 
 class SparePartController extends Controller
 {
@@ -299,10 +300,10 @@ class SparePartController extends Controller
         'sparepart_name' => 'required|string|max:255',
         'sparepart_status' => 'required',
         'sparepart_jenis' => 'required',
-        'jumlah_stok' => 'required',
+        'jumlah_stok' => 'nullable',
         'group_sparepart_id' => 'required',
-        'barcode_pabrik' => 'required',
-        'sparepart_type' => 'required',
+        'barcode_pabrik' => 'nullable',
+        'sparepart_type' => 'nullable',
         'merk_part' => 'required',
       ]);
 
@@ -341,7 +342,6 @@ class SparePartController extends Controller
 
         if($sparePart->save()){
           $historyStokSparepart = new StkHistorySparePart();
-          $sparePart->barcode_gudang = $sparePart->id.'-TSJ-'.date('dmY');
           $historyStokSparepart->sparepart_name = $sparePart->sparepart_name;
           $historyStokSparepart->sparepart_status = $sparePart->sparepart_status;
           $historyStokSparepart->sparepart_jenis = $sparePart->sparepart_jenis;
@@ -365,6 +365,8 @@ class SparePartController extends Controller
           $historyStokSparepart->satuan_type = $sparePart->satuan_type;
           $historyStokSparepart->transaction_type = "IN";
           $historyStokSparepart->save();
+          $sparePart->barcode_gudang = $sparePart->id.'-TSJ-'.date('dmY');
+          $sparePart->save();
           
           if(isset($request->no_rek) && $request->no_rek) {
             $coaMasterSheet = CoaMasterSheet::where('coa_code_sheet', 'ILIKE', '%PL.0007%')->get();
@@ -768,6 +770,11 @@ class SparePartController extends Controller
           'code_type' => 'BadRequest',
         ], 405);
       }
+  }
+
+  public function barcode(Request $request) {
+      $data = $request->all();
+      return DNS1D::getBarcodeSVG($data['id'], 'C39');
   }
 
 }

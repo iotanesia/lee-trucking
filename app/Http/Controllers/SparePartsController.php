@@ -10,6 +10,7 @@ use App\Models\StkGroupSparepart;
 use App\Models\Kenek;
 use App\Models\Rekening;
 use Auth;
+use DNS1D;
 
 class SparePartsController extends Controller
 {
@@ -62,5 +63,9 @@ class SparePartsController extends Controller
         $data['group'] = StkGroupSparepart::where('is_deleted', 'f')->get();
         $data['no_rek'] = Rekening::where('is_deleted', 'f')->get();
         return view('kasbon.hutang-stok.index', $data);
+    }
+
+    public function getBarcode($code) {
+        echo DNS1D::getBarcodeSVG($code, 'C39');
     }
 }
