@@ -94,23 +94,8 @@
                 </tr>
             @endforeach 
                 <tr>
-                    <td colspan="9"
-                        style="font-family:Calibri;font-size:8pt;text-align:center;"><b>TOTAL INVOICE {{$month}} {{$year}}</b></td>
-                    <td id="total-invoice-bo" style="font-size:8pt;border-left:2px solid #000000;border-right:2px solid #000000;text-align:center;"><b>{{$totalInv}}</b></td>
-                </tr>
-                <tr>
-                    <td colspan="9"
-                            style="font-family:Calibri;font-size:8pt;text-align:center;"><b>PPN 10%</b></td>
-                    <td id="ppn-10-bo" style="font-family:Calibri;font-size:8pt;border-left:2px solid #000000;border-right:2px solid #000000;text-align:center;"><b>{{$ppn10}}</b></td>
-                </tr>
-                <tr>
-                    <td colspan="9"
-                            style="font-family:Calibri;font-size:8pt;text-align:center;"><b>PPH 23</b></td>
-                    <td id="pph-23-bo" style="font-family:Calibri;font-size:8pt;border-left:2px solid #000000;border-right:2px solid #000000;text-align:center;color:#FF0000;"><b>{{$pph23}}</b></td>
-                </tr>
-                <tr>
-                    <td colspan="9" style="font-family:Calibri;font-size:8pt;text-align:center;"><b>TOTAL KESELURUHAN INVOICE</b></td>
-                    <td id="total-keseluruhan-bo" style="font-family:Calibri;font-size:8pt;border:2px solid #000000;text-align:center;background-color:#FFFF00"><b>{{$totalKeseluruhan}}</b></td> 
+                    <td colspan="9" style="font-family:Calibri;font-size:8pt;text-align:center;"><b>TOTAL INVOICE</b></td>
+                    <td id="total-keseluruhan-bo" style="font-family:Calibri;font-size:8pt;border:2px solid #000000;text-align:center;background-color:#FFFF00"><b>{{$totalInv}}</b></td> 
                 </tr>
                 <tr>
 

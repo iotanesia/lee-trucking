@@ -55,18 +55,20 @@ class InvoiceController extends Controller
     }
 
     public function exportExcelBO(Request $request){
-       
         $date = $request->dateRangeBO;
         $dates = explode('-',$date);
         
         $startDate = Date('Y-m-d',strtotime($dates[0]));
         $endDate =  Date('Y-m-d',strtotime($dates[1]));
+        $noInvoice = $request->noInvoiceBO;
+        $jenisPembayaran = $request->filterPembayaranBO;
+
         setlocale(LC_TIME, 'id_ID');
         Carbon::setLocale('id');
         
         $namaFile = 'Invoice BO '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
         // if($request->tipeFile == "excel"){
-            return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.xlsx');
+        return Excel::download(new ExportInvoiceBO($startDate, $endDate, $noInvoice, $jenisPembayaran), $namaFile.'.xlsx');
         // }else if($request->tipeFile == "pdf"){
         //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
         // }
@@ -79,8 +81,19 @@ class InvoiceController extends Controller
         
         $startDate = Date('Y-m-d',strtotime($dates[0]));
         $endDate =  Date('Y-m-d',strtotime($dates[1]));
-        $nameExcel = 'Invoice BA '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
-        return Excel::download(new ExportInvoiceBA($startDate, $endDate), $nameExcel.'.xlsx');
+        $noInvoice = $request->noInvoiceBA;
+        $jenisPembayaran = $request->filterPembayaranBA;
+
+        setlocale(LC_TIME, 'id_ID');
+        Carbon::setLocale('id');
+        
+        $namaFile = 'Invoice BA '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
+        // if($request->tipeFile == "excel"){
+        return Excel::download(new ExportInvoiceBA($startDate, $endDate, $noInvoice, $jenisPembayaran), $namaFile.'.xlsx');
+        // }else if($request->tipeFile == "pdf"){
+        //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
+        // }
+        
     }
 
     public function exportExcelBJ(Request $request){
@@ -89,8 +102,18 @@ class InvoiceController extends Controller
         
         $startDate = Date('Y-m-d',strtotime($dates[0]));
         $endDate =  Date('Y-m-d',strtotime($dates[1]));
-        $nameExcel = 'Invoice BJ '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
-        return Excel::download(new ExportInvoiceBJ($startDate, $endDate), $nameExcel.'.xlsx');
+        $noInvoice = $request->noInvoiceBJ;
+        $jenisPembayaran = $request->filterPembayaranBJ;
+
+        setlocale(LC_TIME, 'id_ID');
+        Carbon::setLocale('id');
+        
+        $namaFile = 'Invoice BJ'.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
+        // if($request->tipeFile == "excel"){
+        return Excel::download(new ExportInvoiceBJ($startDate, $endDate, $noInvoice, $jenisPembayaran), $namaFile.'.xlsx');
+        // }else if($request->tipeFile == "pdf"){
+        //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
+        // }
+        
     }
- 
 }

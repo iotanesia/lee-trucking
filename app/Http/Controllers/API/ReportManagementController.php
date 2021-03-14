@@ -58,10 +58,18 @@ class ReportManagementController extends Controller
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = $data['start_date'];
         $endDate = $data['end_date'];
+        $filterPembayaran = $data['filter'];
         $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
         ->where('expedition_activity.nomor_surat_jalan','iLike','BO%')
+        ->where(function($query) use($filterPembayaran) {
+          if($filterPembayaran) {
+            if($filterPembayaran != 'Semua'){
+              $query->where('expedition_activity.otv_payment_method', $filterPembayaran);
+            }
+          }
+        })
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
@@ -88,10 +96,18 @@ class ReportManagementController extends Controller
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = $data['start_date'];
         $endDate = $data['end_date'];
+        $filterPembayaran = $data['filter'];
         $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
         ->where('expedition_activity.nomor_surat_jalan','iLike','BA%')
+        ->where(function($query) use($filterPembayaran) {
+          if($filterPembayaran) {
+            if($filterPembayaran != 'Semua'){
+              $query->where('expedition_activity.otv_payment_method', $filterPembayaran);
+            }
+          }
+        })
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
@@ -118,10 +134,18 @@ class ReportManagementController extends Controller
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = $data['start_date'];
         $endDate = $data['end_date'];
+        $filterPembayaran = $data['filter'];
         $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
         ->where('expedition_activity.nomor_surat_jalan','iLike','BJ%')
+        ->where(function($query) use($filterPembayaran) {
+          if($filterPembayaran) {
+            if($filterPembayaran != 'Semua'){
+              $query->where('expedition_activity.otv_payment_method', $filterPembayaran);
+            }
+          }
+        })
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
