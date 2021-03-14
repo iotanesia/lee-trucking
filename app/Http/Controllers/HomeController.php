@@ -34,9 +34,9 @@ class HomeController extends Controller
         $thn = date('Y');
         $data['cabang_tsj'] = 0;
         $data['cabang_dawuan'] = 0;
-        $totalEx = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn." ");
-        $totalClose = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity = 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn."");
-        $totalOnProggres = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity <> 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn."");
+        $totalEx = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn." AND is_deleted = 'f' ");
+        $totalClose = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity = 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn." AND is_deleted = 'f'");
+        $totalOnProggres = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity <> 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn." AND is_deleted = 'f'");
         $totalrepair = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn."");
         $totalrepairBan = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE kode_repair LIKE '%RPBAN-%' AND EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn."");
         $totalrepairNonBan = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE kode_repair LIKE '%RP-%' AND EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn."");
@@ -48,7 +48,8 @@ class HomeController extends Controller
         $truck = DB::select("SELECT b.cabang_name, COUNT(a.id) FROM ".$schema.".ex_master_truck AS a JOIN ".$schema.".ex_master_cabang AS b ON a.cabang_id = b.id  WHERE a.is_deleted = false GROUP BY cabang_id, b.cabang_name");
 
         foreach($truck as $key => $val) {
-            $cabangName = strtolower(str_replace(" ", "_", $val->cabang_name));
+            $cabangNames = strtolower(str_replace(" - ", " ", $val->cabang_name));
+            $cabangName = strtolower(str_replace(" ", "_", $cabangNames));
             $data[$cabangName] = $val->count;
         }
         
