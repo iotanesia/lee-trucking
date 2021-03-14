@@ -32,8 +32,8 @@ class HomeController extends Controller
         $schema = Auth::user()->schema;
         $bln = date('m');
         $thn = date('Y');
-        $data['cabang_tsj'] = 0;
-        $data['cabang_dawuan'] = 0;
+        $data['cabang_tsj_truck'] = 0;
+        $data['cabang_dawuan_fuso'] = 0;
         $totalEx = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn." AND is_deleted = 'f' ");
         $totalClose = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity = 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn." AND is_deleted = 'f'");
         $totalOnProggres = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity <> 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn." AND is_deleted = 'f'");
