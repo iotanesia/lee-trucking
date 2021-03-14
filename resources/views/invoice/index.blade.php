@@ -460,7 +460,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <a type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-ba" onclick="($('#form-export-ba').submit())">Eksport</a>
+                <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-ba" onclick="($('#form-export-ba').submit())">Eksport</a>
             </div>
         </div>
     </div>
@@ -486,7 +486,7 @@
                 </form>
             </div>
         <div class="modal-footer">
-            <a type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-bj" onclick="($('#form-export-bj').submit())">Eksport</a>
+            <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-bj" onclick="($('#form-export-bj').submit())">Eksport</a>
         </div>
     </div>
   </div>

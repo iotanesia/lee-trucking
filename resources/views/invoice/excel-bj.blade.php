@@ -95,7 +95,7 @@
             @endforeach 
                 <tr>
                     <td colspan="9" style="font-family:Calibri;font-size:8pt;text-align:center;"><b>TOTAL INVOICE</b></td>
-                    <td id="total-keseluruhan-bo" style="font-family:Calibri;font-size:8pt;border:2px solid #000000;text-align:center;background-color:#FFFF00"><b>{{$totalKeseluruhan}}</b></td> 
+                    <td id="total-keseluruhan-bo" style="font-family:Calibri;font-size:8pt;border:2px solid #000000;text-align:center;background-color:#FFFF00"><b>{{$totalInv}}</b></td> 
                 </tr>
                 <tr>
 
