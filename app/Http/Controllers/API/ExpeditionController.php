@@ -397,7 +397,7 @@ class ExpeditionController extends Controller
           $notification->id_user_from = $idUser;
           $notification->save();
 
-          if($row->id_fcm_android != null){
+          if($row->id_fcm_android != null || $row->id_fcm_android != '') {
             $notif = array(
               'title' => $notification->content_title,
               'body' => $notification->content_body
@@ -419,7 +419,6 @@ class ExpeditionController extends Controller
               'id' => $notification->id
             );
 
-              if($row->id_fcm_android) {
                   $requests = array(
                     'tokenFcm' => $row->id_fcm_android,
                     'notif' => $notif,
@@ -427,7 +426,7 @@ class ExpeditionController extends Controller
                   );
                   $factory->sendNotif($requests);
               }
-            }        
+                  
           }
           $driverUser = Driver::where('id', $expeditionActivity->driver_id)->first();
           $notificationDriver = new Notification();
@@ -447,6 +446,7 @@ class ExpeditionController extends Controller
           $userDriverDetail = User::where('id', $notificationDriver->id_user_to)->where('id_fcm_android','<>','')->first();
          
           if(isset($userDriverDetail)){
+            if($userDriverDetail->id_fcm_android != null || $userDriverDetail->id_fcm_android != ''){
               $notifs = array(
                 'title' => $notificationDriver->content_title,
                 'body' => $notificationDriver->content_body
@@ -475,7 +475,7 @@ class ExpeditionController extends Controller
             );
             $factory->sendNotif($requestss);
         }
-
+      }
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
