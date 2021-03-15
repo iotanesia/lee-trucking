@@ -740,7 +740,7 @@ class ExpeditionController extends Controller
                   $coaActivity->save();
                 }
 
-              }elseif($request->nominal < $expeditionActivity->harga_otv){
+              }elseif(($request->nominal < $expeditionActivity->harga_otv) && $request->nominal != 0){
                 $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $fileName;
                 $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $fileName_tujuan;
                 $exStatusActivity->nominal = isset($data['nominal']) ? $data['nominal'] :  $lastExActivity->nominal;
@@ -787,7 +787,7 @@ class ExpeditionController extends Controller
                     $coaActivity->save();
                 }
 
-              } elseif($request->nominal > $expeditionActivity->harga_otv){
+              } elseif(($request->nominal > $expeditionActivity->harga_otv) && $request->nominal != 0){
                 $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $fileName;
                 $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $fileName_tujuan;
                 $exStatusActivity->nominal = isset($data['nominal']) ? $data['nominal'] :  $lastExActivity->nominal;
