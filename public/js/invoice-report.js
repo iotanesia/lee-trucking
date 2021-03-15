@@ -36,6 +36,7 @@
               return meta.row + meta.settings._iDisplayStart + 1;
           }
         },
+        {"data":"nomor_inv"},
         {
           "data":"tgl_po", render: function (data, type, row, meta) {
             return formatDate(data);
@@ -74,7 +75,7 @@
       };
       // Total over all pages
       totalInvoice = api
-          .column(8)
+          .column(9)
           .data()
           .reduce(function(a, b) {
             if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -87,17 +88,17 @@
           pph23 = (totalInvoice*2)/100;
           totalKeseluruhan = totalInvoice + ppn10 + pph23;
 
-          $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(0) td:eq(9)', api.table().footer()).html(convertToRupiah(totalInvoice));
+          $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
 
-          $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
-          $('tr:eq(1) td:eq(9)', api.table().footer()).html(convertToRupiah(ppn10));
+          $('tr:eq(1) td:eq(4)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
+          $('tr:eq(1) td:eq(10)', api.table().footer()).html(convertToRupiah(ppn10));
 
-          $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(2) td:eq(9)', api.table().footer()).html(convertToRupiah(pph23));
+          $('tr:eq(2) td:eq(4)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(2) td:eq(10)', api.table().footer()).html(convertToRupiah(pph23));
 
-          $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(3) td:eq(9)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+          $('tr:eq(3) td:eq(4)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(3) td:eq(10)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
     }
     });
 
@@ -122,6 +123,7 @@
                 return meta.row + meta.settings._iDisplayStart + 1;
             }
           },
+          {"data":"nomor_inv"},
           {
             "data":"tgl_po", render: function (data, type, row, meta) {
               return formatDate(data);
@@ -160,7 +162,7 @@
         };
         // Total over all pages
         totalInvoice = api
-            .column(8)
+            .column(9)
             .data()
             .reduce(function(a, b) {
               if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -173,17 +175,17 @@
             pph23 = (totalInvoice*2)/100;
             totalKeseluruhan = totalInvoice + ppn10 + pph23;
 
-            $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-            $('tr:eq(0) td:eq(9)', api.table().footer()).html(convertToRupiah(totalInvoice));
+            $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+            $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
 
-            $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
-            $('tr:eq(1) td:eq(9)', api.table().footer()).html(convertToRupiah(ppn10));
+            $('tr:eq(1) td:eq(4)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
+            $('tr:eq(1) td:eq(10)', api.table().footer()).html(convertToRupiah(ppn10));
 
-            $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-            $('tr:eq(2) td:eq(9)', api.table().footer()).html(convertToRupiah(pph23));
+            $('tr:eq(2) td:eq(4)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+            $('tr:eq(2) td:eq(10)', api.table().footer()).html(convertToRupiah(pph23));
 
-            $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-            $('tr:eq(3) td:eq(9)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+            $('tr:eq(3) td:eq(4)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+            $('tr:eq(3) td:eq(10)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
       }
     });
  
@@ -207,6 +209,7 @@
               return meta.row + meta.settings._iDisplayStart + 1;
           }
         },
+        {"data":"nomor_inv"},
         {
           "data":"tgl_po", render: function (data, type, row, meta) {
             return formatDate(data);
@@ -245,7 +248,7 @@
       };
       // Total over all pages
       totalInvoice = api
-          .column(8)
+          .column(9)
           .data()
           .reduce(function(a, b) {
             if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -258,17 +261,17 @@
           pph23 = (totalInvoice*2)/100;
           totalKeseluruhan = totalInvoice + ppn10 + pph23;
 
-          $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(0) td:eq(9)', api.table().footer()).html(convertToRupiah(totalInvoice));
+          $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
 
-          $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
-          $('tr:eq(1) td:eq(9)', api.table().footer()).html(convertToRupiah(ppn10));
+          $('tr:eq(1) td:eq(4)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
+          $('tr:eq(1) td:eq(10)', api.table().footer()).html(convertToRupiah(ppn10));
 
-          $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(2) td:eq(9)', api.table().footer()).html(convertToRupiah(pph23));
+          $('tr:eq(2) td:eq(4)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(2) td:eq(10)', api.table().footer()).html(convertToRupiah(pph23));
 
-          $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(3) td:eq(9)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+          $('tr:eq(3) td:eq(4)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(3) td:eq(10)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
     }
   });
     table.on('order.dt search.dt', function () {

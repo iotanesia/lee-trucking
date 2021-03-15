@@ -473,7 +473,7 @@ class ExpeditionController extends Controller
               'notif' => $notifs,
               'data' => $datass
             );
-            $factory->sendNotif($requestss);
+            // $factory->sendNotif($requestss);
         }
       }
         return response()->json([
@@ -884,7 +884,7 @@ class ExpeditionController extends Controller
                         'notif' => $notif,
                         'data' => $datas
                       );
-                      $factory->sendNotif($requests);
+                      // $factory->sendNotif($requests);
                   }
                 }
               }else if($exStatusActivity->status_approval == 'REJECTED'){
@@ -933,7 +933,7 @@ class ExpeditionController extends Controller
                       'data' => $datas
                       );
 
-                      $factory->sendNotif($requests);
+                      // $factory->sendNotif($requests);
                   }
                 }
               }else if($exStatusActivity->status_approval == 'REVISION'){
@@ -981,7 +981,7 @@ class ExpeditionController extends Controller
                         'notif' => $notif,
                         'data' => $datas
                       );
-                      $factory->sendNotif($requests);
+                      // $factory->sendNotif($requests);
                   }
                 }
               }
@@ -1029,7 +1029,7 @@ class ExpeditionController extends Controller
                           'notif' => $notif,
                           'data' => $datas
                         );
-                        $factory->sendNotif($requests);
+                        // $factory->sendNotif($requests);
                     
                   }
                 }
@@ -1075,7 +1075,7 @@ class ExpeditionController extends Controller
                       'notif' => $notifs,
                       'data' => $datass
                     );
-                    $factory->sendNotif($requestss);
+                    // $factory->sendNotif($requestss);
                   }
                 }
               }
@@ -1122,7 +1122,7 @@ class ExpeditionController extends Controller
                     'notif' => $notif,
                     'data' => $datas
                   );
-                  $factory->sendNotif($requests);
+                  // $factory->sendNotif($requests);
                   
                 }
               }
@@ -1169,7 +1169,7 @@ class ExpeditionController extends Controller
                       'notif' => $notif,
                       'data' => $datas
                     );
-                    $factory->sendNotif($requests);
+                    // $factory->sendNotif($requests);
                 
               }
             }

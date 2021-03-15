@@ -70,12 +70,15 @@ class ReportManagementController extends Controller
             }
           }
         })
-        ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+        ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
+                ,'expedition_activity.nomor_inv'
+                ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
                 ,'expedition_activity.toko','expedition_activity.harga_otv')
                 ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
-               ->groupBy('expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+               ->groupBy('expedition_activity.tgl_po','expedition_activity.nomor_inv'
+               ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
                 ,'expedition_activity.toko','expedition_activity.harga_otv')->get();
@@ -108,12 +111,16 @@ class ReportManagementController extends Controller
             }
           }
         })
-        ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+        ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
+                ,'expedition_activity.nomor_inv'
+                ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
                 ,'expedition_activity.toko','expedition_activity.harga_otv')
                 ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
-                ->groupBy('expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+                ->groupBy('expedition_activity.tgl_po'
+                ,'expedition_activity.nomor_inv'
+                ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
                 ,'expedition_activity.toko','expedition_activity.harga_otv')->get();
@@ -146,12 +153,16 @@ class ReportManagementController extends Controller
             }
           }
         })
-        ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+        ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
+                ,'expedition_activity.nomor_inv'
+                ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
                 ,'expedition_activity.toko','expedition_activity.harga_otv')
                 ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
-                ->groupBy('expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+                ->groupBy('expedition_activity.tgl_po'
+                ,'expedition_activity.nomor_inv'
+                ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
                 ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
                 ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
                 ,'expedition_activity.toko','expedition_activity.harga_otv')->get();
