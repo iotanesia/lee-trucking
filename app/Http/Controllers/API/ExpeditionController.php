@@ -66,7 +66,7 @@ class ExpeditionController extends Controller
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code', 
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 
-                            'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
+                            'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 'ex_master_kenek.kenek_name')
                    ->orderBy('id', 'DESC')
                    ->paginate();
       
@@ -152,7 +152,7 @@ class ExpeditionController extends Controller
                                 })
                                 ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                                         'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
-                                            'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
+                                            'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 'ex_master_kenek.kenek_name')
                                 ->orderBy('expedition_activity.updated_at', 'DESC')
                                 ->paginate();
                    
@@ -256,7 +256,7 @@ class ExpeditionController extends Controller
                   })
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
-                             'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
+                             'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 'ex_master_kenek.kenek_name')
                    ->orderBy('expedition_activity.updated_at', 'DESC')
                    ->paginate();
       
@@ -1394,7 +1394,7 @@ class ExpeditionController extends Controller
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 
-                            'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 
+                            'ex_master_cabang.cabang_name', 'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 
                             'ex_master_kenek.kenek_name')
                    ->orderBy('id', 'ASC')
                    ->paginate();
@@ -1458,7 +1458,7 @@ class ExpeditionController extends Controller
                     ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 
-                            'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 
+                            'ex_master_cabang.cabang_name', 'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 
                             'ex_master_kenek.kenek_name')
                     ->orderBy('id', 'ASC')
                     ->paginate();
@@ -1523,7 +1523,7 @@ class ExpeditionController extends Controller
                    ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 
-                            'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 'ex_master_kenek.kenek_name')
+                            'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 'ex_master_kenek.kenek_name')
                    ->orderBy('id', 'DESC')->first();
       
     
@@ -1583,7 +1583,7 @@ class ExpeditionController extends Controller
                     ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 
-                            'ex_master_cabang.cabang_name', 'ex_master_ojk.harga_ojk', 'ex_master_ojk.harga_otv', 
+                            'ex_master_cabang.cabang_name', 'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 
                             'ex_master_kenek.kenek_name')
                     ->orderBy('id', 'ASC')
                     ->paginate();
