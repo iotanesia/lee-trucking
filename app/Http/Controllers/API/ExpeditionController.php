@@ -509,6 +509,11 @@ class ExpeditionController extends Controller
       $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('created_at', 'DESC')->first();
       $allExActivity = ExStatusActivity::where('ex_id', $data['id'])->where('status_activity', 'APPROVAL_OJK_DRIVER')->where('status_approval', 'APPROVED')->get();
       $idUser = Auth::user()->id;
+      $idNonKenek = null;
+
+      if(isset($data['kenek_id'])) {
+          $idNonKenek = Kenek::where('kenek_name', 'Tidak ada Kenek (TK)')->first()->id;
+      }
 
       $factory = new FirebaseService();
       $current_date_time = Carbon::now()->toDateTimeString(); 
@@ -528,6 +533,10 @@ class ExpeditionController extends Controller
 
       if($request->status_activity == 'DRIVER_MENUJU_TUJUAN' && !count($allExActivity)) {        
           $expeditionActivity->is_approve = 1;
+      }
+
+      if($request->status_activity == 'DRIVER_MENUJU_TUJUAN' && $data['kenek_id'] == $idNonKenek) {        
+          $expeditionActivity->harga_ojk = $expeditionActivity->harga_ojk - 60000;
       }
 
       if($request->status_activity == 'DRIVER_SELESAI_EKSPEDISI' && !count($allExActivity)) {
@@ -700,7 +709,7 @@ class ExpeditionController extends Controller
               }
                 
             }else if($expeditionActivity->status_activity == 'DRIVER_SAMPAI_TUJUAN'){
-              if($expeditionActivity->harga_otv == $request->nominal){
+              if($expeditionActivity->harga_otv == $request->nominal || $request->nominal == 0) {
                 $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $fileName;
                 $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $fileName_tujuan;
                 $exStatusActivity->nominal = $data['nominal'] ? $data['nominal'] :  $lastExActivity->nominal;
@@ -731,7 +740,7 @@ class ExpeditionController extends Controller
                   $coaActivity->save();
                 }
 
-              }else if($request->nominal < $expeditionActivity->harga_otv){
+              }elseif($request->nominal < $expeditionActivity->harga_otv){
                 $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $fileName;
                 $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $fileName_tujuan;
                 $exStatusActivity->nominal = isset($data['nominal']) ? $data['nominal'] :  $lastExActivity->nominal;
@@ -744,6 +753,53 @@ class ExpeditionController extends Controller
                 $exStatusActivity->new_address = $data['new_address'] ? $data['new_address'] :  $lastExActivity->new_address;
                 $exStatusActivity->extra_price = isset($data['extra_price']) ? $data['extra_price'] :  $lastExActivity->extra_price;
                 $exStatusActivity->nominal_kurang_bayar = $expeditionActivity->harga_otv - $request->nominal;
+                $exStatusActivity->save();
+                $idCoaSheet2 = array(18, 17, 20, 19);
+                $idCoaSheet3 = array(8, 7, 10, 9);
+                
+                foreach($idCoaSheet2 as $key => $row) {
+                    $coaActivity = new CoaActivity();
+                    $coaActivity->activity_id = $statusActivityId['id'];
+                    $coaActivity->activity_name = $expeditionActivity->status_activity;
+                    $coaActivity->status = 'ACTIVE';
+                    $coaActivity->nominal = $exStatusActivity->nominal;
+                    $coaActivity->rek_no = $exStatusActivity->no_rek;
+                    $coaActivity->coa_id = $row;
+                    $coaActivity->ex_id = $expeditionActivity->id;
+                    $coaActivity->created_at = $current_date_time;
+                    $coaActivity->created_by = $idUser;
+                    $coaActivity->rek_name = $exStatusActivity->rek_name;
+                    $coaActivity->save();
+                }
+                
+                foreach($idCoaSheet3 as $key => $row) {
+                    $coaActivity = new CoaActivity();
+                    $coaActivity->activity_id = $statusActivityId['id'];
+                    $coaActivity->activity_name = $expeditionActivity->status_activity;
+                    $coaActivity->status = 'ACTIVE';
+                    $coaActivity->nominal = $exStatusActivity->nominal_kurang_bayar;
+                    $coaActivity->rek_no = $exStatusActivity->no_rek;
+                    $coaActivity->coa_id = $row;
+                    $coaActivity->ex_id = $expeditionActivity->id;
+                    $coaActivity->created_at = $current_date_time;
+                    $coaActivity->created_by = $idUser;
+                    $coaActivity->rek_name = $exStatusActivity->rek_name;
+                    $coaActivity->save();
+                }
+
+              } elseif($request->nominal > $expeditionActivity->harga_otv){
+                $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $fileName;
+                $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $fileName_tujuan;
+                $exStatusActivity->nominal = isset($data['nominal']) ? $data['nominal'] :  $lastExActivity->nominal;
+                $exStatusActivity->rek_name = isset($data['rek_name']) ? $data['rek_name'] :  $lastExActivity->rek_name;
+                $exStatusActivity->no_rek = isset($data['no_rek']) ? $data['no_rek'] :  $lastExActivity->no_rek;
+                $exStatusActivity->long_lat = isset($data['long_lat']) ? $data['long_lat'] :  $lastExActivity->long_lat;
+                $exStatusActivity->services = $data['services'] ? $data['services'] :  $lastExActivity->services;
+                $exStatusActivity->service_charge = $data['service_charge'] ? $data['service_charge'] :  $lastExActivity->service_charge;
+                $exStatusActivity->status_destination = $data['status_destination'] ? $data['status_destination'] :  $lastExActivity->status_destination;
+                $exStatusActivity->new_address = $data['new_address'] ? $data['new_address'] :  $lastExActivity->new_address;
+                $exStatusActivity->extra_price = isset($data['extra_price']) ? $data['extra_price'] :  $lastExActivity->extra_price;
+                $exStatusActivity->nominal_lebih_bayar = $request->nominal - $expeditionActivity->harga_otv;
                 $exStatusActivity->save();
                 $idCoaSheet2 = array(18, 17, 20, 19);
                 $idCoaSheet3 = array(8, 7, 10, 9);
