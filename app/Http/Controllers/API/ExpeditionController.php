@@ -712,15 +712,15 @@ class ExpeditionController extends Controller
               if($expeditionActivity->harga_otv == $request->nominal || $request->nominal == 0) {
                 $exStatusActivity->img = !isset($img) ?  $lastExActivity->img : $fileName;
                 $exStatusActivity->img_tujuan = !isset($img_tujuan) ?  $lastExActivity->img_tujuan : $fileName_tujuan;
-                $exStatusActivity->nominal = $data['nominal'] ? $data['nominal'] :  $lastExActivity->nominal;
-                $exStatusActivity->rek_name = $data['rek_name'] ? $data['rek_name'] :  $lastExActivity->rek_name;
-                $exStatusActivity->no_rek = $data['no_rek'] ? $data['no_rek'] :  $lastExActivity->no_rek;
-                $exStatusActivity->long_lat = $data['long_lat'] ? $data['long_lat'] :  $lastExActivity->long_lat;
-                $exStatusActivity->services = $data['services'] ? $data['services'] :  $lastExActivity->services;
-                $exStatusActivity->service_charge = $data['service_charge'] ? $data['service_charge'] :  $lastExActivity->service_charge;
-                $exStatusActivity->status_destination = $data['status_destination'] ? $data['status_destination'] :  $lastExActivity->status_destination;
-                $exStatusActivity->new_address = $data['new_address'] ? $data['new_address'] :  $lastExActivity->new_address;
-                $exStatusActivity->extra_price = isset($data['extra_price']) ? $data['extra_price'] :  $lastExActivity->extra_price;
+                $exStatusActivity->nominal = isset($data['nominal']) && $data['nominal'] ? $data['nominal'] :  $lastExActivity->nominal;
+                $exStatusActivity->rek_name = isset($data['rek_name']) && $data['rek_name'] ? $data['rek_name'] :  $lastExActivity->rek_name;
+                $exStatusActivity->no_rek = isset($data['no_rek']) && $data['no_rek'] ? $data['no_rek'] :  $lastExActivity->no_rek;
+                $exStatusActivity->long_lat = isset($data['long_lat']) && $data['long_lat'] ? $data['long_lat'] :  $lastExActivity->long_lat;
+                $exStatusActivity->services = isset($data['services']) && $data['services'] ? $data['services'] :  $lastExActivity->services;
+                $exStatusActivity->service_charge = isset($data['service_charge']) && $data['service_charge'] ? $data['service_charge'] :  $lastExActivity->service_charge;
+                $exStatusActivity->status_destination = isset($data['status_destination']) && $data['status_destination'] ? $data['status_destination'] :  $lastExActivity->status_destination;
+                $exStatusActivity->new_address = isset($data['new_address']) && $data['new_address'] ? $data['new_address'] :  $lastExActivity->new_address;
+                $exStatusActivity->extra_price = isset($data['extra_price']) && $data['extra_price'] ? $data['extra_price'] :  $lastExActivity->extra_price;
                 $exStatusActivity->nominal_kurang_bayar = 0;
                 $exStatusActivity->save();
                 $idCoaSheet1 = array(18, 17, 20, 19);
