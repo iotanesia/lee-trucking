@@ -106,7 +106,7 @@
                 <input type="hidden" name="id" id="id">
                 <div class="card-body">
                     <div class="form-group">
-                    <label for="cabang_name">cabang Plat</label>
+                    <label for="cabang_name">cabang Name</label>
                     <input type="text" class="form-control" name="cabang_name" id="cabang_name" placeholder="cabang_name">
                 </div>
                 <div class="form-group">

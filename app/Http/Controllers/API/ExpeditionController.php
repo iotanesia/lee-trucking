@@ -26,7 +26,7 @@ class ExpeditionController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv, otv_payment_method';
+      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv, otv_payment_method, ex_master_driver.driver_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
       $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
@@ -79,6 +79,7 @@ class ExpeditionController extends Controller
                             ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.*')->first();
 
         $row->long_lat = $exStatusActivity['long_lat'];
+        $row->toko = $row->toko ? $row->toko : '';
         $row->approval_code = $exStatusActivity['approval_code'];
         $row->approval_name = $exStatusActivity['approval_name'];
         $row->data_json = $row->toJson();

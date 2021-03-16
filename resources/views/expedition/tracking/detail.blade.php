@@ -132,7 +132,7 @@
                   <div class="timeline-content">
                     <small class="text-light font-weight-bold">{{date('l, d F Y', strtotime($expedition->tgl_inv))}}</small>
                     <h5 class="text-white mt-3 mb-0">{{$expedition->nomor_inv}}</h5>
-                    <p class="text-light text-sm mt-1 mb-0">Pabrik Pesanan : {{$expedition->pabrik_pesanan}}<br>Nama Barang : {{$expedition->nama_barang}} <br>Tujuan : {{$expedition->kabupaten}} - {{$expedition->kecamatan}} : {{$expedition->cabang_name}} <br> Truck : {{$expedition->truck_name}} - {{$expedition->truck_plat}} <br> Driver : {{$expedition->driver_name}} <br> Kenek : {{$expedition->kenek_name}} </p>
+                    <p class="text-light text-sm mt-1 mb-0">Pabrik Pesanan : {{$expedition->pabrik_pesanan}}<br>Nama Barang : {{$expedition->nama_barang}} <br>Tujuan : {{$expedition->kabupaten}} - {{$expedition->kecamatan}} : {{$expedition->cabang_name}} <br> Truck : {{$expedition->truck_name}} - {{$expedition->truck_plat}} <br> Driver : {{$expedition->driver_name}} <br> Kenek : {{$expedition->kenek_name}} <br> Harga OJK : Rp {{number_format($expedition->harga_ojk)}} <br> Harga OTV : Rp {{number_format($expedition->harga_otv)}} </p>
                     <div class="mt-3">
                       <span class="badge badge-pill {{$color}}">{{$expedition->status_activity}}</span>
                     </div>

@@ -108,7 +108,7 @@
                 <div class="card-body">
                     <div class="form-group">
                     <label for="kenek_name">kenek name</label>
-                    <input type="text" class="form-control" name="kenek_name" id="kenek_name" placeholder="kenek_name">
+                    <input type="text" class="form-control" name="kenek_name" id="kenek_name" placeholder="kenek name">
                 </div>
                 <div class="form-group">
                     <label for="kenek_status">Status Kenek</label>
