@@ -10,6 +10,8 @@ use App\Models\ExpeditionActivity;
 use Auth;
 use DB;
 use Carbon\Carbon;
+use App\Models\StkRepairHeader;
+use App\Models\StkHistorySparePart;
 // use App\Services\FirebaseServic\Messaging;
 
 class ReportManagementController extends Controller
@@ -176,5 +178,34 @@ class ReportManagementController extends Controller
       }
     }
 
+    //Truck Repairs
+    public function getListTruckRepair(Request $request){
+      if($request->isMethod('GET')) {
+        $data = $request->all();
+        $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+        $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = (isset($data['start_date'])) ? $data['start_date'] : '';
+        $endDate = (isset($data['end_date'])) ? $data['end_date'] : '';
+        $data = $data = StkRepairHeader::leftJoin('ex_master_truck' ,'stk_repair_header.truck_id','ex_master_truck.id')
+        ->where(function($query) use($startDate, $endDate) {
+          if($startDate && $endDate){
+            $query->whereBetween('stk_repair_header.created_at', [$startDate, $endDate]);
+          }
+        })
+        ->select('stk_repair_header.*', 'ex_master_truck.truck_name')
+        ->orderBy('stk_repair_header.updated_at','DESC')->get();
+          
+        $totals = 0;
+        foreach($data as $row) {
+          $historyStok = StkHistorySparePart::where('header_id', $row->id)->where('transaction_type','OUT')->get();
+          foreach($historyStok as $rowHistory){
+              $totals += ($rowHistory->jumlah_stok * $rowHistory->amount);
+          }
+            $row->total = 'Rp.'. number_format($totals, 0, ',', '.');
+            $row->data_json = $row->toJson();
+        }
+        return datatables($data)->toJson();
+      }
+    }
     
 }
