@@ -10,6 +10,8 @@ use Kreait\Firebase\ServiceAccount;
 use Kreait\Firebase\Messaging;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Exception\Auth\EmailExists as FirebaseEmailExists;
+use Kreait\Firebase\Exception\Messaging\InvalidArgument;
+use Kreait\Firebase\Exception\Messaging\NotFound;
 
 class FirebaseService
 {
@@ -48,6 +50,13 @@ class FirebaseService
                 ]
             ]
         ]);
-        $messaging->send($message);
+        
+        try {
+            $messaging->send($message, $token);
+        } catch (NotFound $e) {
+            dd($e);
+        } catch (InvalidArgument $e) {
+            dd($e);
+        }
     }
 }
