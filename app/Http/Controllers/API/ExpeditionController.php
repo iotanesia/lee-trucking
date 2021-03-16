@@ -552,6 +552,12 @@ class ExpeditionController extends Controller
       unset($data['id']);
       unset($data['jenis_surat_jalan']);
       
+      if(!$statusActivityParam) {
+          $masterOjk = OJK::where('id', $data['ojk_id'])->select('harga_otv', 'harga_ojk')->first();
+          $expeditionActivity->harga_ojk = $masterOjk['harga_ojk'];
+          $expeditionActivity->harga_otv = $masterOjk['harga_otv'];
+      }
+      
       $expeditionActivity->updated_by = $idUser;
       $expeditionActivity->updated_at = $current_date_time;
 
