@@ -31,7 +31,7 @@ class BonusDriverRitController extends Controller
                             }
                         }
                     })
-                    ->where('status_activity', 'CLOSED_EXPEDITION')
+                    ->whereIn('status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])
                     ->whereRaw("expedition_activity.updated_at between CAST('".$firstDate." 00:00:00' AS DATE) AND CAST('".$lastDate." 23:59:59' AS DATE)")
                     ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
                     ->groupBy('driver_id', 'driver_name')
@@ -45,7 +45,7 @@ class BonusDriverRitController extends Controller
           $truck = Truck::where('driver_id', $row->driver_id)->first();
         //   dump($truck);
           if($truck) {
-              $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)->where('status_activity', 'CLOSED_EXPEDITION')->count();
+              $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)->whereIn('status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])->count();
               $row->truck = $truck->truck_plat.' - '.$truck->truck_name;
               $reward = Reward::where('min', '<=', $row->rit_truck)->where('max', '>=', $row->rit_truck)->orderBy('min', 'DESC')->where('is_deleted', 'false')->first();
               $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
@@ -264,7 +264,7 @@ class BonusDriverRitController extends Controller
                         }
                     })
                     ->where('ex_master_driver.user_id', $user->id)
-                    ->where('expedition_activity.status_activity','CLOSED_EXPEDITION')
+                    ->whereIn('expedition_activity.status_activity',['CLOSED_EXPEDITION', 'WAITING_OWNER'])
                     ->whereYear('expedition_activity.updated_at', $data['year'])
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
                     ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
@@ -338,7 +338,7 @@ class BonusDriverRitController extends Controller
                             }
                         }
                     })
-                    ->where('expedition_activity.status_activity','CLOSED_EXPEDITION')
+                    ->whereIn('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])
                     ->whereYear('expedition_activity.updated_at', $data['year'])
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
                     ->whereNotNull('ojk_id')
@@ -398,7 +398,7 @@ class BonusDriverRitController extends Controller
                         }
                     })
                     ->where('expedition_activity.ojk_id', $data['ojk_id'])
-                    ->where('expedition_activity.status_activity','CLOSED_EXPEDITION')
+                    ->whereIn('expedition_activity.status_activity',['CLOSED_EXPEDITION', 'WAITING_OWNER'])
                     ->whereYear('expedition_activity.updated_at', $data['year'])
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
                     ->whereNotNull('ojk_id')
@@ -456,7 +456,7 @@ class BonusDriverRitController extends Controller
                             }
                         }
                     })
-                    ->where('expedition_activity.status_activity','CLOSED_EXPEDITION')
+                    ->whereIn('expedition_activity.status_activity',['CLOSED_EXPEDITION', 'WAITING_OWNER'])
                     ->whereYear('expedition_activity.updated_at', $data['year'])
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
                     ->select('kenek_id', 'kenek_name', DB::raw('COUNT("kenek_id") AS total_rit'))
