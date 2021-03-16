@@ -59,7 +59,10 @@
                     <table class="table table-responsive align-items-center table-striped" id="table-jurnal" son-success-load="successLoadexpedition" width="100%">
                         <thead class="bg-gradient-info text-white">
                         <tr>
+                            <th>No</th>
                             <th>Tanggal</th>
+                            <th>Nomor Invoice</th>
+                            <th>Nomor Surat Jalan</th>
                             <th>Nama Aktiviti</th>
                             <th>Debit</th>
                             <th>Credit</th>
@@ -74,21 +77,30 @@
                         <tbody></tbody>
                         <tfoot>
                           <tr style="font-weight:bold">
+                            <td></td>
                               <td style="text-align:left">
+                                <td></td>
+                                <td></td>
                               <td></td>
                               <td></td>
                               <td></td>
                               <td></td>
                           </tr>
                           <tr style="font-weight:bold">
+                            <td></td>
                             <td style="text-align:left">
+                              <td></td>
+                              <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr style="font-weight:bold">
+                          <td></td>
                           <td style="text-align:left">
+                            <td></td>
+                            <td></td>
                           <td></td>
                           <td></td>
                           <td></td>
