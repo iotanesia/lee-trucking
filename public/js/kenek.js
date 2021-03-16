@@ -86,9 +86,9 @@ var successLoadkenek = (function(responses, dataModel) {
 
     tableRows += "<tr>" +
                    "<td>"+ (i+1) +"</td>"+
-                   "<td>"+ kenek_name +"</td>"+
+                   "<td>"+ def(kenek_name) +"</td>"+
                    "<td>"+ kenek_status +"</td>"+
-                   "<td>"+ kenek_join_date +"</td>"+
+                   "<td>"+ dateFormat(kenek_join_date) +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
                        "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#kenek-modal'><i class='fas fa-edit'></i></a>"+
