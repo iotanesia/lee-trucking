@@ -79,6 +79,7 @@ class ExpeditionController extends Controller
                             ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.*')->first();
 
         $row->long_lat = $exStatusActivity['long_lat'];
+        $row->toko = $row->toko ? $row->toko : '';
         $row->approval_code = $exStatusActivity['approval_code'];
         $row->approval_name = $exStatusActivity['approval_name'];
         $row->data_json = $row->toJson();
