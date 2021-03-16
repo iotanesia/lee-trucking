@@ -25,6 +25,7 @@ class ReportManagementController extends Controller
           $jurnalReportList = CoaActivity::leftJoin('coa_master_sheet' ,'coa_activity.coa_id','coa_master_sheet.id')
           ->leftJoin('public.users','coa_activity.created_by','public.users.id')
           ->leftJoin('coa_master_rekening','coa_activity.rek_id','coa_master_rekening.id')
+          ->leftJoin('expedition_activity','coa_activity.ex_id', 'expedition_activity.id')
           ->where('coa_master_sheet.report_active','True')
           ->where(function($query) use($whereFilter) {
             if($whereFilter) {
@@ -34,7 +35,9 @@ class ReportManagementController extends Controller
           ->select('coa_activity.created_at','coa_master_sheet.sheet_name'
                   ,'coa_master_sheet.jurnal_category','public.users.name'
                   ,'coa_master_rekening.bank_name','coa_master_rekening.rek_name'
-                  ,'coa_master_rekening.rek_no','coa_activity.nominal','coa_activity.table_id','coa_activity.table')->orderBy('coa_activity.created_at','DESC')->get();
+                  ,'coa_master_rekening.rek_no','coa_activity.nominal','coa_activity.table_id'
+                  ,'coa_activity.table','expedition_activity.nomor_inv','expedition_activity.nomor_surat_jalan')
+                  ->orderBy('coa_activity.created_at','DESC')->get();
           
           foreach($jurnalReportList as $row) {
             $row->activity_name = $row->sheet_name.' ['.$row->table_id.' ]';
@@ -47,7 +50,7 @@ class ReportManagementController extends Controller
             }
             $row->data_json = $row->toJson();
           }
-          // dd($jurnalReportList);
+          //  dd($jurnalReportList);
           return datatables($jurnalReportList)->toJson();
       }
       
