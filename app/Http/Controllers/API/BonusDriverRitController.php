@@ -21,7 +21,7 @@ class BonusDriverRitController extends Controller
       $year = isset($data['tahun']) ? $data['tahun'] : date('Y');
       $firstDate = date('Y-m-01', strtotime($year.'-'.$month.'-01'));
       $lastDate = date('Y-m-t', strtotime($year.'-'.$month.'-01'));
-      $whereField = 'name, no_Reward, driver_name';
+      $whereField = 'driver_name, no_Reward';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $rewardList = ExpeditionActivity::join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
                     ->where(function($query) use($whereField, $whereValue) {
