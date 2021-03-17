@@ -49,7 +49,7 @@ class BonusDriverRitController extends Controller
               $row->truck = $truck->truck_plat.' - '.$truck->truck_name;
               $reward = Reward::where('min', '<=', $row->rit_truck)->where('max', '>=', $row->rit_truck)->orderBy('min', 'DESC')->where('is_deleted', 'false')->first();
               $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
-              $row->bonus = $reward ? $reward->bonus : "1";
+              $row->bonus = $reward ? $reward->bonus : 0;
               $row->data_json = $row->toJson();
           }
       }
@@ -476,7 +476,7 @@ class BonusDriverRitController extends Controller
         foreach($rewardList as $row) {
             $reward = Reward::where('min', '<=', $row->total_rit)->where('max', '>=', $row->total_rit)->orderBy('min', 'DESC')->where('is_deleted', 'false')->first();
             $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
-            $row->bonus = $reward ? $reward->bonus : "1";
+            $row->bonus = $reward ? $reward->bonus : 0;
             $row->data_json = $row->toJson();
         }
         return response()->json([
