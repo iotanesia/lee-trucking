@@ -247,6 +247,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('get-invoice-ba-list', ['as' => '-get-invoice-ba-list', 'uses' => 'API\ReportManagementController@getListInvoiceBAReport']);
     Route::get('get-invoice-bj-list', ['as' => '-get-invoice-bj-list', 'uses' => 'API\ReportManagementController@getListInvoiceBJReport']);
     Route::get('get-repair-truck-list', ['as' => '-get-repair-truck-list', 'uses' => 'API\ReportManagementController@getListTruckRepair']);
+    Route::get('get-detail-repair-truck-list', ['as' => '-get-detail-repair-truck-list', 'uses' => 'API\ReportManagementController@getListDetailTruckRepair']);
   });
   
   Route::group(['as' => 'api-dashboard', 'prefix' => 'dashboard'], function() {
