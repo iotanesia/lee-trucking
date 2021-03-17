@@ -92,7 +92,7 @@
                         <i class="{{$icon}}"></i>
                         </span>
                         <div class="timeline-content">
-                            <small class="text-muted font-weight-bold">{{date('l, d F Y', strtotime($val->created_at))}}</small>
+                            <small class="text-muted font-weight-bold">{{date('l, d F Y H:i:s', strtotime($val->created_at))}}</small>
                             <h5 class=" mt-3 mb-0">Note : {{$val->keterangan}}, <br> Nominal : Rp {{number_format($val->nominal)}} </h5>
                             <div class="float-right">
                                 <!-- <img src="{{url('/uploads/expedition/'.$val->img)}}" width="100" alt=""> -->

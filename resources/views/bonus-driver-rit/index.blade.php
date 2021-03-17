@@ -39,6 +39,15 @@
                 <div class="col">
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
                   <h5 class="h3 mb-0">Table {{$title}}</h5>
+                  <br>
+                  <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm">
+                    <li class="nav-item submenu">
+                        <a class="nav-link active show" id="user-ad" data-toggle="tab" href="#ad" role="tab" aria-selected="true">Driver</a>
+                    </li>
+                    <li class="nav-item submenu">
+                        <a class="nav-link" id="user-up" data-toggle="tab" href="#up" role="tab" aria-selected="false">Kenek</a>
+                    </li>
+                  </ul>
                 </div>
                 <div class="col-md-2">
                     <select class="form-control m-1" id="tahun-select">
@@ -70,9 +79,8 @@
               </div>
             </div>
             <div class="card-body">
-                <!-- <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#bonusDriverRit-modal">
-                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-                </button> -->
+            <div class="tab-content">
+              <div id="ad" class="tab-pane in active">
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush table-striped" id="table-bonusDriverRit" data-model="bonusDriverRit" request-url="{{ route('api-bonusDriverRit') }}" on-success-load="successLoadbonusDriverRit">
                         <thead class="bg-gradient-info text-white">
@@ -91,12 +99,44 @@
                         <tbody></tbody>
                     </table>
                 </div>
+                <div class="card-footer py-4">
+                    <nav aria-label="...">
+                        <ul class="pagination justify-content-end mb-0"></ul>
+                    </nav>
+                </div>
+              </div>
+              <div id="up" class="tab-pane in">
+              <div class="table-responsive">
+                    <table class="table align-items-center table-flush table-striped" id="table-bonusDriverRit" data-model="bonusDriverRit" request-url="{{ route('api-bonusDriverRit') }}" on-success-load="successLoadbonusDriverRit">
+                        <thead class="bg-gradient-info text-white">
+                            <tr>
+                                <th>No</th>
+                                <th>Kenek</th>
+                                <th>Truck</th>
+                                <th>Total Rit Kenek</th>
+                                <th>Total Rit Truck</th>
+                                <th>Reward Jenis</th>
+                                <th>Pendapatan</th>
+                                <th>Bonus</th>
+                                <th>Total Pendapatan</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="card-footer py-4">
+                    <nav aria-label="...">
+                        <ul class="pagination justify-content-end mb-0"></ul>
+                    </nav>
+                </div>
+              </div>
             </div>
-            <div class="card-footer py-4">
-                <nav aria-label="...">
-                    <ul class="pagination justify-content-end mb-0"></ul>
-                </nav>
+                <!-- <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#bonusDriverRit-modal">
+                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+                </button> -->
+                
             </div>
+            
           </div>
         </div>
       </div>
