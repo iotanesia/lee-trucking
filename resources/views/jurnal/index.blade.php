@@ -41,7 +41,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
-                  <h5 class="h3 mb-0">Table {{$title}}</h5>
+                  <h5 class="h3 mb-0">Tabel {{$title}}</h5>
                 </div>
                 <div class="col-md-2">
               

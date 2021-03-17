@@ -8,17 +8,21 @@
     var firstDay = new Date(y, m, 1);
     var lastDay = new Date(y, m+1, 0);
 
-    var startDate = '';
-    var endDate = '';
+    var startDateTujuan = formatDateReq(firstDay);
+    var endDateTujuan = formatDateReq(lastDay);
+    var startDateTruck = formatDateReq(firstDay);
+    var endDateTruck = formatDateReq(lastDay);
+    var startDateDriver = formatDateReq(firstDay);
+    var endDateDriver = formatDateReq(lastDay);
     var detailId = '';
-  var table = $('#table-repair-truck-report').DataTable({
+    var tableRitTujuan = $('#table-rit-tujuan').DataTable({
     processing: true,
     serverSide: true, autoWidth: true,
     ajax: {
-      url: window.Laravel.app_url + "/api/report/get-repair-truck-list",
+      url: window.Laravel.app_url + "/api/report/get-ekspedisi-rit-tujuan-list",
       type: "GET",data: function (d) {
-        d.start_date = startDate;
-        d.end_date = endDate;
+        d.start_date = startDateTujuan;
+        d.end_date = endDateTujuan;
       },
       headers: {"Authorization": "Bearer " + accessToken},
       crossDomain: true,
@@ -30,19 +34,13 @@
               return meta.row + meta.settings._iDisplayStart + 1;
           }
         },
-        {"data":"kode_repair"},
-        {"data":"truck_name"},
-        {"data":"truck_plat"},
-        {
-          "data":"created_at", render: function (data, type, row, meta) {
-            return formatDate(data);
-          }
-        },
-        {"data":"total"},
+        {"data":"kabupaten"},
+        {"data":"kecamatan"},
+        {"data":"total_ekspedisi"},
         {
             "data": null,
             render: function (data, type, row) {
-              return '<a href="#" onclick="return openModalDetail(\'' + data.id + '\',\'' +data.kode_repair+ '\')" data-toggle="modal" data-target="#modal-detail-truck-repair" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
+              return '<a href="#" data-toggle="modal" data-target="#modal-detail-truck-repair" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
             }
         }
     ],
@@ -55,16 +53,83 @@
     }
   });
 
-  function convertToRupiah(angka)
-  {
-    var rupiah = '';		
-    var angkarev = angka.toString().split('').reverse().join('');
-    for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
-    return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
-  }
+  var tableRitTruck = $('#table-rit-truck').DataTable({
+    processing: true,
+    serverSide: true, autoWidth: true,
+    ajax: {
+      url: window.Laravel.app_url + "/api/report/get-ekspedisi-rit-truck-list",
+      type: "GET",data: function (d) {
+        d.start_date = startDateTruck;
+        d.end_date = endDateTruck;
+      },
+      headers: {"Authorization": "Bearer " + accessToken},
+      crossDomain: true,
+    },
+    columns: [
+        {
+          "data": null, "sortable": false,
+            render: function (data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        },
+        {"data":"truck_name"},
+        {"data":"truck_plat"},
+        {"data":"total_ekspedisi"},
+        {
+            "data": null,
+            render: function (data, type, row) {
+              return '<a href="#" data-toggle="modal" data-target="#modal-detail-truck-repair" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
+            }
+        }
+    ],
+    scrollCollapse: true,
+    language: {
+        paginate: {
+            previous: '<i class="fas fa-angle-left"></i>',
+            next: '<i class="fas fa-angle-right"></i>'
+        }
+    }
+  });
+
+  var tableRitDriver = $('#table-rit-driver').DataTable({
+    processing: true,
+    serverSide: true, autoWidth: true,
+    ajax: {
+      url: window.Laravel.app_url + "/api/report/get-ekspedisi-rit-driver-list",
+      type: "GET",data: function (d) {
+        d.start_date = startDateDriver;
+        d.end_date = endDateDriver;
+      },
+      headers: {"Authorization": "Bearer " + accessToken},
+      crossDomain: true,
+    },
+    columns: [
+        {
+          "data": null, "sortable": false,
+            render: function (data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        },
+        {"data":"driver_name"},
+        {"data":"total_ekspedisi"},
+        {
+            "data": null,
+            render: function (data, type, row) {
+              return '<a href="#" data-toggle="modal" data-target="#modal-detail-truck-repair" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
+            }
+        }
+    ],
+    scrollCollapse: true,
+    language: {
+        paginate: {
+            previous: '<i class="fas fa-angle-left"></i>',
+            next: '<i class="fas fa-angle-right"></i>'
+        }
+    }
+  });
 
   $(function() {
-    $('input[name="dateRange"]').daterangepicker({
+    $('input[name="dateRangeRitTujuan"]').daterangepicker({
       opens: 'right',
       showDropdowns: true,
     locale: {
@@ -97,15 +162,105 @@
             'Desember'
         ],
         firstDay:'1'
-    }
+    },
+    startDate: formatDate(firstDay),
+    endDate: formatDate(lastDay)
     },
     function(start, end, label) {
       startDate = start.format('YYYY-MM-DD');
       endDate = end.format('YYYY-MM-DD');
-      $('#table-repair-truck-report').DataTable().ajax.reload();
+      $('#table-rit-tujuan').DataTable().ajax.reload();
     });
-  $('input[name="dateRange"]').val('');
-  $('input[name="dateRange"]').attr("placeholder","Pilih Tanggal");
+  });
+
+  $(function() {
+    $('input[name="dateRangeRitDriver"]').daterangepicker({
+      opens: 'right',
+      showDropdowns: true,
+    locale: {
+        format:'DD MMMM YYYY',
+        separator:' - ',
+        applyLabel: 'Pilih',
+        cancelLabel: 'Batal',
+        customRangeLabel:'Custom',
+        daysOfWeek:[
+            'Min',
+            'Sen',
+            'Sel',
+            'Rab',
+            'Kam',
+            'Jum',
+            'Sab'
+        ],
+        monthNames:[
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        ],
+        firstDay:'1'
+    },
+    startDate: formatDate(firstDay),
+    endDate: formatDate(lastDay)
+    },
+    function(start, end, label) {
+      startDate = start.format('YYYY-MM-DD');
+      endDate = end.format('YYYY-MM-DD');
+      $('#table-rit-driver').DataTable().ajax.reload();
+    });
+  });
+
+  $(function() {
+    $('input[name="dateRangeRitTruck"]').daterangepicker({
+      opens: 'right',
+      showDropdowns: true,
+    locale: {
+        format:'DD MMMM YYYY',
+        separator:' - ',
+        applyLabel: 'Pilih',
+        cancelLabel: 'Batal',
+        customRangeLabel:'Custom',
+        daysOfWeek:[
+            'Min',
+            'Sen',
+            'Sel',
+            'Rab',
+            'Kam',
+            'Jum',
+            'Sab'
+        ],
+        monthNames:[
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        ],
+        firstDay:'1'
+    },
+    startDate: formatDate(firstDay),
+    endDate: formatDate(lastDay)
+    },
+    function(start, end, label) {
+      startDate = start.format('YYYY-MM-DD');
+      endDate = end.format('YYYY-MM-DD');
+      $('#table-rit-truck').DataTable().ajax.reload();
+    });
   });
 
   function formatDate(date) {

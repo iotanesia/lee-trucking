@@ -44,7 +44,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
-                  <h5 class="h3 mb-0">Table {{$title}}</h5><br/>
+                  <h5 class="h3 mb-0">Tabel {{$title}}</h5><br/>
                   <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm">
                     <li class="nav-item submenu">
                         <a class="nav-link active show" id="user-ad" data-toggle="tab" href="#ad" role="tab" aria-selected="true">BO</a>
@@ -117,7 +117,6 @@
                         <thead class="bg-gradient-info text-white">
                         <tr>
                             <th>No</th>
-                            <th>Nomor Invoice</th>
                             <th>Tanggal</th>
                             <th>Surat Jalan</th>
                             <th>Tujuan</th>
@@ -242,7 +241,6 @@
                         <thead class="bg-gradient-info text-white">
                         <tr>
                             <th>No</th>
-                            <th>Nomor Invoice</th>
                             <th>Tanggal</th>
                             <th>Surat Jalan</th>
                             <th>Tujuan</th>
@@ -367,7 +365,6 @@
                             <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
-                                <th>Nomor Invoice</th>
                                 <th>Tanggal</th>
                                 <th>Surat Jalan</th>
                                 <th>Tujuan</th>

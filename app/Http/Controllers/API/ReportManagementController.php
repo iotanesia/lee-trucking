@@ -16,6 +16,7 @@ use App\Models\StkHistorySparePart;
 
 class ReportManagementController extends Controller
 {
+  //Jurnal Report
     public function getListJurnalReport(Request $request) {
         if($request->isMethod('GET')) {
           $data = $request->all();
@@ -55,7 +56,9 @@ class ReportManagementController extends Controller
       }
       
     }
+    //Jurnal Report
 
+    //Invoice Report
     public function getListInvoiceBOReport(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
@@ -180,8 +183,9 @@ class ReportManagementController extends Controller
           return datatables($data)->toJson();
       }
     }
+    //Invoice Report
 
-    //Truck Repairs
+    //Truck Repairs Report
     public function getListTruckRepair(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
@@ -195,7 +199,7 @@ class ReportManagementController extends Controller
             $query->whereBetween('stk_repair_header.created_at', [$startDate, $endDate]);
           }
         })
-        ->select('stk_repair_header.*', 'ex_master_truck.truck_name')
+        ->select('stk_repair_header.*', 'ex_master_truck.truck_name','ex_master_truck.truck_plat')
         ->orderBy('stk_repair_header.updated_at','DESC')->get();
           
         $totals = 0;
@@ -236,5 +240,98 @@ class ReportManagementController extends Controller
         return datatables($data)->toJson();
       }
     }
+    //Truck Repairs Report
+
+    //Expedition And Rit Report  
+    public function getListRitDriver(Request $request){
+      if($request->isMethod('GET')) {
+        $data = $request->all();
+        $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+        $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = (isset($data['start_date'])) ? $data['start_date'] : '';
+        $endDate = (isset($data['end_date'])) ? $data['end_date'] : '';
+        $statusCode = isset($data['status_code']) ? $data['status_code'] : '';
+        $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
+        ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+        ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
+        ->where('expedition_activity.is_deleted','false')
+        ->where(function($query) use($statusCode) {
+          if($statusCode) {
+              $query->where('expedition_activity.status_activity', $statusCode);
+          }
+        })
+        ->where(function($query) use($startDate, $endDate) {
+          if($startDate && $endDate){
+            $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+          }
+        })
+        ->select(DB::raw('COUNT("driver_id") AS total_ekspedisi'),'expedition_activity.driver_id', 'ex_master_driver.driver_name')
+        ->groupBy('expedition_activity.driver_id', 'ex_master_driver.driver_name')->get();
+          // dd($data);
+        return datatables($data)->toJson();
+      }
+    }
+
+    public function getListRitTruck(Request $request){
+      if($request->isMethod('GET')) {
+        $data = $request->all();
+        $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+        $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = (isset($data['start_date'])) ? $data['start_date'] : '';
+        $endDate = (isset($data['end_date'])) ? $data['end_date'] : '';
+        $statusCode = isset($data['status_code']) ? $data['status_code'] : '';
+        $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
+        ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
+        ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
+        ->where('expedition_activity.is_deleted','false')
+        ->where(function($query) use($statusCode) {
+          if($statusCode) {
+              $query->where('expedition_activity.status_activity', $statusCode);
+          }
+        })
+        ->where(function($query) use($startDate, $endDate) {
+          if($startDate && $endDate){
+            $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+          }
+        })
+        ->select(DB::raw('COUNT("truck_id") AS total_ekspedisi'),'expedition_activity.truck_id', 'ex_master_truck.truck_plat','ex_master_truck.truck_name')
+        ->groupBy('expedition_activity.truck_id', 'ex_master_truck.truck_plat','ex_master_truck.truck_name')->get();
+          // dd($data);
+        return datatables($data)->toJson();
+      }
+    }
+
+    public function getListRitTujuan(Request $request){
+      if($request->isMethod('GET')) {
+        $data = $request->all();
+        $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+        $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = (isset($data['start_date'])) ? $data['start_date'] : '';
+        $endDate = (isset($data['end_date'])) ? $data['end_date'] : '';
+        $statusCode = isset($data['status_code']) ? $data['status_code'] : '';
+        $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
+        ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
+        ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
+        ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
+        ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
+        ->where('expedition_activity.is_deleted','false')
+        ->where(function($query) use($statusCode) {
+          if($statusCode) {
+              $query->where('expedition_activity.status_activity', $statusCode);
+          }
+        })
+        ->where(function($query) use($startDate, $endDate) {
+          if($startDate && $endDate){
+            $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+          }
+        })
+        ->select(DB::raw('COUNT("ojk_id") AS total_ekspedisi'),'expedition_activity.ojk_id','ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')
+        ->groupBy('expedition_activity.ojk_id', 'ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')->get();
+          // dd($data);
+        return datatables($data)->toJson();
+      }
+    }
+    //Expedition And Rit Report
+
     
 }

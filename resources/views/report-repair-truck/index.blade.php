@@ -44,7 +44,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
-                  <h5 class="h3 mb-0">Table {{$title}}</h5><br/>
+                  <h5 class="h3 mb-0">Tabel {{$title}}</h5><br/>
                 </div>
               </div>
             </div>
@@ -99,11 +99,12 @@
                         <thead class="bg-gradient-info text-white">
                         <tr>
                             <th>No</th>
-                            <th style="min-width: 200px;text-align:center">Kode Repair</th>
-                            <th style="min-width: 200px;text-align:center">Nama Truk</th>
-                            <th style="min-width: 200px;text-align:center">Tanggal Repair</th>
-                            <th style="min-width: 200px;text-align:center">Total</th>
-                            <th style="min-width: 70px;text-align:center">Aksi</th>
+                            <th style="min-width: 150px;text-align:center">Kode Repair</th>
+                            <th style="min-width: 150px;text-align:center">Nama Truk</th>
+                            <th style="min-width: 150px;text-align:center">Nomor Plat</th>
+                            <th style="min-width: 150px;text-align:center">Tanggal Repair</th>
+                            <th style="min-width: 150px;text-align:center">Total</th>
+                            <th style="min-width: 50px;text-align:center">Aksi</th>
                         </tr>
                         </thead>
                         <tbody style="text-align:center"></tbody>
