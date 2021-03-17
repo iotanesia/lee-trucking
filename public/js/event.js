@@ -415,7 +415,7 @@ function dateFormat(userDate) {
     if(userDate !== null ) {
         var dateAr = userDate.split(' ');
         var date = dateAr[0].split('-');
-        var newDate = date[2]+'-'+date[2]+'-'+date[0];
+        var newDate = date[2]+'-'+date[1]+'-'+date[0];
     
         return newDate
         
