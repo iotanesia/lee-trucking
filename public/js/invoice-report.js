@@ -36,7 +36,6 @@
               return meta.row + meta.settings._iDisplayStart + 1;
           }
         },
-        {"data":"nomor_inv"},
         {
           "data":"tgl_po", render: function (data, type, row, meta) {
             return formatDate(data);
@@ -123,7 +122,6 @@
                 return meta.row + meta.settings._iDisplayStart + 1;
             }
           },
-          {"data":"nomor_inv"},
           {
             "data":"tgl_po", render: function (data, type, row, meta) {
               return formatDate(data);
@@ -209,7 +207,6 @@
               return meta.row + meta.settings._iDisplayStart + 1;
           }
         },
-        {"data":"nomor_inv"},
         {
           "data":"tgl_po", render: function (data, type, row, meta) {
             return formatDate(data);

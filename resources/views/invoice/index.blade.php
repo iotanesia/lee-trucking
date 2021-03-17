@@ -117,7 +117,6 @@
                         <thead class="bg-gradient-info text-white">
                         <tr>
                             <th>No</th>
-                            <th>Nomor Invoice</th>
                             <th>Tanggal</th>
                             <th>Surat Jalan</th>
                             <th>Tujuan</th>
@@ -242,7 +241,6 @@
                         <thead class="bg-gradient-info text-white">
                         <tr>
                             <th>No</th>
-                            <th>Nomor Invoice</th>
                             <th>Tanggal</th>
                             <th>Surat Jalan</th>
                             <th>Tujuan</th>
@@ -367,7 +365,6 @@
                             <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
-                                <th>Nomor Invoice</th>
                                 <th>Tanggal</th>
                                 <th>Surat Jalan</th>
                                 <th>Tujuan</th>

@@ -40,11 +40,11 @@ public function view(): View
     ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
     ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
     ->where('expedition_activity.nomor_surat_jalan','iLike','BA%')
-    ->where(function($query) use($noInv) {
-        if($noInv) {
-            $query->where('expedition_activity.nomor_inv', $noInv);
-        }
-      })
+    // ->where(function($query) use($noInv) {
+    //     if($noInv) {
+    //         $query->where('expedition_activity.nomor_inv', $noInv);
+    //     }
+    //   })
       ->where(function($query) use($jenisP) {
         if($jenisP) {
           if($jenisP != 'Semua'){
@@ -55,12 +55,12 @@ public function view(): View
     ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
             ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
             ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
-            ,'expedition_activity.toko','expedition_activity.harga_otv', 'expedition_activity.tgl_inv', 'expedition_activity.nomor_inv', 'expedition_activity.pabrik_pesanan')
+            ,'expedition_activity.toko','expedition_activity.harga_otv', 'expedition_activity.tgl_inv', 'expedition_activity.pabrik_pesanan')
             ->whereBetween('expedition_activity.tgl_po', [$this->startDate, $this->endDate])
            ->groupBy('expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
             ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
             ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
-            ,'expedition_activity.toko','expedition_activity.harga_otv', 'expedition_activity.tgl_inv', 'expedition_activity.nomor_inv','expedition_activity.pabrik_pesanan')->get();
+            ,'expedition_activity.toko','expedition_activity.harga_otv', 'expedition_activity.tgl_inv','expedition_activity.pabrik_pesanan')->get();
             foreach($data as $row) {
                 $row->harga_per_rit = 'Rp. '. number_format($row->harga_otv, 0, ',', '.');
                 $row->total = 'Rp. '. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
