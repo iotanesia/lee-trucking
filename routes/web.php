@@ -61,5 +61,8 @@ Route::get('/export-bj', 'InvoiceController@exportExcelBJ')->name('export-bj');
 
 Route::get('/getbarcode/{code}', 'SparePartsController@getBarcode');
 
-//repair truck
+//repair truck Report
 Route::get('/repair-truck-report', 'RepairTruckReportController@index')->name('repair-truck-report');
+
+//Expedisi dan rit Report
+Route::get('/ekspedisi-rit-report', 'ExpeditionAndRitReportController@index')->name('ekspedisi-rit-report');

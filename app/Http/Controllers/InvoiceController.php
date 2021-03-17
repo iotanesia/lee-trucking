@@ -35,7 +35,7 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
-        $data['title'] = 'Invoice Report';
+        $data['title'] = 'Laporan Invoice';
       
                                                     // dd($data);
 
