@@ -252,5 +252,7 @@ function openModalDetail(idHeader, kodeRepair){
     // console.log(result);
     return result;
   } 
-
+  $('#modal-detail-truck-repair').on('hidden.bs.modal', function () {
+    $('#table-detail-repair-truck-report').dataTable().fnDestroy();
+});
 }

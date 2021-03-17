@@ -150,7 +150,7 @@
                   <div class="card-body">
                     <div class="form-group">
                       <div class="">
-                        <table class="table table-responsive align-items-center table-striped" id="table-detail-repair-truck-report" son-success-load="successLoadexpedition" style="width: 100%;">
+                        <table class="table table-responsive align-items-center table-striped" id="table-detail-repair-truck-report" style="width: 100%;">
                             <thead class="bg-gradient-info text-white" style="text-align:center">
                             <tr>
                                 <th>No</th>
