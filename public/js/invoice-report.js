@@ -57,11 +57,7 @@
             "next": '<i class="fas fa-angle-right"></i>'
         }
     },
-    initComplete: function() {
-        $('.btn-group > .btn:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-group:not(:last-child) > .btn').css('margin-right','5px');
-        $('.dataTables_length, .dataTables_info, .dt-buttons').css('padding-left','10px');
-        $('.dataTables_filter ').css('padding-right','10px');
-    },
+
     "footerCallback": function (row, data, start, end, display) {
       var api = this.api(), data;
       
@@ -74,7 +70,7 @@
       };
       // Total over all pages
       totalInvoice = api
-          .column(9)
+          .column(8)
           .data()
           .reduce(function(a, b) {
             if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -87,17 +83,17 @@
           pph23 = (totalInvoice*2)/100;
           totalKeseluruhan = totalInvoice + ppn10 + pph23;
 
-          $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
+          $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(0) td:eq(9)', api.table().footer()).html(convertToRupiah(totalInvoice));
 
-          $('tr:eq(1) td:eq(4)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
-          $('tr:eq(1) td:eq(10)', api.table().footer()).html(convertToRupiah(ppn10));
+          $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
+          $('tr:eq(1) td:eq(9)', api.table().footer()).html(convertToRupiah(ppn10));
 
-          $('tr:eq(2) td:eq(4)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(2) td:eq(10)', api.table().footer()).html(convertToRupiah(pph23));
+          $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(2) td:eq(9)', api.table().footer()).html(convertToRupiah(pph23));
 
-          $('tr:eq(3) td:eq(4)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(3) td:eq(10)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+          $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(3) td:eq(9)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
     }
     });
 
@@ -143,11 +139,6 @@
               "next": '<i class="fas fa-angle-right"></i>'
           }
       },
-      initComplete: function() {
-          $('.btn-group > .btn:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-group:not(:last-child) > .btn').css('margin-right','5px');
-          $('.dataTables_length, .dataTables_info, .dt-buttons').css('padding-left','0px');
-          $('.dataTables_filter ').css('padding-right','0px');
-      },
       "footerCallback": function (row, data, start, end, display) {
         var api = this.api(), data;
         
@@ -160,7 +151,7 @@
         };
         // Total over all pages
         totalInvoice = api
-            .column(9)
+            .column(8)
             .data()
             .reduce(function(a, b) {
               if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -173,17 +164,17 @@
             pph23 = (totalInvoice*2)/100;
             totalKeseluruhan = totalInvoice + ppn10 + pph23;
 
-            $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-            $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
+            $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+            $('tr:eq(0) td:eq(9)', api.table().footer()).html(convertToRupiah(totalInvoice));
 
-            $('tr:eq(1) td:eq(4)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
-            $('tr:eq(1) td:eq(10)', api.table().footer()).html(convertToRupiah(ppn10));
+            $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
+            $('tr:eq(1) td:eq(9)', api.table().footer()).html(convertToRupiah(ppn10));
 
-            $('tr:eq(2) td:eq(4)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-            $('tr:eq(2) td:eq(10)', api.table().footer()).html(convertToRupiah(pph23));
+            $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+            $('tr:eq(2) td:eq(9)', api.table().footer()).html(convertToRupiah(pph23));
 
-            $('tr:eq(3) td:eq(4)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-            $('tr:eq(3) td:eq(10)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+            $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+            $('tr:eq(3) td:eq(9)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
       }
     });
  
@@ -228,11 +219,7 @@
             "next": '<i class="fas fa-angle-right"></i>'
         }
     },
-    initComplete: function() {
-        $('.btn-group > .btn:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-group:not(:last-child) > .btn').css('margin-right','5px');
-        $('.dataTables_length, .dataTables_info, .dt-buttons').css('padding-left','0px');
-        $('.dataTables_filter ').css('padding-right','0px');
-    },
+    
     "footerCallback": function (row, data, start, end, display) {
       var api = this.api(), data;
       
@@ -245,49 +232,35 @@
       };
       // Total over all pages
       totalInvoice = api
-          .column(9)
+          .column(8)
           .data()
           .reduce(function(a, b) {
             if((a != NaN || a != 0) && (b != NaN || b != 0)){
               return intVal(a) + intVal(b);
             }
           }, 0);
- 
 
-          ppn10 = (totalInvoice*10)/100;
-          pph23 = (totalInvoice*2)/100;
-          totalKeseluruhan = totalInvoice + ppn10 + pph23;
-
-          $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
-
-          $('tr:eq(1) td:eq(4)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
-          $('tr:eq(1) td:eq(10)', api.table().footer()).html(convertToRupiah(ppn10));
-
-          $('tr:eq(2) td:eq(4)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(2) td:eq(10)', api.table().footer()).html(convertToRupiah(pph23));
-
-          $('tr:eq(3) td:eq(4)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(3) td:eq(10)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+          $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(0) td:eq(9)', api.table().footer()).html(convertToRupiah(totalInvoice));
     }
   });
-    table.on('order.dt search.dt', function () {
-        table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-            cell.innerHTML = i+1;
-        } );
-    } ).draw();
+//     table.on('order.dt search.dt', function () {
+//         table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+//             cell.innerHTML = i+1;
+//         } );
+//     } ).draw();
 
-    tableba.on('order.dt search.dt', function () {
-      table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-          cell.innerHTML = i+1;
-      } );
-  } ).draw();
+//     tableba.on('order.dt search.dt', function () {
+//       table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+//           cell.innerHTML = i+1;
+//       } );
+//   } ).draw();
 
-  tablebj.on('order.dt search.dt', function () {
-    table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-        cell.innerHTML = i+1;
-    } );
-} ).draw();
+//   tablebj.on('order.dt search.dt', function () {
+//     table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+//         cell.innerHTML = i+1;
+//     } );
+// } ).draw();
   function convertToRupiah(angka)
   {
     var rupiah = '';		
