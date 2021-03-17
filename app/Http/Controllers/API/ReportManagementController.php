@@ -210,5 +210,31 @@ class ReportManagementController extends Controller
         return datatables($data)->toJson();
       }
     }
+
+    public function getListDetailTruckRepair(Request $request){
+      if($request->isMethod('GET')) {
+        $data = $request->all();
+        $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+        $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = (isset($data['start_date'])) ? $data['start_date'] : '';
+        $endDate = (isset($data['end_date'])) ? $data['end_date'] : '';
+        $idHeader = $data['id_header'];
+        $data = $data = StkHistorySparePart::leftJoin('stk_repair_header' ,'stk_repair_header.id','stk_history_stock.header_id')
+        ->where('stk_history_stock.header_id', $idHeader)
+        ->where('stk_history_stock.transaction_type','OUT')
+        ->where(function($query) use($startDate, $endDate) {
+          if($startDate && $endDate){
+            $query->whereBetween('stk_history_stock.created_at', [$startDate, $endDate]);
+          }
+        })
+        ->select('stk_history_stock.*')
+        ->orderBy('stk_history_stock.updated_at','DESC')->get();
+          
+        foreach($data as $row) {
+          $row->total = ($row->jumlah_stok * $row->amount);
+        }
+        return datatables($data)->toJson();
+      }
+    }
     
 }
