@@ -31,6 +31,7 @@ class FirebaseService
     public function sendNotif($request){
         $messaging = $this->firebase->createMessaging();
         $soundEffect = storage_path().'/sounds/puin_high.mp3';
+        $token = $request['tokenFcm'];
         $message = CloudMessage::fromArray([
           'token' => $request['tokenFcm'],
           'notification' =>  $request['notif'],
