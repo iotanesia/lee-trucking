@@ -662,7 +662,7 @@ class ExpeditionController extends Controller
               }
 
             } elseif($request->nominal > $expeditionActivity->harga_otv && $request->nominal != 0) {
-                $exStatusActivity->nominal_kurang_bayar = $request->nominal - $expeditionActivity->harga_otv;
+                $exStatusActivity->nominal_lebih_bayar = $request->nominal - $expeditionActivity->harga_otv;
                 $idCoaSheet2 = array(18, 17, 20, 19);
                 $idCoaSheet3 = array(8, 7, 10, 9);
                 
