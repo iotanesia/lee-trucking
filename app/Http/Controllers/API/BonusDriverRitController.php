@@ -36,7 +36,7 @@ class BonusDriverRitController extends Controller
                     ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
                     ->groupBy('driver_id', 'driver_name')
                     ->orderBy('total_rit', 'DESC')
-                    ->paginate();
+                    ->get();
 
                     
     //   dd($rewardList);
