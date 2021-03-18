@@ -39,7 +39,7 @@ class BonusDriverRitController extends Controller
                     ->get();
 
                     
-      dd($rewardList);
+    //   dd($rewardList);
 
       foreach($rewardList as $row) {
           $truck = Truck::where('driver_id', $row->driver_id)->first();
