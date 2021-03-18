@@ -45,7 +45,7 @@
                         <a class="nav-link active show" id="user-ad" data-toggle="tab" href="#ad" role="tab" aria-selected="true">Driver</a>
                     </li>
                     <li class="nav-item submenu">
-                        <a class="nav-link" id="user-up" data-toggle="tab" href="#up" role="tab" aria-selected="false">Kenek</a>
+                        <a class="nav-link" id="user-up" href="{{url('bonus-rit-kenek')}}" aria-selected="false">Kenek</a>
                     </li>
                   </ul>
                 </div>
