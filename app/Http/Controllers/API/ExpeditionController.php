@@ -1112,7 +1112,7 @@ class ExpeditionController extends Controller
               $notification->save();
 
               $userCloseDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
-              if($row->id_fcm_android != null || $row->id_fcm_android != ''){
+              if($userCloseDetail->id_fcm_android != null || $userCloseDetail->id_fcm_android != ''){
                 $notif = array(
                   'title' => $notification->content_title,
                   'body' => $notification->content_body
