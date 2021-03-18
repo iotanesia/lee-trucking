@@ -27,7 +27,7 @@ class JurnalController extends Controller
      */
     public function index(Request $request)
     {
-        $data['title'] = 'Jurnal Report';
+        $data['title'] = 'Laporan Jurnal';
       
                                                     // dd($data);
 
