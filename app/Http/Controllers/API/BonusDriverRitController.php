@@ -36,10 +36,10 @@ class BonusDriverRitController extends Controller
                     ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
                     ->groupBy('driver_id', 'driver_name')
                     ->orderBy('total_rit', 'DESC')
-                    ->paginate();
+                    ->get();
 
                     
-    //   dd($rewardList);
+      dd($rewardList);
 
       foreach($rewardList as $row) {
           $truck = Truck::where('driver_id', $row->driver_id)->first();
