@@ -425,7 +425,7 @@ class ExpeditionController extends Controller
                     'notif' => $notif,
                     'data' => $datas
                   );
-                  $factory->sendNotif($requests);
+                //   $factory->sendNotif($requests);
               }
                   
           }
