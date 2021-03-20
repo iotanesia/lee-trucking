@@ -44,6 +44,7 @@ Route::post('/update-role', 'GroupController@updateRole')->name('update-role');
 Route::get('/my-profile', 'HomeController@myProfile')->name('my-profile');
 Route::post('/update-profile', 'HomeController@updateProfile')->name('update-profile');
 Route::get('/bonus-driver-rit', 'BonusDriverRitController@indexRit')->name('bonus-driver-rit');
+Route::get('/bonus-kenek-rit', 'BonusDriverRitController@indexKenekRit')->name('bonus-kenek-rit');
 Route::get('/bonus-driver-reward', 'BonusDriverRitController@indexReward')->name('bonus-driver-reward');
 Route::get('/purchased-sparepart', 'SparePartsController@indexpurchase')->name('spareparts');
 Route::get('/hutang-stok', 'SparePartsController@indexUnpaid')->name('hutang-stok');
