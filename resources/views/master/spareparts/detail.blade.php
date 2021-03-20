@@ -86,9 +86,6 @@
             <div class="card-body">
               <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
                 <div class="timeline-block">
-                  <span class="timeline-step">
-                    <i class=""></i>
-                  </span>
                   <div class="timeline-content">
                     <img style="width:100%" src="{{url('/uploads/sparepart/'.$sparePart->img_sparepart)}}" alt="">
                   </div>
