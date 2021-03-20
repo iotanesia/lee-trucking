@@ -90,7 +90,7 @@
                     <i class=""></i>
                   </span>
                   <div class="timeline-content">
-                    <img src="{{url('/uploads/sparepart/'.$sparePart->img_sparepart)}}" alt="">
+                    <img style="width:100%" src="{{url('/uploads/sparepart/'.$sparePart->img_sparepart)}}" alt="">
                   </div>
                 </div>
                 
