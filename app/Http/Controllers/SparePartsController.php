@@ -7,6 +7,8 @@ use App\User;
 use App\Models\Truck;
 use App\Models\GlobalParam;
 use App\Models\StkGroupSparepart;
+use App\Models\StkHistorySparePart;
+use App\Models\SparePart;
 use App\Models\Kenek;
 use App\Models\Rekening;
 use Auth;
@@ -63,6 +65,19 @@ class SparePartsController extends Controller
         $data['group'] = StkGroupSparepart::where('is_deleted', 'f')->get();
         $data['no_rek'] = Rekening::where('is_deleted', 'f')->get();
         return view('kasbon.hutang-stok.index', $data);
+    }
+
+    public function detail($id) {
+        $data['title'] = 'Detail Sparepart';
+        $data['status'] = GlobalParam::where('param_type', 'SPAREPART_STATUS')->get();
+        $data['satuan'] = GlobalParam::where('param_type', 'SATUAN')->get();
+        $data['type'] = GlobalParam::where('param_type', 'SPAREPART_TYPE')->get();
+        $data['jenis'] = GlobalParam::where('param_type', 'SPAREPART_JENIS')->get();
+        $data['group'] = StkGroupSparepart::where('is_deleted', 'f')->get();
+        $data['sparePart'] = SparePart::find($id);
+        $data['stkHistorySparePart'] = StkHistorySparePart::where('sparepart_id', $id)->get();
+        $data['no_rek'] = Rekening::where('is_deleted', 'f')->get();
+        return view('master.spareparts.detail', $data);
     }
 
     public function getBarcode($code) {

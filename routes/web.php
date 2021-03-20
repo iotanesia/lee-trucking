@@ -24,6 +24,7 @@ Route::get('/driver', 'DriverController@index')->name('driver');
 Route::get('/kenek', 'KenekController@index')->name('kenek');
 Route::get('/reward', 'RewardController@index')->name('reward');
 Route::get('/spareparts', 'SparePartsController@index')->name('spareparts');
+Route::get('/spareparts/detail/{id}', 'SparePartsController@detail')->name('spareparts-detail');
 Route::get('/gudang', 'GudangController@index')->name('gudang');
 Route::get('/spareparts-group', 'StkGroupSparePartController@index')->name('spareparts-group');
 Route::get('/ojk', 'OjkController@index')->name('ojk');
