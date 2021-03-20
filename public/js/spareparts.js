@@ -287,7 +287,7 @@ var successLoadspareparts = (function(responses, dataModel) {
         success: function(data, textStatus, xhr) {
             console.log(data);
             $('.preloader').hide();
-            $('#form-barcode').html('<center>'+data+'</center>');
+            $('#form-barcode').html('<center>'+data+'</center><br><a class="btn btn-success" href="'+window.Laravel.app_url+'/getbarcode/'+id+'" target="_blank"><i class="fa fa-print"></i> Print</a>');
         },
         error: function(datas, textStatus, xhr) {
             $('.preloader').hide();
