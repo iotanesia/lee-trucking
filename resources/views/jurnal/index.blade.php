@@ -43,18 +43,70 @@
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
                   <h5 class="h3 mb-0">Tabel {{$title}}</h5>
                 </div>
-                <div class="col-md-2">
-              
-                  <select data-column="1" class="form-control col-sm-4 filter-satuan" placeholder="Filter berdasarkan kategori jurnal">
-                    <option value=""></option>
-                    <option value="DEBIT"> DEBIT </option>
-                    <option value="CREDIT"> CREDIT </option>
-                </select>
-                </div>
-             
               </div>
             </div>
             <div class="card-body">
+              <form id="form-export-jurnal" method="get" action="{{url('export-jurnal-report')}}">
+                <div class="row">
+                      <div class="col-md-4">
+                        <input class="form-control" name="tipeFileJurnal" id="tipeFileJurnal" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                        <input class="form-control" name="filterSelectJurnal" id="filterSelectJurnal" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                        <input class="form-control" name="filterActivityJurnal" id="filterActivityJurnal" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                        {{-- <input class="form-control" name="noInvoiceBO" id="noInvoiceBO" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;"> --}}
+                        <div class="input-group input-group-alternative input-group-merge" 
+                            style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                          <div class="input-group-prepend" style="margin-left: 10px;">
+                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                          </div>
+                            <input class="form-control" name="dateRangeJurnal" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                        </div>
+                      </div>
+                      <div class="col-md-2" >
+                        <select class="form-control" id="filter_select_jurnal" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                            <option value="">Semua</option>
+                            <option value="DEBIT"> DEBIT </option>
+                            <option value="CREDIT"> CREDIT </option>
+                        </select>
+                      </div>
+                      <div class="col-md-2" >
+                        <select class="form-control" id="filter_select_aktiviti_jurnal" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                            <option value="">Semua</option>
+                            @foreach($sheetName as $row)
+                            <option value="{{$row->sheet_name}}">{{$row->sheet_name}}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                    <div id="tag-cloud-widget" class="col-md-2">  
+                      <div class="content">  
+                        <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="fas fa-file-export"></i>
+                            </span>
+                            <div class="media-body d-none d-lg-block" style="margin-top: 4px;margin-right: 20px;text-align:center">
+                              <span class="mb-0 text-sm  font-weight-bold">Eksport</span>
+                            </div>
+                          </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-left">
+                          <div class="dropdown-header noti-title">
+                            <h6 class="text-overflow m-0">Eksport</h6>
+                          </div>
+                          <a href="#" id="is-excel-jurnal" class="dropdown-item" onclick="($('#form-export-jurnal').submit())">
+                            <i class="fas fa-file-excel"></i>
+                            <span>Excel</span>
+                          </a>
+                          <div class="dropdown-divider"></div>
+                          <a href="#" id="is-pdf-jurnal" class="dropdown-item" onclick="($('#form-export-jurnal').submit())">
+                          <i class="fas fa-file-pdf"></i>
+                            <span>PDF</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <br/>
                 <div class="">
                     <table class="table table-responsive align-items-center table-striped" id="table-jurnal" son-success-load="successLoadexpedition" width="100%">
                         <thead class="bg-gradient-info text-white">
