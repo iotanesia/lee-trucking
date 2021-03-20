@@ -66,3 +66,5 @@ Route::get('/repair-truck-report', 'RepairTruckReportController@index')->name('r
 
 //Expedisi dan rit Report
 Route::get('/ekspedisi-rit-report', 'ExpeditionAndRitReportController@index')->name('ekspedisi-rit-report');
+
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
