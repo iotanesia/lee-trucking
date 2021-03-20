@@ -712,12 +712,12 @@ class SparePartController extends Controller
             $fileExt = $img_paid->extension();
             $fileName = "IMG-SPAREPART-PAID".$historyStokSparepart->id.'-TSJ-'.date('dmY').".".$fileExt;
             $path =  public_path().'/uploads/sparepart/' ;
+            $historyStokSparepart->img_paid = $fileName;
         }
 
         $current_date_time = Carbon::now()->toDateTimeString(); 
         $user_id = Auth::user()->id;
         $historyStokSparepart->sparepart_type = 'PAID_OFF';
-        $historyStokSparepart->img_paid = $fileName;
   
         if($historyStokSparepart->save()) {
             if($img_paid) {
