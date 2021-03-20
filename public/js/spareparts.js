@@ -214,7 +214,7 @@ var successLoadspareparts = (function(responses, dataModel) {
 
     tableRows += "<tr>" +
                    "<td>"+ (i+1) +"</td>"+
-                   "<td>"+ barcode_gudang +"</td>"+
+                   "<td> <a href='"+window.Laravel.app_url+"/spareparts/detail/"+id+"' >"+ barcode_gudang +"</a></td>"+
                    "<td>"+ barcode_pabrik +"</td>"+
                    "<td>"+ sparepart_name +"</td>"+
                    "<td>"+ sparepart_jenis +"</td>"+
@@ -287,7 +287,7 @@ var successLoadspareparts = (function(responses, dataModel) {
         success: function(data, textStatus, xhr) {
             console.log(data);
             $('.preloader').hide();
-            $('#form-barcode').html('<center>'+data+'</center>');
+            $('#form-barcode').html('<center>'+data+'</center><br><a class="btn btn-success" href="'+window.Laravel.app_url+'/getbarcode/'+id+'" target="_blank"><i class="fa fa-print"></i> Print</a>');
         },
         error: function(datas, textStatus, xhr) {
             $('.preloader').hide();

@@ -88,6 +88,77 @@ class BonusDriverRitController extends Controller
     }
   }
 
+  public function getListKenek(Request $request) {
+    if($request->isMethod('GET')) {
+      $data = $request->all();
+      $month = isset($data['bulan']) ? $data['bulan'] : date('m');
+      $year = isset($data['tahun']) ? $data['tahun'] : date('Y');
+      $firstDate = date('Y-m-01', strtotime($year.'-'.$month.'-01'));
+      $lastDate = date('Y-m-t', strtotime($year.'-'.$month.'-01'));
+      $whereField = 'driver_name';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $rewardList = ExpeditionActivity::join('ex_master_kenek', 'expedition_activity.kenek_id', 'ex_master_kenek.id')
+                    ->where(function($query) use($whereField, $whereValue) {
+                        if($whereValue) {
+                            foreach(explode(', ', $whereField) as $idx => $field) {
+                                $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
+                            }
+                        }
+                    })
+                    ->whereIn('status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])
+                    ->whereRaw("expedition_activity.updated_at between CAST('".$firstDate." 00:00:00' AS DATE) AND CAST('".$lastDate." 23:59:59' AS DATE)")
+                    ->select('kenek_id', 'kenek_name', 'driver_id', DB::raw('COUNT("kenek_id") AS total_rit'))
+                    ->groupBy('kenek_id', 'kenek_name', 'driver_id')
+                    ->orderBy('total_rit', 'DESC')
+                    ->paginate();
+
+      foreach($rewardList as $row) {
+          $truck = Truck::where('driver_id', $row->driver_id)->first();
+        //   dump($truck);
+          if($truck) {
+              $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)->whereIn('status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])->count();
+              $row->truck = $truck->truck_plat.' - '.$truck->truck_name;
+              $reward = Reward::where('min', '<=', $row->rit_truck)->where('max', '>=', $row->rit_truck)->orderBy('min', 'DESC')->where('is_deleted', 'false')->first();
+              $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
+              $row->bonus = $reward ? $reward->bonus : 0;
+              $row->data_json = $row->toJson();
+          
+          } else {
+              $row->rit_truck = null;
+              $row->truck = null;
+              $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
+              $row->bonus = $reward ? $reward->bonus : 0;
+              $row->data_json = $row->toJson();
+          }
+      }
+      
+      if(!isset($rewardList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $rewardList
+        ], 200);
+      }
+      
+      
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
+    }
+  }
+
   public function getListReward(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();

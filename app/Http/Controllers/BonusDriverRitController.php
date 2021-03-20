@@ -36,6 +36,14 @@ class BonusDriverRitController extends Controller
         return view('bonus-driver-rit.index', $data);
     }
 
+    public function indexKenekRit(Request $request)
+    {
+        $data['title'] = 'Bonus Kenek / Rit';
+        $data['tahun'] = ExpeditionActivity::select(DB::raw("date_part('year', updated_at) AS years"))->groupBy('years')->get()->toArray();
+        $data['bulan'] = ['01' => 'Januari', '02' => 'Febuari', '03' => 'Maret', '04' => 'April', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus', '09' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember'];
+        return view('bonus-driver-rit.index-kenek', $data);
+    }
+
     public function indexReward(Request $request)
     {
         $data['title'] = 'Bonus Driver / Reward';

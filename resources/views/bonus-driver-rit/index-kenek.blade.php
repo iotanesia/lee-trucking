@@ -33,7 +33,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-12">
-          <div class="card" id="bonusDriverRit"    >
+          <div class="card" id="bonusDriverRit">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
@@ -42,10 +42,10 @@
                   <br>
                   <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm">
                     <li class="nav-item submenu">
-                        <a class="nav-link active show" id="user-ad" data-toggle="tab" href="#ad" role="tab" aria-selected="true">Driver</a>
+                        <a class="nav-link" id="user-ad" href="{{url('bonus-driver-rit')}}" aria-selected="true">Driver</a>
                     </li>
                     <li class="nav-item submenu">
-                        <a class="nav-link" id="user-up" href="{{url('bonus-kenek-rit')}}" aria-selected="false">Kenek</a>
+                        <a class="nav-link active show" id="user-up" href="#" aria-selected="false">Kenek</a>
                     </li>
                   </ul>
                 </div>
@@ -74,7 +74,7 @@
                             <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="bonusDriverRit" placeholder="Search Key">
                         </div>
                     </div>
-                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="bonusDriverRit"><i class="fa fa-search"></i></a>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" request-url="{{ route('api-bonusDriverRit-get-list-kenek') }}" id="search-data" el-event="search-data" data-model="bonusDriverRit"><i class="fa fa-search"></i></a>
                 </div>
               </div>
             </div>
@@ -82,32 +82,7 @@
             <div class="tab-content">
               <div id="ad" class="tab-pane in active">
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-bonusDriverRit" data-model="bonusDriverRit" request-url="{{ route('api-bonusDriverRit') }}" on-success-load="successLoadbonusDriverRit">
-                        <thead class="bg-gradient-info text-white">
-                            <tr>
-                                <th>No</th>
-                                <th>Driver</th>
-                                <th>Truck</th>
-                                <th>Total Rit Driver</th>
-                                <th>Total Rit Truck</th>
-                                <th>Reward Jenis</th>
-                                <th>Pendapatan</th>
-                                <th>Bonus</th>
-                                <th>Total Pendapatan</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-                <div class="card-footer py-4">
-                    <nav aria-label="...">
-                        <ul class="pagination justify-content-end mb-0"></ul>
-                    </nav>
-                </div>
-              </div>
-              <div id="up" class="tab-pane in">
-              <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-bonusDriverRit" data-model="bonusDriverRit" request-url="{{ route('api-bonusDriverRit') }}" on-success-load="successLoadbonusDriverRit">
+                    <table class="table align-items-center table-flush table-striped" id="table-bonusDriverRit" data-model="bonusDriverRit" request-url="{{ route('api-bonusDriverRit-get-list-kenek') }}" on-success-load="successLoadbonusDriverRit">
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
@@ -130,13 +105,6 @@
                     </nav>
                 </div>
               </div>
-            </div>
-                <!-- <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" data-toggle="modal" data-target="#bonusDriverRit-modal">
-                    <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
-                </button> -->
-                
-            </div>
-            
           </div>
         </div>
       </div>
@@ -194,5 +162,5 @@
 <script src="{{asset('js/event.js')}}"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/2.9.0/moment.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/1/daterangepicker.js"></script>
-<script src="{{asset('js/bonusDriverRit.js')}}"></script>
+<script src="{{asset('js/bonusKenekRit.js')}}"></script>
 @endsection

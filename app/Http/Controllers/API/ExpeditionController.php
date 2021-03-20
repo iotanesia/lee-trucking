@@ -26,7 +26,7 @@ class ExpeditionController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv, otv_payment_method, ex_master_driver.driver_name';
+      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv, otv_payment_method, ex_master_driver.driver_name, expedition_activity.nomor_surat_jalan';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
       $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
@@ -668,40 +668,40 @@ class ExpeditionController extends Controller
 
             } elseif($request->nominal > $expeditionActivity->harga_otv && $request->nominal != 0) {
                 $exStatusActivity->nominal_lebih_bayar = $request->nominal - $expeditionActivity->harga_otv;
-                $idCoaSheet2 = array(18, 17, 20, 19);
-                $idCoaSheet3 = array(8, 7, 10, 9);
+                // $idCoaSheet2 = array(18, 17, 20, 19);
+                // $idCoaSheet3 = array(8, 7, 10, 9);
                 
-                if($request->status_activity != 'WAITING_OWNER') {
-                    foreach($idCoaSheet2 as $key => $row) {
-                        $coaActivity = new CoaActivity();
-                        $coaActivity->activity_id = $statusActivityId['id'];
-                        $coaActivity->activity_name = $expeditionActivity->status_activity;
-                        $coaActivity->status = 'ACTIVE';
-                        $coaActivity->nominal = $exStatusActivity->nominal;
-                        $coaActivity->rek_no = $exStatusActivity->no_rek;
-                        $coaActivity->coa_id = $row;
-                        $coaActivity->ex_id = $expeditionActivity->id;
-                        $coaActivity->created_at = $current_date_time;
-                        $coaActivity->created_by = $idUser;
-                        $coaActivity->rek_name = $exStatusActivity->rek_name;
-                        $coaActivity->save();
-                    }
+                // if($request->status_activity != 'WAITING_OWNER') {
+                //     foreach($idCoaSheet2 as $key => $row) {
+                //         $coaActivity = new CoaActivity();
+                //         $coaActivity->activity_id = $statusActivityId['id'];
+                //         $coaActivity->activity_name = $expeditionActivity->status_activity;
+                //         $coaActivity->status = 'ACTIVE';
+                //         $coaActivity->nominal = $exStatusActivity->nominal;
+                //         $coaActivity->rek_no = $exStatusActivity->no_rek;
+                //         $coaActivity->coa_id = $row;
+                //         $coaActivity->ex_id = $expeditionActivity->id;
+                //         $coaActivity->created_at = $current_date_time;
+                //         $coaActivity->created_by = $idUser;
+                //         $coaActivity->rek_name = $exStatusActivity->rek_name;
+                //         $coaActivity->save();
+                //     }
                     
-                    foreach($idCoaSheet3 as $key => $row) {
-                        $coaActivity = new CoaActivity();
-                        $coaActivity->activity_id = $statusActivityId['id'];
-                        $coaActivity->activity_name = $expeditionActivity->status_activity;
-                        $coaActivity->status = 'ACTIVE';
-                        $coaActivity->nominal = $exStatusActivity->nominal_kurang_bayar;
-                        $coaActivity->rek_no = $exStatusActivity->no_rek;
-                        $coaActivity->coa_id = $row;
-                        $coaActivity->ex_id = $expeditionActivity->id;
-                        $coaActivity->created_at = $current_date_time;
-                        $coaActivity->created_by = $idUser;
-                        $coaActivity->rek_name = $exStatusActivity->rek_name;
-                        $coaActivity->save();
-                    }
-                }
+                //     foreach($idCoaSheet3 as $key => $row) {
+                //         $coaActivity = new CoaActivity();
+                //         $coaActivity->activity_id = $statusActivityId['id'];
+                //         $coaActivity->activity_name = $expeditionActivity->status_activity;
+                //         $coaActivity->status = 'ACTIVE';
+                //         $coaActivity->nominal = $exStatusActivity->nominal_kurang_bayar;
+                //         $coaActivity->rek_no = $exStatusActivity->no_rek;
+                //         $coaActivity->coa_id = $row;
+                //         $coaActivity->ex_id = $expeditionActivity->id;
+                //         $coaActivity->created_at = $current_date_time;
+                //         $coaActivity->created_by = $idUser;
+                //         $coaActivity->rek_name = $exStatusActivity->rek_name;
+                //         $coaActivity->save();
+                //     }
+                // }
             }
           }
           if(isset($img)){
