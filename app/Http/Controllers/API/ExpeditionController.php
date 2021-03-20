@@ -1112,35 +1112,37 @@ class ExpeditionController extends Controller
               $notification->save();
 
               $userCloseDetail = User::where('id', $notification->id_user_to)->where('id_fcm_android','<>','')->first();
-              if($userCloseDetail->id_fcm_android != null || $userCloseDetail->id_fcm_android != ''){
-                $notif = array(
-                  'title' => $notification->content_title,
-                  'body' => $notification->content_body
-                );
-                $datas = array(
-                  'content_id' => $notification->content_id,
-                  'content_type' => $notification->content_type,
-                  'navigate_to_mobile' => $notification->navigate_to_mobile ,
-                  'navigate_to_web' => $notification->navigate_to_web,
-                  'content_title' => $notification->content_title,
-                  'content_body' => $notification->content_body,
-                  'content_img' => $notification->content_img,
-                  'created_at' => $notification->created_at,
-                  'id_group' => $notification->id_group,
-                  'id_user_to' => $notification->id_user_to,
-                  'description' => $notification->description,
-                  'id_user_from' => $notification->id_user_from,
-                  'updated_at' => $notification->updated_at,
-                  'id' => $notification->id
-                );
+              if(isset($userCloseDetail)){
+                if($userCloseDetail->id_fcm_android != null || $userCloseDetail->id_fcm_android != ''){
+                  $notif = array(
+                    'title' => $notification->content_title,
+                    'body' => $notification->content_body
+                  );
+                  $datas = array(
+                    'content_id' => $notification->content_id,
+                    'content_type' => $notification->content_type,
+                    'navigate_to_mobile' => $notification->navigate_to_mobile ,
+                    'navigate_to_web' => $notification->navigate_to_web,
+                    'content_title' => $notification->content_title,
+                    'content_body' => $notification->content_body,
+                    'content_img' => $notification->content_img,
+                    'created_at' => $notification->created_at,
+                    'id_group' => $notification->id_group,
+                    'id_user_to' => $notification->id_user_to,
+                    'description' => $notification->description,
+                    'id_user_from' => $notification->id_user_from,
+                    'updated_at' => $notification->updated_at,
+                    'id' => $notification->id
+                  );
 
-                    $requests = array(
-                      'tokenFcm' => $userCloseDetail->id_fcm_android,
-                      'notif' => $notif,
-                      'data' => $datas
-                    );
-                    // $factory->sendNotif($requests);
-                
+                      $requests = array(
+                        'tokenFcm' => $userCloseDetail->id_fcm_android,
+                        'notif' => $notif,
+                        'data' => $datas
+                      );
+                      // $factory->sendNotif($requests);
+                  
+                }
               }
             }
 
