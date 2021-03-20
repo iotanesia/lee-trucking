@@ -108,6 +108,13 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'log' => 'daily',
+
+    // Agar jumlah maksimum log untuk 30 hari
+    'log_max_files' => 30,
+
+    'log_level' => env('APP_LOG_LEVEL', 'debug'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -168,6 +175,7 @@ return [
 
         Yajra\DataTables\DataTablesServiceProvider::class,
         Yajra\DataTables\ButtonsServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
 
     ],
