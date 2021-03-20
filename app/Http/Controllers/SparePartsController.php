@@ -81,6 +81,7 @@ class SparePartsController extends Controller
     }
 
     public function getBarcode($code) {
-        echo DNS1D::getBarcodeSVG($code, 'C39');
+        $data['code'] = $code;
+        return view('master.spareparts.barcode', $data);
     }
 }
