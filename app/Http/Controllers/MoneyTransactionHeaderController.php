@@ -47,4 +47,20 @@ class MoneyTransactionHeaderController extends Controller
         return view('penanaman-modal.index', $data);
     }
 
+    public function detail($id) {
+        $data['title'] = 'Pinjaman Karyawan';
+        $data['pinjaman'] = MoneyTransactionHeader::join('public.users', 'users.id', 'money_transaction_header.user_id')
+                            ->with(['money_detail_termin' => function($query){ 
+                                $query->leftJoin('coa_master_rekening', 'coa_master_rekening.id', 'money_detail_termin.rek_id')->select('money_detail_termin.*', 'coa_master_rekening.rek_name', 'coa_master_rekening.rek_no',  'coa_master_rekening.id');
+                            }])
+                            ->leftjoin('coa_master_rekening', 'coa_master_rekening.id', 'money_transaction_header.rek_id')
+                            ->select('money_transaction_header.*', 'money_transaction_header.status', 'users.name as name_user', 'coa_master_rekening.rek_no', 'coa_master_rekening.rek_name')
+                            ->where('category_name', 'PINJAMAN_KARYAWAN')
+                            ->where('user_id', $id)
+                            ->get();;
+        return view('kasbon.pinjaman-karyawan.detail', $data);
+    }
+
+
+
 }
