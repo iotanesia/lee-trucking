@@ -80,9 +80,19 @@
                             style="font-family:Calibri;font-size:8pt;text-align:left;"><b>LOSS</b></td>
                     <td id="loss-jurnal" style="font-family:Calibri;font-size:8pt;border-left:2px solid #000000;border-right:2px solid #000000;text-align:center;color:#FF0000;border-bottom:2px solid #000000;"><b>{{$totalLoss}}</b></td>
                 </tr>
+                @if(!($balance == '')) 
                 <tr>
-
+                    <td colspan="5"
+                    style="background-color:#FFFF00;font-family:Calibri;font-size:8pt;text-align:left;"><b>BALANCE</b></td>
+                    <td id="balance-jurnal" style="background-color:#FFFF00;font-family:Calibri;font-size:8pt;border-left:2px solid #000000;border-right:2px solid #000000;text-align:center;border-bottom:2px solid #000000;"><b>{{$balance}}</b></td>
                 </tr>
+                
+                <tr>
+                    <td colspan="5"
+                    style="background-color:#92D050;font-family:Calibri;font-size:8pt;text-align:left;"><b>TOTAL BALANCE</b></td>
+                    <td id="total-balance-jurnal" style="background-color:#92D050;font-family:Calibri;font-size:8pt;border-left:2px solid #000000;border-right:2px solid #000000;text-align:center;border-bottom:2px solid #000000;"><b>{{$totalBalance}}</b></td>
+                </tr>
+                @endif
         </table> 
         @endif 
     </body>

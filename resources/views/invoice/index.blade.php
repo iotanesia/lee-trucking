@@ -414,13 +414,15 @@
     </div>
   </div>
 
-  <div class="modal fade" id="modal-export-bo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modal-export-bo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin:10rem auto">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="width:30% !important; margin:auto !important;">
-            <div class="modal-header bg-gradient-primary">
-              <h5 class="modal-title text-white" id="exampleModalLabel">Nomor Invoice</h5>
+            <div class="modal-header" style="background: linear-gradient(
+              87deg
+              , #11cdef 0, #1171ef 100%) !important;">
+              <h5 class="modal-title text-white" id="exampleModalLabel">NOMOR INVOICE</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                  <span aria-hidden="true text-white">&times;</span>
               </button>
             </div>
             <div class="modal-body">
@@ -440,13 +442,15 @@
     </div>
   </div>
 
-  <div class="modal fade" id="modal-export-ba" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modal-export-ba" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin:10rem auto">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="width:30% !important; margin:auto !important;">
-            <div class="modal-header bg-gradient-primary">
-              <h5 class="modal-title text-white" id="exampleModalLabel">Nomor Invoice</h5>
+            <div class="modal-header" style="background: linear-gradient(
+              87deg
+              , #11cdef 0, #1171ef 100%) !important;">
+              <h5 class="modal-title text-white" id="exampleModalLabel">NOMOR INVOICE</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                  <span aria-hidden="true text-white">&times;</span>
               </button>
             </div>
             <div class="modal-body">
@@ -466,13 +470,15 @@
     </div>
   </div>
 
-  <div class="modal fade" id="modal-export-bj" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modal-export-bj" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin:10rem auto">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="width:30% !important; margin:auto !important;">
-            <div class="modal-header bg-gradient-primary">
-              <h5 class="modal-title text-white" id="exampleModalLabel">Nomor Invoice</h5>
+          <div class="modal-header" style="background: linear-gradient(
+              87deg
+              , #11cdef 0, #1171ef 100%) !important;">
+              <h5 class="modal-title text-white" id="exampleModalLabel">NOMOR INVOICE</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                  <span aria-hidden="true text-white">&times;</span>
               </button>
             </div>
             <div class="modal-body">

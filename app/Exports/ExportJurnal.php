@@ -20,12 +20,14 @@ protected $startDate;
 protected $endDate;
 protected $filterSelect;
 protected $filterAktiviti;
+protected $balance;
 
- function __construct($startDate, $endDate, $filterSelect, $filterAktiviti) {
+ function __construct($startDate, $endDate, $filterSelect, $filterAktiviti, $balance) {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->filterSelect = $filterSelect;
         $this->filterAktiviti = $filterAktiviti;
+        $this->balance = $balance;
  }
 
 /**
@@ -35,6 +37,7 @@ public function view(): View
 {
     $filterSelect = $this->filterSelect;
     $filterAktiviti = $this->filterAktiviti;
+    $balance = $this->balance;
     setlocale(LC_TIME, 'id_ID');
     Carbon::setLocale('id');
     $jurnalReportList = CoaActivity::leftJoin('coa_master_sheet' ,'coa_activity.coa_id','coa_master_sheet.id')
@@ -42,7 +45,7 @@ public function view(): View
           ->leftJoin('coa_master_rekening','coa_activity.rek_id','coa_master_rekening.id')
           ->leftJoin('expedition_activity','coa_activity.ex_id', 'expedition_activity.id')
           ->where('coa_master_sheet.report_active','True')
-          ->whereBetween('coa_activity.created_at', [$this->startDate, $this->endDate])
+          ->whereBetween('coa_activity.created_at', [$this->startDate.' 00:00:00', $this->endDate.' 23:59:59'])
           ->where(function($query) use($filterSelect) {
             if($filterSelect) {
                 $query->where('coa_master_sheet.jurnal_category', $filterSelect);
@@ -84,8 +87,17 @@ public function view(): View
           });
           $totalLoss = $totalDebit - $totalCredit;
           $totalIncome = $totalCredit - $totalDebit;
-        $startDates =  Carbon::parse($this->startDate)->formatLocalized('%d %B %Y');
-        $endDates =  Carbon::parse($this->endDate)->formatLocalized('%d %B %Y');
+          $totalBalance = 0;
+          $totalBalances = '';
+          $balances = '';
+          if($balance != ''){
+            $balances = 'Rp. '. number_format(($balance), 0, ',', '.');
+            $totalBalance = $totalIncome - $balance;
+            $totalBalances = 'Rp. '. number_format(($totalBalance), 0, ',', '.');
+          }
+          
+          $startDates =  Carbon::parse($this->startDate)->formatLocalized('%d %B %Y');
+          $endDates =  Carbon::parse($this->endDate)->formatLocalized('%d %B %Y');
         return view('jurnal.export-excel', [
             'data' => $jurnalReportList,
             'startDate' => $startDates,
@@ -96,6 +108,8 @@ public function view(): View
             'totalIncome' => 'Rp. '. number_format(($totalIncome), 0, ',', '.'),
             'tipePembayaran' => isset($this->filterSelect)?$this->filterSelect : "Semua",
             'namaAktiviti' => isset($this->filterAktiviti)?$this->filterAktiviti : "Semua",
+            'balance' =>$balances,
+            'totalBalance'=>$totalBalances
         ]);
     }
 
