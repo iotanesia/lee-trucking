@@ -66,7 +66,7 @@ class HomeController extends Controller
 
         $debit = DB::select("SELECT SUM(a.nominal) AS total_income FROM ".$schema.".coa_activity AS a JOIN ".$schema.".coa_master_sheet AS b ON a.coa_id = b.id WHERE report_active = 'True' AND b.jurnal_category = 'DEBIT' AND EXTRACT(MONTH FROM a.created_at) = ".$bln."  AND EXTRACT(YEAR FROM a.created_at) = ".$thn." ");
         $credit = DB::select("SELECT SUM(a.nominal) AS total_income FROM ".$schema.".coa_activity AS a JOIN ".$schema.".coa_master_sheet AS b ON a.coa_id = b.id WHERE report_active = 'True' AND b.jurnal_category = 'CREDIT' AND EXTRACT(MONTH FROM a.created_at) = ".$bln."  AND EXTRACT(YEAR FROM a.created_at) = ".$thn." ");
-        $totalIncome = $debit[0]->total_income - $credit[0]->total_income;
+        $totalIncome = $credit[0]->total_income - $debit[0]->total_income;
         
         
         $data['driver'] = DB::select("SELECT a.driver_name, a.driver_status, COUNT(c.id) AS total_rit FROM ".$schema.".ex_master_driver AS a JOIN users AS b ON a.user_id = b.id LEFT JOIN ".$schema.".expedition_activity AS c ON a.id = c.driver_id GROUP BY c.driver_id, a.driver_name, a.driver_status ORDER BY total_rit DESC LIMIT 5");
