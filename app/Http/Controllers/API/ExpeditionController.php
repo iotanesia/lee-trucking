@@ -1550,7 +1550,7 @@ class ExpeditionController extends Controller
                     ->where('ex_master_driver.id', $data['idDriver'])
                     ->whereYear('expedition_activity.updated_at', $data['year'])
                     ->whereMonth('expedition_activity.updated_at', $data['month'])
-                    ->where('expedition_activity.status_activity', 'CLOSED_EXPEDITION', 'WAITING_OWNER')
+                    ->whereIn('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])
                     ->where('expedition_activity.is_deleted', 'false')
                     ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
