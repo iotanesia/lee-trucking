@@ -72,7 +72,7 @@ class MoneyTransactionHeaderController extends Controller
       $data = $request->all();
       $whereField = 'money_transaction_header.category_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-      $moneyTransactionHeaderList = MoneyDetailTermin::leftjoin('coa_master_rekening', 'coa_master_rekening.id', 'money_transaction_header.rek_id')
+      $moneyTransactionHeaderList = MoneyDetailTermin::leftJoin('coa_master_rekening', 'coa_master_rekening.id', 'money_detail_termin.rek_id')
                                     ->where('transaksi_header_id', $data['transaksi_header_id'])
                                     ->select('money_detail_termin.*', 'coa_master_rekening.rek_name', 'coa_master_rekening.rek_no',  'coa_master_rekening.id')
                                     ->paginate();
