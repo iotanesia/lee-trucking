@@ -23,14 +23,24 @@ class ReportManagementController extends Controller
           $whereField = 'coa_master_sheet.jurnal_category';
           $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
           $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+          $startDate = $data['start_date'].' 00:00:00';
+          $endDate = $data['end_date'].' 23:59:59';
+          $filterSelect = $data['filter_select'];
+          $filterAktiviti = $data['filter_aktiviti'];
           $jurnalReportList = CoaActivity::leftJoin('coa_master_sheet' ,'coa_activity.coa_id','coa_master_sheet.id')
           ->leftJoin('public.users','coa_activity.created_by','public.users.id')
           ->leftJoin('coa_master_rekening','coa_activity.rek_id','coa_master_rekening.id')
           ->leftJoin('expedition_activity','coa_activity.ex_id', 'expedition_activity.id')
           ->where('coa_master_sheet.report_active','True')
-          ->where(function($query) use($whereFilter) {
-            if($whereFilter) {
-                $query->where('coa_master_sheet.jurnal_category', $whereFilter);
+          ->whereBetween('coa_activity.created_at', [$startDate, $endDate])
+          ->where(function($query) use($filterSelect) {
+            if($filterSelect) {
+                $query->where('coa_master_sheet.jurnal_category', $filterSelect);
+            }
+          })
+          ->where(function($query) use($filterAktiviti) {
+            if($filterAktiviti) {
+                $query->where('coa_master_sheet.sheet_name', $filterAktiviti);
             }
           })
           ->select('coa_activity.created_at','coa_master_sheet.sheet_name'
@@ -64,8 +74,8 @@ class ReportManagementController extends Controller
         $data = $request->all();
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
-        $startDate = $data['start_date'];
-        $endDate = $data['end_date'];
+        $startDate = $data['start_date'].' 00:00:00';
+        $endDate = $data['end_date'].' 23:59:59';
         $filterPembayaran = $data['filter'];
         $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
@@ -105,8 +115,8 @@ class ReportManagementController extends Controller
         $data = $request->all();
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
-        $startDate = $data['start_date'];
-        $endDate = $data['end_date'];
+        $startDate = $data['start_date'].' 00:00:00';
+        $endDate = $data['end_date'].' 23:59:59';
         $filterPembayaran = $data['filter'];
         $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
@@ -147,8 +157,8 @@ class ReportManagementController extends Controller
         $data = $request->all();
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
-        $startDate = $data['start_date'];
-        $endDate = $data['end_date'];
+        $startDate = $data['start_date'].' 00:00:00';
+        $endDate = $data['end_date'].' 23:59:59';
         $filterPembayaran = $data['filter'];
         $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
@@ -191,8 +201,8 @@ class ReportManagementController extends Controller
         $data = $request->all();
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
-        $startDate = (isset($data['start_date'])) ? $data['start_date'] : '';
-        $endDate = (isset($data['end_date'])) ? $data['end_date'] : '';
+        $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
+        $endDate = (isset($data['end_date'])) ? $data['end_date'].' 23:59:59' : '';
         $data = $data = StkRepairHeader::leftJoin('ex_master_truck' ,'stk_repair_header.truck_id','ex_master_truck.id')
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
@@ -220,8 +230,8 @@ class ReportManagementController extends Controller
         $data = $request->all();
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
-        $startDate = (isset($data['start_date'])) ? $data['start_date'] : '';
-        $endDate = (isset($data['end_date'])) ? $data['end_date'] : '';
+        $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
+        $endDate = (isset($data['end_date'])) ? $data['end_date'].' 23:59:59' : '';
         $idHeader = $data['id_header'];
         $data = $data = StkHistorySparePart::leftJoin('stk_repair_header' ,'stk_repair_header.id','stk_history_stock.header_id')
         ->where('stk_history_stock.header_id', $idHeader)
@@ -248,8 +258,8 @@ class ReportManagementController extends Controller
         $data = $request->all();
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
-        $startDate = (isset($data['start_date'])) ? $data['start_date'] : '';
-        $endDate = (isset($data['end_date'])) ? $data['end_date'] : '';
+        $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
+        $endDate = (isset($data['end_date'])) ? $data['end_date'].' 23:59:59' : '';
         $statusCode = isset($data['status_code']) ? $data['status_code'] : '';
         $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
         ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -277,8 +287,8 @@ class ReportManagementController extends Controller
         $data = $request->all();
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
-        $startDate = (isset($data['start_date'])) ? $data['start_date'] : '';
-        $endDate = (isset($data['end_date'])) ? $data['end_date'] : '';
+        $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
+        $endDate = (isset($data['end_date'])) ? $data['end_date'].' 23:59:59' : '';
         $statusCode = isset($data['status_code']) ? $data['status_code'] : '';
         $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
         ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
@@ -306,8 +316,8 @@ class ReportManagementController extends Controller
         $data = $request->all();
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
-        $startDate = (isset($data['start_date'])) ? $data['start_date'] : '';
-        $endDate = (isset($data['end_date'])) ? $data['end_date'] : '';
+        $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
+        $endDate = (isset($data['end_date'])) ? $data['end_date'].' 23:59:59' : '';
         $statusCode = isset($data['status_code']) ? $data['status_code'] : '';
         $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
         ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')

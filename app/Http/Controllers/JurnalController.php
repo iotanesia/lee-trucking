@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\CoaActivity;
+use App\Exports\ExportJurnal;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\CoaMasterSheet;
 use Auth;
 
@@ -28,23 +31,30 @@ class JurnalController extends Controller
     public function index(Request $request)
     {
         $data['title'] = 'Laporan Jurnal';
-      
+        $data['sheetName'] = CoaMasterSheet::where('report_active','True')->select('sheet_name')->get();
                                                     // dd($data);
 
         return view('jurnal.index', $data);
     }
 
-    public function dataTableJurnalReport(){
-        $data = CoaActivity::leftJoin('coa_master_sheet' ,'coa_activity.coa_id','coa_master_sheet.id')
-        ->where('coa_master_sheet.report_active','True')
-        ->leftJoin('public.users','coa_activity.created_by','public.users.id')
-        ->leftJoin('coa_master_rekening','coa_activity.rek_id','coa_master_rekening.id')
-        ->select('coa_activity.created_at','coa_master_sheet.sheet_name'
-                ,'coa_master_sheet.jurnal_category','public.users.name'
-                ,'coa_master_rekening.bank_name','coa_master_rekening.rek_name'
-                ,'coa_master_rekening.rek_no')->paginate();
-         
-       return json_decode($databuku);
+    public function exportJurnal(Request $request){
+        $date = $request->dateRangeJurnal;
+        $dates = explode('-',$date);
+        
+        $startDate = Date('Y-m-d',strtotime($dates[0]));
+        $endDate =  Date('Y-m-d',strtotime($dates[1]));
+        $filterSelect = $request->filterSelectJurnal;
+        $filterAktiviti = $request->filterActivityJurnal;
+        setlocale(LC_TIME, 'id_ID');
+        Carbon::setLocale('id');
+        
+        $namaFile = 'Laporan Jurnal '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
+        // if($request->tipeFile == "excel"){
+        return Excel::download(new ExportJurnal($startDate, $endDate, $filterSelect, $filterAktiviti), $namaFile.'.xlsx');
+        // }else if($request->tipeFile == "pdf"){
+        //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
+        // }
+        
     }
  
 }

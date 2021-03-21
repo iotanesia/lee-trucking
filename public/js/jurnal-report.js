@@ -3,24 +3,26 @@
     var accessToken =  window.Laravel.api_token;
       // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
    
-    var filter = $(".filter-satuan").val();
-    $("#created_at").daterangepicker({
-        locale: {
-            format: 'DD-MM-YYYY'
-        },
-        singleDatePicker : true,
-    });
+    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+    var firstDay = new Date(y, m, 1);
+    var lastDay = new Date(y, m+1, 0);
+
+    var startDate = formatDateReq(firstDay);
+    var endDate = formatDateReq(lastDay);
+
     var table = $('#table-jurnal').DataTable({
     processing: true,
     serverSide: true,
-    lengthChange: true,
-    dom: 'Blfrtip',
-    buttons : ['csv','pdf', 'excel','print'
-    ],
+    paging:   false,
     ajax: {
       url: window.Laravel.app_url + "/api/report/get-jurnal-list",
       type: "GET",
-      data: "where_filter"+"="+filter,
+      data: function (d) {
+        d.start_date = startDate;
+        d.end_date = endDate;
+        d.filter_select = $("#filter_select_jurnal").val();
+        d.filter_aktiviti = $("#filter_select_aktiviti_jurnal").val();
+      },
       headers: {"Authorization": "Bearer " + accessToken},
       crossDomain: true,
     },
@@ -142,4 +144,72 @@
     // console.log(result);
     return result;
   }
+
+  $(function() {
+    $('input[name="dateRangeJurnal"]').daterangepicker({
+      opens: 'right',
+      showDropdowns: true,
+    locale: {
+        format:'DD MMMM YYYY',
+        separator:' - ',
+        applyLabel: 'Pilih',
+        cancelLabel: 'Batal',
+        customRangeLabel:'Custom',
+        daysOfWeek:[
+            'Min',
+            'Sen',
+            'Sel',
+            'Rab',
+            'Kam',
+            'Jum',
+            'Sab'
+        ],
+        monthNames:[
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        ],
+        firstDay:'1'
+    },
+    startDate: formatDate(firstDay),
+    endDate: formatDate(lastDay)
+    },
+    function(start, end, label) {
+      startDate = start.format('YYYY-MM-DD');
+      endDate = end.format('YYYY-MM-DD');
+      $('#table-jurnal').DataTable().ajax.reload();
+    });
+  });
+
+  function formatDateReq(date) {
+    var d = new Date(date),
+    month = '' + (d.getMonth()+1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+  $("#filter_select_jurnal").on("change", function() {
+    $('#filterSelectJurnal').val($("#filter_select_jurnal").val());
+    $('#table-jurnal').DataTable().ajax.reload();
+  });
+
+  $("#filter_select_aktiviti_jurnal").on("change", function() {
+    $('#filterActivityJurnal').val($("#filter_select_aktiviti_jurnal").val());
+    $('#table-jurnal').DataTable().ajax.reload();
+  });
 });
