@@ -52,7 +52,7 @@
                         <input class="form-control" name="tipeFileJurnal" id="tipeFileJurnal" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                         <input class="form-control" name="filterSelectJurnal" id="filterSelectJurnal" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                         <input class="form-control" name="filterActivityJurnal" id="filterActivityJurnal" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
-                        {{-- <input class="form-control" name="noInvoiceBO" id="noInvoiceBO" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;"> --}}
+                        <input class="form-control" name="balanceJurnal" id="balanceJurnal" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                         <div class="input-group input-group-alternative input-group-merge" 
                             style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
                           <div class="input-group-prepend" style="margin-left: 10px;">
@@ -92,15 +92,15 @@
                           <div class="dropdown-header noti-title">
                             <h6 class="text-overflow m-0">Eksport</h6>
                           </div>
-                          <a href="#" id="is-excel-jurnal" class="dropdown-item" onclick="($('#form-export-jurnal').submit())">
+                          <a href="#" id="is-excel-jurnal" class="dropdown-item"  data-toggle="modal" data-target="#modal-pilihan-export-jurnal">
                             <i class="fas fa-file-excel"></i>
                             <span>Excel</span>
                           </a>
                           <div class="dropdown-divider"></div>
-                          <a href="#" id="is-pdf-jurnal" class="dropdown-item" onclick="($('#form-export-jurnal').submit())">
+                          {{-- <a href="#" id="is-pdf-jurnal" class="dropdown-item" onclick="($('#form-export-jurnal').submit())">
                           <i class="fas fa-file-pdf"></i>
                             <span>PDF</span>
-                          </a>
+                          </a> --}}
                         </div>
                       </div>
                     </div>
@@ -186,6 +186,66 @@
         </div>
       </footer>
     </div>
+  </div>
+
+  <div class="modal fade" id="modal-pilihan-export-jurnal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin:10rem auto">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width:40% !important; margin:auto !important;">
+          <div class="modal-header" style="background-color:transparent !important;padding:0">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+            <div class="modal-body" style="padding:0">
+                <form role="form" id="form-pilihan-export-jurnal">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-7">
+                        <a type="button" class="btn btn-info" style="color:#FFFFFF; margin:auto" id="btn-input-balance-jurnal">Input Balance</a>
+                      </div>
+                      <div class="col-md-5">
+                        <a type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" onclick="($('#form-export-jurnal').submit())">Eksport</a>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+            </div>
+        </div>
+      </div>
+  </div>
+  
+  <div class="modal fade" id="modal-input-balance-jurnal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin:10rem auto">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width:40% !important; margin:auto !important;">
+            <div class="modal-header" style="background: linear-gradient(
+              87deg
+              , #11cdef 0, #1171ef 100%) !important;padding:5px !important;">
+              <h5 class="modal-title text-white" style="padding:5px" id="exampleModalLabel">INPUT BALANCE</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true" style="color:#FFFFFF;">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" style="padding:5px;margin-top: 25px;">
+                <form role="form" id="form-input-balance-jurnal">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-2" style="padding-right:0px">  
+                          <input type="text" class="form-control" value="Rp" style="font-size: .800rem;border-bottom-right-radius: 0px;
+                          border-top-right-radius: 0px;" disabled>
+                        </div>
+                        <div class="col-md-10" style="padding-left:0px">
+                          <input style="font-size: .800rem;border-bottom-left-radius: 0px;
+                          border-top-left-radius: 0px;" type="text" class="form-control" name="balance-jurnal"  id="balance-jurnal" placeholder="Balance">
+                        </div>
+                      </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="padding:5px">
+                <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-jurnal-with-balance" onclick="($('#form-export-jurnal').submit())">Eksport</a>
+            </div>
+          </div>
+      </div>
   </div>
   <script src="{{asset('js/event.js')}}"></script>
   <script src="{{asset('js/jurnal-report.js')}}"></script>

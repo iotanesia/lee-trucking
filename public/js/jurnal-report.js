@@ -103,17 +103,40 @@
           $('tr:eq(2) td:eq(5)', api.table().footer()).html(convertToRupiah(totalLoss));
     }
   });
+
   $('.filter-satuan').change(function () {
     table.column( $(this).data('column'))
     .search( $(this).val() )
     .draw();
   });
+
   function convertToRupiah(angka)
   {
+    var reg = /^\d+$/;
+    var minus = reg.test(angka);
+    var nominal = angka+'';
+    var depan = ' ';
+    if(!minus){
+      nominal = nominal.replace(/[^\w\s]/gi, '');
+      depan = ' -';
+    }
     var rupiah = '';		
-    var angkarev = angka.toString().split('').reverse().join('');
-    for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
-    return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+    var angkarev = nominal.split('').reverse().join('');
+    for(var i = 0; i < angkarev.length; i++){
+          if(i%3 == 0) {
+              rupiah += angkarev.substr(i,3)+'.';
+        }
+      }
+      var result = rupiah.split('',rupiah.length-1).reverse().join('');
+
+      // if(result.charAt(0) == '-'){
+      //   result = result.substring(2);
+      //    console.log(result);
+      //   result = 'Rp. -'+result;
+      // }else{
+      //   result = 'Rp. '+result;
+      // }
+    return 'Rp.'+depan+result;
   }
 
   function formatDate(date) {
@@ -211,5 +234,48 @@
   $("#filter_select_aktiviti_jurnal").on("change", function() {
     $('#filterActivityJurnal').val($("#filter_select_aktiviti_jurnal").val());
     $('#table-jurnal').DataTable().ajax.reload();
+  });
+
+  $('#btn-input-balance-jurnal').click(function(e) {
+    e.preventDefault();
+    $('#modal-pilihan-export-jurnal').modal('hide');
+    $('[data-dismiss=modal]').on('click', function (e) {
+      $('#balance-jurnal').val('');
+      $('#balanceJurnal').val('');
+    });
+    $('#modal-input-balance-jurnal').modal({backdrop: 'static', keyboard: false});
+    $('#modal-input-balance-jurnal').modal('show');
+  });
+  
+  // $('#balance-jurnal').keypress(function(e){
+  //   if(e.keyCode != 8 && e.keyCode !=46) {
+  //     var text = this.value; 
+  //    if(text.length%4 == 3){
+  //       this.value = text+'.'; 
+  //     }
+  //    }
+  // });
+
+  $('#balance-jurnal').on('input',function(e){
+    $('#balanceJurnal').val($('#balance-jurnal').val());
+    if(!($('#balance-jurnal').val().trim())){
+      $('#btn-export-jurnal-with-balance').css('display','none');
+    }else{
+      $('#btn-export-jurnal-with-balance').css('display','block');
+      $('#btn-export-jurnal-with-balance').css('color','#FFFFFF');
+      $('#btn-export-jurnal-with-balance').css('width','100%');
+    }
+  });
+
+  $('#balance-jurnal').on('keydown keyup', function(e) {
+    
+    var regExp = /[a-z]/i;
+    var value = String.fromCharCode(e.which) || e.key;
+
+    // No letters
+    if (regExp.test(value)) {
+      e.preventDefault();
+      return false;
+    }
   });
 });
