@@ -48,6 +48,9 @@ class MoneyTransactionHeaderController extends Controller
     }
 
     public function detail($id) {
+        $data['user'] = User::where('group_id', '<>', 8)->get();
+        $data['no_rek'] = Rekening::where('is_deleted', 'f')->get();
+        $data['status'] = GlobalParam::where('param_type', 'TRUCK_STATUS')->get();
         $data['title'] = 'Pinjaman Karyawan';
         $data['pinjaman'] = MoneyTransactionHeader::join('public.users', 'users.id', 'money_transaction_header.user_id')
                             ->with(['money_detail_termin' => function($query){ 
@@ -57,7 +60,7 @@ class MoneyTransactionHeaderController extends Controller
                             ->select('money_transaction_header.*', 'money_transaction_header.status', 'users.name as name_user', 'coa_master_rekening.rek_no', 'coa_master_rekening.rek_name')
                             ->where('category_name', 'PINJAMAN_KARYAWAN')
                             ->where('user_id', $id)
-                            ->get();;
+                            ->get();
         return view('kasbon.pinjaman-karyawan.detail', $data);
     }
 
