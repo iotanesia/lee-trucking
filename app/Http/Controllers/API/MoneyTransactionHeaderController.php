@@ -78,7 +78,6 @@ class MoneyTransactionHeaderController extends Controller
                                     ->paginate();
 
       foreach($moneyTransactionHeaderList as $row) {
-        $row->total_bayar = count($row->money_detail_termin);
         $row->data_json = $row->toJson();
       }
       
