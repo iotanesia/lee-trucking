@@ -232,6 +232,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('get-list-by-driver', ['as' => '-get-list-by-driver', 'uses' => 'API\MoneyTransactionHeaderController@getListByDriver']);
     Route::get('get-list-modal-usaha', ['as' => '-get-list-modal-usaha', 'uses' => 'API\MoneyTransactionHeaderController@getListModalUsaha']);
     Route::get('get-list-detail', ['as' => '-get-list-detail', 'uses' => 'API\MoneyTransactionHeaderController@getListDetail']);
+    Route::get('get-list-termin', ['as' => '-get-list-termin', 'uses' => 'API\MoneyTransactionHeaderController@getListDetailPembayaran']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\MoneyTransactionHeaderController@add']);
     Route::post('add-modal-usaha', ['as' => '-add-modal-usaha', 'uses' => 'API\MoneyTransactionHeaderController@addModalUsaha']);
     Route::post('paid', ['as' => '-paid', 'uses' => 'API\MoneyTransactionHeaderController@paid']);
