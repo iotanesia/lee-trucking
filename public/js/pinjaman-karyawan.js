@@ -190,6 +190,7 @@ var successLoadmoneyTransactionHeader = (function(responses, dataModel) {
     rek_no = responses.data[i].rek_no;
     rek_name = responses.data[i].rek_name;
     total_bayar = responses.data[i].total_bayar;
+    user_id = responses.data[i].user_id;
     data_json = responses.data[i].data_json;
 
     tableRows += "<tr>" +
@@ -199,19 +200,7 @@ var successLoadmoneyTransactionHeader = (function(responses, dataModel) {
                    "<td>"+ convertToRupiah(sisa_pokok) +"</td>"+
                    "<td>"+ def(rek_no) +" - "+ def(rek_name) +"</td>"+
                    "<td>"+ def(status) +"</td>"+
-                   "<td align='center'>"+
-                     "<div class='btn-group'>";
-                    if(parseInt(total_bayar) == 0 && status == 'BELUM_LUNAS') {
-            tableRows += "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-animate-modal='rotateInDownLeft' data-toggle='modal' data-target='#moneyTransactionHeader-modal'><i class='fas fa-edit'></i></a>";
-                    }
-                    if(status == 'BELUM_LUNAS') {
-            tableRows += "<a class='btn btn-warning btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-animate-modal='rotateInDownLeft' data-toggle='modal' data-target='#moneyTransactionHeader-modal-detail'><i class='fas fa-money-bill-wave'></i></a>";
-                    }
-                    if(parseInt(total_bayar) == 0 && status == 'BELUM_LUNAS') {
-            tableRows += "<a class='btn btn-danger btn-sm' href='#' el-event='edit' data-id='"+ id +"' data-url='/api/moneyTransactionHeader/delete' data-toggle='modal' data-target='#deletedModal'><i class='fa fa-trash'></i></a>";
-                    } 
-                    "</div>"+
-                   "</td>"+
+                   "<td align='center'><a class='btn btn-warning btn-sm' href='"+window.Laravel.app_url+"/pinjaman-karyawan/detail/"+user_id+"'>Detail</a></td>"+
                  "</tr>";
   }
 
