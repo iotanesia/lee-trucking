@@ -17,8 +17,8 @@ class BonusDriverRitController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $month = isset($data['bulan']) ? $data['bulan'] : date('m');
-      $year = isset($data['tahun']) ? $data['tahun'] : date('Y');
+      $month = isset($data['month']) ? $data['month'] : date('m');
+      $year = isset($data['year']) ? $data['year'] : date('Y');
       $firstDate = date('Y-m-01', strtotime($year.'-'.$month.'-01'));
       $lastDate = date('Y-m-t', strtotime($year.'-'.$month.'-01'));
       $whereField = 'driver_name';
