@@ -331,7 +331,7 @@ class SparePartController extends Controller
             $sparePart->img_sparepart = $fileName;
             $img->move($path, $fileName);
         }
-
+        $data['purchase_date'] = date('Y-m-d', strtotime($data['purchase_date']));
         foreach($data as $key => $row) {
           $sparePart->{$key} = $row;
           $sparePart->type = 'SPAREPART';

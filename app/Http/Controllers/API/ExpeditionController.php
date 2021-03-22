@@ -328,7 +328,7 @@ class ExpeditionController extends Controller
       DB::connection(Auth::user()->schema)->beginTransaction();
       $expeditionActivity = new ExpeditionActivity;
       
-      $factory = new FirebaseService();
+      // $factory = new FirebaseService();
       $masterOjk = OJK::where('id', $data['ojk_id'])->select('harga_otv', 'harga_ojk')->first();
     //   $this->validate($request, [
     //       'nomor_inv' => 'required|string|max:255|unique:'.Auth::user()->schema.'.expedition_activity',
@@ -516,7 +516,7 @@ class ExpeditionController extends Controller
           $idNonKenek = Kenek::where('kenek_name', 'Tidak ada Kenek (TK)')->first()->id;
       }
 
-      $factory = new FirebaseService();
+      // $factory = new FirebaseService();
       $current_date_time = Carbon::now()->toDateTimeString(); 
 
       $statusActivityParam = $request->update_lates_status;
@@ -1595,7 +1595,7 @@ class ExpeditionController extends Controller
   }
 
   public function testNotif(Request $request){
-      $factory = new FirebaseService();
+      // $factory = new FirebaseService();
       $user = Auth::user();
       $notif = array(
         'title' => 'hello',
@@ -1610,7 +1610,7 @@ class ExpeditionController extends Controller
         'notif' => $notif,
         'data' => $data
       );
-      $factory->sendNotif($requests);
+      // $factory->sendNotif($requests);
   }
 
 }

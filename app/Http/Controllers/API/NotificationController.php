@@ -113,7 +113,13 @@ class NotificationController extends Controller
       if($request->isMethod('POST')) {
           $data = $request->all();
           $ids = explode(',',$data['id']);
-          $notification = Notification::whereIn('id', $ids)->delete();
+          if($ids){
+            $notification = Notification::find($ids)->each(function ($notif, $key) {
+                $notif->delete();
+            });
+          }else{
+            $notification = Notification::find($data['id'])->delete();
+          }
           if($notification){
             return response()->json([
               'code' => 200,
