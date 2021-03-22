@@ -207,7 +207,7 @@ var successLoadmoneyTransactionHeader = (function(responses, dataModel) {
                    "<td>"+ convertToRupiah(pokok) +"</td>"+
                    "<td>"+ convertToRupiah(sisa_pokok) +"</td>"+
                    "<td> <span class='badge "+badge+"'>"+status+"</span></td>"+
-                   "<td align='center'><a class='btn btn-warning btn-sm' href='"+window.Laravel.app_url+"/pinjaman-karyawan/detail/"+user_id+"'>Detail</a></td>"+
+                   "<td align='left'><a class='btn btn-warning btn-sm' href='"+window.Laravel.app_url+"/pinjaman-karyawan/detail/"+user_id+"'>Detail</a></td>"+
                  "</tr>";
   }
 
