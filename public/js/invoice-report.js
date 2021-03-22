@@ -1,7 +1,7 @@
   
   $(document).ready(function() {  
-    var accessToken =  window.Laravel.api_token;
-    // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
+    // var accessToken =  window.Laravel.api_token;
+    var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
    
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
     var firstDay = new Date(y, m, 1);
@@ -81,18 +81,27 @@
 
           ppn10 = (totalInvoice*10)/100;
           pph23 = (totalInvoice*2)/100;
-          totalKeseluruhan = totalInvoice + ppn10 + pph23;
-
-          $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          // totalKeseluruhan = totalInvoice + ppn10 + pph23;
+          if(($('#cbPpn10Bo').is(':checked') != true) && ($('#cbPph23Bo').is(':checked') != true)){
+            totalKeseluruhan = totalInvoice;
+          }else if(($('#cbPpn10Bo').is(':checked') == true) && ($('#cbPph23Bo').is(':checked') != true)){
+            totalKeseluruhan = totalInvoice + ppn10;
+          }else if(($('#cbPpn10Bo').is(':checked') != true) && ($('#cbPph23Bo').is(':checked') == true)){
+            totalKeseluruhan = totalInvoice + pph23;
+          }else{
+            totalKeseluruhan = totalInvoice + ppn10 + pph23;
+          }
+         
+          $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
           $('tr:eq(0) td:eq(9)', api.table().footer()).html(convertToRupiah(totalInvoice));
 
           $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
           $('tr:eq(1) td:eq(9)', api.table().footer()).html(convertToRupiah(ppn10));
 
-          $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
           $('tr:eq(2) td:eq(9)', api.table().footer()).html(convertToRupiah(pph23));
 
-          $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
           $('tr:eq(3) td:eq(9)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
     }
     });
@@ -162,18 +171,27 @@
 
             ppn10 = (totalInvoice*10)/100;
             pph23 = (totalInvoice*2)/100;
-            totalKeseluruhan = totalInvoice + ppn10 + pph23;
 
-            $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+            if(($('#cbPpn10Ba').is(':checked') != true) && ($('#cbPph23Ba').is(':checked') != true)){
+              totalKeseluruhan = totalInvoice;
+            }else if(($('#cbPpn10Ba').is(':checked') == true) && ($('#cbPph23Ba').is(':checked') != true)){
+              totalKeseluruhan = totalInvoice + ppn10;
+            }else if(($('#cbPpn10Ba').is(':checked') != true) && ($('#cbPph23Ba').is(':checked') == true)){
+              totalKeseluruhan = totalInvoice + pph23;
+            }else{
+              totalKeseluruhan = totalInvoice + ppn10 + pph23;
+            }
+
+            $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
             $('tr:eq(0) td:eq(9)', api.table().footer()).html(convertToRupiah(totalInvoice));
 
             $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
             $('tr:eq(1) td:eq(9)', api.table().footer()).html(convertToRupiah(ppn10));
 
-            $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+            $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
             $('tr:eq(2) td:eq(9)', api.table().footer()).html(convertToRupiah(pph23));
 
-            $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+            $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
             $('tr:eq(3) td:eq(9)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
       }
     });
@@ -511,4 +529,53 @@
       $('#btn-export-bj').css('display','block');
     }
   });
+
+  $('#cbPpn10Bo').click(function() {
+    if(this.checked){
+      $('#table-invoice-bo').DataTable().ajax.reload(function() {
+        $('#trPpn10Bo').show();
+      });
+    }else{
+      $('#table-invoice-bo').DataTable().ajax.reload(function() {
+        $('#trPpn10Bo').hide();
+      });
+    }
+  });
+
+  $('#cbPph23Bo').click(function() {
+    if(this.checked){
+      $('#table-invoice-bo').DataTable().ajax.reload(function() {
+        $('#trPph23Bo').show();
+      });
+    }else{
+      $('#table-invoice-bo').DataTable().ajax.reload(function() {
+        $('#trPph23Bo').hide();
+      });
+    }
+  });
+
+  $('#cbPpn10Ba').click(function() {
+    if(this.checked){
+      $('#table-invoice-ba').DataTable().ajax.reload(function() {
+        $('#trPpn10Ba').show();
+      });
+    }else{
+      $('#table-invoice-ba').DataTable().ajax.reload(function() {
+        $('#trPpn10Ba').hide();
+      });
+    }
+  });
+
+  $('#cbPph23Ba').click(function() {
+    if(this.checked){
+      $('#table-invoice-ba').DataTable().ajax.reload(function() {
+        $('#trPph23Ba').show();
+      });
+    }else{
+      $('#table-invoice-ba').DataTable().ajax.reload(function() {
+        $('#trPph23Ba').hide();
+      });
+    }
+  });
+ 
 });
