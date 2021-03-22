@@ -56,8 +56,6 @@
                                 <th>Name</th>
                                 <th>Pinjaman</th>
                                 <th>Sisa Pinjaman</th>
-                                <th>Sumber Dana</th>
-                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

@@ -17,7 +17,7 @@ class MoneyTransactionHeaderController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'money_transaction_header.category_name';
+      $whereField = 'users.name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $moneyTransactionHeaderList = MoneyTransactionHeader::join('public.users', 'users.id', 'money_transaction_header.user_id')
                                     ->with(['money_detail_termin' => function($query){ 
@@ -32,10 +32,11 @@ class MoneyTransactionHeaderController extends Controller
                                         }
                                     })
                                     ->where('category_name', 'PINJAMAN_KARYAWAN')
-                                    ->select('money_transaction_header.user_id', 'money_transaction_header.status', 'users.name as name_user', 'coa_master_rekening.rek_no', 'coa_master_rekening.rek_name', DB::raw('SUM(pokok) AS pokok'), DB::raw('SUM(sisa_pokok) AS sisa_pokok'))
-                                    ->groupBy('money_transaction_header.user_id', 'users.name', 'coa_master_rekening.rek_no', 'coa_master_rekening.rek_name', 'money_transaction_header.id')
-                                    ->orderBy('money_transaction_header.id', 'ASC')
+                                    ->select('money_transaction_header.user_id', 'users.name as name_user', DB::raw('SUM(pokok) AS pokok'), DB::raw('SUM(sisa_pokok) AS sisa_pokok'))
+                                    ->groupBy('money_transaction_header.user_id', 'users.name')
                                     ->paginate();
+
+                                    // , 'money_transaction_header.status as statue', 'users.name as name_user', 'coa_master_rekening.rek_no as rek_no', 'coa_master_rekening.rek_name as rek_name',
 
       foreach($moneyTransactionHeaderList as $row) {
         $row->total_bayar = count($row->money_detail_termin);

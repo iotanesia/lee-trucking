@@ -126,12 +126,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3"><br><br>
-                        <div class="form-group">
-                            <div class="input-group input-group-merge form-control-label termin-val">
-                            </div>
-                        </div>
-                    </div>
                 </div>  
                 <div class="row">
                     <div class="col-md-12">

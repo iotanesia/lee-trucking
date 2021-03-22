@@ -198,8 +198,6 @@ var successLoadmoneyTransactionHeader = (function(responses, dataModel) {
                    "<td>"+ def(name_user) +"</td>"+
                    "<td>"+ convertToRupiah(pokok) +"</td>"+
                    "<td>"+ convertToRupiah(sisa_pokok) +"</td>"+
-                   "<td>"+ def(rek_no) +" - "+ def(rek_name) +"</td>"+
-                   "<td>"+ def(status) +"</td>"+
                    "<td align='center'><a class='btn btn-warning btn-sm' href='"+window.Laravel.app_url+"/pinjaman-karyawan/detail/"+user_id+"'>Detail</a></td>"+
                  "</tr>";
   }
