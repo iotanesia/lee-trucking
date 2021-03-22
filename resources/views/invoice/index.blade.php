@@ -14,6 +14,76 @@
     padding-top: 0.7rem !important;
     padding-bottom: 0.7rem !important;
   }
+  .switch {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  margin: 7px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  text-align: -webkit-right;
+  font-size:9pt;
+  padding: 8px;
+  font-weight: 600;
+  color:#FFFFFF;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+  text-align: -webkit-left;
+  font-size:9pt;
+  color:#ffffff;
+  padding: 8px;
+  font-weight: 600;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(65px);
+  -ms-transform: translateX(65px);
+  transform: translateX(65px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 40px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
   </style>
     <div class="header bg-gradient-info pb-6">
       <div class="container-fluid">
@@ -102,14 +172,22 @@
                             <i class="fas fa-file-excel"></i>
                             <span>Excel</span>
                           </a>
-                          <div class="dropdown-divider"></div>
+                          {{-- <div class="dropdown-divider"></div>
                           <a href="#" id="is-pdf-bo" class="dropdown-item" data-toggle="modal" data-target="#modal-export-bo">
                           <i class="fas fa-file-pdf"></i>
                             <span>PDF</span>
-                          </a>
+                          </a> --}}
                         </div>
                       </div>
                     </div>
+                        <label class="switch">
+                          <input type="checkbox" id="cbPpn10Bo" checked>
+                          <span class="slider round">PPN 10%</span>
+                        </label>
+                        <label class="switch">
+                          <input type="checkbox" id="cbPph23Bo" checked>
+                          <span class="slider round">PPH 23</span>
+                        </label>
                   </div>
                 </form>
                     <br/>
@@ -134,7 +212,7 @@
                               <td style="text-align:left">
                               <td></td>
                               <td></td>
-                              <td style="text-align:center"></td>
+                              <td style="text-align:right"></td>
                               <td></td>
                               <td></td>
                               <td></td>
@@ -142,11 +220,11 @@
                               <td></td>
                               <td></td>
                           </tr>
-                          <tr style="font-weight:bold">
+                          <tr style="font-weight:bold" id="trPpn10Bo">
                             <td style="text-align:left">
                                 <td></td>
-                              <td></td>
-                                <td style="text-align:center"></td>
+                                <td></td>
+                                <td style="text-align:right"></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -154,11 +232,11 @@
                                 <td></td>
                                 <td></td>
                         </tr>
-                        <tr style="font-weight:bold">
+                        <tr style="font-weight:bold" id="trPph23Bo">
                                 <td style="text-align:left">
-                              <td></td>
                                 <td></td>
-                                <td style="text-align:center"></td>
+                                <td></td>
+                                <td style="text-align:right"></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -170,7 +248,7 @@
                             <td style="text-align:left">
                               <td></td>
                             <td></td>
-                            <td style="text-align:center"></td>
+                            <td style="text-align:right"></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -222,14 +300,22 @@
                                 <i class="fas fa-file-excel"></i>
                                 <span>Excel</span>
                               </a>
-                              <div class="dropdown-divider"></div>
+                              {{-- <div class="dropdown-divider"></div>
                               <a href="#" id="is-pdf-ba" class="dropdown-item" data-toggle="modal" data-target="#modal-export-ba">
                               <i class="fas fa-file-pdf"></i>
                                 <span>PDF</span>
-                              </a>
+                              </a> --}}
                             </div>
                           </div>
                         </div>
+                        <label class="switch">
+                          <input type="checkbox" id="cbPpn10Ba" checked>
+                          <span class="slider round">PPN 10%</span>
+                        </label>
+                        <label class="switch">
+                          <input type="checkbox" id="cbPph23Ba" checked>
+                          <span class="slider round">PPH 23</span>
+                        </label>
                       </div>
                     </form>
                     <br/>
@@ -254,7 +340,7 @@
                             <td style="text-align:left">
                               <td></td>
                             <td></td>
-                            <td style="text-align:center"></td>
+                            <td style="text-align:right"></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -262,11 +348,11 @@
                             <td></td>
                             <td></td>
                         </tr>
-                        <tr style="font-weight:bold">
+                        <tr style="font-weight:bold" id="trPpn10Ba">
                             <td style="text-align:left">
                               <td></td>
                                 <td></td>
-                                <td style="text-align:center"></td>
+                                <td style="text-align:right"></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -274,11 +360,11 @@
                                 <td></td>
                                 <td></td>
                         </tr>
-                        <tr style="font-weight:bold">
+                        <tr style="font-weight:bold" id="trPph23Ba">
                             <td style="text-align:left">
                               <td></td>
                                 <td></td>
-                                <td style="text-align:center"></td>
+                                <td style="text-align:right"></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -290,7 +376,7 @@
                             <td style="text-align:left">
                               <td></td>
                                 <td></td>
-                                <td style="text-align:center"></td>
+                                <td style="text-align:right"></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -342,11 +428,11 @@
                                     <i class="fas fa-file-excel"></i>
                                     <span>Excel</span>
                                   </a>
-                                  <div class="dropdown-divider"></div>
+                                  {{-- <div class="dropdown-divider"></div>
                                   <a href="#" id="is-pdf-bj" class="dropdown-item" data-toggle="modal" data-target="#modal-export-bj">
                                   <i class="fas fa-file-pdf"></i>
                                     <span>PDF</span>
-                                  </a>
+                                  </a> --}}
                                 </div>
                               </div>
                             </div>
@@ -374,7 +460,7 @@
                                   <td style="text-align:left">
                               <td></td>
                                   <td></td>
-                                  <td style="text-align:center"></td>
+                                  <td style="text-align:right"></td>
                                   <td></td>
                                   <td></td>
                                   <td></td>
