@@ -170,11 +170,11 @@ var successLoadspareparts = (function(responses, dataModel) {
 
         tableRows += "<tr>" +
                     "<td>"+ (i+1) +"</td>"+
-                    "<td>"+ barcode_gudang +"</td>"+
-                    "<td>"+ barcode_pabrik +"</td>"+
-                    "<td>"+ sparepart_name +"</td>"+
-                    "<td>"+ sparepart_jenis +"</td>"+
-                    "<td>"+ group_name +"</td>"+
+                    "<td>"+ def(barcode_gudang) +"</td>"+
+                    "<td>"+ def(barcode_pabrik) +"</td>"+
+                    "<td>"+ def(sparepart_name) +"</td>"+
+                    "<td>"+ def(sparepart_jenis) +"</td>"+
+                    "<td>"+ def(group_name) +"</td>"+
                     "<td>"+ merk_part +"</td>"+
                     "<td>"+ jumlah_stok +"</td>"+
                     "<td align='center'>"+

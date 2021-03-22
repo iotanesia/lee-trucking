@@ -32,7 +32,8 @@ class MoneyTransactionHeaderController extends Controller
                                         }
                                     })
                                     ->where('category_name', 'PINJAMAN_KARYAWAN')
-                                    ->select('money_transaction_header.user_id', 'users.name as name_user', DB::raw('SUM(pokok) AS pokok'), DB::raw('SUM(sisa_pokok) AS sisa_pokok'), DB::raw('IF(status = "BELUM_LUNAS" THEN "BELUM_LUNAS" end if) AS status'))
+                                    ->select('money_transaction_header.user_id', 'users.name as name_user', DB::raw('SUM(pokok) AS pokok'), DB::raw('SUM(sisa_pokok) AS sisa_pokok'), 
+                                    DB::raw("CASE WHEN SUM(sisa_pokok) = 0 THEN 'LUNAS'ELSE 'BELUM_LUNAS' END AS status"))
                                     ->groupBy('money_transaction_header.user_id', 'users.name')
                                     ->paginate();
 
