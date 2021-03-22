@@ -327,7 +327,7 @@ class ExpeditionController extends Controller
       $current_date_time = Carbon::now()->toDateTimeString(); 
       DB::connection(Auth::user()->schema)->beginTransaction();
       $expeditionActivity = new ExpeditionActivity;
-      
+      if(isset($data['ojk_id'])){
       // $factory = new FirebaseService();
       $masterOjk = OJK::where('id', $data['ojk_id'])->select('harga_otv', 'harga_ojk')->first();
     //   $this->validate($request, [
@@ -491,7 +491,13 @@ class ExpeditionController extends Controller
           'code_type' => 'BadRequest',
         ], 401);
       }
-      
+      }else{
+        return response()->json([
+          'code' => 401,
+          'code_message' => 'Gagal menyimpan data',
+          'code_type' => 'BadRequest',
+        ], 401);
+      }
     } else {
       return response()->json([
         'code' => 405,
