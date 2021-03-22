@@ -29,13 +29,13 @@ class SparePartController extends Controller
                        ->where(function($query) use($whereField, $whereValue) {
                            if($whereValue) {
                                foreach(explode(', ', $whereField) as $idx => $field) {
-                               $query->orWhere($field, 'LIKE', "%".$whereValue."%");
+                               $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                                }
                            }
                            })
                        ->where('type', 'SPAREPART')
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
-                       ->orderBy('id', 'ASC')
+                       ->orderBy('stk_master_sparepart.id', 'DESC')
                        ->paginate();
       
       foreach($sparePartList as $row) {
@@ -89,7 +89,7 @@ class SparePartController extends Controller
                        ->where('type', 'SPAREPART')
                        ->where('group_sparepart_id', '<>', 5)
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
-                       ->orderBy('id', 'ASC')
+                       ->orderBy('stk_master_sparepart.id', 'DESC')
                        ->get();
       
       foreach($sparePartList as $row) {
@@ -142,7 +142,7 @@ class SparePartController extends Controller
                        ->where('type', 'SPAREPART')
                        ->where('group_sparepart_id', 5)
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
-                       ->orderBy('id', 'ASC')
+                       ->orderBy('stk_master_sparepart.id', 'DESC')
                        ->get();
       
       foreach($sparePartList as $row) {
@@ -202,7 +202,7 @@ class SparePartController extends Controller
                        ->where('type', 'SPAREPART')
                        ->where('stk_master_sparepart.sparepart_jenis', 'PURCHASE')
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
-                       ->orderBy('id', 'ASC')
+                       ->orderBy('stk_master_sparepart.id', 'DESC')
                        ->paginate();
       
       foreach($sparePartList as $row) {
@@ -348,9 +348,7 @@ class SparePartController extends Controller
           $historyStokSparepart->restok_group_sparepart_id = $sparePart->group_sparepart_id;
           $historyStokSparepart->jumlah_stok = $request->jumlah_stok;
           $historyStokSparepart->created_by = $sparePart->created_by;
-          $historyStokSparepart->created_at = $sparePart->created_at;
           $historyStokSparepart->updated_by = $sparePart->updated_by;
-          $historyStokSparepart->updated_at = $sparePart->updated_at;
           $historyStokSparepart->deleted_by = $sparePart->deleted_by;
           $historyStokSparepart->deleted_at = $sparePart->deleted_at;
           $historyStokSparepart->is_deleted = $sparePart->is_deleted;
@@ -460,9 +458,7 @@ class SparePartController extends Controller
             $historyStokSparepart->restok_group_sparepart_id = $sparePart->group_sparepart_id;
             $historyStokSparepart->jumlah_stok = $request->jumlah_stok;
             $historyStokSparepart->created_by = $sparePart->created_by;
-            $historyStokSparepart->created_at = $sparePart->created_at;
             $historyStokSparepart->updated_by = $sparePart->updated_by;
-            $historyStokSparepart->updated_at = $sparePart->updated_at;
             $historyStokSparepart->deleted_by = $sparePart->deleted_by;
             $historyStokSparepart->deleted_at = $sparePart->deleted_at;
             $historyStokSparepart->is_deleted = $sparePart->is_deleted;
@@ -632,9 +628,7 @@ class SparePartController extends Controller
           $historyStokSparepart->restok_group_sparepart_id = $sparePart->group_sparepart_id;
           $historyStokSparepart->jumlah_stok = $sparePart->jumlah_stok;
           $historyStokSparepart->created_by = $sparePart->created_by;
-          $historyStokSparepart->created_at = $sparePart->created_at;
           $historyStokSparepart->updated_by = $sparePart->updated_by;
-          $historyStokSparepart->updated_at = $sparePart->updated_at;
           $historyStokSparepart->deleted_by = $sparePart->deleted_by;
           $historyStokSparepart->deleted_at = $sparePart->deleted_at;
           $historyStokSparepart->is_deleted = $sparePart->is_deleted;

@@ -214,8 +214,8 @@ var successLoadspareparts = (function(responses, dataModel) {
 
     tableRows += "<tr>" +
                    "<td>"+ (i+1) +"</td>"+
-                   "<td> <a href='"+window.Laravel.app_url+"/spareparts/detail/"+id+"' >"+ barcode_gudang +"</a></td>"+
-                   "<td>"+ barcode_pabrik +"</td>"+
+                   "<td> <a href='"+window.Laravel.app_url+"/spareparts/detail/"+id+"' >"+ def(barcode_gudang) +"</a></td>"+
+                   "<td>"+ def(barcode_pabrik) +"</td>"+
                    "<td>"+ sparepart_name +"</td>"+
                    "<td>"+ sparepart_jenis +"</td>"+
                    "<td>"+ group_name +"</td>"+

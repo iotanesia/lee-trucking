@@ -9,6 +9,7 @@ use App\Models\SparePart;
 use App\Models\StkHistorySparePart;
 use Auth;
 use Carbon\Carbon;
+use DB;
 
 class StkRepairHeaderController extends Controller
 {
@@ -129,6 +130,8 @@ class StkRepairHeaderController extends Controller
       unset($data['id']);
       unset($data['sparepart_detail']);
 
+      DB::connection(Auth::user()->schema)->beginTransaction();
+
       foreach($data as $key => $row) {
         $stkRepairHeader->{$key} = $row;
         $stkRepairHeader->created_by = Auth::user()->id;
@@ -144,6 +147,18 @@ class StkRepairHeaderController extends Controller
           if(isset($sparepart_detail)) {
               foreach($sparepart_detail['sparepart_id'] as $key => $row) {
                   $sparepart = SparePart::find($row);
+
+                  if($sparepart->jumlah_stok < $sparepart_detail['jumlah_stock'][$key]) {
+                      DB::connection(Auth::user()->schema)->rollback();
+                      return response()->json([
+                          'code' => 401,
+                          'code_message' => 'Stok Tidak mencukupi',
+                          'code_type' => 'BadRequest',
+                      ], 401);
+                  }
+
+                  $sparepart->jumlah_stok = $sparepart->jumlah_stok - $sparepart_detail['jumlah_stock'][$key];
+                  $sparepart->save();
                   $detail = new StkHistorySparePart;
                   $detail->sparepart_name = $sparepart->sparepart_name;
                   $detail->sparepart_status = $sparepart->sparepart_status;
@@ -162,6 +177,7 @@ class StkRepairHeaderController extends Controller
               }
           }
 
+          DB::connection(Auth::user()->schema)->commit();
           return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -169,11 +185,12 @@ class StkRepairHeaderController extends Controller
           ], 200);
       
       } else {
+        DB::connection(Auth::user()->schema)->rollback();
         return response()->json([
-          'code' => 401,
+          'code' => 400,
           'code_message' => 'Gagal menyimpan data',
           'code_type' => 'BadRequest',
-        ], 401);
+        ], 400);
       }
       
     } else {

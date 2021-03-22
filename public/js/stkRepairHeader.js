@@ -62,6 +62,7 @@ $("document").ready(function(){
         for(var item in datas.responseJSON.errors) {
           msgError += datas.responseJSON.errors[item][0] + "*";
         }
+        msgError = datas.responseJSON.code_message;
         alert(msgError);
       }
     });

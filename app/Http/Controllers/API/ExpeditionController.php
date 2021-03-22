@@ -223,43 +223,43 @@ class ExpeditionController extends Controller
 
       $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
-                   ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
-                   ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
-                   ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
-                   ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
-                   ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
-                   ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
-                   ->leftJoin('ex_master_kenek', 'ex_master_kenek.id', 'expedition_activity.kenek_id')
-                   ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
-                   ->where('expedition_activity.is_deleted','false')
-                   ->whereIn('expedition_activity.status_activity', ['DRIVER_SELESAI_EKSPEDISI', 'APPROVAL_OTV_DRIVER', 'CLOSED_EXPEDITION', 'WAITING_OWNER'])
-                   ->where(function($query) use($whereField, $whereValue) {
-                     if($whereValue) {
-                       foreach(explode(', ', $whereField) as $idx => $field) {
-                         $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
-                       }
-                     }
-                   })
-                   ->where(function($query) use($groupOwner, $groupId) {
-                        if($groupId == $groupOwner->id) {
-                            $query->where('status_activity', 'WAITING_OWNER');
-                        }
-                   })
-                   ->where(function($query) use($groupAdmin, $groupId) {
-                        if($groupId == $groupAdmin->id) {
-                            $query->where('status_activity', 'DRIVER_SELESAI_EKSPEDISI');
-                        }
-                   })  
-                   ->where(function($query) use($whereNotifId) {
-                    if($whereNotifId) {
-                        $query->where('expedition_activity.id', $whereNotifId);
-                    }
-                  })
-                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
-                            'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
-                             'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 'ex_master_kenek.kenek_name')
-                   ->orderBy('expedition_activity.updated_at', 'DESC')
-                   ->paginate();
+                                ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
+                                ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+                                ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
+                                ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
+                                ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
+                                ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+                                ->leftJoin('ex_master_kenek', 'ex_master_kenek.id', 'expedition_activity.kenek_id')
+                                ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
+                                ->where('expedition_activity.is_deleted','false')
+                                ->whereIn('expedition_activity.status_activity', ['DRIVER_SELESAI_EKSPEDISI', 'APPROVAL_OTV_DRIVER', 'CLOSED_EXPEDITION', 'WAITING_OWNER'])
+                                ->where(function($query) use($whereField, $whereValue) {
+                                    if($whereValue) {
+                                    foreach(explode(', ', $whereField) as $idx => $field) {
+                                        $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
+                                    }
+                                    }
+                                })
+                                ->where(function($query) use($groupOwner, $groupId) {
+                                        if($groupId == $groupOwner->id) {
+                                            $query->where('status_activity', 'WAITING_OWNER');
+                                        }
+                                })
+                                ->where(function($query) use($groupAdmin, $groupId) {
+                                        if($groupId == $groupAdmin->id) {
+                                            $query->where('status_activity', 'DRIVER_SELESAI_EKSPEDISI');
+                                        }
+                                })  
+                                ->where(function($query) use($whereNotifId) {
+                                    if($whereNotifId) {
+                                        $query->where('expedition_activity.id', $whereNotifId);
+                                    }
+                                })
+                                ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
+                                            'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
+                                            'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 'ex_master_kenek.kenek_name')
+                                ->orderBy('expedition_activity.updated_at', 'DESC')
+                                ->paginate();
       
       foreach($expeditionActivityList as $key => $row) {
             $approvalCode = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')

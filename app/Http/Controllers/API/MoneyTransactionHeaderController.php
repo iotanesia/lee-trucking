@@ -32,7 +32,7 @@ class MoneyTransactionHeaderController extends Controller
                                         }
                                     })
                                     ->where('category_name', 'PINJAMAN_KARYAWAN')
-                                    ->select('money_transaction_header.user_id', 'users.name as name_user', DB::raw('SUM(pokok) AS pokok'), DB::raw('SUM(sisa_pokok) AS sisa_pokok'))
+                                    ->select('money_transaction_header.user_id', 'users.name as name_user', DB::raw('SUM(pokok) AS pokok'), DB::raw('SUM(sisa_pokok) AS sisa_pokok'), DB::raw('IF(status = "BELUM_LUNAS" THEN "BELUM_LUNAS" end if) AS status'))
                                     ->groupBy('money_transaction_header.user_id', 'users.name')
                                     ->paginate();
 
@@ -75,7 +75,7 @@ class MoneyTransactionHeaderController extends Controller
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $moneyTransactionHeaderList = MoneyDetailTermin::leftJoin('coa_master_rekening', 'coa_master_rekening.id', 'money_detail_termin.rek_id')
                                     ->where('transaksi_header_id', $data['transaksi_header_id'])
-                                    ->select('money_detail_termin.*', 'coa_master_rekening.rek_name', 'coa_master_rekening.rek_no',  'coa_master_rekening.id')
+                                    ->select('money_detail_termin.*', 'coa_master_rekening.rek_name', 'coa_master_rekening.rek_no', 'coa_master_rekening.id')
                                     ->paginate();
 
       foreach($moneyTransactionHeaderList as $row) {
