@@ -193,12 +193,21 @@ var successLoadmoneyTransactionHeader = (function(responses, dataModel) {
     user_id = responses.data[i].user_id;
     data_json = responses.data[i].data_json;
 
+    if(status == 'LUNAS') {
+        var badge = 'badge-success';
+        
+    } else {
+        var badge = 'badge-danger';
+
+    }
+
     tableRows += "<tr>" +
                    "<td>"+ (i+1) +"</td>"+
                    "<td>"+ def(name_user) +"</td>"+
                    "<td>"+ convertToRupiah(pokok) +"</td>"+
                    "<td>"+ convertToRupiah(sisa_pokok) +"</td>"+
-                   "<td align='center'><a class='btn btn-warning btn-sm' href='"+window.Laravel.app_url+"/pinjaman-karyawan/detail/"+user_id+"'>Detail</a></td>"+
+                   "<td> <span class='badge "+badge+"'>"+status+"</span></td>"+
+                   "<td align='left'><a class='btn btn-warning btn-sm' href='"+window.Laravel.app_url+"/pinjaman-karyawan/detail/"+user_id+"'>Detail</a></td>"+
                  "</tr>";
   }
 
