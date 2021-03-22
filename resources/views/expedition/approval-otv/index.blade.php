@@ -65,11 +65,10 @@
                             <th>Nomor invoice</th>
                             <th>Truck Plat</th>
                             <th>Driver</th>
-                            <th>Tanggal invoice</th>
-                            <th>Tanggal PO</th>
+                            <th width="10px">Tanggal invoice</th>
+                            <th width="10px">Tanggal PO</th>
                             <th>Tujuan</th>
                             <th>Status</th>
-                            <th>Status Approval</th>
                             <th>Action</th>
                         </tr>
                         </thead>

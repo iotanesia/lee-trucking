@@ -271,8 +271,7 @@ $("document").ready(function() {
                      "<td>"+ driver_name +"</td>"+
                      "<td>"+ dateFormat(tgl_inv) +"</td>"+
                      "<td>"+ dateFormat(tgl_po) +"</td>"+
-                     "<td>"+ kabupaten +" - "+ kecamatan +" - "+ cabang_name +"</td>"+
-                     "<td> <span class='badge "+classColor+"'>"+ status_name +"</span></td>"+
+                     "<td>"+ kecamatan +" - "+ cabang_name +"</td>"+
                      "<td> <span class='badge "+classColors+"'>"+ approval_name +"</span></td>"+
                      "<td align='center'>"+
                        "<div class='btn-group'>"+

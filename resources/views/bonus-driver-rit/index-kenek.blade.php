@@ -74,7 +74,7 @@
                             <input type="text" id="btn-search-trigger" class="form-control has-primary" name="search_value" data-model="bonusDriverRit" placeholder="Search Key">
                         </div>
                     </div>
-                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" request-url="{{ route('api-bonusDriverRit-get-list-kenek') }}" id="search-data" el-event="search-data" data-model="bonusDriverRit"><i class="fa fa-search"></i></a>
+                    <a type="button" class="input-group-text btn-sm btn-flat" style="display:none" id="search-data" el-event="search-data" data-model="bonusDriverRit"><i class="fa fa-search"></i></a>
                 </div>
               </div>
             </div>
@@ -82,7 +82,7 @@
             <div class="tab-content">
               <div id="ad" class="tab-pane in active">
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-bonusDriverRit" data-model="bonusDriverRit" request-url="{{ route('api-bonusDriverRit-get-list-kenek') }}" on-success-load="successLoadbonusDriverRit">
+                    <table class="table align-items-center table-flush table-striped" id="table-bonusDriverRit" request-url="{{ route('api-bonusDriverRit') }}" data-model="bonusDriverRit" api-route="get-list-kenek" on-success-load="successLoadbonusDriverRit">
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
