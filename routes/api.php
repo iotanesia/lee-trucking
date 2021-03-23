@@ -271,6 +271,7 @@ Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
   Route::get('get-list-kenek', ['as' => '-get-list-kenek', 'uses' => 'API\DropDownController@getListKenek']);
   Route::get('get-list-rekening', ['as' => '-get-list-rekening', 'uses' => 'API\DropDownController@getListRekening']);
   Route::get('get-list-all-user', ['as' => '-get-list-all-user', 'uses' => 'API\DropDownController@getListallUser']);
+  Route::get('get-list-sparepart', ['as' => '-get-list-sparepart', 'uses' => 'API\DropDownController@getListSparepart']);
 });
 
 Route::group(['as' => 'api-global-param', 'prefix' => 'global-param'], function() {
