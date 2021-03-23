@@ -61,6 +61,11 @@ class MoneyTransactionHeaderController extends Controller
                             ->where('category_name', 'PINJAMAN_KARYAWAN')
                             ->where('user_id', $id)
                             ->get();
+
+        foreach($data['pinjaman'] as $row) {
+            $row->data_json = $row->toJson();
+        }
+
         return view('kasbon.pinjaman-karyawan.detail', $data);
     }
 
