@@ -50,6 +50,35 @@ $("document").ready(function(){
     });
   })
 
+  $(".btn-detail").click(function() {
+      var invoker = $(this);
+      var dataJSON = invoker.attr("data-json");
+      var dataJSON = JSON.parse(dataJSON);
+      console.log(dataJSON);
+      var block = '';
+
+      block += `<div class="timeline-block">
+                    <span class="timeline-step @if($val->status == 'LUNAS') badge-success @else badge-danger @endif">
+                    <i class="@if($val->status == 'LUNAS') fa fa-check @else fa fa-times @endif"></i>
+                    </span>
+                    <div class="timeline-content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <small class="text-muted font-weight-bold">{{date('l, d F Y H:i:s', strtotime($val->created_at))}}</small>
+                                <h5 class="text-muted font-weight-bold mt-3 mb-0">Nama Karyawan : {{$val->name_user}} <br>
+                                                                                Pinjaman : Rp {{number_format($val->pokok, 0, ',', '.')}}  <br>
+                                                                                Sisa Pinjaman : Rp {{number_format($val->sisa_pokok, 0, ',', '.')}} 
+                                                                                <br>
+                                                                                <br>
+                                    <span class="badge @if($val->status == 'BELUM_LUNAS') badge-danger @else badge-success @endif badge-pill">{{str_replace('_', ' ', $val->status)}} </span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+
+  })
+
 
   $("#btn-submits-detail").click(function(){
     var event = $("#moneyTransactionHeader-modal #btn-submits-detail").attr("el-event");
@@ -69,9 +98,10 @@ $("document").ready(function(){
         $('.preloader').show();
         },
         success: function(datas, textStatus, xhr) {
-            $("#successModal").modal("show");
             $("#moneyTransactionHeader-modal").modal("hide");
+            $("#successModal").modal("show");
             $('.preloader').hide();
+            location.reload();
             document.getElementById("search-data").click();
 
         },error: function(datas, textStatus, xhr) {
