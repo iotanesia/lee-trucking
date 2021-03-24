@@ -54,28 +54,30 @@ $("document").ready(function(){
       var invoker = $(this);
       var dataJSON = invoker.attr("data-json");
       var dataJSON = JSON.parse(dataJSON);
-      console.log(dataJSON);
       var block = '';
-
-      block += `<div class="timeline-block">
-                    <span class="timeline-step @if($val->status == 'LUNAS') badge-success @else badge-danger @endif">
-                    <i class="@if($val->status == 'LUNAS') fa fa-check @else fa fa-times @endif"></i>
-                    </span>
-                    <div class="timeline-content">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <small class="text-muted font-weight-bold">{{date('l, d F Y H:i:s', strtotime($val->created_at))}}</small>
-                                <h5 class="text-muted font-weight-bold mt-3 mb-0">Nama Karyawan : {{$val->name_user}} <br>
-                                                                                Pinjaman : Rp {{number_format($val->pokok, 0, ',', '.')}}  <br>
-                                                                                Sisa Pinjaman : Rp {{number_format($val->sisa_pokok, 0, ',', '.')}} 
-                                                                                <br>
-                                                                                <br>
-                                    <span class="badge @if($val->status == 'BELUM_LUNAS') badge-danger @else badge-success @endif badge-pill">{{str_replace('_', ' ', $val->status)}} </span>
-                                </h5>
+      
+      for(var i = 0; i < dataJSON.money_detail_termin.length; i++) {
+          block += `<div class="timeline-block">
+                        <span class="timeline-step badge-success">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </span>
+                        <div class="timeline-content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <small class="text-muted font-weight-bold">`+dataJSON.money_detail_termin[i].created_at+`</small>
+                                    <h5 class="text-muted font-weight-bold mt-3 mb-0">Termin : `+dataJSON.money_detail_termin[i].baris_termin+` <br>
+                                                                                    Nominak : Rp `+dataJSON.money_detail_termin[i].nominal_termin+`  <br>
+                                                                                    Rekening : `+dataJSON.money_detail_termin[i].rek_name+`-`+dataJSON.money_detail_termin[i].rek_no+` 
+                                                                                    <br>
+                                                                                    <br>
+                                    </h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>`;
+                    </div>`;
+      }
+
+      $("#blockHtml").html(block);
 
   })
 
