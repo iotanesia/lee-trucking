@@ -75,7 +75,7 @@
               <h3 class="mb-0 text-white">Detail Pinjaman</h3>
             </div>
             <div class="card-body">
-              <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
+              <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed" id="blockHtml">
                 <div class="timeline-block">
                   <div class="timeline-content">
                   </div>
