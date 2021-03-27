@@ -38,8 +38,8 @@
                 <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
                     @foreach($pinjaman as $val)
                     <div class="timeline-block">
-                        <span class="timeline-step">
-                        <i class=""></i>
+                        <span class="timeline-step @if($val->status == 'LUNAS') badge-success @else badge-danger @endif">
+                        <i class="@if($val->status == 'LUNAS') fa fa-check @else fa fa-times @endif"></i>
                         </span>
                         <div class="timeline-content">
                             <div class="row">
@@ -47,13 +47,18 @@
                                     <small class="text-muted font-weight-bold">{{date('l, d F Y H:i:s', strtotime($val->created_at))}}</small>
                                     <h5 class="text-muted font-weight-bold mt-3 mb-0">Nama Karyawan : {{$val->name_user}} <br>
                                                                                     Pinjaman : Rp {{number_format($val->pokok, 0, ',', '.')}}  <br>
-                                                                                    Sisa Pinjaman : Rp {{number_format($val->sisa_pokok, 0, ',', '.')}}  <br>
+                                                                                    Sisa Pinjaman : Rp {{number_format($val->sisa_pokok, 0, ',', '.')}} 
+                                                                                    <br>
+                                                                                    <br>
+                                        <span class="badge @if($val->status == 'BELUM_LUNAS') badge-danger @else badge-success @endif badge-pill">{{str_replace('_', ' ', $val->status)}} </span>
                                     </h5>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="float-right">
-                                        <span class="badge @if($val->status == 'BELUM_LUNAS') badge-danger @else badge-success @endif badge-pill">{{str_replace('_', ' ', $val->status)}}</span> <br><br><br>
-                                        <a class='btn btn-primary btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-animate-modal='rotateInDownLeft' data-toggle='modal' data-target='#moneyTransactionHeader-modal'><i class='fas fa-money-bill-wave'></i> Bayar</a>
+                                    @if($val->status == 'BELUM_LUNAS')
+                                        <a style="margin-right:0px; margin-left:10px" class='btn btn-primary btn-sm float-right' href='#' el-event='edit' data-json='{{$val->data_json}}' data-animate-modal='rotateInDownLeft' data-toggle='modal' data-target='#moneyTransactionHeader-modal-detail'><i class='fas fa-money-bill-wave'></i> Bayar</a>
+                                    @endif
+                                        <a class='btn btn-warning btn-sm btn-detail' href='#' el-event='edit' data-json='{{$val->data_json}}'><i class='fa fa-eye'></i> Detail</a>
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +75,7 @@
               <h3 class="mb-0 text-white">Detail Pinjaman</h3>
             </div>
             <div class="card-body">
-              <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
+              <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed" id="blockHtml">
                 <div class="timeline-block">
                   <div class="timeline-content">
                   </div>
@@ -102,7 +107,7 @@
         </div>
     </footer>
 </div>
-<div class="modal fade" id="moneyTransactionHeader-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="moneyTransactionHeader-modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
@@ -149,4 +154,5 @@
     </div>
 </div>
 <script src="{{asset('js/event.js')}}"></script>
+<script src="{{asset('js/pinjaman-karyawan.js')}}"></script>
 @endsection
