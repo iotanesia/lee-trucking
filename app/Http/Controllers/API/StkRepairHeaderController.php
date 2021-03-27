@@ -38,10 +38,10 @@ class StkRepairHeaderController extends Controller
           $merk_part = '';
           $idGroup = null;
           if(isset($historyStok->sparepart_id)){
-            $sparePart = SparePart::where('id', $historyStok->sparepart_id)->select('merk_part')->first();
+            $sparePart = SparePart::where('id', $historyStok->sparepart_id)->select('merk_part','group_sparepart_id')->first();
             $merk_part = $sparePart->merk_part;
             $idGroup = $sparePart->group_sparepart_id;
-            dd($sparePart);
+            // dd($sparePart);
           }
           $group_name = '';
           if(isset($idGroup)){
