@@ -41,8 +41,8 @@ class StkRepairHeaderController extends Controller
             $sparePart = SparePart::where('id', $historyStok->sparepart_id)->select('merk_part')->first();
             $merk_part = $sparePart->merk_part;
             $idGroup = $sparePart->group_sparepart_id;
+            dd($sparePart);
           }
-
           $group_name = '';
           if(isset($idGroup)){
             $groupSparepart = StkGroupSparepart::where('id', $idGroup)->select('group_name')->first();
