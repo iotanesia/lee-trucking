@@ -21,7 +21,7 @@ class StkRepairHeaderController extends Controller
       $stkRepairHeader = StkRepairHeader::join('ex_master_truck', 'stk_repair_header.truck_id', 'ex_master_truck.id')
                         ->join('ex_master_driver', 'ex_master_truck.driver_id', 'ex_master_driver.id')
                         // ->with(['stk_history_stok']) tutup dulu dari yudha, gua gak ngerti maksudnya with maap ^_^
-                        ->leftJoin('stk_history_stok','stk_history_stok.header_id','stk_repair_header.id')
+                        ->rightJoin('stk_history_stock','stk_history_stock.header_id','stk_repair_header.id')
                         ->leftJoin('stk_master_sparepart','stk_history_stok.sparepart_id', 'stk_master_sparepart.id')
                         ->leftJoin('stk_master_group_sparepart','stk_master_sparepart.group_sparepart_id','stk_master_group_sparepart.id')
                         ->where(function($query) use($whereField, $whereValue) {
