@@ -206,6 +206,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('add', ['as' => '-add', 'uses' => 'API\StkRepairHeaderController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\StkRepairHeaderController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\StkRepairHeaderController@delete']);
+    Route::post('add-mobile', ['as' => '-add-mobile', 'uses' => 'API\StkRepairHeaderController@addMobile']);
+    Route::post('edit-mobile', ['as' => '-edit-mobile', 'uses' => 'API\StkRepairHeaderController@editMobile']);
   });
 
   Route::group(['as' => 'api-stkRepairBanHeader', 'prefix' => 'stkRepairBanHeader'], function() {
