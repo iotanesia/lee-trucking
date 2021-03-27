@@ -32,9 +32,9 @@ class StkRepairHeaderController extends Controller
                         ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
                         ->orderBy('id', 'ASC')
                         ->paginate();
-      dd($stkRepairHeader);
       foreach($stkRepairHeader as $row) {
 
+        // dd($stkRepairHeader['']);
         $row->data_json = $row->toJson();
       }
       
