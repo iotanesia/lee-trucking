@@ -20,11 +20,8 @@ class StkRepairHeaderController extends Controller
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $stkRepairHeader = StkRepairHeader::join('ex_master_truck', 'stk_repair_header.truck_id', 'ex_master_truck.id')
                         ->join('ex_master_driver', 'ex_master_truck.driver_id', 'ex_master_driver.id')
-                        // ->with(['stk_history_stok']) tutup dulu dari yudha, gua gak ngerti maksudnya with maap ^_^
-                        ->rightJoin('stk_history_stock','stk_history_stock.header_id','stk_repair_header.id')
-                        ->leftJoin('stk_master_sparepart','stk_history_stock.sparepart_id', 'stk_master_sparepart.id')
-                        ->leftJoin('stk_master_group_sparepart','stk_master_sparepart.group_sparepart_id','stk_master_group_sparepart.id')
-                        ->where(function($query) use($whereField, $whereValue) {
+                        ->with(['stk_history_stok']) 
+                       ->where(function($query) use($whereField, $whereValue) {
                             if($whereValue) {
                                 foreach(explode(', ', $whereField) as $idx => $field) {
                                     $query->orWhere($field, 'LIKE', "%".$whereValue."%");
@@ -32,11 +29,12 @@ class StkRepairHeaderController extends Controller
                             }
                         })
                         ->where('kode_repair', 'LIKE', '%RP-%')
-                        ->select('stk_repair_header.*','stk_master_sparepart.merk_part','stk_master_group_sparepart.group_name', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
+                        ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
                         ->orderBy('id', 'ASC')
                         ->paginate();
-      
+      dd($stkRepairHeader);
       foreach($stkRepairHeader as $row) {
+
         $row->data_json = $row->toJson();
       }
       
