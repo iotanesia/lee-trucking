@@ -7,6 +7,7 @@ use App\User;
 use App\Models\StkRepairHeader;
 use App\Models\SparePart;
 use App\Models\StkHistorySparePart;
+use App\Models\StkGroupSparepart;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -33,8 +34,10 @@ class StkRepairHeaderController extends Controller
                         ->orderBy('id', 'ASC')
                         ->paginate();
       foreach($stkRepairHeader as $row) {
-
-        dd($row->stk_history_stok['id']);
+        foreach($row->stk_history_stok as $historyStok){
+          $historyStok->merk_part = SparePart::find($historyStok->sparepart_id)->select('merk_part')->first();
+          $historyStok->group_name = StkGroupSparepart::find($historyStok->restok_group_sparepart_id)->select('group_name')->first();
+        }
         $row->data_json = $row->toJson();
       }
       
