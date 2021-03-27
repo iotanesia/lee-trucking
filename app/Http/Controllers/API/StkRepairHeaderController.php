@@ -36,14 +36,16 @@ class StkRepairHeaderController extends Controller
       foreach($stkRepairHeader as $row) {
         foreach($row->stk_history_stok as $historyStok){
           $merk_part = '';
+          $idGroup = null;
           if(isset($historyStok->sparepart_id)){
             $sparePart = SparePart::where('id', $historyStok->sparepart_id)->select('merk_part')->first();
             $merk_part = $sparePart->merk_part;
+            $idGroup = $sparePart->group_sparepart_id;
           }
 
           $group_name = '';
-          if(isset($historyStok->restok_group_sparepart_id)){
-            $groupSparepart = StkGroupSparepart::where('id', $historyStok->restok_group_sparepart_id)->select('group_name')->first();
+          if(isset($idGroup)){
+            $groupSparepart = StkGroupSparepart::where('id', $idGroup)->select('group_name')->first();
             $group_name = $groupSparepart->group_name;
           }
           $historyStok->merk_part = $merk_part;
