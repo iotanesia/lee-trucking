@@ -34,7 +34,7 @@ class StkRepairHeaderController extends Controller
                         ->paginate();
       foreach($stkRepairHeader as $row) {
 
-        // dd($stkRepairHeader['']);
+        dd($row->stk_history_stok);
         $row->data_json = $row->toJson();
       }
       
