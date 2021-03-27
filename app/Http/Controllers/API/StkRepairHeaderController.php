@@ -222,7 +222,7 @@ class StkRepairHeaderController extends Controller
   public function addMobile(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      dd($data);
+      dd($request);
       $sparepart_detail = $data['sparepart_detail'];
       $stkRepairHeader = new StkRepairHeader;
       
