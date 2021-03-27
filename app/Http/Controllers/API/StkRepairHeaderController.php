@@ -35,8 +35,19 @@ class StkRepairHeaderController extends Controller
                         ->paginate();
       foreach($stkRepairHeader as $row) {
         foreach($row->stk_history_stok as $historyStok){
-          $historyStok->merk_part = isset($historyStok->sparepart_id) ? SparePart::where('id', $historyStok->sparepart_id)->select('merk_part')->first() : '';
-          $historyStok->group_name = isset($historyStok->restok_group_sparepart_id) ? StkGroupSparepart::where('id', $historyStok->restok_group_sparepart_id)->select('group_name')->first() : '';
+          $merk_part = '';
+          if(isset($historyStok->sparepart_id)){
+            $sparePart = SparePart::where('id', $historyStok->sparepart_id)->select('merk_part')->first();
+            $merk_part = $sparePart[0];
+          }
+
+          $group_name = '';
+          if(isset($historyStok->restok_group_sparepart_id)){
+            $groupSparepart = StkGroupSparepart::where('id', $historyStok->restok_group_sparepart_id)->select('group_name')->first();
+            $group_name = $groupSparepart[0];
+          }
+          $historyStok->merk_part = $merk_part;
+          $historyStok->group_name = $group_name;
         }
         $row->data_json = $row->toJson();
       }
