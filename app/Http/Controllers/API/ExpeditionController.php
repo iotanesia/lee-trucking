@@ -1498,7 +1498,7 @@ class ExpeditionController extends Controller
                        }
                      }
                    })
-                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
+                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name',
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 
                             'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 'ex_master_kenek.kenek_name')
@@ -1519,9 +1519,10 @@ class ExpeditionController extends Controller
         ->leftJoin('all_global_param', 'ex_status_activity.status_activity', 'all_global_param.param_code')
         ->orderBy('ex_status_activity.created_at', 'DESC')
         ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.long_lat')->first();
-        $expeditionActivityList->long_lat = $exStatusActivity['long_lat'];
+        $expeditionActivityList->long_lat = isset($exStatusActivity['long_lat'])?$exStatusActivity['long_lat'] : '0.0,0.0';
         $expeditionActivityList->approval_code = $exStatusActivity['approval_code'];
         $expeditionActivityList->approval_name = $exStatusActivity['approval_name'];
+        $expeditionActivityList->nominal_lebih_bayar = $exStatusActivity['nominal_lebih_bayar'];
         $expeditionActivityList->data_json = $expeditionActivityList->toJson();
       
         return response()->json([
