@@ -263,7 +263,7 @@ class ExpeditionController extends Controller
       
       foreach($expeditionActivityList as $key => $row) {
             $approvalCode = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
-                            ->leftJoin('all_global_param', 'ex_status_activity.status_activity', 'all_global_param.param_code')
+                            ->leftJoin('all_global_param', 'ex_status_activity.status_activity', 'all_global_param.param_code','ex_status_activity.nominal_lebih_bayar')
                             ->where('ex_status_activity.ex_id', $row->id)
                             ->orderBy('ex_status_activity.created_at', 'DESC')
                             ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.*')->first();
@@ -1315,7 +1315,7 @@ class ExpeditionController extends Controller
         $row->img = ($row->img) ? url('uploads/expedition/'.$row->img) :url('uploads/sparepart/nia3.png');
         $row->created_at = $row->updated_at;
         $row->img_tujuan = ($row->img_tujuan ) ? url('uploads/expedition/'.$row->img_tujuan) :url('uploads/sparepart/nia3.png');
- 
+        $row->long_lat = (null == $row->long_lat || '' == $row->long_lat) ? '0.0,0.0' : $row->long_lat;
         $row->data_json = $row->toJson();
       }
    
@@ -1498,7 +1498,7 @@ class ExpeditionController extends Controller
                        }
                      }
                    })
-                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name',
+                   ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
                             'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat', 
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name', 
                             'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 'ex_master_kenek.kenek_name')
@@ -1519,10 +1519,9 @@ class ExpeditionController extends Controller
         ->leftJoin('all_global_param', 'ex_status_activity.status_activity', 'all_global_param.param_code')
         ->orderBy('ex_status_activity.created_at', 'DESC')
         ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.long_lat')->first();
-        $expeditionActivityList->long_lat = (null == $exStatusActivity['long_lat'] || '' == $exStatusActivity['long_lat']) ? '0.0,0.0' : $exStatusActivity['long_lat'];
+        $expeditionActivityList->long_lat = $exStatusActivity['long_lat'];
         $expeditionActivityList->approval_code = $exStatusActivity['approval_code'];
         $expeditionActivityList->approval_name = $exStatusActivity['approval_name'];
-        $expeditionActivityList->nominal_lebih_bayar = $exStatusActivity['nominal_lebih_bayar'];
         $expeditionActivityList->data_json = $expeditionActivityList->toJson();
       
         return response()->json([
