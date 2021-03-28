@@ -422,7 +422,7 @@ class StkRepairHeaderController extends Controller
                     $detail->delete();
 
                 } else {
-                    dd($sparepart);
+                    // dd($sparepart);
                     $detail->sparepart_name = $sparepart->sparepart_name;
                     $detail->sparepart_status = $sparepart->sparepart_status;
                     $detail->sparepart_jenis = $sparepart->sparepart_jenis;
