@@ -276,7 +276,7 @@ class ExpeditionController extends Controller
             }else{
             $row->otv_payment_method_name = null;
             }
-
+            $row->nominal_lebih_bayar = $approvalCode['nominal_lebih_bayar'];
             $row->id_exAct = $approvalCode['id'];
             $row->approval_code = $approvalCode['approval_code'];
             $row->approval_name = $approvalCode['approval_name'];
