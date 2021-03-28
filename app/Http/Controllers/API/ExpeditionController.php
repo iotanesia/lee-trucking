@@ -1519,7 +1519,7 @@ class ExpeditionController extends Controller
         ->leftJoin('all_global_param', 'ex_status_activity.status_activity', 'all_global_param.param_code')
         ->orderBy('ex_status_activity.created_at', 'DESC')
         ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name', 'ex_status_activity.long_lat')->first();
-        $expeditionActivityList->long_lat = isset($exStatusActivity['long_lat'])?$exStatusActivity['long_lat'] : '0.0,0.0';
+        $expeditionActivityList->long_lat = (null == $exStatusActivity['long_lat'] || '' == $exStatusActivity['long_lat']) ? '0.0,0.0' : $exStatusActivity['long_lat'];
         $expeditionActivityList->approval_code = $exStatusActivity['approval_code'];
         $expeditionActivityList->approval_name = $exStatusActivity['approval_name'];
         $expeditionActivityList->nominal_lebih_bayar = $exStatusActivity['nominal_lebih_bayar'];
