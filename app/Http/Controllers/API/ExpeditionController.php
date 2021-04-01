@@ -1554,8 +1554,8 @@ class ExpeditionController extends Controller
                     ->leftJoin('ex_master_kenek','expedition_activity.kenek_id', 'ex_master_kenek.id')
                     ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                     ->where('ex_master_driver.id', $data['idDriver'])
-                    ->whereYear('expedition_activity.updated_at', $data['year'])
-                    ->whereMonth('expedition_activity.updated_at', $data['month'])
+                    ->whereYear('expedition_activity.tgl_po', $data['year'])
+                    ->whereMonth('expedition_activity.tgl_po', $data['month'])
                     ->whereIn('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])
                     ->where('expedition_activity.is_deleted', 'false')
                     ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 
@@ -1569,7 +1569,7 @@ class ExpeditionController extends Controller
       foreach($expeditionActivityList as $row) {
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
         $exStatusActivity = ExStatusActivity::where('ex_status_activity.ex_id',$row->id)
-        ->orderBy('ex_status_activity.updated_at', 'DESC')
+        ->orderBy('ex_status_activity.tgl_po', 'DESC')
         ->select('ex_status_activity.long_lat')->first();
         $row->long_lat = $exStatusActivity['long_lat'];
         $row->data_json = $row->toJson();
