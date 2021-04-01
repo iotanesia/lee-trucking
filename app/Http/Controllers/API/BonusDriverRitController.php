@@ -42,6 +42,7 @@ class BonusDriverRitController extends Controller
     //   dd($rewardList);
 
       foreach($rewardList as $row) {
+          $reward = null;
           $truck = Truck::where('driver_id', $row->driver_id)->first();
         //   dump($truck);
           if($truck) {
