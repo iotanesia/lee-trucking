@@ -1569,7 +1569,7 @@ class ExpeditionController extends Controller
       foreach($expeditionActivityList as $row) {
         $row->jenis_surat_jalan = substr($row->nomor_surat_jalan, 0, 2);
         $exStatusActivity = ExStatusActivity::where('ex_status_activity.ex_id',$row->id)
-        ->orderBy('ex_status_activity.tgl_po', 'DESC')
+        ->orderBy('ex_status_activity.updated_at', 'DESC')
         ->select('ex_status_activity.long_lat')->first();
         $row->long_lat = $exStatusActivity['long_lat'];
         $row->data_json = $row->toJson();
