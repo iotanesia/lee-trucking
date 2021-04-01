@@ -86,6 +86,10 @@ $("document").ready(function(){
     placeholder:"Select Kenek"
   });
 
+  $("#cabang_id").select2({     
+    placeholder:"Select Cabang"
+  })
+
   $("#driver_join_date").daterangepicker({
     locale: {
         format: 'DD-MM-YYYY'
@@ -113,7 +117,7 @@ var successLoaddriver = (function(responses, dataModel) {
                    "<td>"+ driver_status +"</td>"+
                    "<td>"+ kenek_name +"</td>"+
                    "<td>"+ driver_join_date +"</td>"+
-                   "<td align='center'>"+
+                   "<td align='left'>"+
                      "<div class='btn-group'>"+
                        "<a class='btn btn-success btn-xs btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#driver-modal'><i class='fas fa-edit'></i></a>"+
                        "<a class='btn btn-danger btn-xs btn-sm' href='#' el-event='edit' data-id='"+ id +"' data-url='/api/driver/delete' data-toggle='modal' data-target='#deletedModal'><i class='fa fa-trash'></i></a>"+

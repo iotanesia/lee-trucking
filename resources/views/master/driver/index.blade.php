@@ -139,6 +139,15 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="cabang_id">Cabang</label>
+                    <select name="cabang_id" id="cabang_id" class="form-control">
+                        <option value=""></option>
+                    @foreach($cabangList as $row)
+                        <option value="{{$row->id}}">{{$row->cabang_name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="driver_join_date">Join Date</label>
                     <div class="input-group input-group-merge">
                         <input type="text" name="driver_join_date" id="driver_join_date" class="form-control" placeholder="Driver Date Join">

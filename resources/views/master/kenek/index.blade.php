@@ -119,6 +119,15 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="cabang_id">Cabang</label>
+                    <select name="cabang_id" id="cabang_id" class="form-control">
+                        <option value=""></option>
+                    @foreach($cabangList as $row)
+                        <option value="{{$row->id}}">{{$row->cabang_name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="kenek_join_date">Join Date</label>
                     <input type="date" name="kenek_join_date" class="form-control">
                 </div>

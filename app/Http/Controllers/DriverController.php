@@ -9,6 +9,7 @@ use App\Models\GlobalParam;
 use App\Models\Driver;
 use App\Models\Kenek;
 use App\Models\Group;
+use App\Models\Cabang;
 use Auth;
 
 class DriverController extends Controller
@@ -35,6 +36,7 @@ class DriverController extends Controller
         $data['kenekList'] = Kenek::get();
         $groupCheck = Group::where('group_name', 'Driver')->first();
         $data['users'] = User::where('group_id', $groupCheck->id)->get();
+        $data['cabangList'] = Cabang::where('is_deleted', 'f')->get();
         return view('master.driver.index', $data);
     }
 }
