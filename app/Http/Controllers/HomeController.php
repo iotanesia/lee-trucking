@@ -43,7 +43,7 @@ class HomeController extends Controller
         $totaltruck = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".ex_master_truck WHERE is_deleted = false");
 
         $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        $ex = DB::select("SELECT date_part('month', updated_at) AS months, COUNT(id) FROM ".$schema.".expedition_activity GROUP BY months ORDER BY months ASC");
+        $ex = DB::select("SELECT date_part('month', tgl_po) AS months, COUNT(id) FROM ".$schema.".expedition_activity GROUP BY months ORDER BY months ASC");
         // dd($ex);
         $truck = DB::select("SELECT b.cabang_name, COUNT(a.id) FROM ".$schema.".ex_master_truck AS a JOIN ".$schema.".ex_master_cabang AS b ON a.cabang_id = b.id  WHERE a.is_deleted = false GROUP BY cabang_id, b.cabang_name");
 
