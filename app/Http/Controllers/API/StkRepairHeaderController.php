@@ -407,22 +407,18 @@ class StkRepairHeaderController extends Controller
 
       if($stkRepairHeader->save()){
         if(isset($sparepart_detail)) {
-// dd($sparepart_detail);
             foreach($sparepart_detail['sparepart_id'] as $key => $row) {
                 $sparepart = SparePart::find($row);
 
                 if(isset($sparepart_detail['id'][$key])) {
                     $detail = StkHistorySparePart::find($sparepart_detail['id'][$key]);
-                    
                 } else {
                     $detail = new StkHistorySparePart;
                 }
 
                 if(isset($sparepart_detail['is_deleted'][$key]) && $sparepart_detail['is_deleted'][$key] == 1) {
                     $detail->delete();
-
                 } else {
-                    // dd($sparepart);
                     $detail->sparepart_name = $sparepart->sparepart_name;
                     $detail->sparepart_status = $sparepart->sparepart_status;
                     $detail->sparepart_jenis = $sparepart->sparepart_jenis;
