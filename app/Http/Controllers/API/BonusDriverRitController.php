@@ -46,7 +46,9 @@ class BonusDriverRitController extends Controller
           $truck = Truck::where('driver_id', $row->driver_id)->first();
         //   dump($truck);
           if($truck) {
-              $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)->whereIn('status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])->count();
+              $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)
+                                ->whereRaw("expedition_activity.tgl_po between CAST('".$firstDate." 00:00:00' AS DATE) AND CAST('".$lastDate." 23:59:59' AS DATE)")
+                                ->whereIn('status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])->count();
               $row->truck = $truck->truck_plat.' - '.$truck->truck_name;
               $reward = Reward::where('min', '<=', $row->rit_truck)->where('max', '>=', $row->rit_truck)->orderBy('min', 'DESC')->where('is_deleted', 'false')->first();
               $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
