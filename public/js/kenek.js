@@ -89,7 +89,7 @@ var successLoadkenek = (function(responses, dataModel) {
                    "<td>"+ def(kenek_name) +"</td>"+
                    "<td>"+ kenek_status +"</td>"+
                    "<td>"+ dateFormat(kenek_join_date) +"</td>"+
-                   "<td align='center'>"+
+                   "<td align='left'>"+
                      "<div class='btn-group'>"+
                        "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#kenek-modal'><i class='fas fa-edit'></i></a>"+
                        "<a class='btn btn-danger btn-sm' href='#' el-event='edit' data-id='"+ id +"' data-url='/api/kenek/delete' data-toggle='modal' data-target='#deletedModal'><i class='fa fa-trash'></i></a>"+
