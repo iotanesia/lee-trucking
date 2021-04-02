@@ -256,6 +256,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('get-ekspedisi-rit-tujuan-list', ['as' => '-get-ekspedisi-rit-tujuan-list', 'uses' => 'API\ReportManagementController@getListRitTujuan']);
     Route::get('get-ekspedisi-rit-truck-list', ['as' => '-get-ekspedisi-rit-truck-list', 'uses' => 'API\ReportManagementController@getListRitTruck']);
     Route::get('get-ekspedisi-rit-driver-list', ['as' => '-get-ekspedisi-rit-driver-list', 'uses' => 'API\ReportManagementController@getListRitDriver']);
+    Route::get('get-detail-rit-list', ['as' => '-get-detail-rit-list', 'uses' => 'API\ReportManagementController@getDetailListRit']);
   });
   
   Route::group(['as' => 'api-dashboard', 'prefix' => 'dashboard'], function() {

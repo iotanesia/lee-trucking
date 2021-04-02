@@ -259,20 +259,21 @@
       </footer>
     </div>
   </div>
-  <div class="modal fade" id="modal-detail-rit-report-tujuan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modal-detail-rit-report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-gradient-primary">
-              <h5 class="modal-title text-white" id="exampleModalLabel">Detail <label id="kode-detail-rit-report-tujuan"></label></h5>
+              <h5 class="modal-title text-white" id="exampleModalLabel">Detail <label id="kode-detail-rit-report"></label></h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-detail-rit-report-tujuan" data-model="expedition" request-url="{{ route('api-expedition') }}" on-success-load="successLoadexpedition">
-                        <thead class="bg-gradient-info text-white">
+                <div class="form-group">
+                  <div class="">
+                    <table class="table table-responsive align-items-center table-striped" id="table-detail-rit-report" style="width: 100%;">
+                        <thead class="bg-gradient-info text-white" style="text-align:center">
                         <tr>
                             <th>No</th>
                             <th>Nomor Surat Jalan</th>
@@ -282,24 +283,18 @@
                             <th>Tanggal PO</th>
                             <th>Tujuan</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
+                      </thead>
+                      <tbody style="text-align:center"></tbody>
+                  </table>
+              </div>
             </div>
-            <div class="card-footer py-4">
-                <nav aria-label="...">
-                    <ul class="pagination justify-content-end mb-0"></ul>
-                </nav>
             </div>
-                  </div>
-            </div>
-        <div class="modal-footer">
-        </div>
-    </div>
+      </div>
+  <div class="modal-footer">
   </div>
+</div>
+</div>
   
   <script src="{{asset('js/event.js')}}"></script>
   <script src="{{asset('js/expedition-rit-report.js')}}"></script>
