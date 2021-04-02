@@ -7,6 +7,7 @@ use App\User;
 use App\Models\Truck;
 use App\Models\GlobalParam;
 use App\Models\Kenek;
+use App\Models\Cabang;
 use Auth;
 
 class KenekController extends Controller
@@ -30,6 +31,7 @@ class KenekController extends Controller
     {
         $data['title'] = 'Kenek';
         $data['status'] = GlobalParam::where('param_type', 'KENEK_STATUS')->get();
+        $data['cabangList'] = Cabang::where('is_deleted', 'f')->get();
         return view('master.kenek.index', $data);
     }
 }
