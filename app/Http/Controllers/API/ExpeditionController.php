@@ -26,11 +26,12 @@ class ExpeditionController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv, otv_payment_method, ex_master_driver.driver_name, expedition_activity.nomor_surat_jalan';
+      $whereField = 'kabupaten, ex_wil_kecamatan.kecamatan, cabang_name, all_global_param.param_name, nomor_inv, otv_payment_method, ex_master_driver.driver_name, expedition_activity.nomor_surat_jalan';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
       $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
       $statusCode = isset($data['status_code']) ? $data['status_code'] : false;
+      // echo $whereValue; die();
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
