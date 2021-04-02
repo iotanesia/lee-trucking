@@ -1,8 +1,8 @@
   
   
   $(document).ready(function() {  
-    var accessToken =  window.Laravel.api_token;
-    // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
+    // var accessToken =  window.Laravel.api_token;
+    var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
    
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
     var firstDay = new Date(y, m, 1);
@@ -20,7 +20,8 @@
     serverSide: true, autoWidth: true,
     ajax: {
       url: window.Laravel.app_url + "/api/report/get-ekspedisi-rit-tujuan-list",
-      type: "GET",data: function (d) {
+      type: "GET",
+      data: function (d) {
         d.start_date = startDateTujuan;
         d.end_date = endDateTujuan;
       },
@@ -40,7 +41,7 @@
         {
             "data": null,
             render: function (data, type, row) {
-              return '<a href="#" data-toggle="modal" data-target="#modal-detail-truck-repair" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
+              return '<a href="#" onclick="return openModalDetail(\'' + data.kecamatan + '\')" data-toggle="modal" data-target="#modal-detail-rit-report-tujuan" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
             }
         }
     ],
@@ -332,51 +333,31 @@
 });
 
    
-function openModalDetail(idHeader, kodeRepair){
+function openModalDetail(filter){
   
-    var accessToken =  window.Laravel.api_token;
-    // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
-   $('#kode-detail-repair-truck').text(kodeRepair);
-  var tableDetailRepairTruck = $('#table-detail-repair-truck-report').DataTable({
+    // var accessToken =  window.Laravel.api_token;
+    var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
+   $('#kode-detail-rit-report-tujuan').text(filter);
+
+  var tableDetailRepairTruck = $('#table-detail-rit-report-tujuan').DataTable({
     processing: true,
     serverSide: true, autoWidth: true,
     ajax: {
-      url: window.Laravel.app_url + "/api/report/get-detail-repair-truck-list",
-      type: "GET",data: function (d) {
-        d.id_header = idHeader;
-        // d.start_date = startDate;
-        // d.end_date = endDate;
+      url: window.Laravel.app_url + "/api/expedition/get-list",
+      type: "GET",
+      dataType: "json",
+      data: function (d) {
+        d.where_value = filter;
       },
       headers: {"Authorization": "Bearer " + accessToken},
       crossDomain: true,
-    },
-    columns: [
-        {
-          "data": null, "sortable": false,
-            render: function (data, type, row, meta) {
-              return meta.row + meta.settings._iDisplayStart + 1;
-          }
-        },
-        {
-          "data":"created_at", render: function (data, type, row, meta) {
-            return formatDate(data);
-          }
-        },
-        {"data":"sparepart_name"},
-        {"data":"barcode_gudang"},
-        {"data":"barcode_pabrik"},
-        {"data":"sparepart_type"},
-        {"data":"jumlah_stok"},
-        {"data":"amount"},
-        {"data":"total"},
-        {"data":"satuan_type"},
-    ],
-    scrollCollapse: true,
-    language: {
-        paginate: {
-            previous: '<i class="fas fa-angle-left"></i>',
-            next: '<i class="fas fa-angle-right"></i>'
-        }
+      beforeSend: function( xhr ) { 
+        $('.preloader').show();
+      },
+      success: function(data, textStatus, xhr) {
+        $('.preloader').hide();
+        successLoadexpedition(data);
+      }
     }
   });
 
@@ -408,7 +389,101 @@ function openModalDetail(idHeader, kodeRepair){
     // console.log(result);
     return result;
   } 
-  $('#modal-detail-truck-repair').on('hidden.bs.modal', function () {
-    $('#table-detail-repair-truck-report').dataTable().fnDestroy();
+  $('#modal-detail-rit-report-tujuan').on('hidden.bs.modal', function () {
+    $('#table-detail-rit-report-tujuan').dataTable().fnDestroy();
 });
 }
+
+var successLoadexpedition = (function(responses, dataModel) {
+      
+  var tableRows = "";
+  var responses = responses.result.data == undefined ? responses : responses.result;
+
+  for(var i = 0; i < responses.data.length; i++) {
+    id = responses.data[i].id;
+    nomor_inv = responses.data[i].nomor_inv;
+    pabrik_pesanan = responses.data[i].pabrik_pesanan;
+    nomor_surat_jalan = responses.data[i].nomor_surat_jalan;
+    nama_barang = responses.data[i].nama_barang;
+    truck_name = responses.data[i].truck_name;
+    truck_plat = responses.data[i].truck_plat;
+    driver_name = responses.data[i].driver_name;
+    tgl_inv = responses.data[i].tgl_inv;
+    tgl_po = responses.data[i].tgl_po;
+    kecamatan = responses.data[i].kecamatan;
+    kabupaten = responses.data[i].kabupaten;
+    cabang_name = responses.data[i].cabang_name;
+    status_name = responses.data[i].status_name;
+    approval_name = responses.data[i].approval_name;
+    otv_payment_method = responses.data[i].otv_payment_method;
+
+    if(def(otv_payment_method) !== '-') {
+        var payment = ' - '+otv_payment_method;
+    
+    } else {
+        var payment = '';
+    }
+
+    data_json = responses.data[i].data_json;
+
+    if(responses.data[i].status_activity == 'SUBMIT') {
+        classColor = 'badge-success';
+        
+    } else if(responses.data[i].status_activity == 'APPROVAL_OJK_DRIVER') {
+        classColor = 'badge-warning';
+
+    } else if(responses.data[i].status_activity == 'DRIVER_MENUJU_TUJUAN') {
+        classColor = 'badge-info';
+
+    } else if(responses.data[i].status_activity == 'DRIVER_SAMPAI_TUJUAN') {
+        classColor = 'badge-gradient-warning';
+    
+    } else {
+        classColor = 'badge-danger';
+
+    }
+
+    if(responses.data[i].approval_code == 'APPROVED') {
+        classColors = 'badge-success';
+
+    } else if(responses.data[i].approval_code == 'REVISION') {
+        classColors = 'badge-warning';
+
+    } else if(responses.data[i].approval_code == 'WAITING_OWNER') {
+        classColors = 'badge-info';
+    
+    } else if(responses.data[i].approval_code == null){
+        approval_name = '-';
+        classColors = '';
+
+    } else {
+        classColors = 'badge-danger';
+    }
+
+
+    tableRows += "<tr>" +
+                   "<td>"+ (i+1) +"</td>"+
+                   "<td>"+ nomor_surat_jalan +"</td>"+
+                   "<td>"+ nomor_inv +"</td>"+
+                   "<td>"+ driver_name +"</td>"+
+                   "<td>"+ dateFormat(tgl_inv) +"</td>"+
+                   "<td>"+ dateFormat(tgl_po) +"</td>"+
+                   "<td>"+ kabupaten +" - "+ kecamatan +" - "+ cabang_name +"</td>"+
+                   "<td> <span class='badge "+classColor+"'>"+ status_name + payment +"</span></td>"+
+                   "<td align='center'>"+
+                     "<div class='btn-group'>"+
+                       "<a class='btn btn-warning btn-xs btn-sm' href='"+window.Laravel.app_url+"/expedition-tracking/"+id+"'><i class='fas fa-eye'></i></a>"+
+                     "</div>"+
+                   "</td>"+
+                 "</tr>";
+  }
+
+  if(!tableRows) {
+    tableRows += "<tr>" +
+                 "</tr>";
+  }
+
+  $("#table-detail-rit-report-tujuan tbody").html(tableRows);
+  paginate(responses, 'expedition');
+  $(".preloader").hide();
+});
