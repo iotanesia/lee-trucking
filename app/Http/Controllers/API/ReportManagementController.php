@@ -217,7 +217,7 @@ class ReportManagementController extends Controller
         foreach($data as $row) {
           $historyStok = StkHistorySparePart::where('header_id', $row->id)->where('transaction_type','OUT')->get();
           foreach($historyStok as $rowHistory){
-              $totals += ($rowHistory->jumlah_stok * $rowHistory->amount);
+              $totals = ($rowHistory->jumlah_stok * $rowHistory->amount);
           }
             $row->total = 'Rp.'. number_format($totals, 0, ',', '.');
             $row->data_json = $row->toJson();
@@ -386,14 +386,6 @@ class ReportManagementController extends Controller
         'ex_master_driver.driver_name', 'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name')
            ->get();
         foreach($data as $row){
-          // $exStatusActivity = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
-          // ->leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
-          // ->where('ex_status_activity.ex_id', $row->id)
-          // ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name','ex_status_activity.ex_id')
-          // ->orderBy('ex_status_activity.created_at', 'DESC')
-          // ->groupBy('approval_code', 'approval_name','ex_status_activity.created_at','ex_status_activity.ex_id')->first();
-          // $row->approval_code = $exStatusActivity['approval_code'];
-          // $row->approval_name = $exStatusActivity['approval_name'];
           $row->tujuan = $row->kabupaten.' '.$row->kecamatan.' '.$row->cabang_name;
         }
         //  dd($data);
@@ -433,14 +425,6 @@ class ReportManagementController extends Controller
         'ex_master_driver.driver_name', 'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name')
            ->get();
         foreach($data as $row){
-          // $exStatusActivity = ExStatusActivity::leftJoin('all_global_param as status_activity', 'ex_status_activity.status_activity', 'status_activity.param_code')
-          // ->leftJoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
-          // ->where('ex_status_activity.ex_id', $row->id)
-          // ->select('all_global_param.param_code as approval_code', 'all_global_param.param_name as approval_name','ex_status_activity.ex_id')
-          // ->orderBy('ex_status_activity.created_at', 'DESC')
-          // ->groupBy('approval_code', 'approval_name','ex_status_activity.created_at','ex_status_activity.ex_id')->first();
-          // $row->approval_code = $exStatusActivity['approval_code'];
-          // $row->approval_name = $exStatusActivity['approval_name'];
           $row->tujuan = $row->kabupaten.' '.$row->kecamatan.' '.$row->cabang_name;
         }
         //  dd($data);
