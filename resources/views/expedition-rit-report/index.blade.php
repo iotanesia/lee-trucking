@@ -90,15 +90,15 @@
                           <div class="dropdown-header noti-title">
                             <h6 class="text-overflow m-0">Eksport</h6>
                           </div>
-                          <a href="#" id="is-excel-rit-tujuan" class="dropdown-item">
+                          <a href="#" id="is-excel-rit-tujuan" class="dropdown-item" onclick="($('#form-export-rit-tujuan').submit())">
                             <i class="fas fa-file-excel"></i>
                             <span>Excel</span>
                           </a>
-                          <div class="dropdown-divider"></div>
+                          {{-- <div class="dropdown-divider"></div>
                           <a href="#" id="is-pdf-rit-tujuan" class="dropdown-item">
                           <i class="fas fa-file-pdf"></i>
                             <span>PDF</span>
-                          </a>
+                          </a> --}}
                         </div>
                       </div>
                     </div>
@@ -147,15 +147,15 @@
                               <div class="dropdown-header noti-title">
                                 <h6 class="text-overflow m-0">Eksport</h6>
                               </div>
-                              <a href="#" id="is-excel-rit-truck" class="dropdown-item">
+                              <a href="#" id="is-excel-rit-truck" class="dropdown-item" onclick="($('#form-export-rit-truck').submit())">
                                 <i class="fas fa-file-excel"></i>
                                 <span>Excel</span>
                               </a>
-                              <div class="dropdown-divider"></div>
+                              {{-- <div class="dropdown-divider"></div>
                               <a href="#" id="is-pdf-rit-truck" class="dropdown-item">
                               <i class="fas fa-file-pdf"></i>
                                 <span>PDF</span>
-                              </a>
+                              </a> --}}
                             </div>
                           </div>
                         </div>
@@ -204,15 +204,15 @@
                                   <div class="dropdown-header noti-title">
                                     <h6 class="text-overflow m-0">Eksport</h6>
                                   </div>
-                                  <a href="#" id="is-excel-rit-driver" class="dropdown-item">
+                                  <a href="#" id="is-excel-rit-driver" class="dropdown-item" onclick="($('#form-export-rit-driver').submit())">
                                     <i class="fas fa-file-excel"></i>
                                     <span>Excel</span>
                                   </a>
-                                  <div class="dropdown-divider"></div>
+                                  {{-- <div class="dropdown-divider"></div>
                                   <a href="#" id="is-pdf-rit-driver" class="dropdown-item">
                                   <i class="fas fa-file-pdf"></i>
                                     <span>PDF</span>
-                                  </a>
+                                  </a> --}}
                                 </div>
                               </div>
                             </div>
