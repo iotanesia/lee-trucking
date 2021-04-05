@@ -16,9 +16,10 @@ class Controller extends BaseController
 
     public function checkRoles() {
         $user = Auth::user();
-        $role = $user->group_id;
+        $role = $user->cabang_id;
+        $cabang = null;
 
-        $checkRole = Group::find($role);
+        $checkRole = Cabang::find($role);
 
         if($checkRole) {
             $roles = strpos($checkRole->group_name, "Dawuan -");
@@ -28,7 +29,6 @@ class Controller extends BaseController
                 
             } else {
                 $cabang = Cabang::where('cabang_name', 'LIKE', '%Cabang Dawuan%')->get()->pluck('id');
-
             }
         }
 

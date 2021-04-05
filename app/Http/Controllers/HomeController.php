@@ -30,23 +30,46 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $cekRole = $this->checkRoles();
+        $queryRole = "";
+
+        if($cekRole) {
+            $ids = json_decode($cekRole, true);
+            $idRole = implode(', ', $ids);
+            $queryRole = 'AND b.cabang_id IN ('.$idRole.')';
+        }
+
         $schema = Auth::user()->schema;
         $bln = date('m');
         $thn = date('Y');
         $data['cabang_tsj_truck'] = 0;
         $data['cabang_dawuan_fuso'] = 0;
-        $totalEx = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn." AND is_deleted = 'f' ");
-        $totalClose = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity = 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn." AND is_deleted = 'f'");
-        $totalOnProggres = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".expedition_activity WHERE status_activity <> 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn." AND is_deleted = 'f'");
-        $totalrepair = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn."");
-        $totalrepairBan = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE kode_repair LIKE '%RPBAN-%' AND EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn."");
-        $totalrepairNonBan = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".stk_repair_header WHERE kode_repair LIKE '%RP-%' AND EXTRACT(MONTH FROM updated_at) = ".$bln." AND EXTRACT(YEAR FROM updated_at) = ".$thn."");
-        $totaltruck = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".ex_master_truck WHERE is_deleted = false");
-
+        $totalEx = DB::select("SELECT COUNT(a.id) AS total FROM ".$schema.".expedition_activity as a 
+                   JOIN users as b ON b.id = a.user_id WHERE EXTRACT(MONTH FROM a.updated_at) = ".$bln." AND EXTRACT(YEAR FROM a.updated_at) = ".$thn." 
+                   AND a.is_deleted = 'f' ".$queryRole);
+        $totalClose = DB::select("SELECT COUNT(a.id) AS total FROM ".$schema.".expedition_activity as a 
+                      JOIN users as b ON b.id = a.user_id 
+                      WHERE a.status_activity = 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM a.updated_at) = ".$bln." AND EXTRACT(YEAR FROM a.updated_at) = ".$thn." 
+                      AND a.is_deleted = 'f' ".$queryRole);
+        $totalOnProggres = DB::select("SELECT COUNT(a.id) AS total FROM ".$schema.".expedition_activity as a 
+                           JOIN users as b ON b.id = a.user_id 
+                           WHERE a.status_activity <> 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM a.updated_at) = ".$bln." AND EXTRACT(YEAR FROM a.updated_at) = ".$thn." 
+                           AND a.is_deleted = 'f' ".$queryRole);
+        $totalrepair = DB::select("SELECT COUNT(a.id) AS total FROM ".$schema.".stk_repair_header as a
+                       JOIN ".$schema.".ex_master_truck as b ON b.id = a.truck_id 
+                       WHERE EXTRACT(MONTH FROM a.updated_at) = ".$bln." AND EXTRACT(YEAR FROM a.updated_at) = ".$thn." ".$queryRole);
+        $totalrepairBan = DB::select("SELECT COUNT(a.id) AS total FROM ".$schema.".stk_repair_header as a
+                          JOIN ".$schema.".ex_master_truck as b ON b.id = a.truck_id 
+                          WHERE a.kode_repair LIKE '%RPBAN-%' AND EXTRACT(MONTH FROM a.updated_at) = ".$bln." AND EXTRACT(YEAR FROM a.updated_at) = ".$thn." ".$queryRole);
+        $totalrepairNonBan = DB::select("SELECT COUNT(a.id) AS total FROM ".$schema.".stk_repair_header  as a
+                             JOIN ".$schema.".ex_master_truck as b ON b.id = a.truck_id 
+                             WHERE a.kode_repair LIKE '%RP-%' AND EXTRACT(MONTH FROM a.updated_at) = ".$bln." AND EXTRACT(YEAR FROM a.updated_at) = ".$thn." ".$queryRole);
+        $totaltruck = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".ex_master_truck as b WHERE is_deleted = false ".$queryRole);
         $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        $ex = DB::select("SELECT date_part('month', tgl_po) AS months, COUNT(id) FROM ".$schema.".expedition_activity GROUP BY months ORDER BY months ASC");
-        // dd($ex);
-        $truck = DB::select("SELECT b.cabang_name, COUNT(a.id) FROM ".$schema.".ex_master_truck AS a JOIN ".$schema.".ex_master_cabang AS b ON a.cabang_id = b.id  WHERE a.is_deleted = false GROUP BY cabang_id, b.cabang_name");
+        $ex = DB::select("SELECT date_part('month', a.tgl_po) AS months, COUNT(a.id) FROM ".$schema.".expedition_activity as a
+              JOIN ".$schema.".ex_master_truck as b ON b.id = a.truck_id     
+              GROUP BY months ORDER BY months ASC");
+        $truck = DB::select("SELECT b.cabang_name, COUNT(a.id) FROM ".$schema.".ex_master_truck AS a JOIN ".$schema.".ex_master_cabang AS b ON a.cabang_id = b.id 
+                 WHERE a.is_deleted = false GROUP BY cabang_id, b.cabang_name");
 
         foreach($truck as $key => $val) {
             $cabangNames = strtolower(str_replace(" - ", " ", $val->cabang_name));
@@ -65,13 +88,29 @@ class HomeController extends Controller
             $data['total_trucks'][] = $row->count;
         }
 
-        $debit = DB::select("SELECT SUM(a.nominal) AS total_income FROM ".$schema.".coa_activity AS a JOIN ".$schema.".coa_master_sheet AS b ON a.coa_id = b.id WHERE report_active = 'True' AND b.jurnal_category = 'DEBIT' AND EXTRACT(MONTH FROM a.created_at) = ".$bln."  AND EXTRACT(YEAR FROM a.created_at) = ".$thn." ");
-        $credit = DB::select("SELECT SUM(a.nominal) AS total_income FROM ".$schema.".coa_activity AS a JOIN ".$schema.".coa_master_sheet AS b ON a.coa_id = b.id WHERE report_active = 'True' AND b.jurnal_category = 'CREDIT' AND EXTRACT(MONTH FROM a.created_at) = ".$bln."  AND EXTRACT(YEAR FROM a.created_at) = ".$thn." ");
+        $debit = DB::select("SELECT SUM(a.nominal) AS total_income FROM ".$schema.".coa_activity AS a 
+                 JOIN ".$schema.".coa_master_sheet AS c ON a.coa_id = c.id 
+                 JOIN users AS b ON a.created_by = b.id
+                 WHERE report_active = 'True' 
+                 AND c.jurnal_category = 'DEBIT' AND EXTRACT(MONTH FROM a.created_at) = ".$bln." 
+                 AND EXTRACT(YEAR FROM a.created_at) = ".$thn." ".$queryRole);
+
+        $credit = DB::select("SELECT SUM(a.nominal) AS total_income FROM ".$schema.".coa_activity AS a 
+        JOIN ".$schema.".coa_master_sheet AS c ON a.coa_id = c.id
+        JOIN users AS b ON a.created_by = b.id
+        WHERE report_active = 'True' 
+        AND c.jurnal_category = 'CREDIT' AND EXTRACT(MONTH FROM a.created_at) = ".$bln."  AND EXTRACT(YEAR FROM a.created_at) = ".$thn." ".$queryRole);
         $totalIncome = $credit[0]->total_income - $debit[0]->total_income;
-        
-        
-        $data['driver'] = DB::select("SELECT a.driver_name, a.driver_status, COUNT(c.id) AS total_rit FROM ".$schema.".ex_master_driver AS a JOIN users AS b ON a.user_id = b.id LEFT JOIN ".$schema.".expedition_activity AS c ON a.id = c.driver_id GROUP BY c.driver_id, a.driver_name, a.driver_status ORDER BY total_rit DESC LIMIT 5");
-        $data['truckRit'] = DB::select("SELECT a.truck_name, a.truck_plat, a.truck_status, COUNT(c.id) AS total_rit FROM ".$schema.".ex_master_truck AS a LEFT JOIN ".$schema.".expedition_activity AS c ON a.id = c.truck_id GROUP BY c.truck_id, a.truck_name, a.truck_status, a.truck_plat ORDER BY total_rit DESC LIMIT 5");
+
+        $data['driver'] = DB::select("SELECT a.driver_name, a.driver_status, COUNT(c.id) AS total_rit FROM ".$schema.".ex_master_driver AS a 
+                          JOIN users AS b ON a.user_id = b.id 
+                          LEFT JOIN ".$schema.".expedition_activity AS c ON a.id = c.driver_id 
+                          WHERE a.is_deleted = 'f' ".$queryRole." 
+                          GROUP BY c.driver_id, a.driver_name, a.driver_status ORDER BY total_rit DESC LIMIT 5 ");
+        $data['truckRit'] = DB::select("SELECT b.truck_name, b.truck_plat, b.truck_status, COUNT(c.id) AS total_rit 
+                            FROM ".$schema.".ex_master_truck AS b 
+                            LEFT JOIN ".$schema.".expedition_activity AS c ON b.id = c.truck_id ".$queryRole."
+                            GROUP BY c.truck_id, b.truck_name, b.truck_status, b.truck_plat ORDER BY total_rit DESC LIMIT 5");
         $data['total_expedisi'] = $totalEx[0];
         $data['total_on_progress'] = $totalOnProggres[0];
         $data['total_close'] = $totalClose[0];
