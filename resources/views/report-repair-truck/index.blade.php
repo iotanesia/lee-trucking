@@ -50,7 +50,7 @@
             </div>
             
             <div class="card-body">
-              <form id="form-export" method="get" action="{{url('export-truck-repair')}}">
+              <form id="form-export-truck-repair" method="get" action="{{url('export-truck-repair')}}">
                 <div class="row">
                       <div class="col-md-4">
                         <input class="form-control" name="tipeFile" id="tipeFile" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
@@ -59,7 +59,7 @@
                           <div class="input-group-prepend" style="margin-left: 10px;">
                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                           </div>
-                            <input class="form-control" name="dateRange" placeholder="Pilih Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            <input class="form-control" name="dateRangeTruckRepair" placeholder="Pilih Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                             <a id="clearDate" href="#" style="color:#adb5bd;padding: 8px;font-size: 13pt;padding-right: 15px;">x</a>
                         </div>
                       </div>
@@ -79,15 +79,15 @@
                           <div class="dropdown-header noti-title">
                             <h6 class="text-overflow m-0">Eksport</h6>
                           </div>
-                          <a href="#" id="is-excel" class="dropdown-item" data-toggle="modal" data-target="#modal-export">
+                          <a href="#" id="is-excel-truck-repair" class="dropdown-item" onclick="($('#form-export-truck-repair').submit())">
                             <i class="fas fa-file-excel"></i>
                             <span>Excel</span>
                           </a>
-                          <div class="dropdown-divider"></div>
+                          {{-- <div class="dropdown-divider"></div>
                           <a href="#" id="is-pdf" class="dropdown-item" data-toggle="modal" data-target="#modal-export">
                           <i class="fas fa-file-pdf"></i>
                             <span>PDF</span>
-                          </a>
+                          </a> --}}
                         </div>
                       </div>
                     </div>
@@ -158,7 +158,7 @@
                                 <th>Tanggal</th>
                                 <th>Nama Sparepart</th>
                                 <th>Barcode Gudang</th>
-                                <th>Barcode Pabrik</th>
+                                <th>Barcode Gudang</th>
                                 <th>Tipe Sparepart</th>
                                 <th>Jumlah Stok</th>
                                 <th>Amount</th>

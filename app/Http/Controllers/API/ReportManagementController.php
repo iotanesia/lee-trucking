@@ -204,7 +204,7 @@ class ReportManagementController extends Controller
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
         $endDate = (isset($data['end_date'])) ? $data['end_date'].' 23:59:59' : '';
-        $data = $data = StkRepairHeader::leftJoin('ex_master_truck' ,'stk_repair_header.truck_id','ex_master_truck.id')
+        $data = StkRepairHeader::leftJoin('ex_master_truck' ,'stk_repair_header.truck_id','ex_master_truck.id')
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('stk_repair_header.created_at', [$startDate, $endDate]);
@@ -220,7 +220,6 @@ class ReportManagementController extends Controller
               $totals = ($rowHistory->jumlah_stok * $rowHistory->amount);
           }
             $row->total = 'Rp.'. number_format($totals, 0, ',', '.');
-            $row->data_json = $row->toJson();
         }
         return datatables($data)->toJson();
       }
@@ -234,7 +233,7 @@ class ReportManagementController extends Controller
         $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
         $endDate = (isset($data['end_date'])) ? $data['end_date'].' 23:59:59' : '';
         $idHeader = $data['id_header'];
-        $data = $data = StkHistorySparePart::leftJoin('stk_repair_header' ,'stk_repair_header.id','stk_history_stock.header_id')
+        $data = StkHistorySparePart::leftJoin('stk_repair_header' ,'stk_repair_header.id','stk_history_stock.header_id')
         ->where('stk_history_stock.header_id', $idHeader)
         ->where('stk_history_stock.transaction_type','OUT')
         ->where(function($query) use($startDate, $endDate) {
@@ -246,7 +245,8 @@ class ReportManagementController extends Controller
         ->orderBy('stk_history_stock.updated_at','DESC')->get();
           
         foreach($data as $row) {
-          $row->total = ($row->jumlah_stok * $row->amount);
+          $row->total = 'Rp.'. number_format(($row->jumlah_stok * $row->amount), 0, ',', '.');
+          $row->amount = 'Rp.'. number_format($row->amount, 0, ',', '.');
         }
         return datatables($data)->toJson();
       }

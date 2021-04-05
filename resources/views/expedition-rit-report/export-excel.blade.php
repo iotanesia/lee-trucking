@@ -10,12 +10,11 @@
         <br/>
         <br/>
         <br/>
-        <?php $no = 1; ?>
         @if(!empty($data)) 
         <Table>
             <tr>  
                 <td style="font-weight: bold;font-family:Calibri;font-size:11pt;text-align:left;">
-                Ekspedisi dan Rit {{$param}} Tanggal {{$startDate}} - {{$endDate}}
+                Laporan Ekspedisi dan Rit {{$param}} Tanggal {{$startDate}} - {{$endDate}}
                 </td>
                 <td style="font-family:Calibri;font-size:11pt;text-align:left;">
                 </td>
@@ -73,6 +72,7 @@
                 </tr>
             </thead>
             
+                <?php $no = 1; ?>
                 @foreach ($row->detail as $rows)
                 <tr>
                     <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:5px;vertical-align: middle;">{{$no++}}</td>
