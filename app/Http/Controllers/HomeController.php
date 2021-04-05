@@ -44,15 +44,15 @@ class HomeController extends Controller
         $data['cabang_tsj_truck'] = 0;
         $data['cabang_dawuan_fuso'] = 0;
         $totalEx = DB::select("SELECT COUNT(a.id) AS total FROM ".$schema.".expedition_activity as a 
-                   JOIN users as b ON b.id = a.user_id WHERE EXTRACT(MONTH FROM a.updated_at) = ".$bln." AND EXTRACT(YEAR FROM a.updated_at) = ".$thn." 
+                   JOIN users as b ON b.id = a.user_id WHERE EXTRACT(MONTH FROM a.tgl_po) = ".$bln." AND EXTRACT(YEAR FROM a.tgl_po) = ".$thn." 
                    AND a.is_deleted = 'f' ".$queryRole);
         $totalClose = DB::select("SELECT COUNT(a.id) AS total FROM ".$schema.".expedition_activity as a 
                       JOIN users as b ON b.id = a.user_id 
-                      WHERE a.status_activity = 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM a.updated_at) = ".$bln." AND EXTRACT(YEAR FROM a.updated_at) = ".$thn." 
+                      WHERE a.status_activity = 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM a.tgl_po) = ".$bln." AND EXTRACT(YEAR FROM a.tgl_po) = ".$thn." 
                       AND a.is_deleted = 'f' ".$queryRole);
         $totalOnProggres = DB::select("SELECT COUNT(a.id) AS total FROM ".$schema.".expedition_activity as a 
                            JOIN users as b ON b.id = a.user_id 
-                           WHERE a.status_activity <> 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM a.updated_at) = ".$bln." AND EXTRACT(YEAR FROM a.updated_at) = ".$thn." 
+                           WHERE a.status_activity <> 'CLOSED_EXPEDITION' AND EXTRACT(MONTH FROM a.tgl_po) = ".$bln." AND EXTRACT(YEAR FROM a.tgl_po) = ".$thn." 
                            AND a.is_deleted = 'f' ".$queryRole);
         $totalrepair = DB::select("SELECT COUNT(a.id) AS total FROM ".$schema.".stk_repair_header as a
                        JOIN ".$schema.".ex_master_truck as b ON b.id = a.truck_id 
@@ -94,14 +94,12 @@ class HomeController extends Controller
                  WHERE report_active = 'True' 
                  AND c.jurnal_category = 'DEBIT' AND EXTRACT(MONTH FROM a.created_at) = ".$bln." 
                  AND EXTRACT(YEAR FROM a.created_at) = ".$thn." ".$queryRole);
-
         $credit = DB::select("SELECT SUM(a.nominal) AS total_income FROM ".$schema.".coa_activity AS a 
-        JOIN ".$schema.".coa_master_sheet AS c ON a.coa_id = c.id
-        JOIN users AS b ON a.created_by = b.id
-        WHERE report_active = 'True' 
-        AND c.jurnal_category = 'CREDIT' AND EXTRACT(MONTH FROM a.created_at) = ".$bln."  AND EXTRACT(YEAR FROM a.created_at) = ".$thn." ".$queryRole);
+                  JOIN ".$schema.".coa_master_sheet AS c ON a.coa_id = c.id
+                  JOIN users AS b ON a.created_by = b.id
+                  WHERE report_active = 'True' 
+                  AND c.jurnal_category = 'CREDIT' AND EXTRACT(MONTH FROM a.created_at) = ".$bln."  AND EXTRACT(YEAR FROM a.created_at) = ".$thn." ".$queryRole);
         $totalIncome = $credit[0]->total_income - $debit[0]->total_income;
-
         $data['driver'] = DB::select("SELECT a.driver_name, a.driver_status, COUNT(c.id) AS total_rit FROM ".$schema.".ex_master_driver AS a 
                           JOIN users AS b ON a.user_id = b.id 
                           LEFT JOIN ".$schema.".expedition_activity AS c ON a.id = c.driver_id 
@@ -109,7 +107,8 @@ class HomeController extends Controller
                           GROUP BY c.driver_id, a.driver_name, a.driver_status ORDER BY total_rit DESC LIMIT 5 ");
         $data['truckRit'] = DB::select("SELECT b.truck_name, b.truck_plat, b.truck_status, COUNT(c.id) AS total_rit 
                             FROM ".$schema.".ex_master_truck AS b 
-                            LEFT JOIN ".$schema.".expedition_activity AS c ON b.id = c.truck_id ".$queryRole."
+                            LEFT JOIN ".$schema.".expedition_activity AS c ON b.id = c.truck_id 
+                            WHERE b.is_deleted = 'f' ".$queryRole."
                             GROUP BY c.truck_id, b.truck_name, b.truck_status, b.truck_plat ORDER BY total_rit DESC LIMIT 5");
         $data['total_expedisi'] = $totalEx[0];
         $data['total_on_progress'] = $totalOnProggres[0];
