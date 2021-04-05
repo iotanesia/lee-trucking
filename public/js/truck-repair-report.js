@@ -64,7 +64,7 @@
   }
 
   $(function() {
-    $('input[name="dateRange"]').daterangepicker({
+    $('input[name="dateRangeTruckRepair"]').daterangepicker({
       opens: 'right',
       showDropdowns: true,
     locale: {
@@ -104,8 +104,8 @@
       endDate = end.format('YYYY-MM-DD');
       $('#table-repair-truck-report').DataTable().ajax.reload();
     });
-  $('input[name="dateRange"]').val('');
-  $('input[name="dateRange"]').attr("placeholder","Pilih Tanggal");
+  $('input[name="dateRangeTruckRepair"]').val('');
+  $('input[name="dateRangeTruckRepair"]').attr("placeholder","Pilih Tanggal");
   });
 
   function formatDate(date) {
@@ -154,8 +154,8 @@
 
  $('#clearDate').click(function(e){
     e.preventDefault();
-    $('input[name="dateRange"]').val('');
-    $('input[name="dateRange"]').attr("placeholder","Pilih Tanggal");
+    $('input[name="dateRangeTruckRepair"]').val('');
+    $('input[name="dateRangeTruckRepair"]').attr("placeholder","Pilih Tanggal");
     startDate = '';
     endDate = '';   
     $('#table-repair-truck-report').DataTable().ajax.reload();

@@ -82,3 +82,9 @@ Route::get('/export-rit-tujuan', 'ExpeditionAndRitReportController@exportExcelRi
 Route::get('/export-rit-driver', 'ExpeditionAndRitReportController@exportExcelRitDriver')->name('export-rit-driver');
 Route::get('/export-rit-truck', 'ExpeditionAndRitReportController@exportExcelRitTruck')->name('export-rit-truck');
 #endregion
+
+#region Export Truck Repair Report 
+
+Route::get('/export-truck-repair', 'RepairTruckReportController@exportTruckRepair')->name('export-truck-repair');
+
+#endregion
