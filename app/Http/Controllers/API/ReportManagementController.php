@@ -32,7 +32,7 @@ class ReportManagementController extends Controller
           ->leftJoin('public.users','coa_activity.created_by','public.users.id')
           ->leftJoin('coa_master_rekening','coa_activity.rek_id','coa_master_rekening.id')
           ->leftJoin('expedition_activity','coa_activity.ex_id', 'expedition_activity.id')
-          ->where('coa_master_sheet.report_active','True')
+          ->where('coa_master_sheet.report_active','True')  
           ->whereBetween('coa_activity.created_at', [$startDate, $endDate])
           ->where(function($query) use($filterSelect) {
             if($filterSelect) {
