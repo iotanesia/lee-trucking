@@ -2,12 +2,9 @@
   
   $(document).ready(function() {  
     
-$('#modal-detail-rit-report').on('hidden.bs.modal', function(e) {
-  $('#table-detail-rit-report').dataTable().fnDestroy();
-});
     var accessToken =  window.Laravel.api_token;
-    // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6I/jQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
-   
+    // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
+
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
     var firstDay = new Date(y, m, 1);
     var lastDay = new Date(y, m+1, 0);
@@ -45,6 +42,7 @@ $('#modal-detail-rit-report').on('hidden.bs.modal', function(e) {
         {
             "data": null,
             render: function (data, type, row) {
+              console.log(data);
               param = data.kabupaten+', '+data.kecamatan;
               return '<a href="#" onclick="return openModalDetail(\'Tujuan\',\'' + param + '\',\'' + data.ojk_id + '\',\'' + startDateTujuan + '\',\'' + endDateTujuan + '\')" data-toggle="modal" data-target="#modal-detail-rit-report" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
             }
@@ -175,8 +173,8 @@ $('#modal-detail-rit-report').on('hidden.bs.modal', function(e) {
     endDate: formatDate(lastDay)
     },
     function(start, end, label) {
-      startDate = start.format('YYYY-MM-DD');
-      endDate = end.format('YYYY-MM-DD');
+      startDateTujuan = start.format('YYYY-MM-DD');
+      endDateTujuan = end.format('YYYY-MM-DD');
       $('#table-rit-tujuan').DataTable().ajax.reload();
     });
   });
@@ -220,8 +218,8 @@ $('#modal-detail-rit-report').on('hidden.bs.modal', function(e) {
     endDate: formatDate(lastDay)
     },
     function(start, end, label) {
-      startDate = start.format('YYYY-MM-DD');
-      endDate = end.format('YYYY-MM-DD');
+      startDateDriver = start.format('YYYY-MM-DD');
+      endDateDriver = end.format('YYYY-MM-DD');
       $('#table-rit-driver').DataTable().ajax.reload();
     });
   });
@@ -265,8 +263,8 @@ $('#modal-detail-rit-report').on('hidden.bs.modal', function(e) {
     endDate: formatDate(lastDay)
     },
     function(start, end, label) {
-      startDate = start.format('YYYY-MM-DD');
-      endDate = end.format('YYYY-MM-DD');
+      startDateTruck = start.format('YYYY-MM-DD');
+      endDateTruck = end.format('YYYY-MM-DD');
       $('#table-rit-truck').DataTable().ajax.reload();
     });
   });
@@ -315,14 +313,14 @@ $('#modal-detail-rit-report').on('hidden.bs.modal', function(e) {
   }
   
 
- $('#clearDate').click(function(e){
-    e.preventDefault();
-    $('input[name="dateRange"]').val('');
-    $('input[name="dateRange"]').attr("placeholder","Pilih Tanggal");
-    startDate = '';
-    endDate = '';   
-    $('#table-repair-truck-report').DataTable().ajax.reload();
- })
+//  $('#clearDate').click(function(e){
+//     e.preventDefault();
+//     $('input[name="dateRange"]').val('');
+//     $('input[name="dateRange"]').attr("placeholder","Pilih Tanggal");
+//     startDate = '';
+//     endDate = '';   
+//     $('#table-repair-truck-report').DataTable().ajax.reload();
+//  })
 
   $("#is-excel").click(function(e) {
     e.preventDefault();
@@ -400,7 +398,7 @@ function openModalDetail(_ritBy, _param, _whereValue, _startDate, _endDate){
             classColor = 'badge-danger';
     
         }
-          return '<span class="badge '+classColor+'">'+ data.status_name + data.payment +'</span>';
+          return '<span class="badge '+classColor+'">'+ data.status_name +' '+ data.otv_payment_method +'</span>';
         }
     }, 
   ],
@@ -413,35 +411,36 @@ function openModalDetail(_ritBy, _param, _whereValue, _startDate, _endDate){
   }
   
 });
-// $('#modal-detail-rit-report').on('hidden.bs.modal', function () {
-//   $('#table-detail-rit-report').dataTable().fnDestroy();
-// });
-function formatDate(date) {
-  var d = new Date(date),
-      bulan = d.getMonth(),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
 
-      switch(bulan) {
-        case 0: bulan = "Januari"; break;
-        case 1: bulan = "Februari"; break;
-        case 2: bulan = "Maret"; break;
-        case 3: bulan = "April"; break;
-        case 4: bulan = "Mei"; break;
-        case 5: bulan = "Juni"; break;
-        case 6: bulan = "Juli"; break;
-        case 7: bulan = "Agustus"; break;
-        case 8: bulan = "September"; break;
-        case 9: bulan = "Oktober"; break;
-        case 10: bulan = "November"; break;
-        case 11: bulan = "Desember"; break;
-       }
+$('#modal-detail-rit-report').on('hidden.bs.modal', function(e) {
+  $('#table-detail-rit-report').dataTable().fnDestroy();
+});
+  function formatDate(date) {
+    var d = new Date(date),
+        bulan = d.getMonth(),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+        switch(bulan) {
+          case 0: bulan = "Januari"; break;
+          case 1: bulan = "Februari"; break;
+          case 2: bulan = "Maret"; break;
+          case 3: bulan = "April"; break;
+          case 4: bulan = "Mei"; break;
+          case 5: bulan = "Juni"; break;
+          case 6: bulan = "Juli"; break;
+          case 7: bulan = "Agustus"; break;
+          case 8: bulan = "September"; break;
+          case 9: bulan = "Oktober"; break;
+          case 10: bulan = "November"; break;
+          case 11: bulan = "Desember"; break;
+        }
 
 
-  if (day.length < 2) 
-      day = '0' + day;
-  var result = [day, bulan, year].join(' ');
-  // console.log(result);
-  return result;
-} 
+    if (day.length < 2) 
+        day = '0' + day;
+    var result = [day, bulan, year].join(' ');
+    // console.log(result);
+    return result;
+  } 
 }
