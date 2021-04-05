@@ -319,6 +319,7 @@ class ReportManagementController extends Controller
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
         $endDate = (isset($data['end_date'])) ? $data['end_date'].' 23:59:59' : '';
+      //  dd($startDate.' & '.$endDate); die();
         $statusCode = isset($data['status_code']) ? $data['status_code'] : '';
         $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
         ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
@@ -336,7 +337,7 @@ class ReportManagementController extends Controller
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
-        ->select(DB::raw('COUNT("expedition_activity") AS total_ekspedisi'),'expedition_activity.ojk_id','ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')
+        ->select(DB::raw('COUNT("ojk_id") AS total_ekspedisi'),'expedition_activity.ojk_id','ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')
         ->groupBy('expedition_activity.ojk_id', 'ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')->get();
           // dd($data);
         return datatables($data)->toJson();
