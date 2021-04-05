@@ -8,6 +8,7 @@ use App\Models\ExpeditionActivity;
 use App\Models\Ojk;
 use App\Models\Truck;
 use App\Models\Kabupaten;
+use App\Exports\ExportRepairTruck;
 use Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
@@ -44,6 +45,27 @@ class RepairTruckReportController extends Controller
           ->orderBy('stk_repair_header.updated_at','DESC')->paginate();
        
        return json_decode($data);
+    }
+
+    public function exportTruckRepair(Request $request){
+        $date = $request->dateRangeTruckRepair;
+        $startDate = '';
+        $endDate = '';
+        if(isset($date)){
+            $dates = explode('-',$date);
+            $startDate = Date('Y-m-d',strtotime($dates[0]));
+            $endDate =  Date('Y-m-d',strtotime($dates[1]));
+        }
+        setlocale(LC_TIME, 'id_ID');
+        Carbon::setLocale('id');
+        
+        $namaFile = 'Repair Truck Report '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
+        // if($request->tipeFile == "excel"){
+        return Excel::download(new ExportRepairTruck($startDate, $endDate), $namaFile.'.xlsx');
+        // }else if($request->tipeFile == "pdf"){
+        //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
+        // }
+        
     }
 
 }
