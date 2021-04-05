@@ -16,6 +16,12 @@ class MoneyTransactionHeaderController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
+      $cekRole = $this->checkRoles();
+      $ids = null;
+  
+      if($cekRole) {
+          $ids = json_decode($cekRole, true);
+      }
       $data = $request->all();
       $whereField = 'users.name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
@@ -30,6 +36,11 @@ class MoneyTransactionHeaderController extends Controller
                                                 $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                                             }
                                         }
+                                    })
+                                    ->where(function($query) use($ids) {
+                                      if($ids) {
+                                         $query->whereIn('users.cabang_id', $ids);
+                                      }
                                     })
                                     ->where('category_name', 'PINJAMAN_KARYAWAN')
                                     ->select('money_transaction_header.user_id', 'users.name as name_user', DB::raw('SUM(pokok) AS pokok'), DB::raw('SUM(sisa_pokok) AS sisa_pokok'), 
@@ -216,6 +227,12 @@ class MoneyTransactionHeaderController extends Controller
 
   public function getListModalUsaha(Request $request) {
     if($request->isMethod('GET')) {
+      $cekRole = $this->checkRoles();
+      $ids = null;
+
+      if($cekRole) {
+          $ids = json_decode($cekRole, true);
+      }
       $data = $request->all();
       $whereField = 'money_transaction_header.category_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
@@ -230,6 +247,11 @@ class MoneyTransactionHeaderController extends Controller
                                                 $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                                             }
                                         }
+                                    })
+                                    ->where(function($query) use($ids) {
+                                      if($ids) {
+                                         $query->whereIn('users.cabang_id', $ids);
+                                      }
                                     })
                                     ->where('category_name', 'MODAL_USAHA')
                                     ->select('money_transaction_header.*', 'users.name as name_user', 'coa_master_rekening.rek_no', 'coa_master_rekening.rek_name')

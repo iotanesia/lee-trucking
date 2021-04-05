@@ -101,10 +101,12 @@ $("document").ready(function(){
         $("#user-form").find("input[name=nama_rekening]").val(dataJSON.nama_rekening);
         $("#user-modal #btn-submit").attr("el-event", "edit");
         $("#user-form").find("textarea[name=content]").summernote("code", dataJSON.content);
-
-        bindToForm($("#user-modal"), dataJSON);
         
-      } else {
+        bindToForm($("#user-modal"), dataJSON);
+        $("#user-form").find("select[name=cabang_id]").val(dataJSON.cabang_id).trigger('change');
+        
+    } else {
+        $("#user-form").find("select[name=cabang_id]").val(null).trigger('change');
         $("#user-form").find("input[name=id]").val(null);
         $("#user-modal #btn-submit").attr("el-event", "add");
         $("#user-form").find("textarea[name=content]").summernote("code", "");
