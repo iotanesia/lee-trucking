@@ -58,15 +58,19 @@ $("document").ready(function(){
     });
 
     $("#group_id").select2({
-        placeholder:"Select Group"
+        placeholder:"Pilih Group"
+    });
+
+    $("#cabang_id").select2({
+        placeholder:"Pilih Cabang"
     });
 
     $("#is_active").select2({
-        placeholder:"Select Parent"
+        placeholder:"Pilih Parent"
     });
 
     $("#user_category").select2({
-        placeholder:"Select Category"
+        placeholder:"Pilih Kategori"
     });
 
     $("#tgl_lahir").daterangepicker({
@@ -77,11 +81,11 @@ $("document").ready(function(){
     });
 
     $("#agama").select2({
-        placeholder:"Select Agama"
+        placeholder:"Pilih Agama"
     });
 
     $("#jenis_kelamin").select2({
-        placeholder:"Select Jenis Kelamin"
+        placeholder:"Pilih Jenis Kelamin"
     });
 
     $("#user-modal").on("show.bs.modal", function(e) {
