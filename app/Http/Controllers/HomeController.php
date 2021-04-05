@@ -29,6 +29,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $cekRole = $this->checkRoles();
         $schema = Auth::user()->schema;
         $bln = date('m');
         $thn = date('Y');

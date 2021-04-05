@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\Group;
+use App\Models\Cabang;
 use App\Models\GlobalParam;
 use Auth;
 
@@ -29,6 +30,7 @@ class UserController extends Controller
     {
         $data['title'] = 'User';
         $data['group'] = Group::get();
+        $data['cabang'] = Cabang::where('is_deleted', 'f')->get();
         $data['jk'] = GlobalParam::where('param_type', 'JENIS_KELAMIN')->get();
         $data['agama'] = GlobalParam::where('param_type', 'AGAMA')->get();
 

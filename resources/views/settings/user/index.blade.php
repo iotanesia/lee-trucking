@@ -107,25 +107,36 @@
                 <input type="hidden" name="id" id="id">
                 <div class="card-body">
                     <div class="row">    
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="form-control-label" for="user_name">Username</label>
                                 <input type="text" class="form-control" name="name" id="user_name" placeholder="user_name">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="form-control-label" for="email">Email</label>
                                 <input type="email" class="form-control" name="email" id="email" placeholder="email">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="form-control-label" for="user_parent">Group</label>
                                 <select name="group_id" id="group_id" class="form-control">
                                     <option value=""></option>
                                     @foreach($group as $row)
                                     <option value="{{$row->id}}">{{$row->group_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-control-label" for="user_parent">Cabang</label>
+                                <select name="cabang_id" id="cabang_id" class="form-control">
+                                    <option value=""></option>
+                                    @foreach($cabang as $row)
+                                    <option value="{{$row->id}}">{{$row->cabang_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
