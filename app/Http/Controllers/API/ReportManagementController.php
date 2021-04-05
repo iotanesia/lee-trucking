@@ -273,7 +273,7 @@ class ReportManagementController extends Controller
         })
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
-            $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+            $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
         ->select(DB::raw('COUNT("driver_id") AS total_ekspedisi'),'expedition_activity.driver_id', 'ex_master_driver.driver_name')
@@ -302,7 +302,7 @@ class ReportManagementController extends Controller
         })
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
-            $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+            $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
         ->select(DB::raw('COUNT("truck_id") AS total_ekspedisi'),'expedition_activity.truck_id', 'ex_master_truck.truck_plat','ex_master_truck.truck_name')
@@ -333,7 +333,7 @@ class ReportManagementController extends Controller
         })
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
-            $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+            $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
         ->select(DB::raw('COUNT("expedition_activity") AS total_ekspedisi'),'expedition_activity.ojk_id','ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')
@@ -379,7 +379,7 @@ class ReportManagementController extends Controller
         })
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
-            $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+            $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
         ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code', 
@@ -418,7 +418,7 @@ class ReportManagementController extends Controller
         })
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
-            $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+            $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
         ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code', 
