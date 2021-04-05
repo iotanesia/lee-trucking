@@ -1,9 +1,10 @@
   
   
   $(document).ready(function() {  
+    
     var accessToken =  window.Laravel.api_token;
     // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
-   
+
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
     var firstDay = new Date(y, m, 1);
     var lastDay = new Date(y, m+1, 0);
@@ -20,7 +21,8 @@
     serverSide: true, autoWidth: true,
     ajax: {
       url: window.Laravel.app_url + "/api/report/get-ekspedisi-rit-tujuan-list",
-      type: "GET",data: function (d) {
+      type: "GET",
+      data: function (d) {
         d.start_date = startDateTujuan;
         d.end_date = endDateTujuan;
       },
@@ -40,7 +42,9 @@
         {
             "data": null,
             render: function (data, type, row) {
-              return '<a href="#" data-toggle="modal" data-target="#modal-detail-truck-repair" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
+              console.log(data);
+              param = data.kabupaten+', '+data.kecamatan;
+              return '<a href="#" onclick="return openModalDetail(\'Tujuan\',\'' + param + '\',\'' + data.ojk_id + '\',\'' + startDateTujuan + '\',\'' + endDateTujuan + '\')" data-toggle="modal" data-target="#modal-detail-rit-report" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
             }
         }
     ],
@@ -76,10 +80,11 @@
         {"data":"truck_plat"},
         {"data":"total_ekspedisi"},
         {
-            "data": null,
-            render: function (data, type, row) {
-              return '<a href="#" data-toggle="modal" data-target="#modal-detail-truck-repair" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
-            }
+          "data": null,
+          render: function (data, type, row) {
+            param = data.truck_name+', '+data.truck_plat;
+            return '<a href="#" onclick="return openModalDetail(\'Truck\',\'' + param + '\',\'' + data.truck_id + '\',\'' + startDateTruck + '\',\'' + endDateTruck + '\')" data-toggle="modal" data-target="#modal-detail-rit-report" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
+          }
         }
     ],
     scrollCollapse: true,
@@ -113,10 +118,11 @@
         {"data":"driver_name"},
         {"data":"total_ekspedisi"},
         {
-            "data": null,
-            render: function (data, type, row) {
-              return '<a href="#" data-toggle="modal" data-target="#modal-detail-truck-repair" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
-            }
+          "data": null,
+          render: function (data, type, row) {
+            param = data.driver_name;
+            return '<a href="#" onclick="return openModalDetail(\'Driver\',\'' + param + '\',\'' + data.driver_id + '\',\'' + startDateDriver + '\',\'' + endDateDriver + '\')" data-toggle="modal" data-target="#modal-detail-rit-report" class="btn btn-success" style="padding-right:5px !important;padding-left:5px !important;margin-top:-10px !important;font-size:8pt !important;padding:3px !important">Detail</a>';
+          }
         }
     ],
     scrollCollapse: true,
@@ -167,8 +173,8 @@
     endDate: formatDate(lastDay)
     },
     function(start, end, label) {
-      startDate = start.format('YYYY-MM-DD');
-      endDate = end.format('YYYY-MM-DD');
+      startDateTujuan = start.format('YYYY-MM-DD');
+      endDateTujuan = end.format('YYYY-MM-DD');
       $('#table-rit-tujuan').DataTable().ajax.reload();
     });
   });
@@ -212,8 +218,8 @@
     endDate: formatDate(lastDay)
     },
     function(start, end, label) {
-      startDate = start.format('YYYY-MM-DD');
-      endDate = end.format('YYYY-MM-DD');
+      startDateDriver = start.format('YYYY-MM-DD');
+      endDateDriver = end.format('YYYY-MM-DD');
       $('#table-rit-driver').DataTable().ajax.reload();
     });
   });
@@ -257,8 +263,8 @@
     endDate: formatDate(lastDay)
     },
     function(start, end, label) {
-      startDate = start.format('YYYY-MM-DD');
-      endDate = end.format('YYYY-MM-DD');
+      startDateTruck = start.format('YYYY-MM-DD');
+      endDateTruck = end.format('YYYY-MM-DD');
       $('#table-rit-truck').DataTable().ajax.reload();
     });
   });
@@ -307,14 +313,14 @@
   }
   
 
- $('#clearDate').click(function(e){
-    e.preventDefault();
-    $('input[name="dateRange"]').val('');
-    $('input[name="dateRange"]').attr("placeholder","Pilih Tanggal");
-    startDate = '';
-    endDate = '';   
-    $('#table-repair-truck-report').DataTable().ajax.reload();
- })
+//  $('#clearDate').click(function(e){
+//     e.preventDefault();
+//     $('input[name="dateRange"]').val('');
+//     $('input[name="dateRange"]').attr("placeholder","Pilih Tanggal");
+//     startDate = '';
+//     endDate = '';   
+//     $('#table-repair-truck-report').DataTable().ajax.reload();
+//  })
 
   $("#is-excel").click(function(e) {
     e.preventDefault();
@@ -331,55 +337,84 @@
   });
 });
 
-   
-function openModalDetail(idHeader, kodeRepair){
+function openModalDetail(_ritBy, _param, _whereValue, _startDate, _endDate){
   
-    var accessToken =  window.Laravel.api_token;
-    // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
-   $('#kode-detail-repair-truck').text(kodeRepair);
-  var tableDetailRepairTruck = $('#table-detail-repair-truck-report').DataTable({
-    processing: true,
-    serverSide: true, autoWidth: true,
-    ajax: {
-      url: window.Laravel.app_url + "/api/report/get-detail-repair-truck-list",
-      type: "GET",data: function (d) {
-        d.id_header = idHeader;
-        // d.start_date = startDate;
-        // d.end_date = endDate;
-      },
-      headers: {"Authorization": "Bearer " + accessToken},
-      crossDomain: true,
-    },
-    columns: [
-        {
-          "data": null, "sortable": false,
-            render: function (data, type, row, meta) {
-              return meta.row + meta.settings._iDisplayStart + 1;
-          }
-        },
-        {
-          "data":"created_at", render: function (data, type, row, meta) {
-            return formatDate(data);
-          }
-        },
-        {"data":"sparepart_name"},
-        {"data":"barcode_gudang"},
-        {"data":"barcode_pabrik"},
-        {"data":"sparepart_type"},
-        {"data":"jumlah_stok"},
-        {"data":"amount"},
-        {"data":"total"},
-        {"data":"satuan_type"},
-    ],
-    scrollCollapse: true,
-    language: {
-        paginate: {
-            previous: '<i class="fas fa-angle-left"></i>',
-            next: '<i class="fas fa-angle-right"></i>'
-        }
-    }
-  });
+  var accessToken =  window.Laravel.api_token;
+  // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
+ $('#kode-detail-rit-report').text('Rit '+_ritBy+' '+_param);
 
+ var tableRitDetail = $('#table-detail-rit-report').DataTable({
+  processing: true,
+  serverSide: true, autoWidth: true,
+  ajax: {
+    url: window.Laravel.app_url + "/api/report/get-detail-rit-list",
+    type: "GET",
+    data: function (d) {
+      d.rit_by = _ritBy;
+      d.where_value = _whereValue;
+      d.start_date = _startDate;
+      d.end_date = _endDate;
+    },
+    headers: {"Authorization": "Bearer " + accessToken},
+    crossDomain: true,
+  },
+  columns: [
+      {
+        "data": null, "sortable": false,
+          render: function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1;
+        }
+      },
+      {"data":"nomor_surat_jalan"},
+      {"data":"nomor_inv"},
+      {"data":"driver_name"},
+      {
+        "data":"tgl_inv", render: function (data, type, row, meta) {
+          return formatDate(data);
+        }
+      },
+      {
+        "data":"tgl_po", render: function (data, type, row, meta) {
+          return formatDate(data);
+        }
+      },
+      {"data":"tujuan"},
+      {
+        "data": null,
+        render: function (data, type, row) {
+        if(data.status_activity == 'SUBMIT') {
+            classColor = 'badge-success';
+            
+        } else if(data.status_activity == 'APPROVAL_OJK_DRIVER') {
+            classColor = 'badge-warning';
+    
+        } else if(data.status_activity == 'DRIVER_MENUJU_TUJUAN') {
+            classColor = 'badge-info';
+    
+        } else if(data.status_activity == 'DRIVER_SAMPAI_TUJUAN') {
+            classColor = 'badge-gradient-warning';
+        
+        } else {
+            classColor = 'badge-danger';
+    
+        }
+          return '<span class="badge '+classColor+'">'+ data.status_name +' '+ data.otv_payment_method +'</span>';
+        }
+    }, 
+  ],
+  scrollCollapse: true,
+  language: {
+      paginate: {
+          previous: '<i class="fas fa-angle-left"></i>',
+          next: '<i class="fas fa-angle-right"></i>'
+      }
+  }
+  
+});
+
+$('#modal-detail-rit-report').on('hidden.bs.modal', function(e) {
+  $('#table-detail-rit-report').dataTable().fnDestroy();
+});
   function formatDate(date) {
     var d = new Date(date),
         bulan = d.getMonth(),
@@ -399,16 +434,13 @@ function openModalDetail(idHeader, kodeRepair){
           case 9: bulan = "Oktober"; break;
           case 10: bulan = "November"; break;
           case 11: bulan = "Desember"; break;
-         }
+        }
 
- 
+
     if (day.length < 2) 
         day = '0' + day;
     var result = [day, bulan, year].join(' ');
     // console.log(result);
     return result;
   } 
-  $('#modal-detail-truck-repair').on('hidden.bs.modal', function () {
-    $('#table-detail-repair-truck-report').dataTable().fnDestroy();
-});
 }

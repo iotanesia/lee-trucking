@@ -57,11 +57,11 @@ Route::get('/penanaman-modal', 'MoneyTransactionHeaderController@indexModal')->n
 Route::get('/jurnal-report', 'JurnalController@index')->name('jurnal-report');
 Route::get('/invoice-report', 'InvoiceController@index')->name('invoice-report');
 Route::get('/dashboard/{schema}', 'DashboardController@index');
-//export excel invoice
+#region export excel invoice
 Route::get('/export-bo', 'InvoiceController@exportExcelBO')->name('export-bo');
 Route::get('/export-ba', 'InvoiceController@exportExcelBA')->name('export-ba');
 Route::get('/export-bj', 'InvoiceController@exportExcelBJ')->name('export-bj');
-
+#endregion
 Route::get('/getbarcode/{code}', 'SparePartsController@getBarcode');
 
 //repair truck Report
@@ -72,5 +72,13 @@ Route::get('/ekspedisi-rit-report', 'ExpeditionAndRitReportController@index')->n
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
-//Export Jurnal Excel file
+#region Export Jurnal Excel file
 Route::get('/export-jurnal-report', 'JurnalController@exportJurnal')->name('export-jurnal-report');
+#endregion
+
+#region Export Expeition dan rit report
+
+Route::get('/export-rit-tujuan', 'ExpeditionAndRitReportController@exportExcelRitTujuan')->name('export-rit-tujuan');
+Route::get('/export-rit-driver', 'ExpeditionAndRitReportController@exportExcelRitDriver')->name('export-rit-driver');
+Route::get('/export-rit-truck', 'ExpeditionAndRitReportController@exportExcelRitTruck')->name('export-rit-truck');
+#endregion

@@ -131,8 +131,10 @@ class BonusDriverRitController extends Controller
           } else {
               $row->rit_truck = null;
               $row->truck = null;
-              $row->reward_jenis = $reward ? $reward->reward_jenis : '-';
-              $row->bonus = $reward ? $reward->bonus : 0;
+              // $row->reward_jenis = $reward ? $reward->reward_jenis : '-'; Gua tutup karna dia gak ada objek trucknya
+              $row->reward_jenis = '-';
+              // $row->bonus = $reward ? $reward->bonus : 0;  Gua tutup karna dia gak ada objek trucknya
+              $row->bonus = 0;
               $row->data_json = $row->toJson();
           }
       }
