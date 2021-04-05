@@ -45,7 +45,7 @@ public function view(): View{
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($startDate, $endDate) {
             if($startDate && $endDate){
-                $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+                $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
             }
         })
         ->select(DB::raw('COUNT("ojk_id") AS total_ekspedisi'),'expedition_activity.ojk_id','ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')
@@ -57,7 +57,7 @@ public function view(): View{
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
-            $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+            $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
         ->select(DB::raw('COUNT("driver_id") AS total_ekspedisi'),'expedition_activity.driver_id', 'ex_master_driver.driver_name')
@@ -69,7 +69,7 @@ public function view(): View{
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
-            $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+            $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
         ->select(DB::raw('COUNT("truck_id") AS total_ekspedisi'),'expedition_activity.truck_id', 'ex_master_truck.truck_plat','ex_master_truck.truck_name')
@@ -94,7 +94,7 @@ public function view(): View{
             ->where('expedition_activity.ojk_id', $row->ojk_id)
             ->where(function($query) use($startDate, $endDate) {
               if($startDate && $endDate){
-                $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+                $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
               }
             })
             ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code', 
@@ -143,7 +143,7 @@ public function view(): View{
             ->where('expedition_activity.driver_id', $row->driver_id)
             ->where(function($query) use($startDate, $endDate) {
               if($startDate && $endDate){
-                $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+                $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
               }
             })
             ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code', 
@@ -192,7 +192,7 @@ public function view(): View{
             ->where('expedition_activity.truck_id', $row->truck_id)
             ->where(function($query) use($startDate, $endDate) {
               if($startDate && $endDate){
-                $query->whereBetween('expedition_activity.created_at', [$startDate, $endDate]);
+                $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
               }
             })
             ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code', 
