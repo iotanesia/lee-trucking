@@ -18,17 +18,17 @@ class Controller extends BaseController
         $user = Auth::user();
         $role = $user->cabang_id;
         $cabang = null;
-
+        
         $checkRole = Cabang::find($role);
-
+        
         if($checkRole) {
-            $roles = strpos($checkRole->group_name, "Dawuan -");
+            $roles = strpos($checkRole->cabang_name, " Dawuan ");
 
-            if($roles !== TRUE) {
-                $cabang = Cabang::where('cabang_name', 'LIKE', '%Cabang TSJ%')->get()->pluck('id');
-                
-            } else {
+            if($roles !== false) {
                 $cabang = Cabang::where('cabang_name', 'LIKE', '%Cabang Dawuan%')->get()->pluck('id');
+
+            } else {
+                $cabang = Cabang::where('cabang_name', 'LIKE', '%Cabang TSJ%')->get()->pluck('id');
             }
         }
 

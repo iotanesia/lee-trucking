@@ -16,6 +16,14 @@ class DashboardController extends Controller
 
     public function getList(Request $request) {
         if($request->isMethod('GET')) {
+            $queryRole = "";
+
+            if($cekRole) {
+                $ids = json_decode($cekRole, true);
+                $idRole = implode(', ', $ids);
+                $queryRole = 'AND b.cabang_id IN ('.$idRole.')';
+            }
+
             $schema = Auth::user()->schema;
             $bln = date('m');
             $thn = date('Y');
