@@ -9,6 +9,7 @@ use App\Models\GlobalParam;
 use App\Models\Driver;
 use App\Models\Kenek;
 use App\Models\Group;
+use App\Models\Cabang;
 use Auth;
 use DB;
 
@@ -29,8 +30,36 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($schema)
+    public function index($schema, $id_user = null)
     {
+        if($id_user) {
+            $user = User::find($id_user);
+            $role = $user->cabang_id;
+            $cabang = null;
+            
+            $checkRole = Cabang::find($role);
+            
+            if($checkRole) {
+                $roles = strpos($checkRole->cabang_name, " Dawuan ");
+    
+                if($roles !== false) {
+                    $cabang = Cabang::where('cabang_name', 'LIKE', '%Cabang Dawuan%')->get()->pluck('id');
+    
+                } else {
+                    $cabang = Cabang::where('cabang_name', 'LIKE', '%Cabang TSJ%')->get()->pluck('id');
+                }
+            }
+    
+            if($cabang) {
+                $ids = json_decode($cabang, true);
+                $idRole = implode(', ', $ids);
+                $queryRole = 'AND b.cabang_id IN ('.$idRole.')';
+            }
+
+        } else {
+            $queryRole = '';
+        }
+
         $data['bulan'] = [];
         $data['total'] = [];
         $data['cabang'] = [];
@@ -38,8 +67,11 @@ class DashboardController extends Controller
         $bln = date('m');
         $thn = date('Y');
         $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        $ex = DB::select("SELECT date_part('month', tgl_po) AS months, COUNT(id) FROM ".$schema.".expedition_activity GROUP BY months ORDER BY months ASC");
-        $truck = DB::select("SELECT b.cabang_name, COUNT(a.id) FROM ".$schema.".ex_master_truck AS a JOIN ".$schema.".ex_master_cabang AS b ON a.cabang_id = b.id  WHERE a.is_deleted = false GROUP BY cabang_id, b.cabang_name");
+        $ex = DB::select("SELECT date_part('month', a.tgl_po) AS months, COUNT(a.id) FROM ".$schema.".expedition_activity as a
+              JOIN users as b ON b.id = a.user_id  AND a.is_deleted = 'f' ".$queryRole."   
+              GROUP BY months ORDER BY months ASC");
+        $truck = DB::select("SELECT a.cabang_name, COUNT(b.id) FROM ".$schema.".ex_master_truck AS b JOIN ".$schema.".ex_master_cabang AS a ON b.cabang_id = a.id 
+                 WHERE b.is_deleted = false ".$queryRole." GROUP BY cabang_id, a.cabang_name");
         // dd($truck);
         foreach($ex as $key => $row) {
             $row->months = $month[($row->months - 1)];
