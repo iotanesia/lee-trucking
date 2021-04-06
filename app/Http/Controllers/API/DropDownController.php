@@ -19,12 +19,12 @@ class DropDownController extends Controller
 {
     public function getListTruck(Request $request) {
         if($request->isMethod('GET')) {
-        $cekRole = $this->checkRoles();
-        $ids = null;
+            $cekRole = $this->checkRoles();
+            $ids = null;
 
-        if($cekRole) {
-            $ids = json_decode($cekRole, true);
-        }
+            if($cekRole) {
+                $ids = json_decode($cekRole, true);
+            }
             $data = $request->all();
             $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
             $truckList = Truck::join('all_global_param', 'ex_master_truck.truck_status', 'all_global_param.id')
@@ -133,6 +133,13 @@ class DropDownController extends Controller
 
     public function getListallUser(Request $request) {
         if($request->isMethod('GET')) {
+            $cekRole = $this->checkRoles();
+            $ids = null;
+
+            if($cekRole) {
+                $ids = json_decode($cekRole, true);
+            }
+
             $data = $request->all();
             $group = false;
             $karyawan = false;
@@ -154,7 +161,13 @@ class DropDownController extends Controller
                                 } else {
                                     $query->where('group_id', $group->id)->get();
                                 }
-                            })->get();
+                            })
+                            ->where(function($query) use($ids) {
+                                if($ids) {
+                                   $query->whereIn('users.cabang_id', $ids);
+                                }
+                             })
+                            ->get();
                 
                 return response()->json([
                     'code' => 200,
