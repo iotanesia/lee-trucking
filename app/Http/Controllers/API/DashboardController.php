@@ -16,6 +16,7 @@ class DashboardController extends Controller
 
     public function getList(Request $request) {
         if($request->isMethod('GET')) {
+            $cekRole = $this->checkRoles();
             $queryRole = "";
 
             if($cekRole) {
