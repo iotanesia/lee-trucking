@@ -19,7 +19,7 @@ class DropDownController extends Controller
 {
     public function getListTruck(Request $request) {
         if($request->isMethod('GET')) {
-            $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles();
         $ids = null;
 
         if($cekRole) {
@@ -31,7 +31,7 @@ class DropDownController extends Controller
                          ->join('ex_master_cabang','ex_master_truck.cabang_id', 'ex_master_cabang.id')
                          ->where(function($query) use($ids) {
                             if($ids) {
-                               $query->whereIn('ex_master_cabang.id', $ids);
+                               $query->whereIn('ex_master_truck.cabang_id', $ids);
                             }
                          })
                          ->select('ex_master_truck.*', 'all_global_param.param_name as status_name', 'ex_master_cabang.cabang_name')
