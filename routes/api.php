@@ -263,18 +263,16 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/', 'API\DashboardController@index');
     Route::get('get-list', ['as' => '-get-jurnal-list', 'uses' => 'API\DashboardController@getList']);
   });
-
-
-});
-
-Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
-  Route::get('/', 'Services\DropDown@index');
-  Route::get('get-list-truck', ['as' => '-get-list-truck', 'uses' => 'API\DropDownController@getListTruck']);
-  Route::get('get-list-driver', ['as' => '-get-list-driver', 'uses' => 'API\DropDownController@getListDriver']);
-  Route::get('get-list-kenek', ['as' => '-get-list-kenek', 'uses' => 'API\DropDownController@getListKenek']);
-  Route::get('get-list-rekening', ['as' => '-get-list-rekening', 'uses' => 'API\DropDownController@getListRekening']);
-  Route::get('get-list-all-user', ['as' => '-get-list-all-user', 'uses' => 'API\DropDownController@getListallUser']);
-  Route::get('get-list-sparepart', ['as' => '-get-list-sparepart', 'uses' => 'API\DropDownController@getListSparepart']);
+  
+  Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
+    Route::get('/', 'Services\DropDown@index');
+    Route::get('get-list-truck', ['as' => '-get-list-truck', 'uses' => 'API\DropDownController@getListTruck']);
+    Route::get('get-list-driver', ['as' => '-get-list-driver', 'uses' => 'API\DropDownController@getListDriver']);
+    Route::get('get-list-kenek', ['as' => '-get-list-kenek', 'uses' => 'API\DropDownController@getListKenek']);
+    Route::get('get-list-rekening', ['as' => '-get-list-rekening', 'uses' => 'API\DropDownController@getListRekening']);
+    Route::get('get-list-all-user', ['as' => '-get-list-all-user', 'uses' => 'API\DropDownController@getListallUser']);
+    Route::get('get-list-sparepart', ['as' => '-get-list-sparepart', 'uses' => 'API\DropDownController@getListSparepart']);
+  });
 });
 
 Route::group(['as' => 'api-global-param', 'prefix' => 'global-param'], function() {
