@@ -16,23 +16,36 @@ class StkRepairHeaderController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
+        
+      $cekRole = $this->checkRoles();
+      $ids = null;
+
+      if($cekRole) {
+        $ids = json_decode($cekRole, true);
+      }
+
       $data = $request->all();
       $whereField = 'name, no_StkRepairHeader';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $stkRepairHeader = StkRepairHeader::join('ex_master_truck', 'stk_repair_header.truck_id', 'ex_master_truck.id')
-                        ->join('ex_master_driver', 'ex_master_truck.driver_id', 'ex_master_driver.id')
-                        ->with(['stk_history_stok']) 
-                       ->where(function($query) use($whereField, $whereValue) {
+                         ->join('ex_master_driver', 'ex_master_truck.driver_id', 'ex_master_driver.id')
+                         ->with(['stk_history_stok']) 
+                         ->where(function($query) use($whereField, $whereValue) {
                             if($whereValue) {
                                 foreach(explode(', ', $whereField) as $idx => $field) {
                                     $query->orWhere($field, 'LIKE', "%".$whereValue."%");
                                 }
                             }
-                        })
-                        ->where('kode_repair', 'LIKE', '%RP-%')
-                        ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
-                        ->orderBy('id', 'ASC')
-                        ->paginate();
+                         })
+                         ->where(function($query) use($ids) {
+                            if($ids) {
+                               $query->whereIn('ex_master_truck.cabang_id', $ids);
+                            }
+                         })
+                         ->where('kode_repair', 'LIKE', '%RP-%')
+                         ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
+                         ->orderBy('id', 'ASC')
+                         ->paginate();
       foreach($stkRepairHeader as $row) {
         foreach($row->stk_history_stok as $historyStok){
           $merk_part = '';

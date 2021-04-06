@@ -1331,16 +1331,28 @@ class ExpeditionController extends Controller
 
   public function getExpeditionHistoryByNoInvOrNoSuratJalan(Request $request){
     if($request->isMethod('GET')) {
+      $cekRole = $this->checkRoles();
+      $ids = null;
+
+      if($cekRole) {
+        $ids = json_decode($cekRole, true);
+      }
+
       $data = $request->all();
       $whereField = 'nomor_inv, nomor_surat_jalan';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $expeditionActivityList = ExStatusActivity::join('expedition_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
                     ->leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                     ->leftjoin('usr_detail', 'ex_status_activity.approval_by', 'usr_detail.id_user')
-                    // ->where('all_global_param.param_type', 'EX_STATUS_APPROVAL')
+                    ->join('public.users', 'users.id', 'expedition_activity.user_id')
                     ->where(function($query) use($whereField, $whereValue) {
                         foreach(explode(', ', $whereField) as $idx => $field) {
                           $query->orWhere($field, '=', $whereValue);
+                        }
+                    })
+                    ->where(function($query) use($ids) {
+                        if($ids) {
+                           $query->whereIn('users.cabang_id', $ids);
                         }
                     })
                    ->select('ex_status_activity.*', 'all_global_param.param_name as approval_name',  
