@@ -367,7 +367,11 @@ class MoneyTransactionHeaderController extends Controller
       $moneyTransactionHeader = new MoneyTransactionHeader;
       $current_date_time = Carbon::now()->toDateTimeString();
       $user_id = Auth::user()->id;
-      
+
+      if($data['date']) {
+          $data['date'] = date('Y-m-d', strtotime($data['date']));
+      }
+
       $this->validate($request, [
         // 'no_MoneyTransactionHeader' => 'required|string|max:255|unique:MoneyTransactionHeader',
         // 'MoneyTransactionHeader_plat' => 'required|string|max:255',

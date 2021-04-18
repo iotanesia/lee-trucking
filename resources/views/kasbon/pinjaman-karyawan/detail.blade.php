@@ -47,7 +47,8 @@
                                     <small class="text-muted font-weight-bold">{{date('l, d F Y H:i:s', strtotime($val->created_at))}}</small>
                                     <h5 class="text-muted font-weight-bold mt-3 mb-0">Nama Karyawan : {{$val->name_user}} <br>
                                                                                     Pinjaman : Rp {{number_format($val->pokok, 0, ',', '.')}}  <br>
-                                                                                    Sisa Pinjaman : Rp {{number_format($val->sisa_pokok, 0, ',', '.')}} 
+                                                                                    Sisa Pinjaman : Rp {{number_format($val->sisa_pokok, 0, ',', '.')}} <br>
+                                                                                    Tanggal Pinjaman : {{date('d-m-Y', strtotime($val->date))}}
                                                                                     <br>
                                                                                     <br>
                                         <span class="badge @if($val->status == 'BELUM_LUNAS') badge-danger @else badge-success @endif badge-pill">{{str_replace('_', ' ', $val->status)}} </span>

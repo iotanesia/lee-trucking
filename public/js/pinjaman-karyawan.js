@@ -1,6 +1,13 @@
 $("document").ready(function(){
   var accessToken =  window.Laravel.api_token;
 
+  $("#tgl_pinjaman").daterangepicker({
+    locale: {
+        format: 'DD-MM-YYYY'
+    },
+    singleDatePicker : true,
+  });
+
   $.ajax({
     url: window.Laravel.app_url + "/api/moneyTransactionHeader/get-list",
     type: "GET",
