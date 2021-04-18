@@ -589,6 +589,10 @@ class MoneyTransactionHeaderController extends Controller
           $moneyTransactionHeader = MoneyTransactionHeader::find($data['transaksi_header_id']);
           $checkBarisLast = MoneyDetailTermin::where('transaksi_header_id', $data['transaksi_header_id'])->orderBy('id', 'DESC')->first();
           $current_date_time = Carbon::now()->toDateTimeString();
+
+          if($data['date']) {
+              $data['date'] = date('Y-m-d', strtotime($data['date']));
+          }
           $user_id = Auth::user()->id;
           
           if($checkBarisLast) {

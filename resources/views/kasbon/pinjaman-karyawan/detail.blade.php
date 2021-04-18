@@ -145,7 +145,20 @@
                             </select>
                         </div>
                     </div>
-                </div>        
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="pokok" class="form-control-label">Tanggal Pembayaran</label>
+                            <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input type="text" name="date" id="tgl_pinjaman" class="form-control" placeholder="Tanggal Pinjaman">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="modal-footer">

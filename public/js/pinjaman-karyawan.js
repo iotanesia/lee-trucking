@@ -74,7 +74,8 @@ $("document").ready(function(){
                                     <small class="text-muted font-weight-bold">`+dataJSON.money_detail_termin[i].created_at+`</small>
                                     <h5 class="text-muted font-weight-bold mt-3 mb-0">Termin : `+dataJSON.money_detail_termin[i].baris_termin+` <br>
                                                                                     Nominal : Rp `+convertToRupiah(dataJSON.money_detail_termin[i].nominal_termin)+`  <br>
-                                                                                    Rekening : `+dataJSON.money_detail_termin[i].rek_name+`-`+dataJSON.money_detail_termin[i].rek_no+` 
+                                                                                    Rekening : `+dataJSON.money_detail_termin[i].rek_name+`-`+dataJSON.money_detail_termin[i].rek_no+` <br>
+                                                                                    Tanggal Pembayaran : `+dataJSON.money_detail_termin[i].date+` 
                                                                                     <br>
                                                                                     <br>
                                     </h5>
