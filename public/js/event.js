@@ -374,6 +374,14 @@ $(document).on("click", "a[el-event='show-page']", function(event) {
   data.append("_method", "GET");
   data.append("api_token", window.Laravel.api_token);
   data.append("page", page);
+  
+  var tahun = $('#tahun-select').val();
+  var bulan = $('#bulan-select').val();
+  
+  if(tahun != '' && bulan != '') {
+      data.append("year", tahun);
+      data.append("month", bulan);
+  }
 
   var success = (function(response) {
     if(response.status !== false) {
