@@ -161,7 +161,7 @@
                 <input type="hidden" name="id" id="id">
                 <div class="card-body">
                     <div class="form-group">
-                    <label for="moneyTransactionHeader_name">Karyawan</label>
+                    <label for="moneyTransactionHeader_name" class="form-control-label">Karyawan</label>
                     <select name="user_id" id="user_id" class="form-control">
                         <option value="">Select Karyawan</option>
                     @foreach($user as $row)
@@ -170,11 +170,25 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="pokok">Jumlah Pinjaman</label>
-                    <input type="text" name="pokok" class="form-control">
+                    <label for="moneyTransactionHeader_name" class="form-control-label">Jumlah Pinjaman</label>
+                    <div class="input-group input-group-merge">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                        </div>
+                        <input type="text" name="pokok" placeholder="Pokok Pinjaman" class="form-control">
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="moneyTransactionHeader_name">Sumber Dana</label>
+                    <label for="pokok" class="form-control-label">Tanggal Pinjaman</label>
+                    <div class="input-group input-group-merge">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <input type="text" name="date" id="tgl_pinjaman" class="form-control" placeholder="Tanggal Pinjaman">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="moneyTransactionHeader_name" class="form-control-label">Sumber Dana</label>
                     <select name="rek_id" class="form-control rek_id">
                         <option value="">Select Rekening</option>
                     @foreach($no_rek as $row)
