@@ -17,13 +17,23 @@ use Validator;
 
 class DropDownController extends Controller
 {
-
     public function getListTruck(Request $request) {
         if($request->isMethod('GET')) {
+            $cekRole = $this->checkRoles();
+            $ids = null;
+
+            if($cekRole) {
+                $ids = json_decode($cekRole, true);
+            }
             $data = $request->all();
             $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
             $truckList = Truck::join('all_global_param', 'ex_master_truck.truck_status', 'all_global_param.id')
                          ->join('ex_master_cabang','ex_master_truck.cabang_id', 'ex_master_cabang.id')
+                         ->where(function($query) use($ids) {
+                            if($ids) {
+                               $query->whereIn('ex_master_truck.cabang_id', $ids);
+                            }
+                         })
                          ->select('ex_master_truck.*', 'all_global_param.param_name as status_name', 'ex_master_cabang.cabang_name')
                          ->orderBy('ex_master_truck.id', 'ASC')
                          ->get();
@@ -123,6 +133,13 @@ class DropDownController extends Controller
 
     public function getListallUser(Request $request) {
         if($request->isMethod('GET')) {
+            $cekRole = $this->checkRoles();
+            $ids = null;
+
+            if($cekRole) {
+                $ids = json_decode($cekRole, true);
+            }
+
             $data = $request->all();
             $group = false;
             $karyawan = false;
@@ -144,7 +161,13 @@ class DropDownController extends Controller
                                 } else {
                                     $query->where('group_id', $group->id)->get();
                                 }
-                            })->get();
+                            })
+                            ->where(function($query) use($ids) {
+                                if($ids) {
+                                   $query->whereIn('users.cabang_id', $ids);
+                                }
+                             })
+                            ->get();
                 
                 return response()->json([
                     'code' => 200,

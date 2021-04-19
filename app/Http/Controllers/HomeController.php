@@ -43,6 +43,8 @@ class HomeController extends Controller
         $thn = date('Y');
         $data['cabang_tsj_truck'] = 0;
         $data['cabang_dawuan_fuso'] = 0;
+        $data['bulan'] = [];
+        $data['total'] = [];
         $totalEx = DB::select("SELECT COUNT(a.id) AS total FROM ".$schema.".expedition_activity as a 
                    JOIN users as b ON b.id = a.user_id WHERE EXTRACT(MONTH FROM a.tgl_po) = ".$bln." AND EXTRACT(YEAR FROM a.tgl_po) = ".$thn." 
                    AND a.is_deleted = 'f' ".$queryRole);
@@ -66,10 +68,10 @@ class HomeController extends Controller
         $totaltruck = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".ex_master_truck as b WHERE is_deleted = false ".$queryRole);
         $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
         $ex = DB::select("SELECT date_part('month', a.tgl_po) AS months, COUNT(a.id) FROM ".$schema.".expedition_activity as a
-              JOIN ".$schema.".ex_master_truck as b ON b.id = a.truck_id     
+              JOIN users as b ON b.id = a.user_id  AND a.is_deleted = 'f' ".$queryRole."   
               GROUP BY months ORDER BY months ASC");
-        $truck = DB::select("SELECT b.cabang_name, COUNT(a.id) FROM ".$schema.".ex_master_truck AS a JOIN ".$schema.".ex_master_cabang AS b ON a.cabang_id = b.id 
-                 WHERE a.is_deleted = false GROUP BY cabang_id, b.cabang_name");
+        $truck = DB::select("SELECT a.cabang_name, COUNT(b.id) FROM ".$schema.".ex_master_truck AS b JOIN ".$schema.".ex_master_cabang AS a ON b.cabang_id = a.id 
+                 WHERE b.is_deleted = false ".$queryRole." GROUP BY cabang_id, a.cabang_name");
 
         foreach($truck as $key => $val) {
             $cabangNames = strtolower(str_replace(" - ", " ", $val->cabang_name));
@@ -104,12 +106,12 @@ class HomeController extends Controller
                           JOIN users AS b ON a.user_id = b.id 
                           LEFT JOIN ".$schema.".expedition_activity AS c ON a.id = c.driver_id 
                           WHERE a.is_deleted = 'f' ".$queryRole." 
-                          GROUP BY c.driver_id, a.driver_name, a.driver_status ORDER BY total_rit DESC LIMIT 5 ");
+                          GROUP BY c.driver_id, a.driver_name, a.driver_status HAVING COUNT(c.id) > 0 ORDER BY total_rit DESC LIMIT 5 ");
         $data['truckRit'] = DB::select("SELECT b.truck_name, b.truck_plat, b.truck_status, COUNT(c.id) AS total_rit 
                             FROM ".$schema.".ex_master_truck AS b 
                             LEFT JOIN ".$schema.".expedition_activity AS c ON b.id = c.truck_id 
                             WHERE b.is_deleted = 'f' ".$queryRole."
-                            GROUP BY c.truck_id, b.truck_name, b.truck_status, b.truck_plat ORDER BY total_rit DESC LIMIT 5");
+                            GROUP BY c.truck_id, b.truck_name, b.truck_status, b.truck_plat  HAVING COUNT(c.id) > 0 ORDER BY total_rit DESC LIMIT 5");
         $data['total_expedisi'] = $totalEx[0];
         $data['total_on_progress'] = $totalOnProggres[0];
         $data['total_close'] = $totalClose[0];

@@ -47,7 +47,8 @@
                                     <small class="text-muted font-weight-bold">{{date('l, d F Y H:i:s', strtotime($val->created_at))}}</small>
                                     <h5 class="text-muted font-weight-bold mt-3 mb-0">Nama Karyawan : {{$val->name_user}} <br>
                                                                                     Pinjaman : Rp {{number_format($val->pokok, 0, ',', '.')}}  <br>
-                                                                                    Sisa Pinjaman : Rp {{number_format($val->sisa_pokok, 0, ',', '.')}} 
+                                                                                    Sisa Pinjaman : Rp {{number_format($val->sisa_pokok, 0, ',', '.')}} <br>
+                                                                                    Tanggal Pinjaman : {{$val->date ? date('d-m-Y', strtotime($val->date)) : '-' }}
                                                                                     <br>
                                                                                     <br>
                                         <span class="badge @if($val->status == 'BELUM_LUNAS') badge-danger @else badge-success @endif badge-pill">{{str_replace('_', ' ', $val->status)}} </span>
@@ -144,7 +145,20 @@
                             </select>
                         </div>
                     </div>
-                </div>        
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="pokok" class="form-control-label">Tanggal Pembayaran</label>
+                            <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input type="text" name="date" id="tgl_pinjaman" class="form-control" placeholder="Tanggal Pinjaman">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="modal-footer">

@@ -25,6 +25,13 @@ class ExpeditionController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
+      $cekRole = $this->checkRoles();
+      $ids = null;
+
+      if($cekRole) {
+        $ids = json_decode($cekRole, true);
+      }
+
       $data = $request->all();
       $whereField = 'kabupaten, ex_wil_kecamatan.kecamatan, cabang_name, all_global_param.param_name, nomor_inv, otv_payment_method, ex_master_driver.driver_name, expedition_activity.nomor_surat_jalan';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
@@ -39,6 +46,7 @@ class ExpeditionController extends Controller
                    ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
                    ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
                    ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+                   ->join('public.users', 'users.id', 'expedition_activity.user_id')
                    ->leftJoin('ex_master_kenek','expedition_activity.kenek_id', 'ex_master_kenek.id')
                    ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                    ->where('expedition_activity.is_deleted','false')
@@ -47,6 +55,11 @@ class ExpeditionController extends Controller
                        foreach(explode(', ', $whereField) as $idx => $field) {
                          $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                        }
+                     }
+                   })
+                   ->where(function($query) use($ids) {
+                     if($ids) {
+                        $query->whereIn('users.cabang_id', $ids);
                      }
                    })
                    ->where(function($query) use($whereFilter) {
@@ -113,6 +126,12 @@ class ExpeditionController extends Controller
 
   public function getListApprovalOjk(Request $request) {
     if($request->isMethod('GET')) {
+      $cekRole = $this->checkRoles();
+      $ids = null;
+  
+      if($cekRole) {
+        $ids = json_decode($cekRole, true);
+      }
       $data = $request->all();
       $whereField = 'expedition_activity.kabupaten, expedition_activity.kecamatan, expedition_activity.cabang_name, 
       all_global_param.param_name, expedition_activity.nomor_inv';
@@ -126,6 +145,7 @@ class ExpeditionController extends Controller
                                 ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
                                 ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
                                 ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+                                ->join('public.users', 'users.id', 'expedition_activity.user_id')
                                 ->leftJoin('ex_master_kenek', 'ex_master_kenek.id', 'expedition_activity.kenek_id')
                                 ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                                 ->where('expedition_activity.is_deleted','false')
@@ -134,6 +154,11 @@ class ExpeditionController extends Controller
                                         foreach(explode(', ', $whereField) as $idx => $field) {
                                             $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                                         }
+                                    }
+                                })
+                                ->where(function($query) use($ids) {
+                                    if($ids) {
+                                        $query->whereIn('users.cabang_id', $ids);
                                     }
                                 })
                                 ->where(function($query) use($platform) {
@@ -215,6 +240,12 @@ class ExpeditionController extends Controller
 
   public function getListApprovalOtv(Request $request) {
     if($request->isMethod('GET')) {
+      $cekRole = $this->checkRoles();
+      $ids = null;
+  
+      if($cekRole) {
+        $ids = json_decode($cekRole, true);
+      }
       $data = $request->all();
       $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
@@ -230,6 +261,7 @@ class ExpeditionController extends Controller
                                 ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
                                 ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
                                 ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+                                ->join('public.users', 'users.id', 'expedition_activity.user_id')
                                 ->leftJoin('ex_master_kenek', 'ex_master_kenek.id', 'expedition_activity.kenek_id')
                                 ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
                                 ->where('expedition_activity.is_deleted','false')
@@ -239,6 +271,11 @@ class ExpeditionController extends Controller
                                     foreach(explode(', ', $whereField) as $idx => $field) {
                                         $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                                     }
+                                    }
+                                })
+                                ->where(function($query) use($ids) {
+                                    if($ids) {
+                                        $query->whereIn('users.cabang_id', $ids);
                                     }
                                 })
                                 ->where(function($query) use($groupOwner, $groupId) {
@@ -1294,16 +1331,28 @@ class ExpeditionController extends Controller
 
   public function getExpeditionHistoryByNoInvOrNoSuratJalan(Request $request){
     if($request->isMethod('GET')) {
+      $cekRole = $this->checkRoles();
+      $ids = null;
+
+      if($cekRole) {
+        $ids = json_decode($cekRole, true);
+      }
+
       $data = $request->all();
       $whereField = 'nomor_inv, nomor_surat_jalan';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $expeditionActivityList = ExStatusActivity::join('expedition_activity', 'expedition_activity.id', 'ex_status_activity.ex_id')
                     ->leftjoin('all_global_param', 'ex_status_activity.status_approval', 'all_global_param.param_code')
                     ->leftjoin('usr_detail', 'ex_status_activity.approval_by', 'usr_detail.id_user')
-                    // ->where('all_global_param.param_type', 'EX_STATUS_APPROVAL')
+                    ->join('public.users', 'users.id', 'expedition_activity.user_id')
                     ->where(function($query) use($whereField, $whereValue) {
                         foreach(explode(', ', $whereField) as $idx => $field) {
                           $query->orWhere($field, '=', $whereValue);
+                        }
+                    })
+                    ->where(function($query) use($ids) {
+                        if($ids) {
+                           $query->whereIn('users.cabang_id', $ids);
                         }
                     })
                    ->select('ex_status_activity.*', 'all_global_param.param_name as approval_name',  
