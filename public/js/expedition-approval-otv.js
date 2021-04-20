@@ -177,6 +177,8 @@ $("document").ready(function() {
         // $("#expedition-form #flash-img").attr("href", dataJSON.otv_image);
         
         bindToForm($("#expedition-modal"), dataJSON);
+        $("#expedition-form #kenek_id").val(dataJSON.kenek_id).trigger("change");
+        $("#expedition-form #driver_id").val(dataJSON.driver_id).trigger("change");
 
         if((group_id == 8 && dataJSON.status_activity == 'DRIVER_SELESAI_EKSPEDISI') || (group_id == 8 && dataJSON.status_activity == 'WAITING_OWNER')) {
             $("#expedition-form").find("input[name=status_activity]").val("CLOSED_EXPEDITION");
