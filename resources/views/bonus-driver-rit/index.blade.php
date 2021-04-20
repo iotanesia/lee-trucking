@@ -94,6 +94,7 @@
                                 <th>Pendapatan</th>
                                 <th>Bonus</th>
                                 <th>Total Pendapatan</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody></tbody>

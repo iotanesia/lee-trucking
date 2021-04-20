@@ -176,6 +176,7 @@ $("document").ready(function(){
                      "<td>"+ convertToRupiah(parseInt(total_rit) * 10000) +"</td>"+
                      "<td>"+  convertToRupiah(bonus)  +"</td>"+
                      "<td>"+  convertToRupiah(parseInt(bonus) + (parseInt(total_rit) * 10000))  +"</td>"+
+                     "<td> <button class='btn btn-success btn-sm'>Paid</button> </td>"+
                    "</tr>";
     }
   
