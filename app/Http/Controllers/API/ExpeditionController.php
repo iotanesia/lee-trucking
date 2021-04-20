@@ -273,11 +273,11 @@ class ExpeditionController extends Controller
                                     }
                                     }
                                 })
-                                    // ->where(function($query) use($ids) {
-                                    //     if($ids) {
-                                    //         $query->whereIn('users.cabang_id', $ids);
-                                    //     }
-                                    // })
+                                    ->where(function($query) use($ids) {
+                                        if($ids) {
+                                            $query->whereIn('users.cabang_id', $ids);
+                                        }
+                                    })
                                 ->where(function($query) use($groupOwner, $groupId) {
                                         if($groupId == $groupOwner->id) {
                                             $query->where('status_activity', 'WAITING_OWNER');
