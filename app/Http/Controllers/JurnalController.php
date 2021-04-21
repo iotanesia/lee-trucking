@@ -40,7 +40,13 @@ class JurnalController extends Controller
     public function exportJurnal(Request $request){
         $date = $request->dateRangeJurnal;
         $dates = explode('-',$date);
-        
+
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+            $ids = json_decode($cekRole, true);
+        }
         $startDate = Date('Y-m-d',strtotime($dates[0]));
         $endDate =  Date('Y-m-d',strtotime($dates[1]));
         $filterSelect = $request->filterSelectJurnal;
@@ -48,14 +54,14 @@ class JurnalController extends Controller
         $balance = (isset($request->balanceJurnal)) ? str_replace(".", "",$request->balanceJurnal) : '';
         setlocale(LC_TIME, 'id_ID');
         Carbon::setLocale('id');
-        
+
         $namaFile = 'Laporan Jurnal '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
         // if($request->tipeFile == "excel"){
-        return Excel::download(new ExportJurnal($startDate, $endDate, $filterSelect, $filterAktiviti, $balance), $namaFile.'.xlsx');
+        return Excel::download(new ExportJurnal($startDate, $endDate, $filterSelect, $filterAktiviti, $balance, $ids), $namaFile.'.xlsx');
         // }else if($request->tipeFile == "pdf"){
         //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
         // }
-        
+
     }
- 
+
 }

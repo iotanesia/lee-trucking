@@ -21,6 +21,12 @@ class ReportManagementController extends Controller
     public function getListJurnalReport(Request $request) {
         if($request->isMethod('GET')) {
           $data = $request->all();
+          $cekRole = $this->checkRoles();
+          $ids = null;
+
+          if($cekRole) {
+            $ids = json_decode($cekRole, true);
+          }
           $whereField = 'coa_master_sheet.jurnal_category';
           $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
           $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
@@ -32,7 +38,12 @@ class ReportManagementController extends Controller
           ->leftJoin('public.users','coa_activity.created_by','public.users.id')
           ->leftJoin('coa_master_rekening','coa_activity.rek_id','coa_master_rekening.id')
           ->leftJoin('expedition_activity','coa_activity.ex_id', 'expedition_activity.id')
-          ->where('coa_master_sheet.report_active','True')  
+          ->where('coa_master_sheet.report_active','True')
+          ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
           ->whereBetween('coa_activity.created_at', [$startDate, $endDate])
           ->where(function($query) use($filterSelect) {
             if($filterSelect) {
@@ -50,7 +61,7 @@ class ReportManagementController extends Controller
                   ,'coa_master_rekening.rek_no','coa_activity.nominal','coa_activity.table_id'
                   ,'coa_activity.table','expedition_activity.nomor_inv','expedition_activity.nomor_surat_jalan')
                   ->orderBy('coa_activity.created_at','DESC')->get();
-          
+
           foreach($jurnalReportList as $row) {
             $row->activity_name = $row->sheet_name.' ['.$row->table_id.' ]';
             $row->nominal_debit = null;
@@ -65,7 +76,7 @@ class ReportManagementController extends Controller
           //  dd($jurnalReportList);
           return datatables($jurnalReportList)->toJson();
       }
-      
+
     }
     //Jurnal Report
 
@@ -73,6 +84,12 @@ class ReportManagementController extends Controller
     public function getListInvoiceBOReport(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = $data['start_date'].' 00:00:00';
@@ -80,6 +97,7 @@ class ReportManagementController extends Controller
         $filterPembayaran = $data['filter'];
         $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
         ->where('expedition_activity.nomor_surat_jalan','iLike','BO%')
         ->where(function($query) use($filterPembayaran) {
@@ -89,6 +107,11 @@ class ReportManagementController extends Controller
             }
           }
         })
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
                 ,'expedition_activity.nomor_inv'
                 ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
@@ -104,7 +127,7 @@ class ReportManagementController extends Controller
                 foreach($data as $row) {
                     $row->harga_per_rit = 'Rp.'. number_format($row->harga_otv, 0, ',', '.');
                     $row->total = 'Rp.'. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
-                    
+
                   $row->data_json = $row->toJson();
                 }
           return datatables($data)->toJson();
@@ -114,6 +137,12 @@ class ReportManagementController extends Controller
     public function getListInvoiceBAReport(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = $data['start_date'].' 00:00:00';
@@ -122,6 +151,7 @@ class ReportManagementController extends Controller
         $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
         ->where('expedition_activity.nomor_surat_jalan','iLike','BA%')
         ->where(function($query) use($filterPembayaran) {
           if($filterPembayaran) {
@@ -130,6 +160,11 @@ class ReportManagementController extends Controller
             }
           }
         })
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
                 ,'expedition_activity.nomor_inv'
                 ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
@@ -146,7 +181,7 @@ class ReportManagementController extends Controller
                 foreach($data as $row) {
                     $row->harga_per_rit = 'Rp.'. number_format($row->harga_otv, 0, ',', '.');
                     $row->total = 'Rp.'. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
-                    
+
                   $row->data_json = $row->toJson();
                 }
           return datatables($data)->toJson();
@@ -156,6 +191,12 @@ class ReportManagementController extends Controller
     public function getListInvoiceBJReport(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = $data['start_date'].' 00:00:00';
@@ -164,7 +205,13 @@ class ReportManagementController extends Controller
         $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
         ->where('expedition_activity.nomor_surat_jalan','iLike','BJ%')
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
         ->where(function($query) use($filterPembayaran) {
           if($filterPembayaran) {
             if($filterPembayaran != 'Semua'){
@@ -188,7 +235,7 @@ class ReportManagementController extends Controller
                 foreach($data as $row) {
                     $row->harga_per_rit = 'Rp.'. number_format($row->harga_otv, 0, ',', '.');
                     $row->total = 'Rp.'. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
-                    
+
                   $row->data_json = $row->toJson();
                 }
           return datatables($data)->toJson();
@@ -212,7 +259,7 @@ class ReportManagementController extends Controller
         })
         ->select('stk_repair_header.*', 'ex_master_truck.truck_name','ex_master_truck.truck_plat')
         ->orderBy('stk_repair_header.updated_at','DESC')->get();
-          
+
         $totals = 0;
         foreach($data as $row) {
           $historyStok = StkHistorySparePart::where('header_id', $row->id)->where('transaction_type','OUT')->get();
@@ -243,7 +290,7 @@ class ReportManagementController extends Controller
         })
         ->select('stk_history_stock.*')
         ->orderBy('stk_history_stock.updated_at','DESC')->get();
-          
+
         foreach($data as $row) {
           $row->total = 'Rp.'. number_format(($row->jumlah_stok * $row->amount), 0, ',', '.');
           $row->amount = 'Rp.'. number_format($row->amount, 0, ',', '.');
@@ -253,10 +300,16 @@ class ReportManagementController extends Controller
     }
     //Truck Repairs Report
 
-    //Expedition And Rit Report  
+    //Expedition And Rit Report
     public function getListRitDriver(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
@@ -264,6 +317,12 @@ class ReportManagementController extends Controller
         $statusCode = isset($data['status_code']) ? $data['status_code'] : '';
         $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
         ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($statusCode) {
@@ -286,6 +345,12 @@ class ReportManagementController extends Controller
     public function getListRitTruck(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
@@ -293,6 +358,12 @@ class ReportManagementController extends Controller
         $statusCode = isset($data['status_code']) ? $data['status_code'] : '';
         $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
         ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($statusCode) {
@@ -315,6 +386,12 @@ class ReportManagementController extends Controller
     public function getListRitTujuan(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
@@ -325,6 +402,12 @@ class ReportManagementController extends Controller
         ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
         ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
         ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($statusCode) {
@@ -347,6 +430,12 @@ class ReportManagementController extends Controller
     public function getDetailListRit(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
@@ -360,6 +449,12 @@ class ReportManagementController extends Controller
         ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
         ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
         ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($ritBy, $whereValue) {
@@ -383,7 +478,7 @@ class ReportManagementController extends Controller
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
-        ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code', 
+        ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code',
         'ex_master_driver.driver_name', 'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name')
            ->get();
         foreach($data as $row){
@@ -397,6 +492,12 @@ class ReportManagementController extends Controller
     public function getDetailListRitTruck(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
         $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
         $startDate = (isset($data['start_date'])) ? $data['start_date'].' 00:00:00' : '';
@@ -409,6 +510,12 @@ class ReportManagementController extends Controller
         ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
         ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
         ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
         ->where('ex_master_ojk.id', $request->ojk_id)
@@ -422,7 +529,7 @@ class ReportManagementController extends Controller
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
-        ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code', 
+        ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code',
         'ex_master_driver.driver_name', 'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name')
            ->get();
         foreach($data as $row){
@@ -434,5 +541,5 @@ class ReportManagementController extends Controller
     }
     //Expedition And Rit Report
 
-    
+
 }

@@ -18,11 +18,13 @@ class ExportExpeditionRit implements FromView, WithDrawings
 protected $startDate;
 protected $endDate;
 protected $param;
+protected $ids;
 
- function __construct($startDate, $endDate, $param) {
+ function __construct($startDate, $endDate, $param, $ids) {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->param = $param;
+        $this->ids = $ids;
  }
 
 /**
@@ -34,6 +36,7 @@ public function view(): View{
     $startDate = $this->startDate;
     $endDate = $this->endDate;
     $param = $this->param;
+    $ids = $this->ids;
     $data = null;
     $datas = null;
     if($param == 'Tujuan'){
@@ -41,6 +44,12 @@ public function view(): View{
         ->join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
         ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
         ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($startDate, $endDate) {
@@ -53,6 +62,12 @@ public function view(): View{
     }else if($param == 'Driver'){
         $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
         ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($startDate, $endDate) {
@@ -65,6 +80,12 @@ public function view(): View{
     }else if($param == 'Truck'){
         $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
         ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($startDate, $endDate) {
@@ -78,7 +99,7 @@ public function view(): View{
     foreach($data as $row){
         $textColor = '';
         $backgroundColor = '';
-      
+
         $row->param = $param;
         if($param == 'Tujuan'){
             $row->paramName = $row->kabupaten.', '.$row->kecamatan;
@@ -89,6 +110,12 @@ public function view(): View{
             ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
             ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
             ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+            ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+            ->where(function($query) use($ids) {
+                if($ids) {
+                $query->whereIn('public.users.cabang_id', $ids);
+                }
+            })
             ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
             ->where('expedition_activity.is_deleted','false')
             ->where('expedition_activity.ojk_id', $row->ojk_id)
@@ -97,7 +124,7 @@ public function view(): View{
                 $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
               }
             })
-            ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code', 
+            ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code',
             'ex_master_driver.driver_name', 'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name')
                ->get();
             foreach($dataDetail as $rowDetail){
@@ -106,25 +133,25 @@ public function view(): View{
                 if($rowDetail->status_activity == 'SUBMIT') {
                     $rowDetail->textColor = '#1aae6f';
                     $rowDetail->backgroundColor = '#b0eed3';
-                    
+
                 } else if($rowDetail->status_activity == 'APPROVAL_OJK_DRIVER') {
                     $rowDetail->textColor = '#ff3709';
                     $rowDetail->backgroundColor = '#fee6e0';
-            
+
                 } else if($rowDetail->status_activity == 'DRIVER_MENUJU_TUJUAN') {
                     $rowDetail->textColor = '#03acca';
                     $rowDetail->backgroundColor = '#aaedf9';
-            
+
                 } else if($rowDetail->status_activity == 'DRIVER_SAMPAI_TUJUAN') {
                     $rowDetail->textColor = '#ff3709';
                     $rowDetail->backgroundColor = '#fee6e0';
-                
+
                 } else {
                     $rowDetail->textColor = '#f80031';
                     $rowDetail->backgroundColor = '#fdd1da';
-            
+
                 }
-                
+
                 $rowDetail->tgl_inv = Carbon::parse($rowDetail->tgl_inv)->formatLocalized('%d %B %Y');
                 $rowDetail->tgl_po = Carbon::parse($rowDetail->tgl_po)->formatLocalized('%d %B %Y');
             }
@@ -138,6 +165,12 @@ public function view(): View{
             ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
             ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
             ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+            ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+            ->where(function($query) use($ids) {
+                if($ids) {
+                $query->whereIn('public.users.cabang_id', $ids);
+                }
+            })
             ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
             ->where('expedition_activity.is_deleted','false')
             ->where('expedition_activity.driver_id', $row->driver_id)
@@ -146,7 +179,7 @@ public function view(): View{
                 $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
               }
             })
-            ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code', 
+            ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code',
             'ex_master_driver.driver_name', 'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name')
                ->get();
             foreach($dataDetail as $rowDetail){
@@ -155,25 +188,25 @@ public function view(): View{
                if($rowDetail->status_activity == 'SUBMIT') {
                     $rowDetail->textColor = '#1aae6f';
                     $rowDetail->backgroundColor = '#b0eed3';
-                    
+
                 } else if($rowDetail->status_activity == 'APPROVAL_OJK_DRIVER') {
                     $rowDetail->textColor = '#ff3709';
                     $rowDetail->backgroundColor = '#fee6e0';
-            
+
                 } else if($rowDetail->status_activity == 'DRIVER_MENUJU_TUJUAN') {
                     $rowDetail->textColor = '#03acca';
                     $rowDetail->backgroundColor = '#aaedf9';
-            
+
                 } else if($rowDetail->status_activity == 'DRIVER_SAMPAI_TUJUAN') {
                     $rowDetail->textColor = '#ff3709';
                     $rowDetail->backgroundColor = '#fee6e0';
-                
+
                 } else {
                     $rowDetail->textColor = '#f80031';
                     $rowDetail->backgroundColor = '#fdd1da';
-            
+
                 }
-                
+
                 $rowDetail->tgl_inv = Carbon::parse($rowDetail->tgl_inv)->formatLocalized('%d %B %Y');
                 $rowDetail->tgl_po = Carbon::parse($rowDetail->tgl_po)->formatLocalized('%d %B %Y');
             }
@@ -187,6 +220,12 @@ public function view(): View{
             ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
             ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
             ->join('ex_master_cabang', 'ex_master_ojk.cabang_id', 'ex_master_cabang.id')
+            ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+            ->where(function($query) use($ids) {
+                if($ids) {
+                $query->whereIn('public.users.cabang_id', $ids);
+                }
+            })
             ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
             ->where('expedition_activity.is_deleted','false')
             ->where('expedition_activity.truck_id', $row->truck_id)
@@ -195,7 +234,7 @@ public function view(): View{
                 $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
               }
             })
-            ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code', 
+            ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'all_global_param.param_code as status_code',
             'ex_master_driver.driver_name', 'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name')
                ->get();
             foreach($dataDetail as $rowDetail){
@@ -204,19 +243,19 @@ public function view(): View{
                if($rowDetail->status_activity == 'SUBMIT') {
                     $rowDetail->textColor = '#1aae6f';
                     $rowDetail->backgroundColor = '#b0eed3';
-                    
+
                 } else if($rowDetail->status_activity == 'APPROVAL_OJK_DRIVER') {
                     $rowDetail->textColor = '#ff3709';
                     $rowDetail->backgroundColor = '#fee6e0';
-            
+
                 } else if($rowDetail->status_activity == 'DRIVER_MENUJU_TUJUAN') {
                     $rowDetail->textColor = '#03acca';
                     $rowDetail->backgroundColor = '#aaedf9';
-            
+
                 } else if($rowDetail->status_activity == 'DRIVER_SAMPAI_TUJUAN') {
                     $rowDetail->textColor = '#ff3709';
                     $rowDetail->backgroundColor = '#fee6e0';
-                
+
                 } else {
                     $rowDetail->textColor = '#f80031';
                     $rowDetail->backgroundColor = '#fdd1da';

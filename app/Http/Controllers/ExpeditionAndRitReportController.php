@@ -39,57 +39,74 @@ class ExpeditionAndRitReportController extends Controller
     public function exportExcelRitTujuan(Request $request){
         $date = $request->dateRangeRitTujuan;
         $dates = explode('-',$date);
-        
+
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+        $ids = json_decode($cekRole, true);
+        }
         $startDate = Date('Y-m-d',strtotime($dates[0]));
         $endDate =  Date('Y-m-d',strtotime($dates[1]));
 
         setlocale(LC_TIME, 'id_ID');
         Carbon::setLocale('id');
-        
+
         $namaFile = 'Ekspedisi dan Rit Tujuan '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').' - '.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
         // if($request->tipeFile == "excel"){
-        return Excel::download(new ExportExpeditionRit($startDate, $endDate, 'Tujuan'), $namaFile.'.xlsx');
+        return Excel::download(new ExportExpeditionRit($startDate, $endDate, 'Tujuan', $ids), $namaFile.'.xlsx');
         // }else if($request->tipeFile == "pdf"){
         //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
         // }
-        
+
     }
 
     public function exportExcelRitDriver(Request $request){
         $date = $request->dateRangeRitDriver;
         $dates = explode('-',$date);
-        
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+        $ids = json_decode($cekRole, true);
+        }
         $startDate = Date('Y-m-d',strtotime($dates[0]));
         $endDate =  Date('Y-m-d',strtotime($dates[1]));
 
         setlocale(LC_TIME, 'id_ID');
         Carbon::setLocale('id');
-        
+
         $namaFile = 'Ekspedisi dan Rit Driver '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').' - '.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
         // if($request->tipeFile == "excel"){
-        return Excel::download(new ExportExpeditionRit($startDate, $endDate, 'Driver'), $namaFile.'.xlsx');
+        return Excel::download(new ExportExpeditionRit($startDate, $endDate, 'Driver', $ids), $namaFile.'.xlsx');
         // }else if($request->tipeFile == "pdf"){
         //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
         // }
-        
+
     }
-    
+
     public function exportExcelRitTruck(Request $request){
         $date = $request->dateRangeRitTruck;
         $dates = explode('-',$date);
-        
+
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+        $ids = json_decode($cekRole, true);
+        }
         $startDate = Date('Y-m-d',strtotime($dates[0]));
         $endDate =  Date('Y-m-d',strtotime($dates[1]));
 
         setlocale(LC_TIME, 'id_ID');
         Carbon::setLocale('id');
-        
+
         $namaFile = 'Ekspedisi dan Rit Truck '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').' - '.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
         // if($request->tipeFile == "excel"){
-        return Excel::download(new ExportExpeditionRit($startDate, $endDate, 'Truck'), $namaFile.'.xlsx');
+        return Excel::download(new ExportExpeditionRit($startDate, $endDate, 'Truck', $ids), $namaFile.'.xlsx');
         // }else if($request->tipeFile == "pdf"){
         //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
         // }
-        
+
     }
 }
