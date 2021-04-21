@@ -19,12 +19,14 @@ protected $startDate;
 protected $endDate;
 protected $noInvoice;
 protected $jenisPembayaran;
+protected $ids;
 
- function __construct($startDate, $endDate, $noInvoice, $jenisPembayaran) {
+ function __construct($startDate, $endDate, $noInvoice, $jenisPembayaran, $ids) {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->noInvoice = $noInvoice;
         $this->jenisPembayaran = $jenisPembayaran;
+        $this->ids = $ids;
  }
 
 /**
@@ -34,11 +36,18 @@ public function view(): View
 {
     $noInv = $this->noInvoice;
     $jenisP = $this->jenisPembayaran;
+    $ids = $this->ids;
     setlocale(LC_TIME, 'id_ID');
     Carbon::setLocale('id');
     $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
     ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
     ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
+    ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+    ->where(function($query) use($ids) {
+        if($ids) {
+        $query->whereIn('public.users.cabang_id', $ids);
+        }
+    })
     ->where('expedition_activity.nomor_surat_jalan','iLike','BO%')
     // ->where(function($query) use($noInv) {
     //     if($noInv) {

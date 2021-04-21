@@ -21,13 +21,15 @@ protected $endDate;
 protected $filterSelect;
 protected $filterAktiviti;
 protected $balance;
+protected $ids;
 
- function __construct($startDate, $endDate, $filterSelect, $filterAktiviti, $balance) {
+ function __construct($startDate, $endDate, $filterSelect, $filterAktiviti, $balance, $ids) {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->filterSelect = $filterSelect;
         $this->filterAktiviti = $filterAktiviti;
         $this->balance = $balance;
+        $this->ids = $ids;
  }
 
 /**
@@ -38,6 +40,7 @@ public function view(): View
     $filterSelect = $this->filterSelect;
     $filterAktiviti = $this->filterAktiviti;
     $balance = $this->balance;
+    $ids = $this->ids;
     setlocale(LC_TIME, 'id_ID');
     Carbon::setLocale('id');
     $jurnalReportList = CoaActivity::leftJoin('coa_master_sheet' ,'coa_activity.coa_id','coa_master_sheet.id')
@@ -45,6 +48,11 @@ public function view(): View
           ->leftJoin('coa_master_rekening','coa_activity.rek_id','coa_master_rekening.id')
           ->leftJoin('expedition_activity','coa_activity.ex_id', 'expedition_activity.id')
           ->where('coa_master_sheet.report_active','True')
+            ->where(function($query) use($ids) {
+                if($ids) {
+                $query->whereIn('public.users.cabang_id', $ids);
+                }
+            })
           ->whereBetween('coa_activity.created_at', [$this->startDate.' 00:00:00', $this->endDate.' 23:59:59'])
           ->where(function($query) use($filterSelect) {
             if($filterSelect) {
@@ -95,7 +103,7 @@ public function view(): View
             $totalBalance = $totalIncome - $balance;
             $totalBalances = 'Rp. '. number_format(($totalBalance), 0, ',', '.');
           }
-          
+
           $startDates =  Carbon::parse($this->startDate)->formatLocalized('%d %B %Y');
           $endDates =  Carbon::parse($this->endDate)->formatLocalized('%d %B %Y');
         return view('jurnal.export-excel', [
