@@ -112,18 +112,21 @@ class ReportManagementController extends Controller
                $query->whereIn('public.users.cabang_id', $ids);
             }
           })
-        ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
-                ,'expedition_activity.nomor_inv'
-                ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
-                ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
-                ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
-                ,'expedition_activity.toko','expedition_activity.harga_otv')
-                ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
-               ->groupBy('expedition_activity.tgl_po','expedition_activity.nomor_inv'
-               ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
-                ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
-                ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
-                ,'expedition_activity.toko','expedition_activity.harga_otv')->get();
+          ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
+          ,'expedition_activity.id'
+          ,'expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')
+          ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
+          ->orderBy('expedition_activity.tgl_po','DESC')
+         ->groupBy('expedition_activity.tgl_po'
+         ,'expedition_activity.id','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')->get();
                 foreach($data as $row) {
                     $row->harga_per_rit = 'Rp.'. number_format($row->harga_otv, 0, ',', '.');
                     $row->total = 'Rp.'. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
@@ -165,19 +168,21 @@ class ReportManagementController extends Controller
                $query->whereIn('public.users.cabang_id', $ids);
             }
           })
-        ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
-                ,'expedition_activity.nomor_inv'
-                ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
-                ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
-                ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
-                ,'expedition_activity.toko','expedition_activity.harga_otv')
-                ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
-                ->groupBy('expedition_activity.tgl_po'
-                ,'expedition_activity.nomor_inv'
-                ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
-                ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
-                ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
-                ,'expedition_activity.toko','expedition_activity.harga_otv')->get();
+          ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
+          ,'expedition_activity.id'
+          ,'expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')
+          ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
+          ->orderBy('expedition_activity.tgl_po','DESC')
+         ->groupBy('expedition_activity.tgl_po'
+         ,'expedition_activity.id','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')->get();
                 foreach($data as $row) {
                     $row->harga_per_rit = 'Rp.'. number_format($row->harga_otv, 0, ',', '.');
                     $row->total = 'Rp.'. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
@@ -220,18 +225,20 @@ class ReportManagementController extends Controller
           }
         })
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
-                ,'expedition_activity.nomor_inv'
-                ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
-                ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
-                ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
-                ,'expedition_activity.toko','expedition_activity.harga_otv')
-                ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
-                ->groupBy('expedition_activity.tgl_po'
-                ,'expedition_activity.nomor_inv'
-                ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
-                ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
-                ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
-                ,'expedition_activity.toko','expedition_activity.harga_otv')->get();
+          ,'expedition_activity.id'
+          ,'expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')
+          ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
+          ->orderBy('expedition_activity.tgl_po','DESC')
+         ->groupBy('expedition_activity.tgl_po'
+         ,'expedition_activity.id','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')->get();
                 foreach($data as $row) {
                     $row->harga_per_rit = 'Rp.'. number_format($row->harga_otv, 0, ',', '.');
                     $row->total = 'Rp.'. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
@@ -239,6 +246,86 @@ class ReportManagementController extends Controller
                   $row->data_json = $row->toJson();
                 }
           return datatables($data)->toJson();
+      }
+    }
+
+    public function getListInvoiceBFReport(Request $request){
+      if($request->isMethod('GET')) {
+        $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
+        $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+        $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = $data['start_date'].' 00:00:00';
+        $endDate = $data['end_date'].' 23:59:59';
+        $filterPembayaran = $data['filter'];
+        $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
+        ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
+        ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->where('expedition_activity.nomor_surat_jalan','iLike','BF%')
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
+        ->where(function($query) use($filterPembayaran) {
+          if($filterPembayaran) {
+            if($filterPembayaran != 'Semua'){
+              $query->where('expedition_activity.otv_payment_method', $filterPembayaran);
+            }
+          }
+        })
+        ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
+          ,'expedition_activity.id'
+          ,'expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')
+          ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
+          ->orderBy('expedition_activity.tgl_po','DESC')
+         ->groupBy('expedition_activity.tgl_po'
+         ,'expedition_activity.id','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')->get();
+                foreach($data as $row) {
+                    $row->harga_per_rit = 'Rp.'. number_format($row->harga_otv, 0, ',', '.');
+                    $row->total = 'Rp.'. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
+
+                  $row->data_json = $row->toJson();
+                }
+          return datatables($data)->toJson();
+      }
+    }
+    
+    public function postChangeStatusPemeriksaan(Request $request){
+      if($request->isMethod('POST')) {
+        $data = $request->all();
+        
+        $expeditionActivity = ExpeditionActivity::where('id', $request->id)->first();
+        // dd($expeditionActivity);
+        $expeditionActivity->is_read_invoice_report = $request->is_read;
+        if($expeditionActivity->save()){
+          return response()->json([
+            'code' => 200,
+            'code_message' => 'Berhasil merubah status pemeriksaan',
+            'code_type' => 'Success',
+          ], 200);
+  
+        }else{
+          return response()->json([
+            'code' => 500,
+            'code_message' => 'Gagal menyimpan data',
+            'code_type' => 'Fail',
+          ], 500);
+        }
       }
     }
     //Invoice Report
