@@ -555,8 +555,12 @@ class ExpeditionController extends Controller
       $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('created_at', 'DESC')->first();
       $allExActivity = ExStatusActivity::where('ex_id', $data['id'])->where('status_activity', 'APPROVAL_OJK_DRIVER')->where('status_approval', 'APPROVED')->get();
       $idUser = Auth::user()->id;
-      $truckDetail = Truck::find($data['truck_id']);
-      $truckFuso = GlobalParam::where('param_code', 'FUSO')->where('param_type', 'TRUCK_TYPE')->first();
+
+      if(isset($data['truck_id'])) {
+          $truckDetail = Truck::find($data['truck_id']);
+      }
+
+      $trucktipe = GlobalParam::where('param_code', 'TRUCK')->where('param_type', 'TRUCK_TYPE')->first();
       $idNonKenek = null;
 
       if(isset($data['kenek_id'])) {
@@ -583,7 +587,7 @@ class ExpeditionController extends Controller
           $expeditionActivity->is_approve = 1;
       }
 
-      if(($request->status_activity == 'DRIVER_MENUJU_TUJUAN' && $data['kenek_id'] == $idNonKenek) && $truckDetail->truck_type == $truckFuso->id ) {
+      if(($request->status_activity == 'DRIVER_MENUJU_TUJUAN' && $data['kenek_id'] == $idNonKenek) && (isset($data['truck_id']) && $truckDetail->truck_type == $trucktipe->id )) {
           $expeditionActivity->harga_ojk = $expeditionActivity->harga_ojk - 60000;
       }
 
