@@ -340,7 +340,8 @@ class WareHouseController extends Controller
        
 
         if($sparePart->save()){
-
+          $sparePart->barcode_gudang = $sparePart->id.'-TSJ-'.date('dmY');
+          $sparePart->save();
           DB::connection(Auth::user()->schema)->commit();
 
           return response()->json([
