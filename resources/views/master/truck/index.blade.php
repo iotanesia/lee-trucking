@@ -172,6 +172,15 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="truck_type">Truk Tipe</label>
+                    <select name="truck_type" class="form-control" id="truck_type">
+                        <option value=""></option>
+                        @foreach($truck_type as $row)
+                            <option value="{{$row->id}}">{{$row->param_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </form>
         </div>
         <div class="modal-footer">
