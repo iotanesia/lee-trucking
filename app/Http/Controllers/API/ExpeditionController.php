@@ -10,6 +10,7 @@ use App\Models\Ojk;
 use App\Models\Kenek;
 use App\Models\CoaActivity;
 use App\Models\Driver;
+use App\Models\Truck;
 use App\Models\UserDetail;
 use App\Models\Notification;
 use App\Models\GlobalParam;
@@ -554,6 +555,8 @@ class ExpeditionController extends Controller
       $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('created_at', 'DESC')->first();
       $allExActivity = ExStatusActivity::where('ex_id', $data['id'])->where('status_activity', 'APPROVAL_OJK_DRIVER')->where('status_approval', 'APPROVED')->get();
       $idUser = Auth::user()->id;
+      $truckDetail = Truck::find($data['truck_id']);
+      $truckFuso = GlobalParam::where('param_code', 'FUSO')->where('param_type', 'TRUCK_TYPE')->first();
       $idNonKenek = null;
 
       if(isset($data['kenek_id'])) {
@@ -580,7 +583,7 @@ class ExpeditionController extends Controller
           $expeditionActivity->is_approve = 1;
       }
 
-      if($request->status_activity == 'DRIVER_MENUJU_TUJUAN' && $data['kenek_id'] == $idNonKenek) {
+      if(($request->status_activity == 'DRIVER_MENUJU_TUJUAN' && $data['kenek_id'] == $idNonKenek) && $truckDetail->truck_type == $truckFuso->id ) {
           $expeditionActivity->harga_ojk = $expeditionActivity->harga_ojk - 60000;
       }
 

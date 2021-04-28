@@ -54,20 +54,23 @@ $("document").ready(function(){
     var invoker = $(e.relatedTarget);
 
     if(invoker.attr('el-event') == 'edit') {
-      var dataJSON = invoker.attr("data-json");
-      var dataJSON = JSON.parse(dataJSON);
-
-      $("#truck-form").find("input[name=id]").val(dataJSON.id);
-      $("#truck-modal #btn-submit").attr("el-event", "edit");
-      $("#truck-form").find("textarea[name=content]").summernote("code", dataJSON.content);
-      
-      bindToForm($("#truck-modal"), dataJSON);
+        var dataJSON = invoker.attr("data-json");
+        var dataJSON = JSON.parse(dataJSON);
+        var tipe = dataJSON.truck_type ? dataJSON.truck_type : null;
+        
+        $("#truck-form").find("input[name=id]").val(dataJSON.id);
+        $("#truck-modal #btn-submit").attr("el-event", "edit");
+        $("#truck-form").find("textarea[name=content]").summernote("code", dataJSON.content);
+        
+        bindToForm($("#truck-modal"), dataJSON);
+        $("#truck-form").find("select[name=truck_type]").val(tipe).trigger('change');
       
     } else {
-      $("#truck-form").find("input[name=id]").val(null);
-      $("#truck-modal #btn-submit").attr("el-event", "add");
-      $("#truck-form").find("textarea[name=content]").summernote("code", "");
-      resetForm("#truck-form");
+        $("#truck-form").find("input[name=id]").val(null);
+        $("#truck-modal #btn-submit").attr("el-event", "add");
+        $("#truck-form").find("textarea[name=content]").summernote("code", "");
+        resetForm("#truck-form");
+        $("#truck-form").find("select[name=truck_type]").val(null).trigger('change');
     }
   });
 
@@ -81,6 +84,10 @@ $("document").ready(function(){
 
   $("#driver_id").select2({
     placeholder:"Select Supir"
+  });
+
+  $("#truck_type").select2({
+    placeholder:"Select Tipe"
   });
 
   $("#truck_date_join").daterangepicker({
