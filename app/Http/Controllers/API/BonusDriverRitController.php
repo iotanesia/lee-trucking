@@ -7,6 +7,7 @@ use App\User;
 use App\Models\ExpeditionActivity;
 use App\Models\Reward;
 use App\Models\Truck;
+use App\Models\GlobalParam;
 use App\Models\Driver;
 use Auth;
 use Carbon\Carbon;
@@ -21,9 +22,11 @@ class BonusDriverRitController extends Controller
       $year = isset($data['year']) ? $data['year'] : date('Y');
       $firstDate = date('Y-m-01', strtotime($year.'-'.$month.'-01'));
       $lastDate = date('Y-m-t', strtotime($year.'-'.$month.'-01'));
+      $truckTipe = GlobalParam::where('param_code', 'TRUCK')->where('param_type', 'TRUCK_TYPE')->first();
       $whereField = 'driver_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $rewardList = ExpeditionActivity::join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                     ->where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
                             foreach(explode(', ', $whereField) as $idx => $field) {
@@ -32,18 +35,18 @@ class BonusDriverRitController extends Controller
                         }
                     })
                     ->whereIn('status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])
+                    ->where('ex_master_truck.truck_type', $truckTipe->id)
                     ->whereRaw("expedition_activity.tgl_po between CAST('".$firstDate." 00:00:00' AS DATE) AND CAST('".$lastDate." 23:59:59' AS DATE)")
-                    ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
-                    ->groupBy('driver_id', 'driver_name')
+                    ->select('expedition_activity.driver_id', 'driver_name', DB::raw('COUNT(expedition_activity."driver_id") AS total_rit'))
+                    ->groupBy('expedition_activity.driver_id', 'driver_name')
                     ->orderBy('total_rit', 'DESC')
                     ->paginate();
-
                     
     //   dd($rewardList);
 
       foreach($rewardList as $row) {
           $reward = null;
-          $truck = Truck::where('driver_id', $row->driver_id)->first();
+          $truck = Truck::where('driver_id', $row->driver_id)->where('truck_type', $truckTipe->id)->first();
         //   dump($truck);
           if($truck) {
               $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)
@@ -98,9 +101,11 @@ class BonusDriverRitController extends Controller
       $year = isset($data['tahun']) ? $data['tahun'] : date('Y');
       $firstDate = date('Y-m-01', strtotime($year.'-'.$month.'-01'));
       $lastDate = date('Y-m-t', strtotime($year.'-'.$month.'-01'));
+      $truckTipe = GlobalParam::where('param_code', 'TRUCK')->where('param_type', 'TRUCK_TYPE')->first();
       $whereField = 'driver_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $rewardList = ExpeditionActivity::join('ex_master_kenek', 'expedition_activity.kenek_id', 'ex_master_kenek.id')
+                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                     ->where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
                             foreach(explode(', ', $whereField) as $idx => $field) {
@@ -109,6 +114,7 @@ class BonusDriverRitController extends Controller
                         }
                     })
                     ->whereIn('status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])
+                    ->where('ex_master_truck.truck_type', $truckTipe->id)
                     ->whereRaw("expedition_activity.tgl_po between CAST('".$firstDate." 00:00:00' AS DATE) AND CAST('".$lastDate." 23:59:59' AS DATE)")
                     ->select('kenek_id', 'kenek_name', 'driver_id', DB::raw('COUNT("kenek_id") AS total_rit'))
                     ->groupBy('kenek_id', 'kenek_name', 'driver_id')
@@ -116,7 +122,7 @@ class BonusDriverRitController extends Controller
                     ->paginate();
 
       foreach($rewardList as $row) {
-          $truck = Truck::where('driver_id', $row->driver_id)->first();
+          $truck = Truck::where('driver_id', $row->driver_id)->where('truck_type', $truckTipe->id)->first();
         //   dump($truck);
           if($truck) {
               $row->rit_truck = ExpeditionActivity::where('truck_id', $truck->id)
@@ -340,7 +346,9 @@ class BonusDriverRitController extends Controller
       $user = Auth::user();
       $whereField = 'name, no_Reward';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $truckTipe = GlobalParam::where('param_code', 'TRUCK')->where('param_type', 'TRUCK_TYPE')->first();
       $rewardList = ExpeditionActivity::join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
+                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                     ->where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
                             foreach(explode(', ', $whereField) as $idx => $field) {
@@ -349,6 +357,7 @@ class BonusDriverRitController extends Controller
                         }
                     })
                     ->where('ex_master_driver.user_id', $user->id)
+                    ->where('ex_master_truck.truck_type', $truckTipe->id)
                     ->whereIn('expedition_activity.status_activity',['CLOSED_EXPEDITION', 'WAITING_OWNER'])
                     ->whereYear('expedition_activity.tgl_po', $data['year'])
                     ->whereMonth('expedition_activity.tgl_po', $data['month'])
