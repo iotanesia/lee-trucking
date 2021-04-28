@@ -19,12 +19,20 @@ class SparePartController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
+      $cekRole = $this->checkRoles();
+      $ids = null;
+
+      if($cekRole) {
+        $ids = json_decode($cekRole, true);
+      }
+
       $data = $request->all();
       $whereField = 'sparepart_name, group_name, stk_master_sparepart.barcode_pabrik';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
                                        'stk_master_sparepart.group_sparepart_id')
                        ->join('all_global_param as sparepart_jenis', 'stk_master_sparepart.sparepart_jenis', 'sparepart_jenis.param_code')
+                       ->join('public.users', DB::raw('CAST(users.id AS VARCHAR)'), 'stk_master_sparepart.created_by')
                        ->where('stk_master_sparepart.is_deleted','=','false')
                        ->where(function($query) use($whereField, $whereValue) {
                            if($whereValue) {
@@ -32,7 +40,12 @@ class SparePartController extends Controller
                                $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                                }
                            }
-                           })
+                       })
+                       ->where(function($query) use($ids) {
+                        if($ids) {
+                           $query->whereIn('users.cabang_id', $ids);
+                        }
+                       })
                        ->where('type', 'SPAREPART')
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
                        ->orderBy('stk_master_sparepart.id', 'DESC')
@@ -71,6 +84,13 @@ class SparePartController extends Controller
   }
 
   public function getListAll(Request $request) {
+    $cekRole = $this->checkRoles();
+    $ids = null;
+
+    if($cekRole) {
+      $ids = json_decode($cekRole, true);
+    }
+
     if($request->isMethod('GET')) {
       $data = $request->all();
       $whereField = 'sparepart_name, group_name, stk_master_sparepart.barcode_pabrik';
@@ -78,6 +98,7 @@ class SparePartController extends Controller
       $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
                                        'stk_master_sparepart.group_sparepart_id')
                        ->join('all_global_param as sparepart_jenis', 'stk_master_sparepart.sparepart_jenis', 'sparepart_jenis.param_code')
+                       ->join('public.users', DB::raw('CAST(users.id AS VARCHAR)'), 'stk_master_sparepart.created_by')
                        ->where('stk_master_sparepart.is_deleted','=','false')
                        ->where(function($query) use($whereField, $whereValue) {
                            if($whereValue) {
@@ -86,6 +107,11 @@ class SparePartController extends Controller
                                }
                            }
                            })
+                        ->where(function($query) use($ids) {
+                            if($ids) {
+                                $query->whereIn('users.cabang_id', $ids);
+                            }
+                        })
                        ->where('type', 'SPAREPART')
                        ->where('group_sparepart_id', '<>', 5)
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
@@ -178,6 +204,13 @@ class SparePartController extends Controller
 
   public function getListUnpaid(Request $request) {
     if($request->isMethod('GET')) {
+      $cekRole = $this->checkRoles();
+      $ids = null;
+
+      if($cekRole) {
+        $ids = json_decode($cekRole, true);
+      }
+
       $data = $request->all();
       $whereField = 'sparepart_name, group_name, stk_master_sparepart.barcode_pabrik';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
@@ -189,6 +222,7 @@ class SparePartController extends Controller
                             }
                        ])
                        ->join('all_global_param as sparepart_jenis', 'stk_master_sparepart.sparepart_jenis', 'sparepart_jenis.param_code')
+                       ->join('public.users', DB::raw('CAST(users.id AS VARCHAR)'), 'stk_master_sparepart.created_by')
                        ->where('stk_master_sparepart.is_deleted','=','false')
                        ->where('stk_master_sparepart.sparepart_type', 'DEBT')
                        ->where('stk_master_sparepart.sparepart_type', 'DEBT')
@@ -198,6 +232,11 @@ class SparePartController extends Controller
                                $query->orWhere($field, 'LIKE', "%".$whereValue."%");
                                }
                            }
+                       })
+                       ->where(function($query) use($ids) {
+                            if($ids) {
+                            $query->whereIn('users.cabang_id', $ids);
+                            }
                        })
                        ->where('type', 'SPAREPART')
                        ->where('stk_master_sparepart.sparepart_jenis', 'PURCHASE')
