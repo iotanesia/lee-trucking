@@ -20,7 +20,6 @@ class UserController extends Controller
  
   public function login(){
       $user = User::where('email', request('email'))->first();
-      $cabang_name = Cabang::find($user->cabang_id)->cabang_name;
       $datas = null;
 
       if(!isset($user)) {
@@ -33,6 +32,8 @@ class UserController extends Controller
       }
 
       if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
+          $cabang_name = Cabang::find($user->cabang_id)->cabang_name;
+
           if(!Auth::user()->is_active) {
               return response()->json([
                   'code' => 402,
