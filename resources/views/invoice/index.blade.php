@@ -149,6 +149,7 @@ input:checked + .slider:before {
             </div>
             <div class="card-body">
               <div class="tab-content">
+              @if($user->cabang_id == 6 || $user->cabang_id == 11)
                 <div id="ad" class="tab-pane in active">
                   <form id="form-export-bo" method="get" action="{{url('export-bo')}}">
                     <div class="row">
@@ -634,6 +635,7 @@ input:checked + .slider:before {
                     </tfoot>
                   </table>
                 </div>
+              @elseif($user->cabang_id == 7 || $user->cabang_id == 10)  
                 <div id="do" class="tab-pane in active">
                   <form id="form-export-do" method="get" action="{{url('export-do')}}">
                     <div class="row">
@@ -1119,6 +1121,7 @@ input:checked + .slider:before {
                     </tfoot>
                   </table>
                 </div>
+              @endif
               </div>
             </div>
           </div>
