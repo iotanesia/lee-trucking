@@ -43,7 +43,7 @@ class UserController extends Controller
           }
           
           $schema = Auth::user()->schema.'.';
-          $user->cabang_name = $cabang_name;
+        //   $user->cabang_name = $cabang_name;
           $user->remember_token = $user->createToken('nApp')->accessToken;
           $user->id_fcm_android = request('id_fcm_android');
           $user->save();
