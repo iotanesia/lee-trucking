@@ -53,7 +53,7 @@ public function view(): View
                 $query->whereIn('public.users.cabang_id', $ids);
                 }
             })
-          ->whereBetween('coa_activity.created_at', [$this->startDate.' 00:00:00', $this->endDate.' 23:59:59'])
+          ->whereBetween('expedition_activity.tgl_inv', [$this->startDate.' 00:00:00', $this->endDate.' 23:59:59'])
           ->where(function($query) use($filterSelect) {
             if($filterSelect) {
                 $query->where('coa_master_sheet.jurnal_category', $filterSelect);
@@ -64,12 +64,12 @@ public function view(): View
                 $query->where('coa_master_sheet.sheet_name', $filterAktiviti);
             }
           })
-          ->select('coa_activity.created_at','coa_master_sheet.sheet_name'
+          ->select('expedition_activity.tgl_inv as created_at','coa_master_sheet.sheet_name'
                   ,'coa_master_sheet.jurnal_category','public.users.name'
                   ,'coa_master_rekening.bank_name','coa_master_rekening.rek_name'
                   ,'coa_master_rekening.rek_no','coa_activity.nominal','coa_activity.table_id'
                   ,'coa_activity.table','expedition_activity.nomor_inv','expedition_activity.nomor_surat_jalan')
-                  ->orderBy('coa_activity.created_at','DESC')->get();
+                  ->orderBy('expedition_activity.tgl_inv','DESC')->get();
           // dd($jurnalReportList[0]);
           foreach($jurnalReportList as $row) {
             $row->activity_name = $row->sheet_name.' ['.$row->table_id.' ]';
