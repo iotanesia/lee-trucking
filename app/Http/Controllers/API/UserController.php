@@ -8,6 +8,7 @@ use App\User;
 use Auth;
 use DB;
 use Validator;
+use App\Models\Cabang;
 use App\Models\UserDetail;
 use App\Models\GlobalParam;
 use Carbon\Carbon;
@@ -18,7 +19,7 @@ class UserController extends Controller
   public $successStatus = 201;
  
   public function login(){
-      $user = User::join(Auth::user()->schema.'.ex_master_cabang', Auth::user()->schema.'.ex_master_cabang.id', 'users.cabang_id')->where('email', request('email'))->select('users.*', Auth::user()->schema.'.ex_master_cabang.cabang_name')->first();
+      $user = User::where('email', request('email'))->first();
       $datas = null;
 
       if(!isset($user)) {
@@ -41,6 +42,7 @@ class UserController extends Controller
           }
           
           $schema = Auth::user()->schema.'.';
+          $user->cabang_name = Cabang::find($user->cabang_id)->cabang_name;
           $user->remember_token = $user->createToken('nApp')->accessToken;
           $user->id_fcm_android = request('id_fcm_android');
           $user->save();
