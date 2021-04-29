@@ -690,7 +690,7 @@
         data: function (d) {
           d.start_date = startDateDA;
           d.end_date = endDateDA;
-          d.filter = $("#filter-select-ba").val();
+          d.filter = $("#filter-select-da").val();
         },
         headers: {"Authorization": "Bearer " + accessToken},
         crossDomain: true,
@@ -821,8 +821,8 @@
       ajax: {
         url: window.Laravel.app_url + "/api/report/get-invoice-dj-list",
         type: "GET",data: function (d) {
-          d.start_date = startDateDj;
-          d.end_date = endDateDj;
+          d.start_date = startDateDJ;
+          d.end_date = endDateDJ;
           d.filter = $("#filter-select-dj").val();
         },
         headers: {"Authorization": "Bearer " + accessToken},
