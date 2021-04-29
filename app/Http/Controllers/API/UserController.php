@@ -8,6 +8,7 @@ use App\User;
 use Auth;
 use DB;
 use Validator;
+use App\Models\Cabang;
 use App\Models\UserDetail;
 use App\Models\GlobalParam;
 use Carbon\Carbon;
@@ -19,6 +20,7 @@ class UserController extends Controller
  
   public function login(){
       $user = User::where('email', request('email'))->first();
+      $cabang_name = Cabang::find($user->cabang_id)->cabang_name;
       $datas = null;
 
       if(!isset($user)) {
@@ -51,6 +53,7 @@ class UserController extends Controller
                         ->get();
 
           $user->group_name = isset(DB::table($schema.'usr_group')->find($user->group_id)->group_name) ? DB::table($schema.'usr_group')->find($user->group_id)->group_name : null;
+          $user->cabang_name = $cabang_name;
           foreach($roleAccess as $val) {
                $datas[] = $val->menu_name;
           }
