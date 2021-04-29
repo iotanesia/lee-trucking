@@ -116,8 +116,8 @@ class BonusDriverRitController extends Controller
                     ->whereIn('status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])
                     ->where('ex_master_truck.truck_type', $truckTipe->id)
                     ->whereRaw("expedition_activity.tgl_po between CAST('".$firstDate." 00:00:00' AS DATE) AND CAST('".$lastDate." 23:59:59' AS DATE)")
-                    ->select('kenek_id', 'kenek_name', 'driver_id', DB::raw('COUNT("kenek_id") AS total_rit'))
-                    ->groupBy('kenek_id', 'kenek_name', 'driver_id')
+                    ->select('kenek_id', 'kenek_name', 'expedition_activity.driver_id', DB::raw('COUNT("kenek_id") AS total_rit'))
+                    ->groupBy('kenek_id', 'kenek_name', 'expedition_activity.driver_id')
                     ->orderBy('total_rit', 'DESC')
                     ->paginate();
 
@@ -361,9 +361,9 @@ class BonusDriverRitController extends Controller
                     ->whereIn('expedition_activity.status_activity',['CLOSED_EXPEDITION', 'WAITING_OWNER'])
                     ->whereYear('expedition_activity.tgl_po', $data['year'])
                     ->whereMonth('expedition_activity.tgl_po', $data['month'])
-                    ->select('driver_id', 'driver_name', DB::raw('COUNT("driver_id") AS total_rit'))
-                    ->whereNotNull('driver_id')
-                    ->groupBy('driver_id', 'driver_name')
+                    ->select('expedition_activity.driver_id', 'driver_name', DB::raw('COUNT(expedition_activity."driver_id") AS total_rit'))
+                    ->whereNotNull('expedition_activity.driver_id')
+                    ->groupBy('expedition_activity.driver_id', 'driver_name')
                     ->orderBy('total_rit', 'DESC')->first();
       if(!isset($rewardList)){
         $rewardListNullBonus = Driver::where('user_id', $user->id)
