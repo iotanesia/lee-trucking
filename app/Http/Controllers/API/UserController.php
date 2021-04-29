@@ -45,8 +45,8 @@ class UserController extends Controller
           $schema = Auth::user()->schema.'.';
           $user->remember_token = $user->createToken('nApp')->accessToken;
           $user->id_fcm_android = request('id_fcm_android');
-          $user->cabang_name = $cabang_name;
           $user->save();
+          $user->cabang_name = $cabang_name;
           $roleAccess = DB::table(Auth::user()->schema.'.usr_group_menu')
                         ->join(Auth::user()->schema.'.usr_menu', 'usr_group_menu.menu_id', 'usr_menu.id')
                         ->select('usr_menu.menu_name as menu_name')
