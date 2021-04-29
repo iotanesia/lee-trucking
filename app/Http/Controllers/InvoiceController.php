@@ -14,6 +14,11 @@ use DB;
 use App\Exports\ExportInvoiceBO;
 use App\Exports\ExportInvoiceBA;
 use App\Exports\ExportInvoiceBJ;
+use App\Exports\ExportInvoiceBF;
+use App\Exports\ExportInvoiceDO;
+use App\Exports\ExportInvoiceDA;
+use App\Exports\ExportInvoiceDJ;
+use App\Exports\ExportInvoiceDF;
 use Carbon\Carbon;
 
 class InvoiceController extends Controller
@@ -38,9 +43,10 @@ class InvoiceController extends Controller
         $user = Auth::User();
         // dd($user);
         $data['title'] = 'Laporan Invoice';
+        $data['user'] = $user;
 
                                                     // dd($data);
-
+        
         return view('invoice.index', $data);
     }
 
@@ -158,6 +164,114 @@ class InvoiceController extends Controller
         $namaFile = 'Invoice BF '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
         // if($request->tipeFile == "excel"){
         return Excel::download(new ExportInvoiceBF($startDate, $endDate, $noInvoice, $jenisPembayaran, $ids), $namaFile.'.xlsx');
+        // }else if($request->tipeFile == "pdf"){
+        //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
+        // }
+
+    }
+
+    public function exportExcelDO(Request $request){
+        $date = $request->dateRangeDO;
+        $dates = explode('-',$date);
+
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+            $ids = json_decode($cekRole, true);
+        }
+        $startDate = Date('Y-m-d',strtotime($dates[0]));
+        $endDate =  Date('Y-m-d',strtotime($dates[1]));
+        $noInvoice = $request->noInvoiceDO;
+        $jenisPembayaran = $request->filterPembayaranDO;
+
+        setlocale(LC_TIME, 'id_ID');
+        Carbon::setLocale('id');
+
+        $namaFile = 'Invoice DO '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
+        // if($request->tipeFile == "excel"){
+        return Excel::download(new ExportInvoiceDO($startDate, $endDate, $noInvoice, $jenisPembayaran, $ids), $namaFile.'.xlsx');
+        // }else if($request->tipeFile == "pdf"){
+        //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
+        // }
+
+    }
+
+    public function exportExcelDA(Request $request){
+        $date = $request->dateRangeDA;
+        $dates = explode('-',$date);
+
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+            $ids = json_decode($cekRole, true);
+        }
+        $startDate = Date('Y-m-d',strtotime($dates[0]));
+        $endDate =  Date('Y-m-d',strtotime($dates[1]));
+        $noInvoice = $request->noInvoiceDA;
+        $jenisPembayaran = $request->filterPembayaranDA;
+
+        setlocale(LC_TIME, 'id_ID');
+        Carbon::setLocale('id');
+
+        $namaFile = 'Invoice DA '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
+        // if($request->tipeFile == "excel"){
+        return Excel::download(new ExportInvoiceDA($startDate, $endDate, $noInvoice, $jenisPembayaran, $ids), $namaFile.'.xlsx');
+        // }else if($request->tipeFile == "pdf"){
+        //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
+        // }
+
+    }
+
+    public function exportExcelDJ(Request $request){
+        $date = $request->dateRangeDJ;
+        $dates = explode('-',$date);
+
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+            $ids = json_decode($cekRole, true);
+        }
+        $startDate = Date('Y-m-d',strtotime($dates[0]));
+        $endDate =  Date('Y-m-d',strtotime($dates[1]));
+        $noInvoice = $request->noInvoiceDJ;
+        $jenisPembayaran = $request->filterPembayaranDJ;
+
+        setlocale(LC_TIME, 'id_ID');
+        Carbon::setLocale('id');
+
+        $namaFile = 'Invoice DJ'.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
+        // if($request->tipeFile == "excel"){
+        return Excel::download(new ExportInvoiceDJ($startDate, $endDate, $noInvoice, $jenisPembayaran, $ids), $namaFile.'.xlsx');
+        // }else if($request->tipeFile == "pdf"){
+        //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
+        // }
+
+    }
+
+    public function exportExcelDF(Request $request){
+        $date = $request->dateRangeDF;
+        $dates = explode('-',$date);
+
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+            $ids = json_decode($cekRole, true);
+        }
+        $startDate = Date('Y-m-d',strtotime($dates[0]));
+        $endDate =  Date('Y-m-d',strtotime($dates[1]));
+        $noInvoice = $request->noInvoiceDF;
+        $jenisPembayaran = $request->filterPembayaranDF;
+
+        setlocale(LC_TIME, 'id_ID');
+        Carbon::setLocale('id');
+
+        $namaFile = 'Invoice DF '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
+        // if($request->tipeFile == "excel"){
+        return Excel::download(new ExportInvoiceDF($startDate, $endDate, $noInvoice, $jenisPembayaran, $ids), $namaFile.'.xlsx');
         // }else if($request->tipeFile == "pdf"){
         //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
         // }

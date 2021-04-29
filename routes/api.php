@@ -252,6 +252,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('get-invoice-ba-list', ['as' => '-get-invoice-ba-list', 'uses' => 'API\ReportManagementController@getListInvoiceBAReport']);
     Route::get('get-invoice-bj-list', ['as' => '-get-invoice-bj-list', 'uses' => 'API\ReportManagementController@getListInvoiceBJReport']);
     Route::get('get-invoice-bf-list', ['as' => '-get-invoice-bf-list', 'uses' => 'API\ReportManagementController@getListInvoiceBFReport']);
+    Route::get('get-invoice-do-list', ['as' => '-get-invoice-do-list', 'uses' => 'API\ReportManagementController@getListInvoiceDOReport']);
+    Route::get('get-invoice-da-list', ['as' => '-get-invoice-da-list', 'uses' => 'API\ReportManagementController@getListInvoiceDAReport']);
+    Route::get('get-invoice-dj-list', ['as' => '-get-invoice-dj-list', 'uses' => 'API\ReportManagementController@getListInvoiceDJReport']);
+    Route::get('get-invoice-df-list', ['as' => '-get-invoice-df-list', 'uses' => 'API\ReportManagementController@getListInvoiceDFReport']);
     Route::post('post-change-status-periksa', ['as' => '-post-change-status-periksa', 'uses' => 'API\ReportManagementController@postChangeStatusPemeriksaan']);
     Route::get('get-repair-truck-list', ['as' => '-get-repair-truck-list', 'uses' => 'API\ReportManagementController@getListTruckRepair']);
     Route::get('get-detail-repair-truck-list', ['as' => '-get-detail-repair-truck-list', 'uses' => 'API\ReportManagementController@getListDetailTruckRepair']);
