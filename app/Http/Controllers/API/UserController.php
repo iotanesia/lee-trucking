@@ -18,7 +18,7 @@ class UserController extends Controller
   public $successStatus = 201;
  
   public function login(){
-      $user = User::where('email', request('email'))->first();
+      $user = User::join('ex_master_cabang', 'ex_master_cabang.id', 'users.cabang_id')->where('email', request('email'))->select('users.*', 'ex_master_cabang.cabang_name')->first();
       $datas = null;
 
       if(!isset($user)) {
