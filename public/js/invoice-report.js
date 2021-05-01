@@ -4,8 +4,10 @@
     // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRhMTQ3OWJkMDk4OGMxMGU5ZWVlYjMwNGVkNDBhMmE1MzM1MmNiMTc5ZWZiOTJkNDRlNGJkNTEwYjg3MTJiNGQ1MmEzNDZlYWQ5MzE3MzZlIn0.eyJhdWQiOiIzIiwianRpIjoiZGExNDc5YmQwOTg4YzEwZTllZWViMzA0ZWQ0MGEyYTUzMzUyY2IxNzllZmI5MmQ0NGU0YmQ1MTBiODcxMmI0ZDUyYTM0NmVhZDkzMTczNmUiLCJpYXQiOjE2MTQ1Nzg5ODgsIm5iZiI6MTYxNDU3ODk4OCwiZXhwIjoxNjQ2MTE0OTg4LCJzdWIiOiI5NCIsInNjb3BlcyI6W119.CHZi3-vdYJEDh2QVO3RprLaPWXqgn2S32alcFUH2MmA1tZ1sp8ohqz5zmZepEGd-59jGbTuo2LQubRslqUs5bIBCIQ2TKSUeflGNnyVpVYnBFmS9a__khfufakgGZDRib1r2jIl04KQ60OiFjR5XD2x1BxwZuCh_aYg_MOs4tA_LeQDHRtmnVYnSm1xP1vlGsRTl0K2A8cH-qUKpY5PdYdn-UviOhvWZrpZdl_0t_UsRjVsB3QjJoPJ6TZyru-ge0eTaYq0NJSK7Vc2crAyhBrC81VHcQu340DoQXRoTtvLQ4u1IZoxyS_QmXYEpvG3NrYMlfmQyRnhoeTaMZaKZvFcVwh11gt25dOTCovBa5onJKA0EOW2JCOGikUPuANNA5PY3jha5uPo_mvv0doLm8LntQZUZLgYH2rFrMDHM_5QSY0zVDQj96CNGdV7rmFzg9xzMjQu4Ml6wFDNRnzeOR3Lw7dzjH2UGTxs5KbVMcjczik9jBwI30FdyfQDpz3YayPIqOBbcw6Bl-E2kVuxXODe5yRYQ2f44LBacgb8z5x2MVWqqU3lA1zOaIIvJMnsqZsynxfPuJBG6rePm2_cD7O8cgcp7VcoAuUPWpL09Eyzh8jBRgCPb8jI1EzVeYZbS4cWvRCbK3s2fyuhrDTeMn21KxsuQQ_gfGpzGkf-E0rM"
    
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
-    var firstDay = new Date(y, m, 1);
-    var lastDay = new Date(y, m+1, 0);
+    var fd = new Date(y, m, 1);
+    var firstDay = formatDate(fd);
+    var ld = new Date(y, m + 1, 0);
+    var lastDay = formatDate(ld);
 
     var startDateBO = formatDateReq(firstDay);
     var endDateBO = formatDateReq(lastDay);
@@ -1088,19 +1090,19 @@
             'Sab'
         ],
         monthNames:[
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ],
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+      ],
         firstDay:'1'
     },
       startDate: formatDate(firstDay),
@@ -1133,19 +1135,19 @@
             'Sab'
         ],
         monthNames:[
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ],
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+      ],
         firstDay:'1'
     },
       startDate: formatDate(firstDay),
@@ -1178,19 +1180,19 @@
             'Sab'
         ],
         monthNames:[
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ],
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+      ],
         firstDay:'1'
     },
       startDate: formatDate(firstDay),
@@ -1223,19 +1225,19 @@
             'Sab'
         ],
         monthNames:[
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ],
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+      ],
         firstDay:'1'
     },
       startDate: formatDate(firstDay),
@@ -1268,19 +1270,19 @@
             'Sab'
         ],
         monthNames:[
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ],
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+      ],
         firstDay:'1'
     },
       startDate: formatDate(firstDay),
@@ -1313,19 +1315,19 @@
             'Sab'
         ],
         monthNames:[
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ],
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+      ],
         firstDay:'1'
     },
       startDate: formatDate(firstDay),
@@ -1358,19 +1360,19 @@
             'Sab'
         ],
         monthNames:[
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ],
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+      ],
         firstDay:'1'
     },
       startDate: formatDate(firstDay),
@@ -1403,19 +1405,19 @@
             'Sab'
         ],
         monthNames:[
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ],
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+      ],
         firstDay:'1'
     },
       startDate: formatDate(firstDay),
@@ -1467,19 +1469,19 @@
         year = d.getFullYear();
 
         switch(bulan) {
-          case 0: bulan = "Januari"; break;
-          case 1: bulan = "Februari"; break;
-          case 2: bulan = "Maret"; break;
+          case 0: bulan = "January"; break;
+          case 1: bulan = "February"; break;
+          case 2: bulan = "March"; break;
           case 3: bulan = "April"; break;
-          case 4: bulan = "Mei"; break;
-          case 5: bulan = "Juni"; break;
-          case 6: bulan = "Juli"; break;
-          case 7: bulan = "Agustus"; break;
+          case 4: bulan = "May"; break;
+          case 5: bulan = "June"; break;
+          case 6: bulan = "July"; break;
+          case 7: bulan = "August"; break;
           case 8: bulan = "September"; break;
-          case 9: bulan = "Oktober"; break;
+          case 9: bulan = "October"; break;
           case 10: bulan = "November"; break;
-          case 11: bulan = "Desember"; break;
-         }
+          case 11: bulan = "December"; break;
+        }
 
  
     if (day.length < 2) 
