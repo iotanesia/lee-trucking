@@ -300,7 +300,7 @@ class WareHouseController extends Controller
         'sparepart_status' => 'required',
         'jumlah_stok' => 'required',
         'group_sparepart_id' => 'required',
-        'barcode_pabrik' => 'required',
+        // 'barcode_pabrik' => 'required',
         'merk_part' => 'required',
       ]);
 

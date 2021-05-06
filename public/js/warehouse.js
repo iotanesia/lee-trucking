@@ -172,19 +172,19 @@ var successLoadwarehouse = (function(responses, dataModel) {
     sparepart_jenis = responses.data[i].sparepart_jenis;
     merk_part = responses.data[i].merk_part;
     barcode_pabrik = responses.data[i].barcode_pabrik;
-    barcode_warehouse = responses.data[i].barcode_warehouse;
+    barcode_warehouse = responses.data[i].barcode_gudang;
     group_name = responses.data[i].group_name;
     jumlah_stok = responses.data[i].jumlah_stok;
     data_json = responses.data[i].data_json;
 
     tableRows += "<tr>" +
                    "<td>"+ (i+1) +"</td>"+
-                   "<td>"+ barcode_warehouse +"</td>"+
-                   "<td>"+ barcode_pabrik +"</td>"+
-                   "<td>"+ sparepart_name +"</td>"+
-                   "<td>"+ group_name +"</td>"+
-                   "<td>"+ merk_part +"</td>"+
-                   "<td>"+ jumlah_stok +"</td>"+
+                   "<td>"+ def(barcode_warehouse) +"</td>"+
+                   "<td>"+ def(barcode_pabrik) +"</td>"+
+                   "<td>"+ def(sparepart_name) +"</td>"+
+                   "<td>"+ def(group_name) +"</td>"+
+                   "<td>"+ def(merk_part) +"</td>"+
+                   "<td>"+ def(jumlah_stok) +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
                        "<a class='btn btn-success btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#warehouse-modal'><i class='fas fa-edit'></i></a>"+
