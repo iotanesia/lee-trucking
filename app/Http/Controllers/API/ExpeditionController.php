@@ -593,7 +593,7 @@ class ExpeditionController extends Controller
       }
 
       if($request->status_activity == 'DRIVER_SELESAI_EKSPEDISI') {
-          $ban = Ban::where('truck_id', $data['truck_id'])->get();
+          $ban = Ban::where('truck_id', $lastExActivity->truck_id());
 
           foreach($ban as $key => $val) {
               $bans = Ban::find($val->id);
