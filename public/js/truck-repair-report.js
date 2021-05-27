@@ -5,8 +5,10 @@
     // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
    
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
-    var firstDay = new Date(y, m, 1);
-    var lastDay = new Date(y, m+1, 0);
+    var fd = new Date(y, m, 1);
+    var firstDay = formatDate(fd);
+    var ld = new Date(y, m + 1, 0);
+    var lastDay = formatDate(ld);
 
     var startDate = '';
     var endDate = '';
@@ -83,19 +85,19 @@
             'Sab'
         ],
         monthNames:[
-            'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        ],
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+      ],
         firstDay:'1'
     }
     },
@@ -114,20 +116,21 @@
         day = '' + d.getDate(),
         year = d.getFullYear();
 
+       
         switch(bulan) {
-          case 0: bulan = "Januari"; break;
-          case 1: bulan = "Februari"; break;
-          case 2: bulan = "Maret"; break;
+          case 0: bulan = "January"; break;
+          case 1: bulan = "February"; break;
+          case 2: bulan = "March"; break;
           case 3: bulan = "April"; break;
-          case 4: bulan = "Mei"; break;
-          case 5: bulan = "Juni"; break;
-          case 6: bulan = "Juli"; break;
-          case 7: bulan = "Agustus"; break;
+          case 4: bulan = "May"; break;
+          case 5: bulan = "June"; break;
+          case 6: bulan = "July"; break;
+          case 7: bulan = "August"; break;
           case 8: bulan = "September"; break;
-          case 9: bulan = "Oktober"; break;
+          case 9: bulan = "October"; break;
           case 10: bulan = "November"; break;
-          case 11: bulan = "Desember"; break;
-         }
+          case 11: bulan = "December"; break;
+        }
 
  
     if (day.length < 2) 
@@ -232,20 +235,19 @@ function openModalDetail(idHeader, kodeRepair){
         year = d.getFullYear();
 
         switch(bulan) {
-          case 0: bulan = "Januari"; break;
-          case 1: bulan = "Februari"; break;
-          case 2: bulan = "Maret"; break;
+          case 0: bulan = "January"; break;
+          case 1: bulan = "February"; break;
+          case 2: bulan = "March"; break;
           case 3: bulan = "April"; break;
-          case 4: bulan = "Mei"; break;
-          case 5: bulan = "Juni"; break;
-          case 6: bulan = "Juli"; break;
-          case 7: bulan = "Agustus"; break;
+          case 4: bulan = "May"; break;
+          case 5: bulan = "June"; break;
+          case 6: bulan = "July"; break;
+          case 7: bulan = "August"; break;
           case 8: bulan = "September"; break;
-          case 9: bulan = "Oktober"; break;
+          case 9: bulan = "October"; break;
           case 10: bulan = "November"; break;
-          case 11: bulan = "Desember"; break;
-         }
-
+          case 11: bulan = "December"; break;
+        }
  
     if (day.length < 2) 
         day = '0' + day;

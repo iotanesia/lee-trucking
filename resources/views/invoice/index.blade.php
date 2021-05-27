@@ -116,6 +116,7 @@ input:checked + .slider:before {
                   <h6 class="text-uppercase text-muted ls-1 mb-1">Data {{$title}}</h6>
                   <h5 class="h3 mb-0">Tabel {{$title}}</h5><br/>
                   <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm">
+                  @if($user->cabang_id == 6 || $user->cabang_id == 11)
                     <li class="nav-item submenu">
                         <a class="nav-link active show" id="user-ad" data-toggle="tab" href="#ad" role="tab" aria-selected="true">BO</a>
                     </li>
@@ -128,12 +129,27 @@ input:checked + .slider:before {
                     <li class="nav-item submenu">
                         <a class="nav-link" id="user-uf" data-toggle="tab" href="#uf" role="tab" aria-selected="false">BF</a>
                     </li>
+                   @elseif($user->cabang_id == 7 || $user->cabang_id == 10)  
+                    <li class="nav-item submenu">
+                        <a class="nav-link active show" id="user-do" data-toggle="tab" href="#do" role="tab" aria-selected="true">DO</a>
+                    </li>
+                    <li class="nav-item submenu">
+                        <a class="nav-link" id="user-da" data-toggle="tab" href="#da" role="tab" aria-selected="false">DA</a>
+                    </li>
+                    <li class="nav-item submenu">
+                        <a class="nav-link" id="user-dj" data-toggle="tab" href="#dj" role="tab" aria-selected="false">DJ</a>
+                    </li>
+                    <li class="nav-item submenu">
+                        <a class="nav-link" id="user-df" data-toggle="tab" href="#df" role="tab" aria-selected="false">DF</a>
+                    </li>
+                  @endif
                   </ul>
                 </div>
               </div>
             </div>
             <div class="card-body">
               <div class="tab-content">
+              @if($user->cabang_id == 6 || $user->cabang_id == 11)
                 <div id="ad" class="tab-pane in active">
                   <form id="form-export-bo" method="get" action="{{url('export-bo')}}">
                     <div class="row">
@@ -619,6 +635,493 @@ input:checked + .slider:before {
                     </tfoot>
                   </table>
                 </div>
+              @elseif($user->cabang_id == 7 || $user->cabang_id == 10)  
+                <div id="do" class="tab-pane in active">
+                  <form id="form-export-do" method="get" action="{{url('export-do')}}">
+                    <div class="row">
+                          <div class="col-md-4">
+                            <input class="form-control" name="tipeFileDO" id="tipeFileDO" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            <input class="form-control" name="noInvoiceDO" id="noInvoiceDO" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            <div class="input-group input-group-alternative input-group-merge" 
+                                style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                              <div class="input-group-prepend" style="margin-left: 10px;">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                              </div>
+                                <input class="form-control" name="dateRangeDO" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            </div>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-select-do" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="TUNAI">TUNAI</option>
+                                <option value="NON_TUNAI">NON TUNAI</option>
+                            </select>
+                          </div>
+                        <div id="tag-cloud-widget" class="col-md-2">  
+                          <div class="content">  
+                            <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fas fa-file-export"></i>
+                                </span>
+                                <div class="media-body d-none d-lg-block" style="margin-top: 4px;margin-right: 20px;text-align:center">
+                                  <span class="mb-0 text-sm  font-weight-bold">Eksport</span>
+                                </div>
+                              </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left">
+                              <div class="dropdown-header noti-title">
+                                <h6 class="text-overflow m-0">Eksport</h6>
+                              </div>
+                              <a href="#" id="is-excel-do" class="dropdown-item" data-toggle="modal" data-target="#modal-export-do">
+                                <i class="fas fa-file-excel"></i>
+                                <span>Excel</span>
+                              </a>
+                              {{-- <div class="dropdown-divider"></div>
+                              <a href="#" id="is-pdf-do" class="dropdown-item" data-toggle="modal" data-target="#modal-export-do">
+                              <i class="fas fa-file-pdf"></i>
+                                <span>PDF</span>
+                              </a> --}}
+                            </div>
+                          </div>
+                        </div>
+                            <label class="switch">
+                              <input type="checkbox" id="cbPpn10Do" checked>
+                              <span class="slider round">PPN 10%</span>
+                            </label>
+                            <label class="switch">
+                              <input type="checkbox" id="cbPph23Do" checked>
+                              <span class="slider round">PPH 23</span>
+                            </label>
+                      </div>
+                  </form>
+                  <br/>
+                  <table class="table table-responsive align-items-center table-striped" id="table-invoice-do" son-success-load="successLoadexpedition" width="100%">
+                      <thead class="bg-gradient-info text-white">
+                      <tr>
+                          <th>No</th>
+                          <th>Status Pemeriksaan</th>
+                          <th>Tanggal</th>
+                          <th>Surat Jalan</th>
+                          <th>Tujuan</th>
+                          <th>Plat</th>
+                          <th>Qty Palet</th>
+                          <th>Rit</th>
+                          <th>Nama Toko</th>
+                          <th>Harga/Rit</th>
+                          <th>Total</th>
+                      </tr>
+                      </thead>
+                      <tbody></tbody>
+                      <tfoot>
+                        <tr style="font-weight:bold">
+                            <td style="text-align:left">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align:right"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr style="font-weight:bold" id="trPpn10Do">
+                          <td style="text-align:left">
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td style="text-align:right"></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                      </tr>
+                      <tr style="font-weight:bold" id="trPph23Do">
+                              <td style="text-align:left">
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td style="text-align:right"></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td style="color:#f02e2e;"></td>
+                      </tr>
+                      <tr style="font-weight:bold">
+                          <td style="text-align:left">
+                            <td></td>
+                          <td></td>
+                          <td></td>
+                          <td style="text-align:right"></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td style="background-color:#f2de68;"></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div id="da" class="tab-pane in fade">
+                  <form id="form-export-da" method="get" action="{{url('export-da')}}">
+                    <div class="row">
+                          <div class="col-md-4">
+                            <input class="form-control" name="tipeFileDA" id="tipeFileDA" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            <input class="form-control" name="noInvoiceDA" id="noInvoiceDA" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            <div class="input-group input-group-alternative input-group-merge" 
+                                style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                              <div class="input-group-prepend" style="margin-left: 10px;">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                              </div>
+                                <input class="form-control" name="dateRangeDA" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            </div>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-select-da" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="TUNAI">TUNAI</option>
+                                <option value="NON_TUNAI">NON TUNAI</option>
+                            </select>
+                          </div>
+                        <div id="tag-cloud-widget" class="col-md-2">  
+                          <div class="content">  
+                            <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fas fa-file-export"></i>
+                                </span>
+                                <div class="media-body d-none d-lg-block" style="margin-top: 4px;margin-right: 20px;text-align:center">
+                                  <span class="mb-0 text-sm  font-weight-bold">Eksport</span>
+                                </div>
+                              </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left">
+                              <div class="dropdown-header noti-title">
+                                <h6 class="text-overflow m-0">Eksport</h6>
+                              </div>
+                              <a href="#" id="is-excel-da" class="dropdown-item" data-toggle="modal" data-target="#modal-export-da">
+                                <i class="fas fa-file-excel"></i>
+                                <span>Excel</span>
+                              </a>
+                              {{-- <div class="dropdown-divider"></div>
+                              <a href="#" id="is-pdf-da" class="dropdown-item" data-toggle="modal" data-target="#modal-export-da">
+                              <i class="fas fa-file-pdf"></i>
+                                <span>PDF</span>
+                              </a> --}}
+                            </div>
+                          </div>
+                        </div>
+                        <label class="switch">
+                          <input type="checkbox" id="cbPpn10Da" checked>
+                          <span class="slider round">PPN 10%</span>
+                        </label>
+                        <label class="switch">
+                          <input type="checkbox" id="cbPph23Da" checked>
+                          <span class="slider round">PPH 23</span>
+                        </label>
+                      </div>
+                  </form>
+                  <br/>
+                  <table class="table table-responsive align-items-center table-striped" id="table-invoice-da" son-success-load="successLoadexpedition" width="100%">
+                    <thead class="bg-gradient-info text-white">
+                      <tr>
+                          <th>No</th>
+                          <th>Status Pemeriksaan</th>
+                          <th>Tanggal</th>
+                          <th>Surat Jalan</th>
+                          <th>Tujuan</th>
+                          <th>Plat</th>
+                          <th>Qty Palet</th>
+                          <th>Rit</th>
+                          <th>Nama Toko</th>
+                          <th>Harga/Rit</th>
+                          <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                      <tr style="font-weight:bold">
+                        <td style="text-align:left">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr style="font-weight:bold" id="trPpn10Da">
+                        <td style="text-align:left">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr style="font-weight:bold" id="trPph23Da">
+                        <td style="text-align:left">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="color:#f02e2e;"></td>
+                      </tr>
+                      <tr style="font-weight:bold">
+                        <td style="text-align:left">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="background-color:#f2de68;"></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div id="dj" class="tab-pane fade">
+                  <form id="form-export-dj" method="get" action="{{url('export-dj')}}">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <input class="form-control" name="tipeFileDJ" id="tipeFileDJ" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                        <input class="form-control" name="noInvoiceDJ" id="noInvoiceDJ" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                        <div class="input-group input-group-alternative input-group-merge" 
+                                    style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                          <div class="input-group-prepend" style="margin-left: 10px;">
+                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                          </div>
+                          <input class="form-control" name="dateRangeDJ" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                        </div>
+                      </div>
+                      <div class="col-md-2" >
+                        <select class="form-control" id="filter-select-dj" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                            <option value="">Semua</option>
+                            <option value="TUNAI">TUNAI</option>
+                            <option value="NON_TUNAI">NON TUNAI</option>
+                        </select>
+                      </div>
+                      <div id="tag-cloud-widget" class="col-md-2">  
+                        <div class="content">  
+                          <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fas fa-file-export"></i>
+                              </span>
+                              <div class="media-body d-none d-lg-block" style="margin-top: 4px;margin-right: 20px;text-align:center">
+                                <span class="mb-0 text-sm  font-weight-bold">Eksport</span>
+                              </div>
+                            </div>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-left">
+                            <div class="dropdown-header noti-title">
+                              <h6 class="text-overflow m-0">Eksport</h6>
+                            </div>
+                            <a href="#" id="is-excel-dj" class="dropdown-item" data-toggle="modal" data-target="#modal-export-dj">
+                              <i class="fas fa-file-excel"></i>
+                              <span>Excel</span>
+                            </a>
+                            {{-- <div class="dropdown-divider"></div>
+                            <a href="#" id="is-pdf-dj" class="dropdown-item" data-toggle="modal" data-target="#modal-export-dj">
+                            <i class="fas fa-file-pdf"></i>
+                              <span>PDF</span>
+                            </a> --}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <br/>
+                  <table class="table table-responsive align-items-center table-striped" id="table-invoice-dj" son-success-load="successLoadexpedition" width="100%">
+                    <thead class="bg-gradient-info text-white">
+                      <tr>
+                        <th>No</th>
+                        <th>Status Pemeriksaan</th>
+                        <th>Tanggal</th>
+                        <th>Surat Jalan</th>
+                        <th>Tujuan</th>
+                        <th>Plat</th>
+                        <th>Qty Palet</th>
+                        <th>Rit</th>
+                        <th>Nama Toko</th>
+                        <th>Harga/Rit</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                      <tr style="font-weight:bold">
+                        <td style="text-align:left">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="background-color:#f2de68;"></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div id="df" class="tab-pane in fade">
+                  <form id="form-export-df" method="get" action="{{url('export-df')}}">
+                    <div class="row">
+                          <div class="col-md-4">
+                            <input class="form-control" name="tipeFileDF" id="tipeFileDF" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            <input class="form-control" name="noInvoiceDF" id="noInvoiceDF" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            <div class="input-group input-group-alternative input-group-merge" 
+                                style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                              <div class="input-group-prepend" style="margin-left: 10px;">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                              </div>
+                                <input class="form-control" name="dateRangeDF" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            </div>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-select-df" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="TUNAI">TUNAI</option>
+                                <option value="NON_TUNAI">NON TUNAI</option>
+                            </select>
+                          </div>
+                        <div id="tag-cloud-widget" class="col-md-2">  
+                          <div class="content">  
+                            <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fas fa-file-export"></i>
+                                </span>
+                                <div class="media-body d-none d-lg-block" style="margin-top: 4px;margin-right: 20px;text-align:center">
+                                  <span class="mb-0 text-sm  font-weight-bold">Eksport</span>
+                                </div>
+                              </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left">
+                              <div class="dropdown-header noti-title">
+                                <h6 class="text-overflow m-0">Eksport</h6>
+                              </div>
+                              <a href="#" id="is-excel-df" class="dropdown-item" data-toggle="modal" data-target="#modal-export-df">
+                                <i class="fas fa-file-excel"></i>
+                                <span>Excel</span>
+                              </a>
+                              {{-- <div class="dropdown-divider"></div>
+                              <a href="#" id="is-pdf-df" class="dropdown-item" data-toggle="modal" data-target="#modal-export-df">
+                              <i class="fas fa-file-pdf"></i>
+                                <span>PDF</span>
+                              </a> --}}
+                            </div>
+                          </div>
+                        </div>
+                        <label class="switch">
+                          <input type="checkbox" id="cbPpn10Df" checked>
+                          <span class="slider round">PPN 10%</span>
+                        </label>
+                        <label class="switch">
+                          <input type="checkbox" id="cbPph23Df" checked>
+                          <span class="slider round">PPH 23</span>
+                        </label>
+                      </div>
+                  </form>
+                  <br/>
+                  <table class="table table-responsive align-items-center table-striped" id="table-invoice-df" son-success-load="successLoadexpedition" width="100%">
+                    <thead class="bg-gradient-info text-white">
+                      <tr>
+                          <th>No</th>
+                          <th>Status Pemeriksaan</th>
+                          <th>Tanggal</th>
+                          <th>Surat Jalan</th>
+                          <th>Tujuan</th>
+                          <th>Plat</th>
+                          <th>Qty Palet</th>
+                          <th>Rit</th>
+                          <th>Nama Toko</th>
+                          <th>Harga/Rit</th>
+                          <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                      <tr style="font-weight:bold">
+                        <td style="text-align:left">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr style="font-weight:bold" id="trPpn10Df">
+                        <td style="text-align:left">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr style="font-weight:bold" id="trPph23Df">
+                        <td style="text-align:left">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="color:#f02e2e;"></td>
+                      </tr>
+                      <tr style="font-weight:bold">
+                        <td style="text-align:left">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="background-color:#f2de68;"></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              @endif
               </div>
             </div>
           </div>
@@ -752,6 +1255,117 @@ input:checked + .slider:before {
             </div>
             <div class="modal-footer">
                 <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-bf" onclick="($('#form-export-bf').submit())">Eksport</a>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-export-do" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin:10rem auto">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width:30% !important; margin:auto !important;">
+            <div class="modal-header" style="background: linear-gradient(
+              87deg
+              , #11cdef 0, #1171ef 100%) !important;">
+              <h5 class="modal-title text-white" id="exampleModalLabel">NOMOR INVOICE</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true text-white">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="form-no-invoice-do">
+                <input type="hidden" name="id" id="id">
+                  <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="no-invoice-do" id="no-invoice-do" placeholder="Nomor Invoice">
+                    </div>
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-do" onclick="($('#form-export-do').submit())">Eksport</a>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-export-da" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin:10rem auto">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width:30% !important; margin:auto !important;">
+            <div class="modal-header" style="background: linear-gradient(
+              87deg
+              , #11cdef 0, #1171ef 100%) !important;">
+              <h5 class="modal-title text-white" id="exampleModalLabel">NOMOR INVOICE</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true text-white">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="form-no-invoice-da">
+                <input type="hidden" name="id" id="id">
+                  <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="no-invoice-da" id="no-invoice-da" placeholder="Nomor Invoice">
+                    </div>
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-da" onclick="($('#form-export-da').submit())">Eksport</a>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-export-dj" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin:10rem auto">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width:30% !important; margin:auto !important;">
+          <div class="modal-header" style="background: linear-gradient(
+              87deg
+              , #11cdef 0, #1171ef 100%) !important;">
+              <h5 class="modal-title text-white" id="exampleModalLabel">NOMOR INVOICE</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true text-white">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="form-no-invoice-dj">
+                <input type="hidden" name="id" id="id">
+                  <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="no-invoice-dj" id="no-invoice-dj" placeholder="Nomor Invoice">
+                    </div>
+                  </div>
+                </form>
+            </div>
+        <div class="modal-footer">
+            <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-dj" onclick="($('#form-export-dj').submit())">Eksport</a>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modal-export-df" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin:10rem auto">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width:30% !important; margin:auto !important;">
+            <div class="modal-header" style="background: linear-gradient(
+              87deg
+              , #11cdef 0, #1171ef 100%) !important;">
+              <h5 class="modal-title text-white" id="exampleModalLabel">NOMOR INVOICE</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true text-white">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="form-no-invoice-df">
+                <input type="hidden" name="id" id="id">
+                  <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="no-invoice-df" id="no-invoice-df" placeholder="Nomor Invoice">
+                    </div>
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-df" onclick="($('#form-export-df').submit())">Eksport</a>
             </div>
         </div>
     </div>

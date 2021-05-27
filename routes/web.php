@@ -64,6 +64,10 @@ Route::get('/export-bo', 'InvoiceController@exportExcelBO')->name('export-bo');
 Route::get('/export-ba', 'InvoiceController@exportExcelBA')->name('export-ba');
 Route::get('/export-bj', 'InvoiceController@exportExcelBJ')->name('export-bj');
 Route::get('/export-bf', 'InvoiceController@exportExcelBF')->name('export-bf');
+Route::get('/export-do', 'InvoiceController@exportExcelDO')->name('export-do');
+Route::get('/export-da', 'InvoiceController@exportExcelDA')->name('export-da');
+Route::get('/export-dj', 'InvoiceController@exportExcelDJ')->name('export-dj');
+Route::get('/export-df', 'InvoiceController@exportExcelDF')->name('export-df');
 #endregion
 Route::get('/getbarcode/{code}', 'SparePartsController@getBarcode');
 

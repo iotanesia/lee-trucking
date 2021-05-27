@@ -44,7 +44,7 @@ class ReportManagementController extends Controller
                $query->whereIn('public.users.cabang_id', $ids);
             }
           })
-          ->whereBetween('coa_activity.created_at', [$startDate, $endDate])
+          ->whereBetween('expedition_activity.tgl_inv', [$startDate, $endDate])
           ->where(function($query) use($filterSelect) {
             if($filterSelect) {
                 $query->where('coa_master_sheet.jurnal_category', $filterSelect);
@@ -55,12 +55,12 @@ class ReportManagementController extends Controller
                 $query->where('coa_master_sheet.sheet_name', $filterAktiviti);
             }
           })
-          ->select('coa_activity.created_at','coa_master_sheet.sheet_name'
+          ->select('coa_master_sheet.sheet_name','expedition_activity.tgl_inv as created_at'
                   ,'coa_master_sheet.jurnal_category','public.users.name'
                   ,'coa_master_rekening.bank_name','coa_master_rekening.rek_name'
                   ,'coa_master_rekening.rek_no','coa_activity.nominal','coa_activity.table_id'
                   ,'coa_activity.table','expedition_activity.nomor_inv','expedition_activity.nomor_surat_jalan')
-                  ->orderBy('coa_activity.created_at','DESC')->get();
+                  ->orderBy('expedition_activity.tgl_inv','DESC')->get();
 
           foreach($jurnalReportList as $row) {
             $row->activity_name = $row->sheet_name.' ['.$row->table_id.' ]';
@@ -268,6 +268,230 @@ class ReportManagementController extends Controller
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
         ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
         ->where('expedition_activity.nomor_surat_jalan','iLike','BF%')
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
+        ->where(function($query) use($filterPembayaran) {
+          if($filterPembayaran) {
+            if($filterPembayaran != 'Semua'){
+              $query->where('expedition_activity.otv_payment_method', $filterPembayaran);
+            }
+          }
+        })
+        ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
+          ,'expedition_activity.id'
+          ,'expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')
+          ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
+          ->orderBy('expedition_activity.tgl_po','DESC')
+         ->groupBy('expedition_activity.tgl_po'
+         ,'expedition_activity.id','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')->get();
+                foreach($data as $row) {
+                    $row->harga_per_rit = 'Rp.'. number_format($row->harga_otv, 0, ',', '.');
+                    $row->total = 'Rp.'. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
+
+                  $row->data_json = $row->toJson();
+                }
+          return datatables($data)->toJson();
+      }
+    }
+
+    public function getListInvoiceDOReport(Request $request){
+      if($request->isMethod('GET')) {
+        $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
+        $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+        $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = $data['start_date'].' 00:00:00';
+        $endDate = $data['end_date'].' 23:59:59';
+        $filterPembayaran = $data['filter'];
+        $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
+        ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
+        ->where('expedition_activity.nomor_surat_jalan','iLike','DO%')
+        ->where(function($query) use($filterPembayaran) {
+          if($filterPembayaran) {
+            if($filterPembayaran != 'Semua'){
+              $query->where('expedition_activity.otv_payment_method', $filterPembayaran);
+            }
+          }
+        })
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
+          ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
+          ,'expedition_activity.id'
+          ,'expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')
+          ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
+          ->orderBy('expedition_activity.tgl_po','DESC')
+         ->groupBy('expedition_activity.tgl_po'
+         ,'expedition_activity.id','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')->get();
+                foreach($data as $row) {
+                    $row->harga_per_rit = 'Rp.'. number_format($row->harga_otv, 0, ',', '.');
+                    $row->total = 'Rp.'. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
+
+                  $row->data_json = $row->toJson();
+                }
+          return datatables($data)->toJson();
+      }
+    }
+
+    public function getListInvoiceDAReport(Request $request){
+      if($request->isMethod('GET')) {
+        $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
+        $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+        $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = $data['start_date'].' 00:00:00';
+        $endDate = $data['end_date'].' 23:59:59';
+        $filterPembayaran = $data['filter'];
+        $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
+        ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
+        ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->where('expedition_activity.nomor_surat_jalan','iLike','DA%')
+        ->where(function($query) use($filterPembayaran) {
+          if($filterPembayaran) {
+            if($filterPembayaran != 'Semua'){
+              $query->where('expedition_activity.otv_payment_method', $filterPembayaran);
+            }
+          }
+        })
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
+          ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
+          ,'expedition_activity.id'
+          ,'expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')
+          ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
+          ->orderBy('expedition_activity.tgl_po','DESC')
+         ->groupBy('expedition_activity.tgl_po'
+         ,'expedition_activity.id','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')->get();
+                foreach($data as $row) {
+                    $row->harga_per_rit = 'Rp.'. number_format($row->harga_otv, 0, ',', '.');
+                    $row->total = 'Rp.'. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
+
+                  $row->data_json = $row->toJson();
+                }
+          return datatables($data)->toJson();
+      }
+    }
+
+    public function getListInvoiceDJReport(Request $request){
+      if($request->isMethod('GET')) {
+        $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
+        $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+        $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = $data['start_date'].' 00:00:00';
+        $endDate = $data['end_date'].' 23:59:59';
+        $filterPembayaran = $data['filter'];
+        $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
+        ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
+        ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->where('expedition_activity.nomor_surat_jalan','iLike','DJ%')
+        ->where(function($query) use($ids) {
+            if($ids) {
+               $query->whereIn('public.users.cabang_id', $ids);
+            }
+          })
+        ->where(function($query) use($filterPembayaran) {
+          if($filterPembayaran) {
+            if($filterPembayaran != 'Semua'){
+              $query->where('expedition_activity.otv_payment_method', $filterPembayaran);
+            }
+          }
+        })
+        ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
+          ,'expedition_activity.id'
+          ,'expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')
+          ->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate])
+          ->orderBy('expedition_activity.tgl_po','DESC')
+         ->groupBy('expedition_activity.tgl_po'
+         ,'expedition_activity.id','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
+          ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
+          ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report')->get();
+                foreach($data as $row) {
+                    $row->harga_per_rit = 'Rp.'. number_format($row->harga_otv, 0, ',', '.');
+                    $row->total = 'Rp.'. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
+
+                  $row->data_json = $row->toJson();
+                }
+          return datatables($data)->toJson();
+      }
+    }
+
+    public function getListInvoiceDFReport(Request $request){
+      if($request->isMethod('GET')) {
+        $data = $request->all();
+        $cekRole = $this->checkRoles();
+        $ids = null;
+
+        if($cekRole) {
+          $ids = json_decode($cekRole, true);
+        }
+        $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+        $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
+        $startDate = $data['start_date'].' 00:00:00';
+        $endDate = $data['end_date'].' 23:59:59';
+        $filterPembayaran = $data['filter'];
+        $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
+        ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
+        ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
+        ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
+        ->where('expedition_activity.nomor_surat_jalan','iLike','DF%')
         ->where(function($query) use($ids) {
             if($ids) {
                $query->whereIn('public.users.cabang_id', $ids);
