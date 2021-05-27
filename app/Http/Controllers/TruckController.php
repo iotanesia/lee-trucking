@@ -7,6 +7,9 @@ use App\User;
 use App\Models\Truck;
 use App\Models\GlobalParam;
 use App\Models\Cabang;
+use App\Models\ExpeditionActivity;
+use App\Models\ExStatusActivity;
+use App\Models\Kenek;
 use App\Models\Driver;
 use Auth;
 
@@ -47,6 +50,14 @@ class TruckController extends Controller
         $customerList = Customer::all();
         $tenanList = Tenan::all();
         return view('transaksi', compact('customerList', 'tenanList'));
+    }
+
+    public function detail(Request $request, $id) {
+        $data['title'] = 'Ban Truck';
+        $data['truck'] = Truck::select('ex_master_truck.*', 'ex_master_cabang.*')->join('ex_master_cabang', 'ex_master_cabang.id', 'ex_master_truck.cabang_id')->where('ex_master_truck.id', $id)->first();
+        // dd($data);
+
+        return view('master.truck.detail', $data);
     }
 
 }

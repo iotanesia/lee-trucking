@@ -15,6 +15,7 @@ use App\Models\UserDetail;
 use App\Models\Notification;
 use App\Models\GlobalParam;
 use App\Models\Group;
+use App\Models\Ban;
 use Auth;
 use DB;
 use Carbon\Carbon;
@@ -589,6 +590,16 @@ class ExpeditionController extends Controller
 
       if(($request->status_activity == 'DRIVER_MENUJU_TUJUAN' && $data['kenek_id'] == $idNonKenek) && (isset($data['truck_id']) && $truckDetail->truck_type == $trucktipe->id )) {
           $expeditionActivity->harga_ojk = $expeditionActivity->harga_ojk - 60000;
+      }
+
+      if($request->status_activity == 'DRIVER_SELESAI_EKSPEDISI') {
+          $ban = Ban::where('truck_id', $data['truck_id'])->get();
+
+          foreach($ban as $key => $val) {
+              $bans = Ban::find($val->id);
+              $bans->ritasi = $bans->ritasi + 1;
+              $bans->save();
+          }
       }
 
       if($request->status_activity == 'DRIVER_SELESAI_EKSPEDISI' && !count($allExActivity)) {

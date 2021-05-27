@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/truck', 'TruckController@index')->name('truck');
+Route::get('/truck/ban-detail/{id}', 'TruckController@detail')->name('truck-ban-detail');
 Route::get('/cabang', 'CabangController@index')->name('cabang');
 Route::get('/driver', 'DriverController@index')->name('driver');
 Route::get('/kenek', 'KenekController@index')->name('kenek');

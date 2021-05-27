@@ -57,14 +57,16 @@ $("document").ready(function(){
         var dataJSON = invoker.attr("data-json");
         var dataJSON = JSON.parse(dataJSON);
         var tipe = dataJSON.truck_type ? dataJSON.truck_type : null;
-        
+        var jumlahBan = dataJSON.jumlah_ban ? dataJSON.jumlah_ban : null;
+
         $("#truck-form").find("input[name=id]").val(dataJSON.id);
         $("#truck-modal #btn-submit").attr("el-event", "edit");
         $("#truck-form").find("textarea[name=content]").summernote("code", dataJSON.content);
-        
+
         bindToForm($("#truck-modal"), dataJSON);
         $("#truck-form").find("select[name=truck_type]").val(tipe).trigger('change');
-      
+        $("#truck-form").find("input[name=jumlah_ban]").val(jumlahBan).trigger('change');
+
     } else {
         $("#truck-form").find("input[name=id]").val(null);
         $("#truck-modal #btn-submit").attr("el-event", "add");
