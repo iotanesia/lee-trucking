@@ -5,8 +5,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\Truck;
+use App\Models\Ban;
 use Auth;
 use Carbon\Carbon;
+use DB;
 
 class TruckController extends Controller
 {
@@ -84,6 +86,18 @@ class TruckController extends Controller
       }
 
       if($truck->save()){
+          
+        if($data['jumlah_ban']) {
+            for ($i=0; $i <= $data['jumlah_ban']; $i++) { 
+                $ban = new Ban;
+                $no = $i + 1;
+                $ban->name_ban = 'Ban-'.$no;
+                $ban->code_ban = 'BAN-'.$truck_id.'-'.$no;
+                $ban->truck_id = $truck->id;
+                $ban->save();
+            }
+        }
+
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -134,6 +148,21 @@ class TruckController extends Controller
       }
 
       if($truck->save()){
+        if($data['jumlah_ban']) {
+            $bans = Ban::where('truck_id', $request->id)->first();
+
+            if(!$bans) {
+                for ($i=0; $i <= $data['jumlah_ban']; $i++) { 
+                    $ban = new Ban;
+                    $no = $i + 1;
+                    $ban->name_ban = 'Ban-'.$no;
+                    $ban->code_ban = 'BAN-'.$request->id.'-'.$no;
+                    $ban->truck_id = $truck->id;
+                    $ban->save();
+                }
+            }
+        }
+
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
