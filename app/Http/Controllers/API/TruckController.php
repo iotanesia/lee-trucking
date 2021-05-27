@@ -152,7 +152,7 @@ class TruckController extends Controller
             $bans = Ban::where('truck_id', $request->id)->first();
 
             if(!$bans) {
-                for ($i=0; $i <= $data['jumlah_ban']; $i++) { 
+                for ($i=0; $i < $data['jumlah_ban']; $i++) { 
                     $ban = new Ban;
                     $no = $i + 1;
                     $ban->name_ban = 'Ban-'.$no;
