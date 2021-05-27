@@ -597,7 +597,7 @@ class ExpeditionController extends Controller
 
           foreach($ban as $key => $val) {
               $bans = Ban::find($val->id);
-              $bans->ritasi = $bans->ritasi + 1;
+              $bans->total_ritasi = $bans->total_ritasi + 1;
               $bans->save();
           }
       }
