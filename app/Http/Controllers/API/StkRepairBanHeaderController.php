@@ -28,7 +28,7 @@ class StkRepairBanHeaderController extends Controller
                                  }
                              }
                          })
-                         ->select('ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', DB::raw('COUNT("truck_id") AS total_rit'))
+                         ->select('ex_master_truck.id', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', DB::raw('COUNT("truck_id") AS total_rit'))
                          ->groupBy('expedition_activity.truck_id','ex_master_truck.id', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
                          ->orderBy('ex_master_truck.id', 'ASC')
                          ->paginate();
