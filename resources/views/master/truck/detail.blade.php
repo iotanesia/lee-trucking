@@ -2,7 +2,7 @@
 @section('content')
 <style>
 .modal-dialog {
-    max-width: 80%;
+    max-width: 30%;
     height: 100%;
 }
 </style>
@@ -32,38 +32,36 @@
         <div class="col-lg-6">
             <div class="card">
             <div class="card-header bg-transparent">
-                <h3 class="mb-0">Tracking</h3>
+                <h3 class="mb-0">Data Detail Ban</h3>
             </div>
             <div class="card-body">
                 <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
-                    @foreach($detail as $val)
+                    @foreach($ban as $val)
                     <div class="timeline-block">
-                        <span class="timeline-step {{$color}}">
-                        <i class="{{$icon}}"></i>
+                        <span class="timeline-step badge-warning">
+                        <i class="fa fa-cogs"></i>
                         </span>
                         <div class="timeline-content">
-                            <small class="text-muted font-weight-bold">{{date('l, d F Y H:i:s', strtotime($val->created_at))}}</small>
-                            <h5 class=" mt-3 mb-0">Note : {{$val->keterangan}}, <br> Nominal : Rp {{number_format($val->nominal)}} </h5>
-                            <div class="float-right">
-                                <!-- <img src="{{url('/uploads/expedition/'.$val->img)}}" width="100" alt=""> -->
-                            </div>
-                            <div class="mt-3">
-                                <span class="badge badge-pill {{$color}}">{{$val->status_activity}}</span>
-                                <span class="badge badge-pill {{$colorEx}}">{{$val->status_approval}}</span>
-                                @if($val->img)
-                                <a target="_blank" href="{{url('/uploads/expedition/'.$val->img)}}">
-                                    <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top" title="Bukti Transfer"><i class="ni ni-image"></i></span>
-                                </a>
-                                @endif
-                                @if($val->img_tujuan)
-                                <a target="_blank" href="{{url('/uploads/expedition/'.$val->img_tujuan)}}">
-                                    <span class="badge badge-pill badge-secondary" data-toggle="tooltip" data-placement="top" title="Gambar Tujuan"><i class="ni ni-album-2"></i></span>
-                                </a>
-                                @endif
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <small class="text-muted font-weight-bold">{{date('l, d F Y H:i:s', strtotime($val->created_at))}}</small>
+                                    <h5 class="text-muted font-weight-bold mt-3 mb-0">Nama Ban : {{$val->name_ban}} <br>
+                                                                                    Code Ban : {{$val->code_ban}} <br>
+                                                                                    Total Ritasi : {{$val->total_ritasi}}  <br>
+                                                                                    Batas Ritasi : {{$val->batas_ritasi }}
+                                                                                    <br>
+                                                                                    <br>
+                                    </h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="float-right">
+                                        <a style="margin-right:0px; margin-left:10px" class='btn btn-primary btn-sm float-right' href='#' el-event='edit' data-json='{{$val->data_json}}' data-animate-modal='rotateInDownLeft' data-toggle='modal' data-target='#moneyTransactionHeader-modal-detail'><i class='fas fa-tools'></i> Repair</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    @endforeach            
+                    </div> 
+                    @endforeach 
                 </div>
                 </div>
             </div>
@@ -71,21 +69,18 @@
         <div class="col-lg-6">
           <div class="card bg-gradient-default shadow">
             <div class="card-header bg-transparent">
-              <h3 class="mb-0 text-white">Detail Expedition</h3>
+              <h3 class="mb-0 text-white">Detail Truck</h3>
             </div>
             <div class="card-body">
-              <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed">
+              <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed" id="blockHtml">
                 <div class="timeline-block">
-                  <span class="timeline-step {{$color}}">
-                    <i class="{{$icon}}"></i>
-                  </span>
                   <div class="timeline-content">
-                    <small class="text-light font-weight-bold">{{date('l, d F Y', strtotime($expedition->tgl_inv))}}</small>
-                    <h5 class="text-white mt-3 mb-0">{{$expedition->nomor_inv}}</h5>
-                    <p class="text-light text-sm mt-1 mb-0">Pabrik Pesanan : {{$expedition->pabrik_pesanan}}<br>Nama Barang : {{$expedition->nama_barang}} <br>Tujuan : {{$expedition->kabupaten}} - {{$expedition->kecamatan}} : {{$expedition->cabang_name}} <br> Truck : {{$expedition->truck_name}} - {{$expedition->truck_plat}} <br> Driver : {{$expedition->driver_name}} <br> Kenek : {{$expedition->kenek_name}} <br> Harga OJK : Rp {{number_format($expedition->harga_ojk)}} <br> Harga OTV : Rp {{number_format($expedition->harga_otv)}} </p>
-                    <div class="mt-3">
-                      <span class="badge badge-pill {{$color}}">{{$expedition->status_activity}}</span>
-                    </div>
+                    <h5 class="text-muted font-weight-bold mt-3 mb-0">Nama Truk : {{$truck->truck_name}} <br>
+                                                                    Plat : {{$truck->truck_plat}} <br>
+                                                                    Cabang : {{$truck->truck_corporate_asal}}  <br>
+                                                                    Jumlah Bank : {{$truck->jumlah_ban }} <br>
+                                                                    <br>
+                    </h5>
                   </div>
                 </div>
                 
@@ -115,5 +110,61 @@
         </div>
     </footer>
 </div>
+<div class="modal fade" id="moneyTransactionHeader-modal-detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-primary">
+            <h5 class="modal-title text-white" id="exampleModalLabel">Repair Ban</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form role="form" id="moneyTransactionHeader-detail-form">
+                <input type="hidden" name="transaksi_header_id" id="id">
+                <!-- <div class="row">
+                    <div class="col-md-12">                
+                        <label class="form-control-label" for="nominal_termin">Ganti Ban</label>
+                        <div class="form-group">
+                            <div class="input-group input-group-merge">                            
+                                <input class="form-control" name="nominal_termin" placeholder="Nominal" id="nominal_termin">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="pokok" class="form-control-label">Ritasi</label>
+                            <div class="input-group input-group-merge">
+                            <input class="form-control" name="total_ritasi" placeholder="Total Ritasi" disabled id="ritasi">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="pokok" class="form-control-label">Batas Ritasi</label>
+                            <div class="input-group input-group-merge">
+                            <input class="form-control" name="batas_ritasi" placeholder="Total Ritasi" disabled id="batas_ritasi">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            <button type="button" class="btn btn-primary" el-event="add" id="btn-submits-detail">Ganti Ban</button>
+        </div>
+    </div>
+</div>
 <script src="{{asset('js/event.js')}}"></script>
+<script src="{{asset('js/stkRepairBanHeader.js')}}"></script>
 @endsection

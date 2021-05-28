@@ -11,6 +11,7 @@ use App\Models\ExpeditionActivity;
 use App\Models\ExStatusActivity;
 use App\Models\Kenek;
 use App\Models\Driver;
+use App\Models\Ban;
 use Auth;
 
 class TruckController extends Controller
@@ -55,7 +56,12 @@ class TruckController extends Controller
     public function detail(Request $request, $id) {
         $data['title'] = 'Ban Truck';
         $data['truck'] = Truck::select('ex_master_truck.*', 'ex_master_cabang.*')->join('ex_master_cabang', 'ex_master_cabang.id', 'ex_master_truck.cabang_id')->where('ex_master_truck.id', $id)->first();
+        $data['ban'] = Ban::select('*')->where('truck_id', $id)->get();
         // dd($data);
+
+        foreach($data['ban'] as $key => $val) {
+            $val->data_json = $val->toJson();
+        }
 
         return view('master.truck.detail', $data);
     }

@@ -161,8 +161,7 @@ var successLoadstkRepairBanHeader = (function(responses, dataModel) {
                    "<td>"+ total_rit +"</td>"+
                    "<td align='center'>"+
                      "<div class='btn-group'>"+
-                       "<a class='btn btn-slack btn-icon-only btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#stkRepairBanHeader-modal'><i class='fas fa-edit'></i></a>"+
-                       "<a class='btn btn-danger btn-icon-only btn-sm' href='#' el-event='edit' data-id='"+ id +"' data-url='/api/stkRepairBanHeader/delete' data-toggle='modal' data-target='#deletedModal'><i class='fa fa-trash'></i></a>"+
+                       "<a class='btn btn-slack btn-icon-only btn-sm' href='"+window.Laravel.app_url+"/truck/ban-detail/"+id+"'><i class='fas fa-tools'></i></a>"+
                      "</div>"+
                    "</td>"+
                  "</tr>";
@@ -243,4 +242,91 @@ var successLoadstkRepairBanHeader = (function(responses, dataModel) {
       },
     });
 })
+$("#btn-submits-detail").click(function(){
+    var event = $("#moneyTransactionHeader-modal #btn-submits-detail").attr("el-event");
+    var data = new FormData($("#moneyTransactionHeader-detail-form")[0]);
+    data.append("_token", window.Laravel.csrfToken);
+    
+    $.ajax({
+      url: window.Laravel.app_url + "/api/moneyTransactionHeader/paid",
+      type: "POST",
+      dataType: "json",
+      data: data,
+      processData: false,
+      contentType: false,
+      headers: {"Authorization": "Bearer " + accessToken},
+      crossDomain: true,
+      beforeSend: function( xhr ) {
+        $('.preloader').show();
+      },
+      success: function(datas, textStatus, xhr) {
+            $("#moneyTransactionHeader-modal").modal("hide");
+            $("#successModal").modal("show");
+            $('.preloader').hide();
+            location.reload();
+            document.getElementById("search-data").click();
+            
+          },error: function(datas, textStatus, xhr) {
+              $('.preloader').hide();
+            msgError = "";
+            for(var item in datas.responseJSON.errors) {
+                msgError += datas.responseJSON.errors[item][0] + "*";
+              }
+            alert(msgError);
+          }
+      });
+  })
+  
+  $("#moneyTransactionHeader-modal").on("show.bs.modal", function(e) {
+      var invoker = $(e.relatedTarget);
+
+      if(invoker.attr('el-event') == 'edit') {
+          var dataJSON = invoker.attr("data-json");
+          var dataJSON = JSON.parse(dataJSON);
+          
+          $("#moneyTransactionHeader-form").find("input[name=id]").val(dataJSON.id);
+          $("#moneyTransactionHeader-modal #btn-submit").attr("el-event", "edit");
+          $("#moneyTransactionHeader-form").find("textarea[name=content]").summernote("code", dataJSON.content);
+          
+          bindToForm($("#moneyTransactionHeader-modal"), dataJSON);
+          
+      } else {
+          $("#moneyTransactionHeader-form").find("input[name=id]").val(null);
+          $("#moneyTransactionHeader-modal #btn-submit").attr("el-event", "add");
+          $("#moneyTransactionHeader-form").find("textarea[name=content]").summernote("code", "");
+          resetForm("#moneyTransactionHeader-form");
+      }
+  });
+
+  $("#moneyTransactionHeader-modal-detail").on("show.bs.modal", function(e) {
+      var invoker = $(e.relatedTarget);
+      var tableRows = "";
+
+      if(invoker.attr('el-event') == 'edit') {
+          var dataJSON = invoker.attr("data-json");
+          var dataJSON = JSON.parse(dataJSON);
+          console.log(dataJSON);
+          $('.termin-val').text('Pembayaran Ke - '+(parseInt(dataJSON.total_bayar) + 1));
+          var responses = dataJSON.money_detail_termin;
+
+          
+          $("#table-moneyTransactionHeader-detail tbody").html(tableRows);
+          $("#moneyTransactionHeader-detail-form").find("input[name=total_ritasi]").val(dataJSON.total_ritasi);
+          $("#moneyTransactionHeader-detail-form").find("input[name=batas_ritasi]").val(dataJSON.batas_ritasi);
+          $("#moneyTransactionHeader-detail-form").find("input[name=transaksi_header_id]").val(dataJSON.id);
+          $("#moneyTransactionHeader-modal #btn-submit").attr("el-event", "edit");
+          $("#moneyTransactionHeader-form").find("textarea[name=content]").summernote("code", dataJSON.content);
+          
+          bindToForm($("#moneyTransactionHeader-modal"), dataJSON);
+          
+      } else {
+          $("#moneyTransactionHeader-form").find("input[name=id]").val(null);
+          $("#moneyTransactionHeader-modal #btn-submit").attr("el-event", "add");
+          $("#moneyTransactionHeader-form").find("textarea[name=content]").summernote("code", "");
+          resetForm("#moneyTransactionHeader-form");
+      }
+  });
+
+  
+
 });
