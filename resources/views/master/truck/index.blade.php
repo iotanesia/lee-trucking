@@ -74,6 +74,49 @@
           </div>
         </div>
       </div>
+
+    <div class="modal fade" id="ban-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-primary">
+                <h5 class="modal-title text-white" id="exampleModalLabel">Add Ban</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row col-md-12">
+                    <button type="button" class="btn btn-slack btn-icon-only rounded-circle float-right mb-2" id="add-row">
+                        <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                </div>
+                <form role="form" id="ban-form">
+                <input type="hidden" name="id" id="id">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-striped" id="tblBlockBan">
+                                <thead>
+                                    <tr>
+                                        <th>Ban</th>
+                                        <th>Keterangan</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" el-event="add" id="btn-submit-ban">Save changes</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
       <!-- Footer -->
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
@@ -200,4 +243,22 @@
 </div>
 <script src="{{asset('js/event.js')}}"></script>
 <script src="{{asset('js/truck.js')}}"></script>
+<script>
+    var i = 1;
+    $("#add-row").click(function() {
+        var j = i;
+        var tblBlock = '';
+            tblBlock = `<tr id="tr-`+i+`">
+                            <td><input type="text" name="ban[ban_name][]" class="form-control"></td>
+                            <td><input type="text" name="ban[description][]" class="form-control"></td>
+                            <td><a class='btn btn-danger btn-icon-only btn-sm btn-delete' data-id="`+j+`" href='#'><i class='fa fa-trash'></i></a></td>
+                        </tr>`;
+
+        $("#tblBlockBan tbody").append(tblBlock);
+        $(".btn-delete").click(function() {
+            var id = $(this).attr("data-id");
+            $("#tr-"+id).remove();
+        });
+    });
+</script>
 @endsection

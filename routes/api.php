@@ -76,6 +76,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('add', ['as' => '-add', 'uses' => 'API\TruckController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\TruckController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\TruckController@delete']);
+    Route::post('ban-delete', ['as' => '--ban-deleted', 'uses' => 'API\TruckController@Bandeleted']);
   });
 
   Route::group(['as' => 'api-reward', 'prefix' => 'reward'], function() {
@@ -269,6 +270,12 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/', 'API\DashboardController@index');
     Route::get('get-list', ['as' => '-get-jurnal-list', 'uses' => 'API\DashboardController@getList']);
   });
+
+  Route::group(['as' => 'api-ban', 'prefix' => 'ban'], function() {
+    Route::post('/add', 'API\TruckController@addBan');
+    Route::post('/add-repair', 'API\TruckController@addBanRepair');
+  });
+  
 
   Route::group(['as' => 'api-drop-down', 'prefix' => 'drop-down'], function() {
     Route::get('/', 'Services\DropDown@index');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\Truck;
 use App\Models\Ban;
+use App\Models\HistoryBan;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -19,6 +20,7 @@ class TruckController extends Controller
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $truckList = Truck::join('all_global_param', 'ex_master_truck.truck_status', 'all_global_param.id')
                    ->join('ex_master_cabang','ex_master_truck.cabang_id', 'ex_master_cabang.id')
+                   ->with(['ban'])
                    ->where(function($query) use($whereField, $whereValue) {
                      if($whereValue) {
                        foreach(explode(', ', $whereField) as $idx => $field) {
@@ -33,6 +35,7 @@ class TruckController extends Controller
 
       foreach($truckList as $row) {
         $row->data_json = $row->toJson();
+        $row->ban_json = $row->ban->toJson();
       }
       
       if(!isset($truckList)){
@@ -86,17 +89,6 @@ class TruckController extends Controller
       }
 
       if($truck->save()){
-          
-        if($data['jumlah_ban']) {
-            for ($i=0; $i <= $data['jumlah_ban']; $i++) { 
-                $ban = new Ban;
-                $no = $i + 1;
-                $ban->name_ban = 'Ban-'.$no;
-                $ban->code_ban = 'BAN-'.$truck_id.'-'.$no;
-                $ban->truck_id = $truck->id;
-                $ban->save();
-            }
-        }
 
         return response()->json([
           'code' => 200,
@@ -148,21 +140,6 @@ class TruckController extends Controller
       }
 
       if($truck->save()){
-        if($data['jumlah_ban']) {
-            $bans = Ban::where('truck_id', $request->id)->first();
-
-            if(!$bans) {
-                for ($i=0; $i < $data['jumlah_ban']; $i++) { 
-                    $ban = new Ban;
-                    $no = $i + 1;
-                    $ban->name_ban = 'Ban-'.$no;
-                    $ban->code_ban = 'BAN-'.$request->id.'-'.$no;
-                    $ban->truck_id = $truck->id;
-                    $ban->save();
-                }
-            }
-        }
-
         return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -219,6 +196,83 @@ class TruckController extends Controller
         'code_message' => 'Method salah',
         'code_type' => 'BadRequest',
       ], 405);
+    }
+  }
+
+  public function addBan(Request $request) {
+    $data = $request->all();
+
+    foreach ($data['ban']['ban_name'] as $key => $value) {
+        $ban = new Ban;
+        $ban->truck_id = $data['id'];
+        $ban->name_ban = $value;
+        $ban->desc = $data['ban']['description'][$key];
+        $ban->code_ban = 'BN0'.$data['id'].date('dmyHis');
+        $ban->save();
+    }
+
+    return response()->json([
+        'code' => 200,
+        'code_message' => 'Berhasil menyimpan data',
+        'code_type' => 'Success',
+      ], 200);
+  }
+
+  public function addBanRepair(Request $request) {
+    $data = $request->all();
+    $oldBan = Ban::find($data['id']);
+    // dd($data);
+
+    $history = new HistoryBan;
+    $history->ban_id = $oldBan->id;
+    $history->total_ritasi = $oldBan->total_ritasi;
+    $history->batas_ritasi = $oldBan->batas_ritasi;
+    $history->truck_id = $oldBan->truck_id;
+    $history->save();
+
+    $gapRitasi = $oldBan->batas_ritasi - $oldBan->total_ritasi;
+    $oldBan->batas_ritasi = 200 + $gapRitasi;
+    $oldBan->total_ritasi = 0;
+    $oldBan->name_ban = $data['name_ban'];
+    $oldBan->desc = $data['description'];
+    $oldBan->save();
+
+    return response()->json([
+        'code' => 200,
+        'code_message' => 'Berhasil menyimpan data',
+        'code_type' => 'Success',
+      ], 200);
+  }
+
+  public function Bandeleted(Request $request) {
+    if($request->isMethod('POST')) {
+        $data = $request->all();
+        $ban = Ban::find($data['id']);
+        $current_date_time = Carbon::now()->toDateTimeString(); 
+        $user_id = Auth::user()->id;
+        $ban->deleted_at = $current_date_time;
+        
+        if($ban->save()){
+            return response()->json([
+                'code' => 200,
+                'code_message' => 'Berhasil menghapus data',
+                'code_type' => 'Success',
+            ], 200);
+            
+        } else {
+            return response()->json([
+                'code' => 401,
+                'code_message' => 'Gagal menghapus data',
+                'code_type' => 'BadRequest',
+            ], 401);
+        }
+        
+    } else {
+        return response()->json([
+            'code' => 405,
+            'code_message' => 'Method salah',
+            'code_type' => 'BadRequest',
+        ], 405);
     }
   }
 }
