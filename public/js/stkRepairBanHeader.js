@@ -311,6 +311,7 @@ $("#btn-submits-detail").click(function(){
 
           
           $("#table-moneyTransactionHeader-detail tbody").html(tableRows);
+          $("#moneyTransactionHeader-detail-form").find("input[name=id]").val(dataJSON.id);
           $("#moneyTransactionHeader-detail-form").find("input[name=total_ritasi]").val(dataJSON.total_ritasi);
           $("#moneyTransactionHeader-detail-form").find("input[name=batas_ritasi]").val(dataJSON.batas_ritasi);
           $("#moneyTransactionHeader-detail-form").find("input[name=transaksi_header_id]").val(dataJSON.id);
@@ -327,6 +328,39 @@ $("#btn-submits-detail").click(function(){
       }
   });
 
-  
-
+  $("#btn-submit-detail").click(function(){
+      var accessToken =  window.Laravel.api_token;
+      var event = $("#moneyTransactionHeader-modal-detail #btn-submit-detail").attr("el-event");
+      var data = new FormData($("#moneyTransactionHeader-detail-form")[0]);
+      data.append("_token", window.Laravel.csrfToken);
+      
+      $.ajax({
+          url: window.Laravel.app_url + "/api/ban/add-repair",
+          type: "POST",
+          dataType: "json",
+          data: data,
+          processData: false,
+          contentType: false,
+          headers: {"Authorization": "Bearer " + accessToken},
+          crossDomain: true,
+          beforeSend: function( xhr ) {
+          $('.preloader').show();
+      },
+      success: function(datas, textStatus, xhr) {
+            $("#moneyTransactionHeader-modal").modal("hide");
+            $("#successModal").modal("show");
+            $('.preloader').hide();
+            location.reload();
+            document.getElementById("search-data").click();
+            
+          },error: function(datas, textStatus, xhr) {
+              $('.preloader').hide();
+            msgError = "";
+            for(var item in datas.responseJSON.errors) {
+                msgError += datas.responseJSON.errors[item][0] + "*";
+              }
+            alert(msgError);
+          }
+      });
+  })
 });

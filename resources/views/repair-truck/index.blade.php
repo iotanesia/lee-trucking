@@ -188,8 +188,6 @@
             var id = $(this).attr("data-id");
             $("#tr-"+id).remove();
         });
-
-
     });
 </script>
 @endsection

@@ -48,7 +48,8 @@
                                     <h5 class="text-muted font-weight-bold mt-3 mb-0">Nama Ban : {{$val->name_ban}} <br>
                                                                                     Code Ban : {{$val->code_ban}} <br>
                                                                                     Total Ritasi : {{$val->total_ritasi}}  <br>
-                                                                                    Batas Ritasi : {{$val->batas_ritasi }}
+                                                                                    Batas Ritasi : {{$val->batas_ritasi }} <br>
+                                                                                    Deskripsi : {{$val->desc }}
                                                                                     <br>
                                                                                     <br>
                                     </h5>
@@ -78,7 +79,7 @@
                     <h5 class="text-muted font-weight-bold mt-3 mb-0">Nama Truk : {{$truck->truck_name}} <br>
                                                                     Plat : {{$truck->truck_plat}} <br>
                                                                     Cabang : {{$truck->truck_corporate_asal}}  <br>
-                                                                    Jumlah Bank : {{$truck->jumlah_ban }} <br>
+                                                                    Jumlah Ban : {{$truck->jumlah_ban }} <br>
                                                                     <br>
                     </h5>
                   </div>
@@ -121,7 +122,7 @@
         </div>
         <div class="modal-body">
             <form role="form" id="moneyTransactionHeader-detail-form">
-                <input type="hidden" name="transaksi_header_id" id="id">
+                <input type="hidden" name="id" id="id">
                 <!-- <div class="row">
                     <div class="col-md-12">                
                         <label class="form-control-label" for="nominal_termin">Ganti Ban</label>
@@ -138,9 +139,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="pokok" class="form-control-label">Ritasi</label>
+                            <label for="pokok" class="form-control-label">Name Ban</label>
                             <div class="input-group input-group-merge">
-                            <input class="form-control" name="total_ritasi" placeholder="Total Ritasi" disabled id="ritasi">
+                            <input class="form-control" name="name_ban" placeholder="Name Ban" id="name_ban">
                                 
                             </div>
                         </div>
@@ -149,9 +150,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="pokok" class="form-control-label">Batas Ritasi</label>
+                            <label for="pokok" class="form-control-label">Description</label>
                             <div class="input-group input-group-merge">
-                            <input class="form-control" name="batas_ritasi" placeholder="Total Ritasi" disabled id="batas_ritasi">
+                            <input class="form-control" name="description" placeholder="Description" id="description">
                                 
                             </div>
                         </div>
@@ -161,7 +162,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-            <button type="button" class="btn btn-primary" el-event="add" id="btn-submits-detail">Ganti Ban</button>
+            <button type="button" class="btn btn-primary" el-event="add" id="btn-submit-detail">Ganti Ban</button>
         </div>
     </div>
 </div>
