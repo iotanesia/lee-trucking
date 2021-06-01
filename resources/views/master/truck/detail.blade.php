@@ -49,14 +49,14 @@
                                                                                     Code Ban : {{$val->code_ban}} <br>
                                                                                     Total Ritasi : {{$val->total_ritasi}}  <br>
                                                                                     Batas Ritasi : {{$val->batas_ritasi }} <br>
-                                                                                    Deskripsi : {{$val->desc }}
-                                                                                    <br>
+                                                                                    Deskripsi : {{$val->desc }}<br>
                                                                                     <br>
                                     </h5>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="float-right">
                                         <a style="margin-right:0px; margin-left:10px" class='btn btn-primary btn-sm float-right' href='#' el-event='edit' data-json='{{$val->data_json}}' data-animate-modal='rotateInDownLeft' data-toggle='modal' data-target='#moneyTransactionHeader-modal-detail'><i class='fas fa-tools'></i> Repair</a>
+                                        <a class='btn btn-warning btn-sm btn-detail' href='#' el-event='edit' history-json='{{$val->history_json}}'><i class='fa fa-eye'></i> Detail</a>
                                     </div>
                                 </div>
                             </div>

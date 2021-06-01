@@ -67,6 +67,39 @@ $("document").ready(function(){
     });
   })
 
+  $(".btn-detail").click(function() {
+        var invoker = $(this);
+        var dataJSON = invoker.attr("history-json");
+        var dataJSON = JSON.parse(dataJSON);
+        console.log(dataJSON);
+        var block = '';
+    
+        for(var i = 0; i < dataJSON.length; i++) {
+            block += `<div class="timeline-block">
+                        <span class="timeline-step badge-success">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </span>
+                        <div class="timeline-content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <small class="text-muted font-weight-bold">`+dataJSON[i].created_at+`</small>
+                                    <h5 class="text-muted font-weight-bold mt-3 mb-0">Batas Ritasi : `+dataJSON[i].batas_ritasi+` <br>
+                                                                                    Total Ritasi : `+dataJSON[i].total_ritasi+`  <br>
+                                                                                    Nama Ban : `+dataJSON[i].name_ban+`  <br>
+                                                                                    Desc : `+dataJSON[i].desc+`  <br>
+                                                                                    <br>
+                                                                                    <br>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+        }
+
+        $("#blockHtml").html(block);
+
+    })
+
   $("#stkRepairBanHeader-modal").on("show.bs.modal", function(e) {
     var invoker = $(e.relatedTarget);
 
