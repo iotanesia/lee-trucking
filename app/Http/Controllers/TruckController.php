@@ -56,12 +56,16 @@ class TruckController extends Controller
     public function detail(Request $request, $id) {
         $data['title'] = 'Ban Truck';
         $data['truck'] = Truck::select('ex_master_truck.*', 'ex_master_cabang.*')->join('ex_master_cabang', 'ex_master_cabang.id', 'ex_master_truck.cabang_id')->where('ex_master_truck.id', $id)->first();
-        $data['ban'] = Ban::select('*')->where('truck_id', $id)->get();
+        $data['ban'] = Ban::select('*')->with(['historyBan'])->where('truck_id', $id)->get();
         // dd($data);
 
         foreach($data['ban'] as $key => $val) {
             $val->data_json = $val->toJson();
+            $val->history_json = $val->historyBan->toJson();
+            
         }
+
+        // dd($data['ban']);
 
         return view('master.truck.detail', $data);
     }
