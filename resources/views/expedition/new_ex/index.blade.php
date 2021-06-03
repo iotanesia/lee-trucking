@@ -122,7 +122,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-receipt"></i></span>
                                 </div>
-                                <input class="form-control" name="nomor_inv" id="nomor_inv" placeholder="Nomor Invoice" type="text">
+                                <input class="form-control upperCaseText" name="nomor_inv" id="nomor_inv" placeholder="Nomor Invoice" type="text">
                             </div>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-building"></i></span>
                                 </div>
-                                <input type="text" name="pabrik_pesanan" id="pabrik_pesanan" class="form-control" placeholder="Pabrik Pesanan">
+                                <input type="text" name="pabrik_pesanan" id="pabrik_pesanan" class="form-control upperCaseText" placeholder="Pabrik Pesanan">
                             </div>
                         </div>
                     </div>
@@ -142,7 +142,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
                                 </div>
-                                <input type="text" name="nama_barang" id="nama_barang" class="form-control" placeholder="Nama Barang">
+                                <input type="text" name="nama_barang" id="nama_barang" class="form-control upperCaseText" placeholder="Nama Barang">
                             </div>
                         </div>
                     </div>
@@ -228,7 +228,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="toko">Toko</label>
                             <div class="input-group input-group-merge">
-                                <input class="form-control" name="toko" id="toko" placeholder="Toko" type="text">
+                                <input class="form-control upperCaseText" name="toko" id="toko" placeholder="Toko" type="text">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="far fa-building"></i></span>
                                 </div>
