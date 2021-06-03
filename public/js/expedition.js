@@ -33,6 +33,10 @@ $("document").ready(function() {
         placeholder:"Select Jenis Surat Jalan"
     });
 
+    $(".upperCaseText").on('keyup', function(){
+        this.value = this.value.toUpperCase();
+    });
+
     // $("#driver_id").on("change", function() {
     //     id = $(this).val();
 
