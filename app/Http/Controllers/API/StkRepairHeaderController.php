@@ -25,7 +25,7 @@ class StkRepairHeaderController extends Controller
       }
 
       $data = $request->all();
-      $whereField = 'name, no_StkRepairHeader, truck_plat, kode_repair';
+      $whereField = 'truck_plat, kode_repair';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $stkRepairHeader = StkRepairHeader::join('ex_master_truck', 'stk_repair_header.truck_id', 'ex_master_truck.id')
                          ->join('ex_master_driver', 'ex_master_truck.driver_id', 'ex_master_driver.id')
