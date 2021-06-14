@@ -408,7 +408,9 @@ class ExpeditionController extends Controller
         $code = str_repeat("0", 4 - strlen($expeditionActivity->id)).$expeditionActivity->id;
         $codes = $request->jenis_surat_jalan.date('Y').$code;
 
-        $expeditionActivity->nomor_surat_jalan = $codes;
+        if($request->jenis_surat_jalan) {
+            $expeditionActivity->nomor_surat_jalan = $codes;
+        }
         $expeditionActivity->save();
 
         $exStatusActivity = new ExStatusActivity();
