@@ -44,7 +44,7 @@ class StkRepairHeaderController extends Controller
                          })
                          ->where('kode_repair', 'LIKE', '%RP-%')
                          ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
-                         ->orderBy('id', 'ASC')
+                         ->orderBy('id', 'DESC')
                          ->paginate();
       foreach($stkRepairHeader as $row) {
         foreach($row->stk_history_stok as $historyStok){
