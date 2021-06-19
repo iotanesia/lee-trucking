@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
             // dd($attribute, $value, $parameters, $validator);
             $count = DB::table($parameters[0])
                      ->where($attribute, $value)
-                     ->where('is_deleted', false);
+                     ->where('is_deleted', 'f');
 
             if(!$count->count()) {
                 return true;

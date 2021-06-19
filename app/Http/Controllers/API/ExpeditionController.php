@@ -387,6 +387,15 @@ class ExpeditionController extends Controller
          ],405);
       }
 
+      if(!$request->jenis_surat_jalan) {
+        return response()->json([
+            'code' => 405,
+            'code_message' => 'Periksa Koneksi Jaringan Anda',
+            'code_type' => 'BadRequest',
+            'result'=> null
+         ],405);
+      }
+
       unset($data['_token']);
       unset($data['id']);
       unset($data['jenis_surat_jalan']);
@@ -407,7 +416,6 @@ class ExpeditionController extends Controller
       if($expeditionActivity->save()) {
         $code = str_repeat("0", 4 - strlen($expeditionActivity->id)).$expeditionActivity->id;
         $codes = $request->jenis_surat_jalan.date('Y').$code;
-
         if($request->jenis_surat_jalan) {
             $expeditionActivity->nomor_surat_jalan = $codes;
         }
@@ -648,7 +656,10 @@ class ExpeditionController extends Controller
 
         DB::connection(Auth::user()->schema)->beginTransaction();
 
-        $expeditionActivity->otv_payment_method = $request->otv_payment_method;
+        if($request->otv_payment_method) {
+            $expeditionActivity->otv_payment_method = $request->otv_payment_method;
+        }
+
         $expeditionActivity->status_activity = $request->status_activity;
         $expeditionActivity->updated_by = $idUser;
         $expeditionActivity->updated_at = $current_date_time;

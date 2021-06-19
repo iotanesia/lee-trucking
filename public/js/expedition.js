@@ -99,11 +99,13 @@ $("document").ready(function() {
         },
         error: function(datas, textStatus, xhr) {
           $('.preloader').hide();
+          console.log(datas);
           msgError = "";
-          for(var item in datas.responseJSON.errors) {
-            msgError += datas.responseJSON.errors[item][0] + "*";
+          for(var item in datas.responseJSON.code_message) {
+            msgError += datas.responseJSON.code_message[item];
           }
           alert(msgError);
+          location.reload();
         }
       });
     })
