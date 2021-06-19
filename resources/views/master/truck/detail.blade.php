@@ -150,6 +150,30 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
+                            <label for="pokok" class="form-control-label">Code Ban</label>
+                            <div class="input-group input-group-merge">
+                            <input class="form-control" name="code_ban" placeholder="Code Ban" id="code_ban">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="pokok" class="form-control-label">Tanggal Perbaikan</label>
+                            <div class="input-group input-group-merge">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input type="text" name="repair_date" id="repair_date" class="form-control" placeholder="Tanggal Perbaikan">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
                             <label for="pokok" class="form-control-label">Description</label>
                             <div class="input-group input-group-merge">
                             <input class="form-control" name="description" placeholder="Description" id="description">

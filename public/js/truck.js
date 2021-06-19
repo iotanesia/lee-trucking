@@ -132,11 +132,13 @@ $("document").ready(function(){
         for(var i = 0; i < dataBanJSON.length; i++) {
             id = dataBanJSON[i].id;
             name_ban = dataBanJSON[i].name_ban;
+            code_ban = dataBanJSON[i].code_ban;
             desc = dataBanJSON[i].desc;
             total_ritasi = dataBanJSON[i].total_ritasi;
 
             tableRows += "<tr>" +
                            "<td>"+ def(name_ban) +"</td>"+
+                           "<td>"+ def(code_ban) +"</td>"+
                            "<td>"+ def(desc) +"</td>"+
                            "<td align='center'>"+
                              "<div class='btn-group'>"+

@@ -98,6 +98,7 @@
                                 <thead>
                                     <tr>
                                         <th>Ban</th>
+                                        <th>Code Ban</th>
                                         <th>Keterangan</th>
                                         <th>Action</th>
                                     </tr>
@@ -207,15 +208,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="jumlah_ban">Jumlah Ban</label>
-                    <div class="input-group input-group-merge">
-                        <input type="text" class="form-control" name="jumlah_ban" id="jumlah_ban" placeholder="Jumlah Ban">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="far fa-life-ring"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="form-control-label" for="cabang_id">Cabang</label>
                     <select name="cabang_id" class="form-control" id="cabang_id">
                         <option value=""></option>
@@ -250,6 +242,7 @@
         var tblBlock = '';
             tblBlock = `<tr id="tr-`+i+`">
                             <td><input type="text" name="ban[ban_name][]" class="form-control"></td>
+                            <td><input type="text" name="ban[code_ban][]" class="form-control"></td>
                             <td><input type="text" name="ban[description][]" class="form-control"></td>
                             <td><a class='btn btn-danger btn-icon-only btn-sm btn-delete' data-id="`+j+`" href='#'><i class='fa fa-trash'></i></a></td>
                         </tr>`;

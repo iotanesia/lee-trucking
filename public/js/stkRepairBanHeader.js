@@ -5,6 +5,13 @@ $("document").ready(function(){
       placeholder:"Select Sparepart"
   });
 
+  $("#repair_date").daterangepicker({
+    locale: {
+        format: 'DD-MM-YYYY'
+    },
+    singleDatePicker : true,
+  });
+
   $.ajax({
     url: window.Laravel.app_url + "/api/stkRepairBanHeader/get-list",
     type: "GET",
@@ -73,8 +80,9 @@ $("document").ready(function(){
         var dataJSON = JSON.parse(dataJSON);
         console.log(dataJSON);
         var block = '';
-    
+        
         for(var i = 0; i < dataJSON.length; i++) {
+            var gap = dataJSON[i].batas_ritasi - dataJSON[i].total_ritasi;
             block += `<div class="timeline-block">
                         <span class="timeline-step badge-success">
                             <i class="fas fa-money-bill-wave"></i>
@@ -85,6 +93,7 @@ $("document").ready(function(){
                                     <small class="text-muted font-weight-bold">`+dataJSON[i].created_at+`</small>
                                     <h5 class="text-muted font-weight-bold mt-3 mb-0">Batas Ritasi : `+dataJSON[i].batas_ritasi+` <br>
                                                                                     Total Ritasi : `+dataJSON[i].total_ritasi+`  <br>
+                                                                                    Gap Ritasi : `+gap+`  <br>
                                                                                     Nama Ban : `+dataJSON[i].name_ban+`  <br>
                                                                                     Desc : `+dataJSON[i].desc+`  <br>
                                                                                     <br>
