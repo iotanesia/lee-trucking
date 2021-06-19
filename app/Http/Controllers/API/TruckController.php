@@ -207,7 +207,8 @@ class TruckController extends Controller
         $ban->truck_id = $data['id'];
         $ban->name_ban = $value;
         $ban->desc = $data['ban']['description'][$key];
-        $ban->code_ban = 'BN0'.$data['id'].date('dmyHis');
+        $ban->code_ban = $data['ban']['code_ban'][$key];
+        $ban->batas_ritasi = 275;
         $ban->save();
     }
 
@@ -233,10 +234,12 @@ class TruckController extends Controller
     $history->save();
 
     $gapRitasi = $oldBan->batas_ritasi - $oldBan->total_ritasi;
-    $oldBan->batas_ritasi = 275 + $gapRitasi;
+    $oldBan->batas_ritasi = 275;
     $oldBan->total_ritasi = 0;
     $oldBan->name_ban = $data['name_ban'];
+    $oldBan->code_ban = $data['code_ban'];
     $oldBan->desc = $data['description'];
+    $oldBan->repair_date = date('Y-m-d', strToTime($data['repair_date']));
     $oldBan->save();
 
     return response()->json([
