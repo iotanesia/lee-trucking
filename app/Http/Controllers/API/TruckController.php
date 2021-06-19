@@ -233,7 +233,7 @@ class TruckController extends Controller
     $history->save();
 
     $gapRitasi = $oldBan->batas_ritasi - $oldBan->total_ritasi;
-    $oldBan->batas_ritasi = 200 + $gapRitasi;
+    $oldBan->batas_ritasi = 275 + $gapRitasi;
     $oldBan->total_ritasi = 0;
     $oldBan->name_ban = $data['name_ban'];
     $oldBan->desc = $data['description'];
