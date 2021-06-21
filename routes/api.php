@@ -65,6 +65,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/', 'API\DriverController@index');
     Route::get('get-list', ['as' => '-get-list', 'uses' => 'API\DriverController@getList']);
     Route::get('get-user-driver-list', ['as' => '-get-user-driver-list', 'uses' => 'API\DriverController@getUserDriverList']);
+    Route::get('get-detail-driver', ['as' => '-get-detail-driver', 'uses' => 'API\DriverController@detailDriver']);
     Route::post('add', ['as' => '-add', 'uses' => 'API\DriverController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\DriverController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\DriverController@delete']);

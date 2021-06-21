@@ -1455,7 +1455,7 @@ class ExpeditionController extends Controller
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten',
                             'ex_master_cabang.cabang_name', 'expedition_activity.harga_ojk', 'expedition_activity.harga_otv',
                             'ex_master_kenek.kenek_name')
-                   ->orderBy('updated_by', 'DESC')
+                   ->orderBy('expedition_activity.tgl_po', 'DESC')
                    ->paginate();
 
       foreach($expeditionActivityList as $row) {
@@ -1519,7 +1519,7 @@ class ExpeditionController extends Controller
                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten',
                             'ex_master_cabang.cabang_name', 'expedition_activity.harga_ojk', 'expedition_activity.harga_otv',
                             'ex_master_kenek.kenek_name')
-                    ->orderBy('updated_by', 'DESC')
+                    ->orderBy('expedition_activity.tgl_po', 'DESC')
                     ->paginate();
 
       foreach($expeditionActivityList as $row) {
