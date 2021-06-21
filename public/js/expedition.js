@@ -37,25 +37,29 @@ $("document").ready(function() {
         this.value = this.value.toUpperCase();
     });
 
-    // $("#driver_id").on("change", function() {
-    //     id = $(this).val();
+    $("#driver_id").on("change", function() {
+        id = $(this).val();
 
-    //     $.ajax({
-    //         url: window.Laravel.app_url + "/api/expedition/get-kenek",
-    //         type: "GET",
-    //         dataType: "json",
-    //         data: 'id='+id,
-    //         headers: {"Authorization": "Bearer " + accessToken},
-    //         crossDomain: true,
-    //         beforeSend: function( xhr ) { 
-    //           $('.preloader').show();
-    //         },
-    //         success: function(res, textStatus, xhr) {
-    //           $('.preloader').hide();
-    //           $("#kenek_id").val(res.data.id).trigger("change");
-    //         },
-    //       });
-    // });
+        $.ajax({
+            url: window.Laravel.app_url + "/api/driver/get-detail-driver/",
+            type: "GET",
+            dataType: "json",
+            data: 'id='+id,
+            headers: {"Authorization": "Bearer " + accessToken},
+            crossDomain: true,
+            beforeSend: function( xhr ) { 
+              $('.preloader').show();
+            },
+            success: function(res, textStatus, xhr) {
+              $('.preloader').hide();
+            //   $("#kenek_id").val(res.data.id).trigger("change");
+              $('#nama_penerima').val(res.data.nama_rekening);
+              $('#no_rek').val(res.data.no_rek);
+              $('#bank_name').val(res.data.bank_name);
+              $('#nomor_hp_penerima').val(res.data.nomor_hp);
+            },
+          });
+    });
 
     var accessToken =  window.Laravel.api_token;
   
