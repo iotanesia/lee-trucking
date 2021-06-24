@@ -453,7 +453,15 @@ class MoneyTransactionHeaderController extends Controller
       }
 
       if($moneyTransactionHeader->save()) {
-          $coaMasterSheet = CoaMasterSheet::whereIn('coa_code_sheet', ['PL.0003.01', 'PL.0003.02', 'PL.0003.03', 'PL.0003.04'])->get();
+          if(isset($data['category_name']) && $data['category_name'] == 'DANA_LAIN_LAIN') {
+              $coaMasterSheet = CoaMasterSheet::whereIn('coa_code_sheet', ['PL.0001.04', 'PL.0001.05', 'PL.0001.06', 'PL.0001.07'])->get();
+
+          } elseif(isset($data['category_name']) && $data['category_name'] == 'GAJI_KARYAWAN') {
+              $coaMasterSheet = CoaMasterSheet::whereIn('coa_code_sheet', ['PL.0001.17', 'PL.0001.18', 'PL.0001.19', 'PL.0001.07'])->get();
+
+          } else {
+              $coaMasterSheet = CoaMasterSheet::whereIn('coa_code_sheet', ['PL.0003.01', 'PL.0003.02', 'PL.0003.03', 'PL.0003.04'])->get();
+          }
           
         //   for ($i=0; $i < $moneyTransactionHeader->termin; $i++) { 
         //       $moneyDetailTermin = new MoneyDetailTermin;
