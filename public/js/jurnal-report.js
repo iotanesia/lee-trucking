@@ -238,7 +238,11 @@
     $('#filterSelectJurnal').val($("#filter_select_jurnal").val());
     $('#table-jurnal').DataTable().ajax.reload();
   });
-
+  // $('#filter_select_jurnal').select2({
+  //   width: '100%',
+  //   placeholder: "Select an Option",
+  //   allowClear: true
+  // });
   $("#filter_select_aktiviti_jurnal").on("change", function() {
     $('#filterActivityJurnal').val($("#filter_select_aktiviti_jurnal").val());
     $('#table-jurnal').DataTable().ajax.reload();
