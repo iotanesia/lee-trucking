@@ -225,6 +225,63 @@ class MoneyTransactionHeaderController extends Controller
     }
   }
 
+  public function getListUangKeluar(Request $request) {
+    if($request->isMethod('GET')) {
+      $cekRole = $this->checkRoles();
+      $ids = null;
+
+      if($cekRole) {
+          $ids = json_decode($cekRole, true);
+      }
+      $data = $request->all();
+      $whereField = 'money_transaction_header.category_name';
+      $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
+      $moneyTransactionHeaderList = MoneyTransactionHeader::with(['money_detail_termin' => function($query){ 
+                                        $query->leftJoin('coa_master_rekening', 'coa_master_rekening.id', 'money_detail_termin.rek_id')->select('money_detail_termin.*', 'coa_master_rekening.rek_name', 'coa_master_rekening.rek_no',  'coa_master_rekening.id');
+                                    }])
+                                    ->leftjoin('coa_master_rekening', 'coa_master_rekening.id', 'money_transaction_header.rek_id') 
+                                    ->where(function($query) use($whereField, $whereValue) {
+                                        if($whereValue) {
+                                            foreach(explode(', ', $whereField) as $idx => $field) {
+                                                $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
+                                            }
+                                        }
+                                    })
+                                    ->whereIn('category_name', ['DANA_LAIN_LAIN', 'GAJI_KARYAWAN'])
+                                    ->select('money_transaction_header.*', 'coa_master_rekening.rek_no', 'coa_master_rekening.rek_name')
+                                    ->orderBy('money_transaction_header.id', 'ASC')
+                                    ->paginate();
+
+      foreach($moneyTransactionHeaderList as $row) {
+        $row->total_bayar = count($row->money_detail_termin);
+        $row->data_json = $row->toJson();
+      }
+      
+      if(!isset($moneyTransactionHeaderList)){
+        return response()->json([
+          'code' => 404,
+          'code_message' => 'Data tidak ditemukan',
+          'code_type' => 'BadRequest',
+          'result'=> null
+        ], 404);
+      }else{
+        return response()->json([
+          'code' => 200,
+          'code_message' => 'Success',
+          'code_type' => 'Success',
+          'result'=> $moneyTransactionHeaderList
+        ], 200);
+      }
+    } else {
+      return response()->json([
+        'code' => 405,
+        'code_message' => 'Method salah',
+        'code_type' => 'BadRequest',
+        'result'=> null
+      ], 405);
+    }
+  }
+
   public function getListModalUsaha(Request $request) {
     if($request->isMethod('GET')) {
       $cekRole = $this->checkRoles();
@@ -372,6 +429,13 @@ class MoneyTransactionHeaderController extends Controller
           $data['date'] = date('Y-m-d', strtotime($data['date']));
       }
 
+      if(isset($data['category_name']) && $data['category_name']) {
+          $data['category_name'] = $data['category_name'];
+
+      } else {
+          $data['category_name'] = 'PINJAMAN_KARYAWAN';
+      }
+
       $this->validate($request, [
         // 'no_MoneyTransactionHeader' => 'required|string|max:255|unique:MoneyTransactionHeader',
         // 'MoneyTransactionHeader_plat' => 'required|string|max:255',
@@ -383,7 +447,7 @@ class MoneyTransactionHeaderController extends Controller
       foreach($data as $key => $row) {
         $moneyTransactionHeader->{$key} = $row;
         $moneyTransactionHeader->status = 'BELUM_LUNAS';
-        $moneyTransactionHeader->category_name = 'PINJAMAN_KARYAWAN';
+        // $moneyTransactionHeader->category_name = 'PINJAMAN_KARYAWAN';
         $moneyTransactionHeader->sisa_pokok = $data['pokok'];
         $moneyTransactionHeader->created_by = Auth::user()->id;
       }
@@ -403,7 +467,7 @@ class MoneyTransactionHeaderController extends Controller
           foreach($coaMasterSheet as $key => $value) {
             $coaActivity = new CoaActivity();
             $coaActivity->activity_id = 52;
-            $coaActivity->activity_name = 'PINJAMAN_KARYAWAN';
+            $coaActivity->activity_name = isset($data['category_name']) ? $data['category_name'] :'PINJAMAN_KARYAWAN';
             $coaActivity->status = 'ACTIVE';
             $coaActivity->nominal = $moneyTransactionHeader->pokok;
             $coaActivity->coa_id = $value->id;
@@ -453,7 +517,7 @@ class MoneyTransactionHeaderController extends Controller
       
       unset($data['_token']);
       unset($data['id']);
-      
+
       foreach($data as $key => $row) {
         $moneyTransactionHeader->{$key} = $row;
         $moneyTransactionHeader->sisa_pokok = $data['pokok'];
@@ -475,7 +539,7 @@ class MoneyTransactionHeaderController extends Controller
           foreach($coaMasterSheet as $key => $value) {
             $coaActivity = new CoaActivity();
             $coaActivity->activity_id = 52;
-            $coaActivity->activity_name = 'PINJAMAN_KARYAWAN';
+            $coaActivity->activity_name = isset($data['category_name']) ? $data['category_name'] :'PINJAMAN_KARYAWAN';
             $coaActivity->status = 'ACTIVE';
             $coaActivity->nominal = $moneyTransactionHeader->pokok;
             $coaActivity->coa_id = $value->id;
@@ -547,7 +611,7 @@ class MoneyTransactionHeaderController extends Controller
           foreach($coaMasterSheet as $key => $value) {
             $coaActivity = new CoaActivity();
             $coaActivity->activity_id = 52;
-            $coaActivity->activity_name = 'PINJAMAN_KARYAWAN';
+            $coaActivity->activity_name = 'MODAL_USAHA';
             $coaActivity->status = 'ACTIVE';
             $coaActivity->nominal = $moneyTransactionHeader->pokok;
             $coaActivity->coa_id = $value->id;
