@@ -38,13 +38,13 @@ class ReportManagementController extends Controller
           ->leftJoin('public.users','coa_activity.created_by','public.users.id')
           ->leftJoin('coa_master_rekening','coa_activity.rek_id','coa_master_rekening.id')
           ->leftJoin('expedition_activity','coa_activity.ex_id', 'expedition_activity.id')
-          ->where('coa_master_sheet.report_active','True')
+           ->where('coa_master_sheet.report_active','True')
           ->where(function($query) use($ids) {
             if($ids) {
                $query->whereIn('public.users.cabang_id', $ids);
             }
           })
-          ->whereBetween('expedition_activity.tgl_inv', [$startDate, $endDate])
+          ->whereBetween('coa_activity.created_at', [$startDate, $endDate])
           ->where(function($query) use($filterSelect) {
             if($filterSelect) {
                 $query->where('coa_master_sheet.jurnal_category', $filterSelect);
@@ -55,7 +55,7 @@ class ReportManagementController extends Controller
                 $query->where('coa_master_sheet.sheet_name', $filterAktiviti);
             }
           })
-          ->select('coa_master_sheet.sheet_name','expedition_activity.tgl_inv as created_at'
+          ->select('coa_master_sheet.sheet_name','coa_activity.created_at as created_at'
                   ,'coa_master_sheet.jurnal_category','public.users.name'
                   ,'coa_master_rekening.bank_name','coa_master_rekening.rek_name'
                   ,'coa_master_rekening.rek_no','coa_activity.nominal','coa_activity.table_id'
