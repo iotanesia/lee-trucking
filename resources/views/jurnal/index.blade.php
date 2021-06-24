@@ -69,7 +69,7 @@
                         </select>
                       </div>
                       <div class="col-md-2" >
-                        <select class="form-control" id="filter_select_aktiviti_jurnal" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                        <select multiple class="form-control" id="filter_select_aktiviti_jurnal" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
                             <option value="">Semua</option>
                             @foreach($sheetName as $row)
                             <option value="{{$row->sheet_name}}">{{$row->sheet_name}}</option>
