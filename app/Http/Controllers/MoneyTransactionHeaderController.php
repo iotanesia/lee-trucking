@@ -36,6 +36,16 @@ class MoneyTransactionHeaderController extends Controller
         $data['cabangList'] = Cabang::all();
         return view('kasbon.pinjaman-karyawan.index', $data);
     }
+
+    public function indexOutCome(Request $request)
+    {
+        $data['title'] = 'Uang Keluar';
+        $data['user'] = User::where('group_id', '<>', 8)->get();
+        $data['no_rek'] = Rekening::where('is_deleted', 'f')->get();
+        $data['status'] = GlobalParam::where('param_type', 'TRUCK_STATUS')->get();
+        $data['cabangList'] = Cabang::all();
+        return view('kasbon.uang-keluar.index', $data);
+    }
     
     public function indexModal(Request $request)
     {

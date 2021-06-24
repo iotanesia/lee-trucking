@@ -54,6 +54,8 @@ Route::get('/repair-truck', 'StkRepairHeaderController@index')->name('repair-tru
 Route::get('/repair-ban-truck', 'StkRepairBanHeaderController@index')->name('repair-ban-truck');
 Route::get('/pinjaman-karyawan', 'MoneyTransactionHeaderController@index')->name('pinjaman-karyawan');
 Route::get('/pinjaman-karyawan/detail/{id}', 'MoneyTransactionHeaderController@detail')->name('pinjaman-karyawan-detail');
+Route::get('/uang-keluar', 'MoneyTransactionHeaderController@indexOutCome')->name('uang-keluar');
+Route::get('/uang-keluar/detail/{id}', 'MoneyTransactionHeaderController@detail')->name('uang-keluar-detail');
 Route::get('/penanaman-modal', 'MoneyTransactionHeaderController@indexModal')->name('penanaman-modal');
 Route::get('/jurnal-report', 'JurnalController@index')->name('jurnal-report');
 Route::get('/invoice-report', 'InvoiceController@index')->name('invoice-report');
