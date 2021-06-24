@@ -49,7 +49,7 @@
                     <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
                 </button>
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush table-striped" id="table-moneyTransactionHeader" data-model="moneyTransactionHeader" request-url="{{ route('api-moneyTransactionHeader') }}" on-success-load="successLoadmoneyTransactionHeader">
+                    <table class="table align-items-center table-flush table-striped" id="table-moneyTransactionHeader" api-route="get-list-uang-keluar" data-model="moneyTransactionHeader" request-url="{{ route('api-moneyTransactionHeader') }}" on-success-load="successLoadmoneyTransactionHeader">
                         <thead class="bg-gradient-info text-white">
                             <tr>
                                 <th>No</th>
