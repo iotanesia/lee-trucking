@@ -260,6 +260,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('get-invoice-dj-list', ['as' => '-get-invoice-dj-list', 'uses' => 'API\ReportManagementController@getListInvoiceDJReport']);
     Route::get('get-invoice-df-list', ['as' => '-get-invoice-df-list', 'uses' => 'API\ReportManagementController@getListInvoiceDFReport']);
     Route::post('post-change-status-periksa', ['as' => '-post-change-status-periksa', 'uses' => 'API\ReportManagementController@postChangeStatusPemeriksaan']);
+    Route::post('post-change-status-export', ['as' => '-post-change-status-export', 'uses' => 'API\ReportManagementController@postChangeStatusExport']);
     Route::get('get-repair-truck-list', ['as' => '-get-repair-truck-list', 'uses' => 'API\ReportManagementController@getListTruckRepair']);
     Route::get('get-detail-repair-truck-list', ['as' => '-get-detail-repair-truck-list', 'uses' => 'API\ReportManagementController@getListDetailTruckRepair']);
     Route::get('get-ekspedisi-rit-tujuan-list', ['as' => '-get-ekspedisi-rit-tujuan-list', 'uses' => 'API\ReportManagementController@getListRitTujuan']);

@@ -61,6 +61,8 @@ public function view(): View
           }
         }
       })
+      ->where('expedition_activity.is_read_invoice_report', 'true')
+      ->where('expedition_activity.is_export_invoice_report', 'false')
     ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po','ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
             ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
             ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'

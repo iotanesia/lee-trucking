@@ -39,6 +39,8 @@
       d.start_date = startDateBO;
       d.end_date = endDateBO;
       d.filter = $("#filter-select-bo").val();
+      d.filter_periksa = $("#filter-periksa-bo").val();
+      d.filter_export = $("#filter-export-bo").val();
   },
     headers: {"Authorization": "Bearer " + accessToken},
     crossDomain: true,
@@ -55,6 +57,15 @@
         render: function ( data, type, row ) {
             if ( type === 'display' ) {
                 return '<input type="checkbox" class="editor-bo-active"> <label class="editor-bo-label">Belum Diperiksa</label>';
+            }
+            return data;
+        }
+      },
+      {
+        data:   "is_export_invoice_report",
+        render: function ( data, type, row ) {
+            if ( type === 'display' ) {
+                return '<input type="checkbox" class="editor-export-bo-active"> <label class="editor-export-bo-label">Belum di export</label>';
             }
             return data;
         }
@@ -83,6 +94,14 @@
       $('label.editor-bo-label', row).text('Belum Diperiksa');
     }
     
+    if(data.is_export_invoice_report == true){
+      $('input.editor-export-bo-active', row).prop('checked', true);
+      $('label.editor-export-bo-label', row).text('Sudah di export');
+    }else{
+      $('input.editor-export-bo-active', row).prop('checked', false);
+      $('label.editor-export-bo-label', row).text('Belum di export');
+    }
+
     $('input.editor-bo-active', row).on('change', function () {
       var isTruePeriksa = false;
       if($(this).prop('checked')){
@@ -103,6 +122,31 @@
             $('label.editor-bo-label', row).text('Sudah Diperiksa');
           }else{
             $('label.editor-bo-label', row).text('Belum Diperiksa');
+          }
+        }
+      });
+    });
+
+    $('input.editor-export-bo-active', row).on('change', function () {
+      var isTrueExport = false;
+      if($(this).prop('checked')){
+        isTrueExport=true;
+      }else{
+        isTrueExport =false;
+      }
+      var datassss = { id : data.id, is_export : isTrueExport}
+      $.ajax({
+        url: window.Laravel.app_url + "/api/report/post-change-status-export",
+        type: "POST",
+        dataType: "json",
+        data: datassss,
+        headers: {"Authorization": "Bearer " + accessToken},
+        dataType: "text",
+        success: function(resultData) {
+          if(isTrueExport){
+            $('label.editor-export-bo-label', row).text('Sudah di export');
+          }else{
+            $('label.editor-export-bo-label', row).text('Belum di export');
           }
         }
       });
@@ -130,7 +174,7 @@
     
     // Total over all pages
     totalInvoice = api
-        .column(9)
+        .column(10)
         .data()
         .reduce(function(a, b) {
           if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -152,17 +196,17 @@
           totalKeseluruhan = totalInvoice + ppn10 + pph23;
         }
         
-        $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
-        $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
+        $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
+        $('tr:eq(0) td:eq(11)', api.table().footer()).html(convertToRupiah(totalInvoice));
 
-        $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
-        $('tr:eq(1) td:eq(10)', api.table().footer()).html(convertToRupiah(ppn10));
+        $('tr:eq(1) td:eq(4)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
+        $('tr:eq(1) td:eq(11)', api.table().footer()).html(convertToRupiah(ppn10));
 
-        $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
-        $('tr:eq(2) td:eq(10)', api.table().footer()).html(convertToRupiah(pph23));
+        $('tr:eq(2) td:eq(4)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
+        $('tr:eq(2) td:eq(11)', api.table().footer()).html(convertToRupiah(pph23));
 
-        $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
-        $('tr:eq(3) td:eq(10)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+        $('tr:eq(3) td:eq(4)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
+        $('tr:eq(3) td:eq(11)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
   }
   });
   
@@ -176,6 +220,8 @@
         d.start_date = startDateBA;
         d.end_date = endDateBA;
         d.filter = $("#filter-select-ba").val();
+        d.filter_periksa = $("#filter-periksa-ba").val();
+        d.filter_export = $("#filter-export-ba").val();
       },
       headers: {"Authorization": "Bearer " + accessToken},
       crossDomain: true,
@@ -192,6 +238,15 @@
         render: function ( data, type, row ) {
             if ( type === 'display' ) {
                 return '<input type="checkbox" class="editor-ba-active"> <label class="editor-ba-label">Belum Diperiksa</label>';
+            }
+            return data;
+        }
+      },
+      {
+        data:   "is_export_invoice_report",
+        render: function ( data, type, row ) {
+            if ( type === 'display' ) {
+                return '<input type="checkbox" class="editor-export-ba-active"> <label class="editor-export-ba-label">Belum di export</label>';
             }
             return data;
         }
@@ -219,6 +274,14 @@
       $('input.editor-ba-active', row).prop('checked', false);
       $('label.editor-ba-label', row).text('Belum Diperiksa');
     }
+
+    if(data.is_export_invoice_report == true){
+      $('input.editor-export-ba-active', row).prop('checked', true);
+      $('label.editor-export-ba-label', row).text('Sudah di export');
+    }else{
+      $('input.editor-export-ba-active', row).prop('checked', false);
+      $('label.editor-export-ba-label', row).text('Belum di export');
+    }
     
     $('input.editor-ba-active', row).on('change', function () {
       var isTruePeriksa = false;
@@ -244,6 +307,31 @@
         }
       });
     });
+
+    $('input.editor-export-ba-active', row).on('change', function () {
+      var isTrueExport = false;
+      if($(this).prop('checked')){
+        isTrueExport=true;
+      }else{
+        isTrueExport =false;
+      }
+      var datassss = { id : data.id, is_export : isTrueExport}
+      $.ajax({
+        url: window.Laravel.app_url + "/api/report/post-change-status-export",
+        type: "POST",
+        dataType: "json",
+        data: datassss,
+        headers: {"Authorization": "Bearer " + accessToken},
+        dataType: "text",
+        success: function(resultData) {
+          if(isTruePeriksa){
+            $('label.editor-export-ba-label', row).text('Sudah di export');
+          }else{
+            $('label.editor-export-ba-label', row).text('Belum di export');
+          }
+        }
+      });
+    });
   },
     scrollCollapse: true,
     "language": {
@@ -264,7 +352,7 @@
       };
       // Total over all pages
       totalInvoice = api
-          .column(9)
+          .column(10)
           .data()
           .reduce(function(a, b) {
             if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -286,17 +374,17 @@
             totalKeseluruhan = totalInvoice + ppn10 + pph23;
           }
 
-          $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
-          $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
+          $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
+          $('tr:eq(0) td:eq(11)', api.table().footer()).html(convertToRupiah(totalInvoice));
 
-          $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
-          $('tr:eq(1) td:eq(10)', api.table().footer()).html(convertToRupiah(ppn10));
+          $('tr:eq(1) td:eq(4)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
+          $('tr:eq(1) td:eq(11)', api.table().footer()).html(convertToRupiah(ppn10));
 
-          $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
-          $('tr:eq(2) td:eq(10)', api.table().footer()).html(convertToRupiah(pph23));
+          $('tr:eq(2) td:eq(4)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
+          $('tr:eq(2) td:eq(11)', api.table().footer()).html(convertToRupiah(pph23));
 
-          $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
-          $('tr:eq(3) td:eq(10)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+          $('tr:eq(3) td:eq(4)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
+          $('tr:eq(3) td:eq(11)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
     }
   });
  
@@ -309,6 +397,8 @@
         d.start_date = startDateBJ;
         d.end_date = endDateBJ;
         d.filter = $("#filter-select-bj").val();
+        d.filter_periksa = $("#filter-periksa-bj").val();
+        d.filter_export = $("#filter-export-bj").val();
       },
       headers: {"Authorization": "Bearer " + accessToken},
       crossDomain: true,
@@ -325,6 +415,15 @@
         render: function ( data, type, row ) {
             if ( type === 'display' ) {
                 return '<input type="checkbox" class="editor-bj-active"> <label class="editor-bj-label">Belum Diperiksa</label>';
+            }
+            return data;
+        }
+      },
+      {
+        data:   "is_export_invoice_report",
+        render: function ( data, type, row ) {
+            if ( type === 'display' ) {
+                return '<input type="checkbox" class="editor-export-bj-active"> <label class="editor-export-bj-label">Belum di export</label>';
             }
             return data;
         }
@@ -352,6 +451,14 @@
       $('input.editor-bj-active', row).prop('checked', false);
       $('label.editor-bj-label', row).text('Belum Diperiksa');
     }
+
+    if(data.is_export_invoice_report == true){
+      $('input.editor-export-bj-active', row).prop('checked', true);
+      $('label.editor-export-bj-label', row).text('Sudah di export');
+    }else{
+      $('input.editor-export-bj-active', row).prop('checked', false);
+      $('label.editor-export-bj-label', row).text('Belum di export');
+    }
     
     $('input.editor-bj-active', row).on('change', function () {
       var isTruePeriksa = false;
@@ -377,6 +484,31 @@
         }
       });
     });
+
+    $('input.editor-export-bj-active', row).on('change', function () {
+      var isTrueExport = false;
+      if($(this).prop('checked')){
+        isTrueExport=true;
+      }else{
+        isTrueExport =false;
+      }
+      var datassss = { id : data.id, is_export : isTrueExport}
+      $.ajax({
+        url: window.Laravel.app_url + "/api/report/post-change-status-export",
+        type: "POST",
+        dataType: "json",
+        data: datassss,
+        headers: {"Authorization": "Bearer " + accessToken},
+        dataType: "text",
+        success: function(resultData) {
+          if(isTrueExport){
+            $('label.editor-export-bj-label', row).text('Sudah di export');
+          }else{
+            $('label.editor-export-bj-label', row).text('Belum di export');
+          }
+        }
+      });
+    });
   },
     scrollCollapse: true,
     "language": {
@@ -398,7 +530,7 @@
       };
       // Total over all pages
       totalInvoice = api
-          .column(9)
+          .column(10)
           .data()
           .reduce(function(a, b) {
             if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -406,8 +538,8 @@
             }
           }, 0);
 
-          $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-          $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
+          $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+          $('tr:eq(0) td:eq(11)', api.table().footer()).html(convertToRupiah(totalInvoice));
     }
   });
 
@@ -420,7 +552,9 @@
       data: function (d) {
         d.start_date = startDateBF;
         d.end_date = endDateBF;
-        d.filter = $("#filter-select-bf").val();
+        d.filter = $("#filter-select-bf").val();   
+        d.filter_periksa = $("#filter-periksa-bf").val();
+        d.filter_export = $("#filter-export-bf").val();
       },
       headers: {"Authorization": "Bearer " + accessToken},
       crossDomain: true,
@@ -437,6 +571,15 @@
         render: function ( data, type, row ) {
             if ( type === 'display' ) {
                 return '<input type="checkbox" class="editor-bf-active"> <label class="editor-bf-label">Belum Diperiksa</label>';
+            }
+            return data;
+        }
+      },
+      {
+        data:   "is_export_invoice_report",
+        render: function ( data, type, row ) {
+            if ( type === 'display' ) {
+                return '<input type="checkbox" class="editor-export-bf-active"> <label class="editor-export-bf-label">Belum di export</label>';
             }
             return data;
         }
@@ -464,6 +607,14 @@
       $('input.editor-bf-active', row).prop('checked', false);
       $('label.editor-bf-label', row).text('Belum Diperiksa');
     }
+
+    if(data.is_export_invoice_report == true){
+      $('input.editor-export-bf-active', row).prop('checked', true);
+      $('label.editor-export-bf-label', row).text('Sudah di export');
+    }else{
+      $('input.editor-export-bf-active', row).prop('checked', false);
+      $('label.editor-export-bf-label', row).text('Belum di export');
+    }
     
     $('input.editor-bf-active', row).on('change', function () {
       var isTruePeriksa = false;
@@ -489,6 +640,31 @@
         }
       });
     });
+
+    $('input.editor-export-bf-active', row).on('change', function () {
+      var isTrueExport = false;
+      if($(this).prop('checked')){
+        isTrueExport=true;
+      }else{
+        isTrueExport =false;
+      }
+      var datassss = { id : data.id, is_export : isTrueExport}
+      $.ajax({
+        url: window.Laravel.app_url + "/api/report/post-change-status-export",
+        type: "POST",
+        dataType: "json",
+        data: datassss,
+        headers: {"Authorization": "Bearer " + accessToken},
+        dataType: "text",
+        success: function(resultData) {
+          if(isTrueExport){
+            $('label.editor-export-bf-label', row).text('Sudah di export');
+          }else{
+            $('label.editor-export-bf-label', row).text('Belum di export');
+          }
+        }
+      });
+    });
   },
     scrollCollapse: true,
     "language": {
@@ -509,7 +685,7 @@
       };
       // Total over all pages
       totalInvoice = api
-          .column(9)
+          .column(10)
           .data()
           .reduce(function(a, b) {
             if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -531,17 +707,17 @@
             totalKeseluruhan = totalInvoice + ppn10 + pph23;
           }
 
-          $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
-          $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
+          $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
+          $('tr:eq(0) td:eq(11)', api.table().footer()).html(convertToRupiah(totalInvoice));
 
-          $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
-          $('tr:eq(1) td:eq(10)', api.table().footer()).html(convertToRupiah(ppn10));
+          $('tr:eq(1) td:eq(4)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
+          $('tr:eq(1) td:eq(11)', api.table().footer()).html(convertToRupiah(ppn10));
 
-          $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
-          $('tr:eq(2) td:eq(10)', api.table().footer()).html(convertToRupiah(pph23));
+          $('tr:eq(2) td:eq(4)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
+          $('tr:eq(2) td:eq(11)', api.table().footer()).html(convertToRupiah(pph23));
 
-          $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
-          $('tr:eq(3) td:eq(10)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+          $('tr:eq(3) td:eq(4)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
+          $('tr:eq(3) td:eq(11)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
     }
   });
 
@@ -556,6 +732,8 @@
         d.start_date = startDateDO;
         d.end_date = endDateDO;
         d.filter = $("#filter-select-do").val();
+        d.filter_periksa = $("#filter-periksa-do").val();
+        d.filter_export = $("#filter-export-do").val();
     },
       headers: {"Authorization": "Bearer " + accessToken},
       crossDomain: true,
@@ -572,6 +750,15 @@
           render: function ( data, type, row ) {
               if ( type === 'display' ) {
                   return '<input type="checkbox" class="editor-do-active"> <label class="editor-do-label">Belum Diperiksa</label>';
+              }
+              return data;
+          }
+        },
+        {
+          data:   "is_export_invoice_report",
+          render: function ( data, type, row ) {
+              if ( type === 'display' ) {
+                  return '<input type="checkbox" class="editor-export-do-active"> <label class="editor-export-do-label">Belum di export</label>';
               }
               return data;
           }
@@ -599,27 +786,35 @@
         $('input.editor-do-active', row).prop('checked', false);
         $('label.editor-do-label', row).text('Belum Diperiksa');
       }
+
+      if(data.is_export_invoice_report == true){
+        $('input.editor-export-do-active', row).prop('checked', true);
+        $('label.editor-export-do-label', row).text('Sudah di export');
+      }else{
+        $('input.editor-export-do-active', row).prop('checked', false);
+        $('label.editor-export-do-label', row).text('Belum di export');
+      }
       
-      $('input.editor-do-active', row).on('change', function () {
-        var isTruePeriksa = false;
+      $('input.editor-export-do-active', row).on('change', function () {
+        var isTrueExport = false;
         if($(this).prop('checked')){
-          isTruePeriksa=true;
+          isTrueExport=true;
         }else{
-          isTruePeriksa =false;
+          isTrueExport =false;
         }
-        var datasss = { id : data.id, is_read : isTruePeriksa}
+        var datassss = { id : data.id, is_export : isTrueExport}
         $.ajax({
-          url: window.Laravel.app_url + "/api/report/post-change-status-periksa",
+          url: window.Laravel.app_url + "/api/report/post-change-status-export",
           type: "POST",
           dataType: "json",
-          data: datasss,
+          data: datassss,
           headers: {"Authorization": "Bearer " + accessToken},
           dataType: "text",
           success: function(resultData) {
-            if(isTruePeriksa){
-              $('label.editor-do-label', row).text('Sudah Diperiksa');
+            if(isTrueExport){
+              $('label.editor-export-do-label', row).text('Sudah di export');
             }else{
-              $('label.editor-do-label', row).text('Belum Diperiksa');
+              $('label.editor-export-do-label', row).text('Belum di export');
             }
           }
         });
@@ -647,7 +842,7 @@
       
       // Total over all pages
       totalInvoice = api
-          .column(9)
+          .column(10)
           .data()
           .reduce(function(a, b) {
             if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -669,17 +864,17 @@
             totalKeseluruhan = totalInvoice + ppn10 + pph23;
           }
           
-          $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
-          $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
+          $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
+          $('tr:eq(0) td:eq(11)', api.table().footer()).html(convertToRupiah(totalInvoice));
   
-          $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
-          $('tr:eq(1) td:eq(10)', api.table().footer()).html(convertToRupiah(ppn10));
+          $('tr:eq(1) td:eq(4)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
+          $('tr:eq(1) td:eq(11)', api.table().footer()).html(convertToRupiah(ppn10));
   
-          $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
-          $('tr:eq(2) td:eq(10)', api.table().footer()).html(convertToRupiah(pph23));
+          $('tr:eq(2) td:eq(4)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
+          $('tr:eq(2) td:eq(11)', api.table().footer()).html(convertToRupiah(pph23));
   
-          $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
-          $('tr:eq(3) td:eq(10)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+          $('tr:eq(3) td:eq(4)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
+          $('tr:eq(3) td:eq(11)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
     }
     });
     
@@ -693,6 +888,8 @@
           d.start_date = startDateDA;
           d.end_date = endDateDA;
           d.filter = $("#filter-select-da").val();
+          d.filter_periksa = $("#filter-periksa-da").val();
+          d.filter_export = $("#filter-export-da").val();
         },
         headers: {"Authorization": "Bearer " + accessToken},
         crossDomain: true,
@@ -709,6 +906,15 @@
           render: function ( data, type, row ) {
               if ( type === 'display' ) {
                   return '<input type="checkbox" class="editor-da-active"> <label class="editor-da-label">Belum Diperiksa</label>';
+              }
+              return data;
+          }
+        },
+        {
+          data:   "is_export_invoice_report",
+          render: function ( data, type, row ) {
+              if ( type === 'display' ) {
+                  return '<input type="checkbox" class="editor-export-da-active"> <label class="editor-export-da-label">Belum di export</label>';
               }
               return data;
           }
@@ -736,6 +942,14 @@
         $('input.editor-da-active', row).prop('checked', false);
         $('label.editor-da-label', row).text('Belum Diperiksa');
       }
+
+      if(data.is_export_invoice_report == true){
+        $('input.editor-export-da-active', row).prop('checked', true);
+        $('label.editor-export-da-label', row).text('Sudah di export');
+      }else{
+        $('input.editor-export-da-active', row).prop('checked', false);
+        $('label.editor-export-da-label', row).text('Belum di export');
+      }
       
       $('input.editor-da-active', row).on('change', function () {
         var isTruePeriksa = false;
@@ -761,6 +975,31 @@
           }
         });
       });
+
+      $('input.editor-export-da-active', row).on('change', function () {
+        var isTrueExport = false;
+        if($(this).prop('checked')){
+          isTrueExport=true;
+        }else{
+          isTrueExport =false;
+        }
+        var datassss = { id : data.id, is_export : isTrueExport}
+        $.ajax({
+          url: window.Laravel.app_url + "/api/report/post-change-status-export",
+          type: "POST",
+          dataType: "json",
+          data: datassss,
+          headers: {"Authorization": "Bearer " + accessToken},
+          dataType: "text",
+          success: function(resultData) {
+            if(isTrueExport){
+              $('label.editor-export-da-label', row).text('Sudah di export');
+            }else{
+              $('label.editor-export-da-label', row).text('Belum di export');
+            }
+          }
+        });
+      });
     },
       scrollCollapse: true,
       "language": {
@@ -781,7 +1020,7 @@
         };
         // Total over all pages
         totalInvoice = api
-            .column(9)
+            .column(10)
             .data()
             .reduce(function(a, b) {
               if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -803,17 +1042,17 @@
               totalKeseluruhan = totalInvoice + ppn10 + pph23;
             }
   
-            $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
-            $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
+            $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
+            $('tr:eq(0) td:eq(11)', api.table().footer()).html(convertToRupiah(totalInvoice));
   
             $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
-            $('tr:eq(1) td:eq(10)', api.table().footer()).html(convertToRupiah(ppn10));
+            $('tr:eq(1) td:eq(11)', api.table().footer()).html(convertToRupiah(ppn10));
   
-            $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
-            $('tr:eq(2) td:eq(10)', api.table().footer()).html(convertToRupiah(pph23));
+            $('tr:eq(2) td:eq(4)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
+            $('tr:eq(2) td:eq(11)', api.table().footer()).html(convertToRupiah(pph23));
   
-            $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
-            $('tr:eq(3) td:eq(10)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+            $('tr:eq(3) td:eq(4)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
+            $('tr:eq(3) td:eq(11)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
       }
     });
    
@@ -826,6 +1065,8 @@
           d.start_date = startDateDJ;
           d.end_date = endDateDJ;
           d.filter = $("#filter-select-dj").val();
+          d.filter_periksa = $("#filter-periksa-dj").val();
+          d.filter_export = $("#filter-export-dj").val();
         },
         headers: {"Authorization": "Bearer " + accessToken},
         crossDomain: true,
@@ -842,6 +1083,15 @@
           render: function ( data, type, row ) {
               if ( type === 'display' ) {
                   return '<input type="checkbox" class="editor-dj-active"> <label class="editor-dj-label">Belum Diperiksa</label>';
+              }
+              return data;
+          }
+        },
+        {
+          data:   "is_export_invoice_report",
+          render: function ( data, type, row ) {
+              if ( type === 'display' ) {
+                  return '<input type="checkbox" class="editor-export-dj-active"> <label class="editor-export-dj-label">Belum di export</label>';
               }
               return data;
           }
@@ -869,6 +1119,13 @@
         $('input.editor-dj-active', row).prop('checked', false);
         $('label.editor-dj-label', row).text('Belum Diperiksa');
       }
+      if(data.is_export_invoice_report == true){
+        $('input.editor-export-dj-active', row).prop('checked', true);
+        $('label.editor-export-dj-label', row).text('Sudah di export');
+      }else{
+        $('input.editor-export-dj-active', row).prop('checked', false);
+        $('label.editor-export-dj-label', row).text('Belum di export');
+      }
       
       $('input.editor-dj-active', row).on('change', function () {
         var isTruePeriksa = false;
@@ -894,6 +1151,31 @@
           }
         });
       });
+
+      $('input.editor-export-dj-active', row).on('change', function () {
+        var isTrueExport = false;
+        if($(this).prop('checked')){
+          isTrueExport=true;
+        }else{
+          isTrueExport =false;
+        }
+        var datassss = { id : data.id, is_export : isTrueExport}
+        $.ajax({
+          url: window.Laravel.app_url + "/api/report/post-change-status-export",
+          type: "POST",
+          dataType: "json",
+          data: datassss,
+          headers: {"Authorization": "Bearer " + accessToken},
+          dataType: "text",
+          success: function(resultData) {
+            if(isTrueExport){
+              $('label.editor-export-dj-label', row).text('Sudah di export');
+            }else{
+              $('label.editor-export-dj-label', row).text('Belum di export');
+            }
+          }
+        });
+      });
     },
       scrollCollapse: true,
       "language": {
@@ -915,7 +1197,7 @@
         };
         // Total over all pages
         totalInvoice = api
-            .column(9)
+            .column(10)
             .data()
             .reduce(function(a, b) {
               if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -923,8 +1205,8 @@
               }
             }, 0);
   
-            $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
-            $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
+            $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:');
+            $('tr:eq(0) td:eq(11)', api.table().footer()).html(convertToRupiah(totalInvoice));
       }
     });
   
@@ -938,6 +1220,8 @@
           d.start_date = startDateDF;
           d.end_date = endDateDF;
           d.filter = $("#filter-select-df").val();
+          d.filter_periksa = $("#filter-periksa-df").val();
+          d.filter_export = $("#filter-export-df").val();
         },
         headers: {"Authorization": "Bearer " + accessToken},
         crossDomain: true,
@@ -954,6 +1238,15 @@
           render: function ( data, type, row ) {
               if ( type === 'display' ) {
                   return '<input type="checkbox" class="editor-df-active"> <label class="editor-df-label">Belum Diperiksa</label>';
+              }
+              return data;
+          }
+        },
+        {
+          data:   "is_export_invoice_report",
+          render: function ( data, type, row ) {
+              if ( type === 'display' ) {
+                  return '<input type="checkbox" class="editor-export-df-active"> <label class="editor-export-df-label">Belum di periksa</label>';
               }
               return data;
           }
@@ -981,27 +1274,35 @@
         $('input.editor-df-active', row).prop('checked', false);
         $('label.editor-df-label', row).text('Belum Diperiksa');
       }
+
+      if(data.is_export_invoice_report == true){
+        $('input.editor-export-df-active', row).prop('checked', true);
+        $('label.editor-export-df-label', row).text('Sudah di export');
+      }else{
+        $('input.editor-export-df-active', row).prop('checked', false);
+        $('label.editor-export-df-label', row).text('Belum di export');
+      }
       
-      $('input.editor-df-active', row).on('change', function () {
-        var isTruePeriksa = false;
+      $('input.editor-export-df-active', row).on('change', function () {
+        var isTrueExport = false;
         if($(this).prop('checked')){
-          isTruePeriksa=true;
+          isTrueExport=true;
         }else{
-          isTruePeriksa =false;
+          isTrueExport =false;
         }
-        var datasss = { id : data.id, is_read : isTruePeriksa}
+        var datassss = { id : data.id, is_export : isTrueExport}
         $.ajax({
-          url: window.Laravel.app_url + "/api/report/post-change-status-periksa",
+          url: window.Laravel.app_url + "/api/report/post-change-status-export",
           type: "POST",
           dataType: "json",
-          data: datasss,
+          data: datassss,
           headers: {"Authorization": "Bearer " + accessToken},
           dataType: "text",
           success: function(resultData) {
-            if(isTruePeriksa){
-              $('label.editor-df-label', row).text('Sudah Diperiksa');
+            if(isTrueExport){
+              $('label.editor-export-df-label', row).text('Sudah di export');
             }else{
-              $('label.editor-df-label', row).text('Belum Diperiksa');
+              $('label.editor-export-df-label', row).text('Belum di export');
             }
           }
         });
@@ -1026,7 +1327,7 @@
         };
         // Total over all pages
         totalInvoice = api
-            .column(9)
+            .column(10)
             .data()
             .reduce(function(a, b) {
               if((a != NaN || a != 0) && (b != NaN || b != 0)){
@@ -1048,17 +1349,17 @@
               totalKeseluruhan = totalInvoice + ppn10 + pph23;
             }
   
-            $('tr:eq(0) td:eq(3)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
-            $('tr:eq(0) td:eq(10)', api.table().footer()).html(convertToRupiah(totalInvoice));
+            $('tr:eq(0) td:eq(4)', api.table().footer()).html('Total Invoie&nbsp;&nbsp;:');
+            $('tr:eq(0) td:eq(11)', api.table().footer()).html(convertToRupiah(totalInvoice));
   
-            $('tr:eq(1) td:eq(3)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
-            $('tr:eq(1) td:eq(10)', api.table().footer()).html(convertToRupiah(ppn10));
+            $('tr:eq(1) td:eq(4)', api.table().footer()).html('PPN 10%&nbsp;&nbsp;:');
+            $('tr:eq(1) td:eq(11)', api.table().footer()).html(convertToRupiah(ppn10));
   
-            $('tr:eq(2) td:eq(3)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
-            $('tr:eq(2) td:eq(10)', api.table().footer()).html(convertToRupiah(pph23));
+            $('tr:eq(2) td:eq(4)', api.table().footer()).html('PPH 23&nbsp;&nbsp;:');
+            $('tr:eq(2) td:eq(11)', api.table().footer()).html(convertToRupiah(pph23));
   
-            $('tr:eq(3) td:eq(3)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
-            $('tr:eq(3) td:eq(10)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
+            $('tr:eq(3) td:eq(4)', api.table().footer()).html('Total Keseluruhan Invoice&nbsp;&nbsp;:');
+            $('tr:eq(3) td:eq(11)', api.table().footer()).html(convertToRupiah(totalKeseluruhan));
       }
     });
 
@@ -1460,6 +1761,71 @@
 
   $("#filter-select-df").on("change", function() {
     $('#table-invoice-df').DataTable().ajax.reload();
+  });
+
+
+  $("#filter-periksa-bo").on("change", function() {
+    $('#table-invoice-bo').DataTable().ajax.reload();
+  });
+
+  $("#filter-export-bo").on("change", function() {
+    $('#table-invoice-bo').DataTable().ajax.reload();
+  });
+
+  $("#filter-periksa-ba").on("change", function() {
+    $('#table-invoice-ba').DataTable().ajax.reload();
+  });
+
+  $("#filter-export-ba").on("change", function() {
+    $('#table-invoice-ba').DataTable().ajax.reload();
+  });
+
+  $("#filter-periksa-bj").on("change", function() {
+    $('#table-invoice-bj').DataTable().ajax.reload();
+  });
+
+  $("#filter-export-bj").on("change", function() {
+    $('#table-invoice-bj').DataTable().ajax.reload();
+  });
+
+  $("#filter-periksa-bf").on("change", function() {
+    $('#table-invoice-bf').DataTable().ajax.reload();
+  });
+
+  $("#filter-export-bf").on("change", function() {
+    $('#table-invoice-bf').DataTable().ajax.reload();
+  });
+
+  $("#filter-periksa-do").on("change", function() {
+    $('#table-invoice-do').DataTable().ajax.reload();
+  });
+
+  $("#filter-export-do").on("change", function() {
+    $('#table-invoice-do').DataTable().ajax.reload();
+  });
+
+  $("#filter-periksa-da").on("change", function() {
+    $('#table-invoice-da').DataTable().ajax.reload();
+  });
+
+  $("#filter-export-da").on("change", function() {
+    $('#table-invoice-da').DataTable().ajax.reload();
+  });
+
+  $("#filter-periksa-df").on("change", function() {
+    $('#table-invoice-df').DataTable().ajax.reload();
+  });
+
+  $("#filter-export-df").on("change", function() {
+    $('#table-invoice-df').DataTable().ajax.reload();
+  });
+
+  $("#filter-periksa-dj").on("change", function() {
+    $('#table-invoice-dj').DataTable().ajax.reload();
+  });
+
+  $("#filter-export-dj").on("change", function() {
+    $('#table-invoice-dj').DataTable().ajax.reload();
   });
 
   function formatDate(date) {
