@@ -1,7 +1,13 @@
   
   $(document).ready(function() {  
+    // $('#framework').multiselect({
+    //   nonSelectedText: 'Select Framework',
+    //   enableFiltering: true,
+    //   enableCaseInsensitiveFiltering: true,
+    //   buttonWidth:'400px'
+    //  });
     var accessToken =  window.Laravel.api_token;
-      // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQ5NTlhYjQ2ZWUwZmFjOWU1ZGYxYTdkMjY0NzE3NmFlZWViYTg5M2ExOTA4NjY0N2ZiNjhiZmUzYTk2MjNkYTk5YWE0YzM0Njg3NWMxY2QzIn0.eyJhdWQiOiIzIiwianRpIjoiNDk1OWFiNDZlZTBmYWM5ZTVkZjFhN2QyNjQ3MTc2YWVlZWJhODkzYTE5MDg2NjQ3ZmI2OGJmZTNhOTYyM2RhOTlhYTRjMzQ2ODc1YzFjZDMiLCJpYXQiOjE2MTUzMDU1OTksIm5iZiI6MTYxNTMwNTU5OSwiZXhwIjoxNjQ2ODQxNTk5LCJzdWIiOiIxMCIsInNjb3BlcyI6W119.X1minlba3vJY7FkBVY8Hi_ijTGdvmftNBk17863ItQbGhOUiAMCjK-TEHJst4PJMmZpBQdKa0GcpGwtOgYkCADS4uxYgG6FIuRCXsfetSx23TmF48PSlhMxyeG55i23aHwHUv-Ho7cKXwxOYDEOT10QBKGNYTs-TFzXMheajtxTJvgjGb7VzJCcA8tMn-n3DzKA9mT-ZU4CB9WSoCh4IjAisxRhOf2iC8IYxu_h-L5cC_R4jPirvTcOEtoPgQ752_O0XvDQDFoYH_Rdp0DOy3PkyhJrX3CL6HOAYwAI-ip2X2j4Z9-Hp0ddqFOAAszoauGrTxzgKZGus4VHcQ9NQjsfv7KrAlwLGpS0Zc-jWqfavzMz6OMNpevLc7c3OVVeWN4jUCrJTZCUnQMwZgr2rSN5yJLU20DjSpljN0N2NOot43hf83_K0e8iTsLFnwmLkyh7KezOtkMzHmBXSq1j2sVUs4jsZH-eOsh8Vs7aIFyxC4qIMV6h_mU8oFA1TaGhVyzzW_xLJgl9gGLRDONPP15AT6vmkFD14Ut6tJUbjpBV9FSshJ3JUTP-LjCKbAMao1TkEAOsrG2ag-V9R0pg-cym7Glok57_i_jJwEfbVSFXAD5v2sEo5rp0VVTM3x2hziuXH1q1UmGRg3HgqF0Iw2EVmuRNs7vgZXJwBJA3xFjc"
+      // var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImU4ZjNkZGYxNDQ5MTMyOWE3OGQ3NDJmZGRlOWQ2NjIwNmJlMTFjYTc3MWVlMTE5ZmM2NWJlNzM4YmEyNGM2OTQwN2JkZTg3MDRlN2ZjMzRjIn0.eyJhdWQiOiIzIiwianRpIjoiZThmM2RkZjE0NDkxMzI5YTc4ZDc0MmZkZGU5ZDY2MjA2YmUxMWNhNzcxZWUxMTlmYzY1YmU3MzhiYTI0YzY5NDA3YmRlODcwNGU3ZmMzNGMiLCJpYXQiOjE2MDgwODgxNzAsIm5iZiI6MTYwODA4ODE3MCwiZXhwIjoxNjM5NjI0MTcwLCJzdWIiOiIxMiIsInNjb3BlcyI6W119.YP1-K-hz3N6jE5xxevgYRdQoOEDDGyEa8AeKekYzzPCZs1fgdIvD6t6tWpWOYlzt8qLLAvXkJdbKlNMIbzfeTLUeZ5D_jSf9XzaP3kHUex3LLAJNAhhkpcPr1kHGc6fqLw2PIVwdWxTy5vgVJsIh3gg3i0sqx0P4Iz-mmJ3W1c8p2wV2524V89xWdFoNm_XQn8Bo8ShB3D8_rrz5bgxq4s_WgFlrYiR5TeLGLJrw7bM1w-IuAbMZpiKnh-etCg4EZNpFVJ3Crax_nIktwkVdVdW017pa1U7tPDzo-PkZ_enSkh41xD4YXMxNOEY2bzhElKQFCq9AYBfzGhQidZcsKvwVutvR_VY4Ydxd6cdodT8DQ4ZHdgv0qkmpYUug65WFE99ZNrpETvt1IwDeDS-GvvtMSvw_Rv6PoUwrNm8jHQU-0fmdZzNTA7SA2YmhdrFvOwKBS-rTRtPPdmj8VQEFT0BkF5qvCBlkDQndfQekQ2OEBEpLXlqukLunE0JAEBv4L-JpheuM2RTZXTPjE6p1-x-lOd9ty549wDu-eYzDwHM7PrbDvzJOWBkZA3kCJ-_HWCYOIPPVGHCMILO_A1hGlDnVxH9R9cHybEzSJ_m_63DXhEJP8voH9G88YP_rQHy4W1Bcbid5UHwE2AEJX_jOCjSFNK6wzHgJxSUj6Yzqlak"
    
       var date = new Date(), y = date.getFullYear(), m = date.getMonth();
       var fd = new Date(y, m, 1);
@@ -24,6 +30,8 @@
         d.end_date = endDate;
         d.filter_select = $("#filter_select_jurnal").val();
         d.filter_aktiviti = $("#filter_select_aktiviti_jurnal").val();
+        d.filter_aktiviti2 = $("#filter_select_aktiviti_jurnal2").val();
+        d.filter_aktiviti3 = $("#filter_select_aktiviti_jurnal3").val();
       },
       headers: {"Authorization": "Bearer " + accessToken},
       crossDomain: true,
@@ -232,9 +240,51 @@
     $('#filterSelectJurnal').val($("#filter_select_jurnal").val());
     $('#table-jurnal').DataTable().ajax.reload();
   });
-
+  // $('#filter_select_jurnal').select2({
+  //   width: '100%',
+  //   placeholder: "Select an Option",
+  //   allowClear: true
+  // });
   $("#filter_select_aktiviti_jurnal").on("change", function() {
     $('#filterActivityJurnal').val($("#filter_select_aktiviti_jurnal").val());
+    if($("#filter_select_aktiviti_jurnal").val() == ""){
+      $('#filterActivityJurnal2').val("");
+      $('#filterActivityJurnal3').val("");
+      $("#filter_select_aktiviti_jurnal2").css('display','none');
+      $("#filter_select_aktiviti_jurnal3").css('display','none');
+    }else{
+      $("#filter_select_aktiviti_jurnal2").css('display','block');
+    }
+
+    $('#table-jurnal').DataTable().ajax.reload();
+  });
+
+  $("#filter_select_aktiviti_jurnal2").on("change", function() {
+    $('#filterActivityJurnal2').val($("#filter_select_aktiviti_jurnal2").val());
+    if($("#filter_select_aktiviti_jurnal2").val() == ""){
+      $('#filterActivityJurnal3').val("");
+      $("#filter_select_aktiviti_jurnal3").css('display','none');
+    }else{
+      $("#filter_select_aktiviti_jurnal3").css('display','block');
+    }
+
+    $('#table-jurnal').DataTable().ajax.reload();
+  });
+
+  $("#filter_select_aktiviti_jurnal3").on("change", function() {
+    $('#filterActivityJurnal3').val($("#filter_select_aktiviti_jurnal3").val());
+
+    $('#table-jurnal').DataTable().ajax.reload();
+  });
+
+  $("#filter_select_aktiviti_jurnal2").on("change", function() {
+    $('#filterActivityJurnal2').val($("#filter_select_aktiviti_jurnal2").val());
+    if($("#filter_select_aktiviti_jurnal2").val() == ""){
+      $("#filter_select_aktiviti_jurnal3").css('display','none');
+    }else{
+      $("#filter_select_aktiviti_jurnal3").css('display','block');
+    }
+
     $('#table-jurnal').DataTable().ajax.reload();
   });
 

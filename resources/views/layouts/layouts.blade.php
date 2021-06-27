@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="{{asset('assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css')}}">
-  
+
   <style>
   .fixed-footer .app-footer .app-footer__inner{box-shadow:0.3rem -0.46875rem 2.1875rem rgba(4,9,20,0.02),0.3rem -0.9375rem 1.40625rem rgba(4,9,20,0.02),0.3rem -0.25rem 0.53125rem rgba(4,9,20,0.04),0.3rem -0.125rem 0.1875rem rgba(4,9,20,0.02)}
   /* Apply second set of CSS rules */
@@ -37,6 +37,11 @@
     top: 50%;
     transform: translate(-50%,-50%);
     font: 14px arial;
+  }
+
+  .filter-aktifiti{
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;
   }
   </style>
   <script src="{{asset('js/jquery3.5.1.js')}}"></script>

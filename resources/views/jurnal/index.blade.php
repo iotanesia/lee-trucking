@@ -8,7 +8,7 @@
   }
   .toolbar {
     float: left;
-}
+  }
   </style>
 @endsection
 @section('content')
@@ -52,6 +52,8 @@
                         <input class="form-control" name="tipeFileJurnal" id="tipeFileJurnal" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                         <input class="form-control" name="filterSelectJurnal" id="filterSelectJurnal" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                         <input class="form-control" name="filterActivityJurnal" id="filterActivityJurnal" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                        <input class="form-control" name="filterActivityJurnal2" id="filterActivityJurnal2" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                        <input class="form-control" name="filterActivityJurnal3" id="filterActivityJurnal3" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                         <input class="form-control" name="balanceJurnal" id="balanceJurnal" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                         <div class="input-group input-group-alternative input-group-merge" 
                             style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
@@ -68,9 +70,23 @@
                             <option value="CREDIT"> CREDIT </option>
                         </select>
                       </div>
-                      <div class="col-md-2" >
-                        <select class="form-control" id="filter_select_aktiviti_jurnal" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                      <div class="col-md-4" >
+                        <select class="form-control filter-aktifiti"  id="filter_select_aktiviti_jurnal" >
                             <option value="">Semua</option>
+                            @foreach($sheetName as $row)
+                            <option value="{{$row->sheet_name}}">{{$row->sheet_name}}</option>
+                            @endforeach
+                        </select>
+                        <br/>
+                        <select class="form-control filter-aktifiti"  id="filter_select_aktiviti_jurnal2" style="display: none;">
+                            <option value="">Pilih Aktifiti Jurnal ke 2</option>
+                            @foreach($sheetName as $row)
+                            <option value="{{$row->sheet_name}}">{{$row->sheet_name}}</option>
+                            @endforeach
+                        </select>
+                        <br/>
+                        <select class="form-control filter-aktifiti"  id="filter_select_aktiviti_jurnal3" style="display: none;">
+                            <option value="">Pilih Aktifiti Jurnal ke 3</option>
                             @foreach($sheetName as $row)
                             <option value="{{$row->sheet_name}}">{{$row->sheet_name}}</option>
                             @endforeach

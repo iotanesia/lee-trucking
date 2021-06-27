@@ -112,6 +112,8 @@
                             <th>Kabupaten</th>
                             <th>Kecamatan</th>
                             <th>Total Ekspedisi</th>
+                            <th>Total OJK</th>
+                            <th>Total OTV</th>
                             <th>Aksi</th>
                         </tr>
                         </thead>
@@ -169,6 +171,8 @@
                             <th>Nama Truck</th>
                             <th>Nomor Plat</th>
                             <th>Total Ekspedisi</th>
+                            <th>Total OJK</th>
+                            <th>Total OTV</th>
                             <th>Aksi</th>
                         </tr>
                         </thead>
@@ -225,6 +229,8 @@
                                 <th>No</th>
                                 <th>Nama Driver</th>
                                 <th>Total Ekspedisi</th>
+                                <th>Total OJK</th>
+                                <th>Total OTV</th>
                                 <th>Aksi</th>
                             </tr>
                             </thead>
@@ -279,6 +285,8 @@
                             <th>Nomor Surat Jalan</th>
                             <th>Nomor invoice</th>
                             <th>Driver</th>
+                            <th>Harga OJK</th>
+                            <th>Harga OTV</th>
                             <th>Tanggal invoice</th>
                             <th>Tanggal PO</th>
                             <th>Tujuan</th>
