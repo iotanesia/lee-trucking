@@ -30,6 +30,8 @@
         d.end_date = endDate;
         d.filter_select = $("#filter_select_jurnal").val();
         d.filter_aktiviti = $("#filter_select_aktiviti_jurnal").val();
+        d.filter_aktiviti2 = $("#filter_select_aktiviti_jurnal2").val();
+        d.filter_aktiviti3 = $("#filter_select_aktiviti_jurnal3").val();
       },
       headers: {"Authorization": "Bearer " + accessToken},
       crossDomain: true,
@@ -245,6 +247,44 @@
   // });
   $("#filter_select_aktiviti_jurnal").on("change", function() {
     $('#filterActivityJurnal').val($("#filter_select_aktiviti_jurnal").val());
+    if($("#filter_select_aktiviti_jurnal").val() == ""){
+      $('#filterActivityJurnal2').val("");
+      $('#filterActivityJurnal3').val("");
+      $("#filter_select_aktiviti_jurnal2").css('display','none');
+      $("#filter_select_aktiviti_jurnal3").css('display','none');
+    }else{
+      $("#filter_select_aktiviti_jurnal2").css('display','block');
+    }
+
+    $('#table-jurnal').DataTable().ajax.reload();
+  });
+
+  $("#filter_select_aktiviti_jurnal2").on("change", function() {
+    $('#filterActivityJurnal2').val($("#filter_select_aktiviti_jurnal2").val());
+    if($("#filter_select_aktiviti_jurnal2").val() == ""){
+      $('#filterActivityJurnal3').val("");
+      $("#filter_select_aktiviti_jurnal3").css('display','none');
+    }else{
+      $("#filter_select_aktiviti_jurnal3").css('display','block');
+    }
+
+    $('#table-jurnal').DataTable().ajax.reload();
+  });
+
+  $("#filter_select_aktiviti_jurnal3").on("change", function() {
+    $('#filterActivityJurnal3').val($("#filter_select_aktiviti_jurnal3").val());
+
+    $('#table-jurnal').DataTable().ajax.reload();
+  });
+
+  $("#filter_select_aktiviti_jurnal2").on("change", function() {
+    $('#filterActivityJurnal2').val($("#filter_select_aktiviti_jurnal2").val());
+    if($("#filter_select_aktiviti_jurnal2").val() == ""){
+      $("#filter_select_aktiviti_jurnal3").css('display','none');
+    }else{
+      $("#filter_select_aktiviti_jurnal3").css('display','block');
+    }
+
     $('#table-jurnal').DataTable().ajax.reload();
   });
 

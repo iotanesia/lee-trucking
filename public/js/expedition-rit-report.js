@@ -19,7 +19,8 @@
     var detailId = '';
     var tableRitTujuan = $('#table-rit-tujuan').DataTable({
     processing: true,
-    serverSide: true, autoWidth: true,
+    serverSide: true, 
+    autoWidth: true,
     ajax: {
       url: window.Laravel.app_url + "/api/report/get-ekspedisi-rit-tujuan-list",
       type: "GET",
@@ -40,6 +41,8 @@
         {"data":"kabupaten"},
         {"data":"kecamatan"},
         {"data":"total_ekspedisi"},
+        {"data":"total_ojk"},
+        {"data":"total_otv"},
         {
             "data": null,
             render: function (data, type, row) {
@@ -79,6 +82,8 @@
           {"data":"truck_name"},
           {"data":"truck_plat"},
           {"data":"total_ekspedisi"},
+          {"data":"total_ojk"},
+          {"data":"total_otv"},
           {
             "data": null,
             render: function (data, type, row) {
@@ -117,6 +122,8 @@
           },
           {"data":"driver_name"},
           {"data":"total_ekspedisi"},
+          {"data":"total_ojk"},
+          {"data":"total_otv"},
           {
             "data": null,
             render: function (data, type, row) {
@@ -358,6 +365,8 @@ function openModalDetail(_ritBy, _param, _whereValue, _startDate, _endDate){
       {"data":"nomor_surat_jalan"},
       {"data":"nomor_inv"},
       {"data":"driver_name"},
+      {"data":"harga_ojk"},
+      {"data":"harga_otv"},
       {
         "data":"tgl_inv", render: function (data, type, row, meta) {
           return formatDateModal(data);
@@ -390,7 +399,7 @@ function openModalDetail(_ritBy, _param, _whereValue, _startDate, _endDate){
         }
           return '<span class="badge '+classColor+'">'+ data.status_name +' '+ data.otv_payment_method +'</span>';
         }
-    }, 
+    }
   ],
   scrollCollapse: true,
   language: {

@@ -45,19 +45,20 @@ public function view(): View{
         ->join('ex_wil_kecamatan', 'ex_master_ojk.kecamatan_id', 'ex_wil_kecamatan.id')
         ->join('ex_wil_kabupaten', 'ex_master_ojk.kabupaten_id', 'ex_wil_kabupaten.id')
         ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
-        ->where(function($query) use($ids) {
+       ->where(function($query) use($ids) {
             if($ids) {
                $query->whereIn('public.users.cabang_id', $ids);
             }
           })
-        ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
+        ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')  
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($startDate, $endDate) {
             if($startDate && $endDate){
                 $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
             }
         })
-        ->select(DB::raw('COUNT("ojk_id") AS total_ekspedisi'),'expedition_activity.ojk_id','ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')
+        ->select(DB::raw('COUNT("ojk_id") AS total_ekspedisi'), DB::raw('SUM(ex_master_ojk.harga_ojk) AS total_ojk'), DB::raw('SUM(ex_master_ojk.harga_otv) AS total_otv'), 'expedition_activity.ojk_id','ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')
         ->groupBy('expedition_activity.ojk_id', 'ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')->get();
     }else if($param == 'Driver'){
         $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
@@ -69,13 +70,14 @@ public function view(): View{
             }
           })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
-        ->select(DB::raw('COUNT("driver_id") AS total_ekspedisi'),'expedition_activity.driver_id', 'ex_master_driver.driver_name')
+        ->select(DB::raw('COUNT("driver_id") AS total_ekspedisi'), DB::raw('SUM("harga_ojk") AS total_ojk'), DB::raw('SUM("harga_otv") AS total_otv'), 'expedition_activity.driver_id', 'ex_master_driver.driver_name')
         ->groupBy('expedition_activity.driver_id', 'ex_master_driver.driver_name')->get();
     }else if($param == 'Truck'){
         $data  = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
@@ -86,14 +88,15 @@ public function view(): View{
                $query->whereIn('public.users.cabang_id', $ids);
             }
           })
-        ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
+        ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')  
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
-        ->select(DB::raw('COUNT("truck_id") AS total_ekspedisi'),'expedition_activity.truck_id', 'ex_master_truck.truck_plat','ex_master_truck.truck_name')
+        ->select(DB::raw('COUNT("truck_id") AS total_ekspedisi'), DB::raw('SUM("harga_ojk") AS total_ojk'), DB::raw('SUM("harga_otv") AS total_otv'), 'expedition_activity.truck_id', 'ex_master_truck.truck_plat','ex_master_truck.truck_name')
         ->groupBy('expedition_activity.truck_id', 'ex_master_truck.truck_plat','ex_master_truck.truck_name')->get();
     }
     foreach($data as $row){
@@ -101,6 +104,8 @@ public function view(): View{
         $backgroundColor = '';
 
         $row->param = $param;
+        $row->total_ojk = 'Rp.'. number_format($row->total_ojk, 0, ',', '.');
+        $row->total_otv = 'Rp.'. number_format($row->total_otv, 0, ',', '.');
         if($param == 'Tujuan'){
             $row->paramName = $row->kabupaten.', '.$row->kecamatan;
             $dataDetail = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
@@ -116,7 +121,8 @@ public function view(): View{
                 $query->whereIn('public.users.cabang_id', $ids);
                 }
             })
-            ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
+            ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY') 
+            ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
             ->where('expedition_activity.is_deleted','false')
             ->where('expedition_activity.ojk_id', $row->ojk_id)
             ->where(function($query) use($startDate, $endDate) {
@@ -154,6 +160,8 @@ public function view(): View{
 
                 $rowDetail->tgl_inv = Carbon::parse($rowDetail->tgl_inv)->formatLocalized('%d %B %Y');
                 $rowDetail->tgl_po = Carbon::parse($rowDetail->tgl_po)->formatLocalized('%d %B %Y');
+                $rowDetail->harga_ojk = 'Rp.'. number_format($rowDetail->harga_ojk, 0, ',', '.');
+                $rowDetail->harga_otv = 'Rp.'. number_format($rowDetail->harga_otv, 0, ',', '.');
             }
             $row->detail  = $dataDetail;
         }else if($param == 'Driver'){
@@ -172,6 +180,7 @@ public function view(): View{
                 }
             })
             ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
+            ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
             ->where('expedition_activity.is_deleted','false')
             ->where('expedition_activity.driver_id', $row->driver_id)
             ->where(function($query) use($startDate, $endDate) {
@@ -209,6 +218,8 @@ public function view(): View{
 
                 $rowDetail->tgl_inv = Carbon::parse($rowDetail->tgl_inv)->formatLocalized('%d %B %Y');
                 $rowDetail->tgl_po = Carbon::parse($rowDetail->tgl_po)->formatLocalized('%d %B %Y');
+                $rowDetail->harga_ojk = 'Rp.'. number_format($rowDetail->harga_ojk, 0, ',', '.');
+                $rowDetail->harga_otv = 'Rp.'. number_format($rowDetail->harga_otv, 0, ',', '.');
             }
             $row->detail = $dataDetail;
         }else if($param == 'Truck'){
@@ -227,6 +238,7 @@ public function view(): View{
                 }
             })
             ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
+            ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
             ->where('expedition_activity.is_deleted','false')
             ->where('expedition_activity.truck_id', $row->truck_id)
             ->where(function($query) use($startDate, $endDate) {
@@ -262,6 +274,8 @@ public function view(): View{
                 }
                 $rowDetail->tgl_inv = Carbon::parse($rowDetail->tgl_inv)->formatLocalized('%d %B %Y');
                 $rowDetail->tgl_po = Carbon::parse($rowDetail->tgl_po)->formatLocalized('%d %B %Y');
+                $rowDetail->harga_ojk = 'Rp.'. number_format($rowDetail->harga_ojk, 0, ',', '.');
+                $rowDetail->harga_otv = 'Rp.'. number_format($rowDetail->harga_otv, 0, ',', '.');
             }
             $row->detail = $dataDetail;
         }

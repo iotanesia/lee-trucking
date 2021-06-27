@@ -20,14 +20,18 @@ protected $startDate;
 protected $endDate;
 protected $filterSelect;
 protected $filterAktiviti;
+protected $filterAktiviti2;
+protected $filterAktiviti3;
 protected $balance;
 protected $ids;
 
- function __construct($startDate, $endDate, $filterSelect, $filterAktiviti, $balance, $ids) {
+ function __construct($startDate, $endDate, $filterSelect, $filterAktiviti, $filterAktiviti2, $filterAktiviti3, $balance, $ids) {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->filterSelect = $filterSelect;
         $this->filterAktiviti = $filterAktiviti;
+        $this->filterAktiviti2 = $filterAktiviti2;
+        $this->filterAktiviti3 = $filterAktiviti3;
         $this->balance = $balance;
         $this->ids = $ids;
  }
@@ -39,37 +43,49 @@ public function view(): View
 {
     $filterSelect = $this->filterSelect;
     $filterAktiviti = $this->filterAktiviti;
+    $filterAktiviti2 = $this->filterAktiviti2;
+    $filterAktiviti3 = $this->filterAktiviti3;
     $balance = $this->balance;
     $ids = $this->ids;
     setlocale(LC_TIME, 'id_ID');
     Carbon::setLocale('id');
     $jurnalReportList = CoaActivity::leftJoin('coa_master_sheet' ,'coa_activity.coa_id','coa_master_sheet.id')
-          ->leftJoin('public.users','coa_activity.created_by','public.users.id')
-          ->leftJoin('coa_master_rekening','coa_activity.rek_id','coa_master_rekening.id')
-          ->leftJoin('expedition_activity','coa_activity.ex_id', 'expedition_activity.id')
-          ->where('coa_master_sheet.report_active','True')
-            ->where(function($query) use($ids) {
-                if($ids) {
-                $query->whereIn('public.users.cabang_id', $ids);
+    ->leftJoin('public.users','coa_activity.created_by','public.users.id')
+    ->leftJoin('coa_master_rekening','coa_activity.rek_id','coa_master_rekening.id')
+    ->leftJoin('expedition_activity','coa_activity.ex_id', 'expedition_activity.id')
+     ->where('coa_master_sheet.report_active','True')
+    ->where(function($query) use($ids) {
+      if($ids) {
+         $query->whereIn('public.users.cabang_id', $ids);
+      }
+    })
+    ->whereBetween('coa_activity.created_at', [$startDate, $endDate])
+    ->where(function($query) use($filterSelect) {
+      if($filterSelect) {
+          $query->where('coa_master_sheet.jurnal_category', $filterSelect);
+      }
+    })
+    ->where(function($query) use($filterAktiviti, $filterAktiviti2, $filterAktiviti3) {
+      if($filterAktiviti) {
+          $query->where('coa_master_sheet.sheet_name', $filterAktiviti);
+          if($filterAktiviti2){
+            if($filterAktiviti2 != ""){
+              $query->where('coa_master_sheet.sheet_name', $filterAktiviti)->orWhere('coa_master_sheet.sheet_name', $filterAktiviti2);
+              if($filterAktiviti3){
+                if($filterAktiviti3 != ""){
+                  $query->where('coa_master_sheet.sheet_name', $filterAktiviti)->orWhere('coa_master_sheet.sheet_name', $filterAktiviti2)->orWhere('coa_master_sheet.sheet_name', $filterAktiviti3);
                 }
-            })
-          ->whereBetween('expedition_activity.tgl_inv', [$this->startDate.' 00:00:00', $this->endDate.' 23:59:59'])
-          ->where(function($query) use($filterSelect) {
-            if($filterSelect) {
-                $query->where('coa_master_sheet.jurnal_category', $filterSelect);
+              }
             }
-          })
-          ->where(function($query) use($filterAktiviti) {
-            if($filterAktiviti) {
-                $query->where('coa_master_sheet.sheet_name', $filterAktiviti);
-            }
-          })
-          ->select('expedition_activity.tgl_inv as created_at','coa_master_sheet.sheet_name'
-                  ,'coa_master_sheet.jurnal_category','public.users.name'
-                  ,'coa_master_rekening.bank_name','coa_master_rekening.rek_name'
-                  ,'coa_master_rekening.rek_no','coa_activity.nominal','coa_activity.table_id'
-                  ,'coa_activity.table','expedition_activity.nomor_inv','expedition_activity.nomor_surat_jalan')
-                  ->orderBy('expedition_activity.tgl_inv','DESC')->get();
+          }
+        }
+    })
+    ->select('coa_master_sheet.sheet_name','coa_activity.created_at as created_at'
+            ,'coa_master_sheet.jurnal_category','public.users.name'
+            ,'coa_master_rekening.bank_name','coa_master_rekening.rek_name'
+            ,'coa_master_rekening.rek_no','coa_activity.nominal','coa_activity.table_id'
+            ,'coa_activity.table','expedition_activity.nomor_inv','expedition_activity.nomor_surat_jalan')
+            ->orderBy('expedition_activity.tgl_inv','DESC')->get();
           // dd($jurnalReportList[0]);
           foreach($jurnalReportList as $row) {
             $row->activity_name = $row->sheet_name.' ['.$row->table_id.' ]';

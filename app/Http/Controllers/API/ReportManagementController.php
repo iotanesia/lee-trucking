@@ -34,6 +34,8 @@ class ReportManagementController extends Controller
           $endDate = $data['end_date'].' 23:59:59';
           $filterSelect = $data['filter_select'];
           $filterAktiviti = $data['filter_aktiviti'];
+          $filterAktiviti2 = $data['filter_aktiviti2'];
+          $filterAktiviti3 = $data['filter_aktiviti3'];
           $jurnalReportList = CoaActivity::leftJoin('coa_master_sheet' ,'coa_activity.coa_id','coa_master_sheet.id')
           ->leftJoin('public.users','coa_activity.created_by','public.users.id')
           ->leftJoin('coa_master_rekening','coa_activity.rek_id','coa_master_rekening.id')
@@ -50,10 +52,20 @@ class ReportManagementController extends Controller
                 $query->where('coa_master_sheet.jurnal_category', $filterSelect);
             }
           })
-          ->where(function($query) use($filterAktiviti) {
+          ->where(function($query) use($filterAktiviti, $filterAktiviti2, $filterAktiviti3) {
             if($filterAktiviti) {
                 $query->where('coa_master_sheet.sheet_name', $filterAktiviti);
-            }
+                if($filterAktiviti2){
+                  if($filterAktiviti2 != ""){
+                    $query->where('coa_master_sheet.sheet_name', $filterAktiviti)->orWhere('coa_master_sheet.sheet_name', $filterAktiviti2);
+                    if($filterAktiviti3){
+                      if($filterAktiviti3 != ""){
+                        $query->where('coa_master_sheet.sheet_name', $filterAktiviti)->orWhere('coa_master_sheet.sheet_name', $filterAktiviti2)->orWhere('coa_master_sheet.sheet_name', $filterAktiviti3);
+                      }
+                    }
+                  }
+                }
+              }
           })
           ->select('coa_master_sheet.sheet_name','coa_activity.created_at as created_at'
                   ,'coa_master_sheet.jurnal_category','public.users.name'
@@ -636,19 +648,19 @@ class ReportManagementController extends Controller
           })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
-        ->where(function($query) use($statusCode) {
-          if($statusCode) {
-              $query->where('expedition_activity.status_activity', $statusCode);
-          }
-        })
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
-        ->select(DB::raw('COUNT("driver_id") AS total_ekspedisi'),'expedition_activity.driver_id', 'ex_master_driver.driver_name')
+        ->select(DB::raw('COUNT("driver_id") AS total_ekspedisi'), DB::raw('SUM("harga_ojk") AS total_ojk'), DB::raw('SUM("harga_otv") AS total_otv'), 'expedition_activity.driver_id', 'ex_master_driver.driver_name')
         ->groupBy('expedition_activity.driver_id', 'ex_master_driver.driver_name')->get();
           // dd($data);
+          foreach($data as $row){
+            $row->total_ojk = 'Rp.'. number_format($row->total_ojk, 0, ',', '.');
+            $row->total_otv = 'Rp.'. number_format($row->total_otv, 0, ',', '.');
+          }
         return datatables($data)->toJson();
       }
     }
@@ -677,19 +689,19 @@ class ReportManagementController extends Controller
           })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
-        ->where(function($query) use($statusCode) {
-          if($statusCode) {
-              $query->where('expedition_activity.status_activity', $statusCode);
-          }
-        })
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
-        ->select(DB::raw('COUNT("truck_id") AS total_ekspedisi'),'expedition_activity.truck_id', 'ex_master_truck.truck_plat','ex_master_truck.truck_name')
+        ->select(DB::raw('COUNT("truck_id") AS total_ekspedisi'), DB::raw('SUM("harga_ojk") AS total_ojk'), DB::raw('SUM("harga_otv") AS total_otv'), 'expedition_activity.truck_id', 'ex_master_truck.truck_plat','ex_master_truck.truck_name')
         ->groupBy('expedition_activity.truck_id', 'ex_master_truck.truck_plat','ex_master_truck.truck_name')->get();
           // dd($data);
+          foreach($data as $row){
+            $row->total_ojk = 'Rp.'. number_format($row->total_ojk, 0, ',', '.');
+            $row->total_otv = 'Rp.'. number_format($row->total_otv, 0, ',', '.');
+          }
         return datatables($data)->toJson();
       }
     }
@@ -721,19 +733,19 @@ class ReportManagementController extends Controller
           })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
-        ->where(function($query) use($statusCode) {
-          if($statusCode) {
-              $query->where('expedition_activity.status_activity', $statusCode);
-          }
-        })
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
           }
         })
-        ->select(DB::raw('COUNT("ojk_id") AS total_ekspedisi'),'expedition_activity.ojk_id','ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')
+        ->select(DB::raw('COUNT("ojk_id") AS total_ekspedisi'), DB::raw('SUM(ex_master_ojk.harga_ojk) AS total_ojk'), DB::raw('SUM(ex_master_ojk.harga_otv) AS total_otv'), 'ojk_id','ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')
         ->groupBy('expedition_activity.ojk_id', 'ex_wil_kabupaten.kabupaten','ex_wil_kecamatan.kecamatan')->get();
           // dd($data);
+          foreach($data as $row){
+            $row->total_ojk = 'Rp.'. number_format($row->total_ojk, 0, ',', '.');
+            $row->total_otv = 'Rp.'. number_format($row->total_otv, 0, ',', '.');
+          }
         return datatables($data)->toJson();
       }
     }
@@ -779,11 +791,7 @@ class ReportManagementController extends Controller
               }
           }
         })
-        ->where(function($query) use($statusCode) {
-          if($statusCode) {
-              $query->where('expedition_activity.status_activity', $statusCode);
-          }
-        })
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
@@ -794,6 +802,10 @@ class ReportManagementController extends Controller
            ->get();
         foreach($data as $row){
           $row->tujuan = $row->kabupaten.' '.$row->kecamatan.' '.$row->cabang_name;
+          // if($ritBy == 'Truck'){
+                $row->harga_ojk = 'Rp.'. number_format($row->harga_ojk, 0, ',', '.');
+                $row->harga_otv = 'Rp.'. number_format($row->harga_otv, 0, ',', '.');
+          // }
         }
         //  dd($data);
         return datatables($data)->toJson();
@@ -830,11 +842,7 @@ class ReportManagementController extends Controller
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
         ->where('ex_master_ojk.id', $request->ojk_id)
-        ->where(function($query) use($statusCode) {
-          if($statusCode) {
-              $query->where('expedition_activity.status_activity', $statusCode);
-          }
-        })
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
