@@ -170,6 +170,20 @@ input:checked + .slider:before {
                                 <option value="TUNAI">TUNAI</option>
                                 <option value="NON_TUNAI">NON TUNAI</option>
                             </select>
+                          </div>     
+                           <div class="col-md-2" >
+                            <select class="form-control" id="filter-periksa-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di periksa</option>
+                                <option value="false">Belum di periksa</option>
+                            </select>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-export-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di export</option>
+                                <option value="false">Belum di export</option>
+                            </select>
                           </div>
                         <div id="tag-cloud-widget" class="col-md-2">  
                           <div class="content">  
@@ -199,6 +213,8 @@ input:checked + .slider:before {
                             </div>
                           </div>
                         </div>
+                        <br/><br/><br/>
+                        <div style='margin-left:10px'>
                             <label class="switch">
                               <input type="checkbox" id="cbPpn10Bo" checked>
                               <span class="slider round">PPN 10%</span>
@@ -207,6 +223,7 @@ input:checked + .slider:before {
                               <input type="checkbox" id="cbPph23Bo" checked>
                               <span class="slider round">PPH 23</span>
                             </label>
+                        </div>
                       </div>
                   </form>
                   <br/>
@@ -215,6 +232,7 @@ input:checked + .slider:before {
                       <tr>
                           <th>No</th>
                           <th>Status Pemeriksaan</th>
+                          <th>Status Export</th>
                           <th>Tanggal</th>
                           <th>Surat Jalan</th>
                           <th>Tujuan</th>
@@ -233,6 +251,7 @@ input:checked + .slider:before {
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td style="text-align:right"></td>
                             <td></td>
                             <td></td>
@@ -244,6 +263,7 @@ input:checked + .slider:before {
                         <tr style="font-weight:bold" id="trPpn10Bo">
                           <td style="text-align:left">
                               <td></td>
+                            <td></td>
                               <td></td>
                               <td></td>
                               <td style="text-align:right"></td>
@@ -257,6 +277,7 @@ input:checked + .slider:before {
                       <tr style="font-weight:bold" id="trPph23Bo">
                               <td style="text-align:left">
                               <td></td>
+                            <td></td>
                               <td></td>
                               <td></td>
                               <td style="text-align:right"></td>
@@ -269,6 +290,7 @@ input:checked + .slider:before {
                       </tr>
                       <tr style="font-weight:bold">
                           <td style="text-align:left">
+                            <td></td>
                             <td></td>
                           <td></td>
                           <td></td>
@@ -304,6 +326,20 @@ input:checked + .slider:before {
                                 <option value="NON_TUNAI">NON TUNAI</option>
                             </select>
                           </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-periksa-ba" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di periksa</option>
+                                <option value="false">Belum di periksa</option>
+                            </select>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-export-ba" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di export</option>
+                                <option value="false">Belum di export</option>
+                            </select>
+                          </div>
                         <div id="tag-cloud-widget" class="col-md-2">  
                           <div class="content">  
                             <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -332,14 +368,19 @@ input:checked + .slider:before {
                             </div>
                           </div>
                         </div>
-                        <label class="switch">
-                          <input type="checkbox" id="cbPpn10Ba" checked>
-                          <span class="slider round">PPN 10%</span>
-                        </label>
-                        <label class="switch">
-                          <input type="checkbox" id="cbPph23Ba" checked>
-                          <span class="slider round">PPH 23</span>
-                        </label>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div style='margin-left:10px'>
+                          <label class="switch">
+                            <input type="checkbox" id="cbPpn10Ba" checked>
+                            <span class="slider round">PPN 10%</span>
+                          </label>
+                          <label class="switch">
+                            <input type="checkbox" id="cbPph23Ba" checked>
+                            <span class="slider round">PPH 23</span>
+                          </label>
+                        </div>
                       </div>
                   </form>
                   <br/>
@@ -348,6 +389,7 @@ input:checked + .slider:before {
                       <tr>
                           <th>No</th>
                           <th>Status Pemeriksaan</th>
+                          <th>Status Export</th>
                           <th>Tanggal</th>
                           <th>Surat Jalan</th>
                           <th>Tujuan</th>
@@ -366,6 +408,7 @@ input:checked + .slider:before {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td style="text-align:right"></td>
                         <td></td>
                         <td></td>
@@ -376,6 +419,7 @@ input:checked + .slider:before {
                       </tr>
                       <tr style="font-weight:bold" id="trPpn10Ba">
                         <td style="text-align:left">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -392,6 +436,7 @@ input:checked + .slider:before {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td style="text-align:right"></td>
                         <td></td>
                         <td></td>
@@ -402,6 +447,7 @@ input:checked + .slider:before {
                       </tr>
                       <tr style="font-weight:bold">
                         <td style="text-align:left">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -437,6 +483,20 @@ input:checked + .slider:before {
                             <option value="NON_TUNAI">NON TUNAI</option>
                         </select>
                       </div>
+                      <div class="col-md-2" >
+                            <select class="form-control" id="filter-periksa-bj" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di periksa</option>
+                                <option value="false">Belum di periksa</option>
+                            </select>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-export-bj" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di export</option>
+                                <option value="false">Belum di export</option>
+                            </select>
+                          </div>
                       <div id="tag-cloud-widget" class="col-md-2">  
                         <div class="content">  
                           <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -473,6 +533,7 @@ input:checked + .slider:before {
                       <tr>
                         <th>No</th>
                         <th>Status Pemeriksaan</th>
+                        <th>Status Export</th>
                         <th>Tanggal</th>
                         <th>Surat Jalan</th>
                         <th>Tujuan</th>
@@ -488,6 +549,7 @@ input:checked + .slider:before {
                     <tfoot>
                       <tr style="font-weight:bold">
                         <td style="text-align:left">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -523,6 +585,20 @@ input:checked + .slider:before {
                                 <option value="NON_TUNAI">NON TUNAI</option>
                             </select>
                           </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-periksa-bf" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di periksa</option>
+                                <option value="false">Belum di periksa</option>
+                            </select>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-export-bf" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di export</option>
+                                <option value="false">Belum di export</option>
+                            </select>
+                          </div>
                         <div id="tag-cloud-widget" class="col-md-2">  
                           <div class="content">  
                             <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -551,6 +627,10 @@ input:checked + .slider:before {
                             </div>
                           </div>
                         </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div style='margin-left:10px'>
                         <label class="switch">
                           <input type="checkbox" id="cbPpn10Bf" checked>
                           <span class="slider round">PPN 10%</span>
@@ -559,6 +639,7 @@ input:checked + .slider:before {
                           <input type="checkbox" id="cbPph23Bf" checked>
                           <span class="slider round">PPH 23</span>
                         </label>
+                        </div>
                       </div>
                   </form>
                   <br/>
@@ -567,6 +648,7 @@ input:checked + .slider:before {
                       <tr>
                           <th>No</th>
                           <th>Status Pemeriksaan</th>
+                          <th>Status Export</th>
                           <th>Tanggal</th>
                           <th>Surat Jalan</th>
                           <th>Tujuan</th>
@@ -585,6 +667,7 @@ input:checked + .slider:before {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td style="text-align:right"></td>
                         <td></td>
                         <td></td>
@@ -595,6 +678,7 @@ input:checked + .slider:before {
                       </tr>
                       <tr style="font-weight:bold" id="trPpn10Bf">
                         <td style="text-align:left">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -611,6 +695,7 @@ input:checked + .slider:before {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td style="text-align:right"></td>
                         <td></td>
                         <td></td>
@@ -621,6 +706,7 @@ input:checked + .slider:before {
                       </tr>
                       <tr style="font-weight:bold">
                         <td style="text-align:left">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -657,6 +743,20 @@ input:checked + .slider:before {
                                 <option value="NON_TUNAI">NON TUNAI</option>
                             </select>
                           </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-periksa-do" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di periksa</option>
+                                <option value="false">Belum di periksa</option>
+                            </select>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-export-do" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di export</option>
+                                <option value="false">Belum di export</option>
+                            </select>
+                          </div>
                         <div id="tag-cloud-widget" class="col-md-2">  
                           <div class="content">  
                             <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -685,6 +785,10 @@ input:checked + .slider:before {
                             </div>
                           </div>
                         </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div style='margin-left:10px'>
                             <label class="switch">
                               <input type="checkbox" id="cbPpn10Do" checked>
                               <span class="slider round">PPN 10%</span>
@@ -693,6 +797,7 @@ input:checked + .slider:before {
                               <input type="checkbox" id="cbPph23Do" checked>
                               <span class="slider round">PPH 23</span>
                             </label>
+                          </div>
                       </div>
                   </form>
                   <br/>
@@ -701,6 +806,7 @@ input:checked + .slider:before {
                       <tr>
                           <th>No</th>
                           <th>Status Pemeriksaan</th>
+                          <th>Status Export</th>
                           <th>Tanggal</th>
                           <th>Surat Jalan</th>
                           <th>Tujuan</th>
@@ -719,6 +825,7 @@ input:checked + .slider:before {
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td style="text-align:right"></td>
                             <td></td>
                             <td></td>
@@ -730,6 +837,7 @@ input:checked + .slider:before {
                         <tr style="font-weight:bold" id="trPpn10Do">
                           <td style="text-align:left">
                               <td></td>
+                            <td></td>
                               <td></td>
                               <td></td>
                               <td style="text-align:right"></td>
@@ -743,6 +851,7 @@ input:checked + .slider:before {
                       <tr style="font-weight:bold" id="trPph23Do">
                               <td style="text-align:left">
                               <td></td>
+                            <td></td>
                               <td></td>
                               <td></td>
                               <td style="text-align:right"></td>
@@ -755,6 +864,7 @@ input:checked + .slider:before {
                       </tr>
                       <tr style="font-weight:bold">
                           <td style="text-align:left">
+                            <td></td>
                             <td></td>
                           <td></td>
                           <td></td>
@@ -790,6 +900,20 @@ input:checked + .slider:before {
                                 <option value="NON_TUNAI">NON TUNAI</option>
                             </select>
                           </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-periksa-da" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di periksa</option>
+                                <option value="false">Belum di periksa</option>
+                            </select>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-export-da" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di export</option>
+                                <option value="false">Belum di export</option>
+                            </select>
+                          </div>
                         <div id="tag-cloud-widget" class="col-md-2">  
                           <div class="content">  
                             <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -818,14 +942,19 @@ input:checked + .slider:before {
                             </div>
                           </div>
                         </div>
-                        <label class="switch">
-                          <input type="checkbox" id="cbPpn10Da" checked>
-                          <span class="slider round">PPN 10%</span>
-                        </label>
-                        <label class="switch">
-                          <input type="checkbox" id="cbPph23Da" checked>
-                          <span class="slider round">PPH 23</span>
-                        </label>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div style='margin-left:10px'>
+                            <label class="switch">
+                              <input type="checkbox" id="cbPpn10Da" checked>
+                              <span class="slider round">PPN 10%</span>
+                            </label>
+                            <label class="switch">
+                              <input type="checkbox" id="cbPph23Da" checked>
+                              <span class="slider round">PPH 23</span>
+                            </label>
+                        </div>
                       </div>
                   </form>
                   <br/>
@@ -834,6 +963,7 @@ input:checked + .slider:before {
                       <tr>
                           <th>No</th>
                           <th>Status Pemeriksaan</th>
+                          <th>Status Export</th>
                           <th>Tanggal</th>
                           <th>Surat Jalan</th>
                           <th>Tujuan</th>
@@ -852,6 +982,7 @@ input:checked + .slider:before {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td style="text-align:right"></td>
                         <td></td>
                         <td></td>
@@ -862,6 +993,7 @@ input:checked + .slider:before {
                       </tr>
                       <tr style="font-weight:bold" id="trPpn10Da">
                         <td style="text-align:left">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -878,6 +1010,7 @@ input:checked + .slider:before {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td style="text-align:right"></td>
                         <td></td>
                         <td></td>
@@ -888,6 +1021,7 @@ input:checked + .slider:before {
                       </tr>
                       <tr style="font-weight:bold">
                         <td style="text-align:left">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -923,6 +1057,20 @@ input:checked + .slider:before {
                             <option value="NON_TUNAI">NON TUNAI</option>
                         </select>
                       </div>
+                      <div class="col-md-2" >
+                            <select class="form-control" id="filter-periksa-dj" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di periksa</option>
+                                <option value="false">Belum di periksa</option>
+                            </select>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-export-dj" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di export</option>
+                                <option value="false">Belum di export</option>
+                            </select>
+                          </div>
                       <div id="tag-cloud-widget" class="col-md-2">  
                         <div class="content">  
                           <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -959,6 +1107,7 @@ input:checked + .slider:before {
                       <tr>
                         <th>No</th>
                         <th>Status Pemeriksaan</th>
+                        <th>Status Export</th>
                         <th>Tanggal</th>
                         <th>Surat Jalan</th>
                         <th>Tujuan</th>
@@ -974,6 +1123,7 @@ input:checked + .slider:before {
                     <tfoot>
                       <tr style="font-weight:bold">
                         <td style="text-align:left">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -1009,6 +1159,20 @@ input:checked + .slider:before {
                                 <option value="NON_TUNAI">NON TUNAI</option>
                             </select>
                           </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-periksa-df" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di periksa</option>
+                                <option value="false">Belum di periksa</option>
+                            </select>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-export-df" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di export</option>
+                                <option value="false">Belum di export</option>
+                            </select>
+                          </div>
                         <div id="tag-cloud-widget" class="col-md-2">  
                           <div class="content">  
                             <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -1037,6 +1201,10 @@ input:checked + .slider:before {
                             </div>
                           </div>
                         </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div style='margin-left:10px'>
                         <label class="switch">
                           <input type="checkbox" id="cbPpn10Df" checked>
                           <span class="slider round">PPN 10%</span>
@@ -1045,6 +1213,7 @@ input:checked + .slider:before {
                           <input type="checkbox" id="cbPph23Df" checked>
                           <span class="slider round">PPH 23</span>
                         </label>
+                        </div>
                       </div>
                   </form>
                   <br/>
@@ -1053,6 +1222,7 @@ input:checked + .slider:before {
                       <tr>
                           <th>No</th>
                           <th>Status Pemeriksaan</th>
+                          <th>Status Export</th>
                           <th>Tanggal</th>
                           <th>Surat Jalan</th>
                           <th>Tujuan</th>
@@ -1071,6 +1241,7 @@ input:checked + .slider:before {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td style="text-align:right"></td>
                         <td></td>
                         <td></td>
@@ -1081,6 +1252,7 @@ input:checked + .slider:before {
                       </tr>
                       <tr style="font-weight:bold" id="trPpn10Df">
                         <td style="text-align:left">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -1097,6 +1269,7 @@ input:checked + .slider:before {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td style="text-align:right"></td>
                         <td></td>
                         <td></td>
@@ -1107,6 +1280,7 @@ input:checked + .slider:before {
                       </tr>
                       <tr style="font-weight:bold">
                         <td style="text-align:left">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
