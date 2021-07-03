@@ -75,7 +75,7 @@ $("document").ready(function(){
             var accessToken =  window.Laravel.api_token;
   
             $.ajax({
-                url: window.Laravel.app_url + "/api/bonusDriverRit/get-list?tahun="+tahun+"&bulan="+bulan+"",
+                url: window.Laravel.app_url + "/api/bonusDriverRit/get-list-kenek?tahun="+tahun+"&bulan="+bulan+"",
                 type: "GET",
                 dataType: "json",
                 headers: {"Authorization": "Bearer " + accessToken},
@@ -102,7 +102,7 @@ $("document").ready(function(){
             var accessToken =  window.Laravel.api_token;
   
             $.ajax({
-                url: window.Laravel.app_url + "/api/bonusDriverRit/get-list?tahun="+tahun+"&bulan="+bulan+"",
+                url: window.Laravel.app_url + "/api/bonusDriverRit/get-list-kenek?tahun="+tahun+"&bulan="+bulan+"",
                 type: "GET",
                 dataType: "json",
                 headers: {"Authorization": "Bearer " + accessToken},
