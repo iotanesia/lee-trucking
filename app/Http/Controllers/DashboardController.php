@@ -89,4 +89,8 @@ class DashboardController extends Controller
         // $data = json_encode($data);
         return view('dashboard.index', $data);
     }
+
+    public function indexTandC() {
+        return view('dashboard.indexTnC');
+    }
 }
