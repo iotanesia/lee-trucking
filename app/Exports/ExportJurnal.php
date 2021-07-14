@@ -41,6 +41,8 @@ protected $ids;
 */
 public function view(): View
 {
+  $startDate = $this->startDate;
+  $endDate = $this->endDate;
     $filterSelect = $this->filterSelect;
     $filterAktiviti = $this->filterAktiviti;
     $filterAktiviti2 = $this->filterAktiviti2;
