@@ -784,7 +784,7 @@ class ReportManagementController extends Controller
           })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
-        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN', 'WAITING_OWNER'])
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
@@ -825,7 +825,7 @@ class ReportManagementController extends Controller
           })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
-        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN', 'WAITING_OWNER'])
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
@@ -869,7 +869,7 @@ class ReportManagementController extends Controller
           })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
-        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN', 'WAITING_OWNER'])
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
@@ -927,7 +927,7 @@ class ReportManagementController extends Controller
               }
           }
         })
-        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN', 'WAITING_OWNER'])
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);
@@ -978,7 +978,7 @@ class ReportManagementController extends Controller
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
         ->where('expedition_activity.is_deleted','false')
         ->where('ex_master_ojk.id', $request->ojk_id)
-        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN', 'WAITING_OWNER'])
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
             $query->whereBetween('expedition_activity.tgl_po', [$startDate, $endDate]);

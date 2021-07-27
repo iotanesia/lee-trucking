@@ -51,7 +51,7 @@ public function view(): View{
             }
           })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')  
-        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN', 'WAITING_OWNER'])
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($startDate, $endDate) {
             if($startDate && $endDate){
@@ -70,7 +70,7 @@ public function view(): View{
             }
           })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
-        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN', 'WAITING_OWNER'])
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
@@ -89,7 +89,7 @@ public function view(): View{
             }
           })
         ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')  
-        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
+        ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN', 'WAITING_OWNER'])
         ->where('expedition_activity.is_deleted','false')
         ->where(function($query) use($startDate, $endDate) {
           if($startDate && $endDate){
@@ -122,7 +122,7 @@ public function view(): View{
                 }
             })
             ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY') 
-            ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
+            ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN', 'WAITING_OWNER'])
             ->where('expedition_activity.is_deleted','false')
             ->where('expedition_activity.ojk_id', $row->ojk_id)
             ->where(function($query) use($startDate, $endDate) {
@@ -180,7 +180,7 @@ public function view(): View{
                 }
             })
             ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
-            ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
+            ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN', 'WAITING_OWNER'])
             ->where('expedition_activity.is_deleted','false')
             ->where('expedition_activity.driver_id', $row->driver_id)
             ->where(function($query) use($startDate, $endDate) {
@@ -238,7 +238,7 @@ public function view(): View{
                 }
             })
             ->where('all_global_param.param_type', 'EX_STATUS_ACTIVITY')
-            ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN'])
+            ->wherein('expedition_activity.status_activity', ['CLOSED_EXPEDITION', 'DRIVER_SELESAI_EKSPEDISI', 'DRIVER_SAMPAI_TUJUAN', 'WAITING_OWNER'])
             ->where('expedition_activity.is_deleted','false')
             ->where('expedition_activity.truck_id', $row->truck_id)
             ->where(function($query) use($startDate, $endDate) {
