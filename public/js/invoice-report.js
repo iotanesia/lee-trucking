@@ -30,7 +30,6 @@
 
   var table = $('#table-invoice-bo').DataTable({
   processing: true,
-  searching: false,
   serverSide: true,
   ajax: {
     url: window.Laravel.app_url + "/api/report/get-invoice-bo-list",
@@ -1545,8 +1544,8 @@
       endDate: formatDate(lastDay)
     },
     function(start, end, label) {
-      startDateBO = start.format('YYYY-MM-DD');
-      endDateBO = end.format('YYYY-MM-DD');
+      startDateBF = start.format('YYYY-MM-DD');
+      endDateBF = end.format('YYYY-MM-DD');
       $('#table-invoice-bf').DataTable().ajax.reload();
     });
   });
