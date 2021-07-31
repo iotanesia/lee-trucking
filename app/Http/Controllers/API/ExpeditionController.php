@@ -598,8 +598,10 @@ class ExpeditionController extends Controller
           $expeditionActivity->is_approve = 1;
       }
 
-      if(($request->status_activity == 'DRIVER_MENUJU_TUJUAN' && $data['kenek_id'] == $idNonKenek) && (isset($data['truck_id']) && $truckDetail->truck_type == $trucktipe->id )) {
-          $expeditionActivity->harga_ojk = $expeditionActivity->harga_ojk - 60000;
+      if(($request->status_activity == 'DRIVER_MENUJU_TUJUAN' && $data['kenek_id'] == $idNonKenek)) {
+          $truck = Truck::find($expeditionActivity->truck_id);
+
+          if($truck->truck_type == $trucktipe->id ) $expeditionActivity->harga_ojk = $expeditionActivity->harga_ojk - 60000;
       }
 
       if($request->status_activity == 'DRIVER_SELESAI_EKSPEDISI') {
