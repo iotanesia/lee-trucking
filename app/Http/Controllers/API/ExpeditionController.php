@@ -135,7 +135,7 @@ class ExpeditionController extends Controller
         $ids = json_decode($cekRole, true);
       }
       $data = $request->all();
-      $whereField = 'expedition_activity.kabupaten, expedition_activity.kecamatan, expedition_activity.cabang_name, all_global_param.param_name, expedition_activity.nomor_inv, ex_master_truck.truck_plat, ex_master_driver.driver_name';
+      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, expedition_activity.nomor_inv, ex_master_truck.truck_plat, ex_master_driver.driver_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $platform = (isset($data['from'])) ? $data['from'] : '';
       $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
