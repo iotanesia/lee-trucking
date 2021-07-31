@@ -135,8 +135,7 @@ class ExpeditionController extends Controller
         $ids = json_decode($cekRole, true);
       }
       $data = $request->all();
-      $whereField = 'expedition_activity.kabupaten, expedition_activity.kecamatan, expedition_activity.cabang_name,
-      all_global_param.param_name, expedition_activity.nomor_inv';
+      $whereField = 'expedition_activity.kabupaten, expedition_activity.kecamatan, expedition_activity.cabang_name, all_global_param.param_name, expedition_activity.nomor_inv, ex_master_truck.truck_plat, ex_master_driver.driver_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $platform = (isset($data['from'])) ? $data['from'] : '';
       $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
@@ -182,7 +181,7 @@ class ExpeditionController extends Controller
                                 ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat',
                                         'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                                             'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 'ex_master_kenek.kenek_name')
-                                ->orderBy('expedition_activity.created_at', 'ASC')
+                                ->orderBy('expedition_activity.created_at', 'DESC')
                                 ->paginate();
 
       foreach($expeditionActivityList as $row) {
@@ -249,7 +248,7 @@ class ExpeditionController extends Controller
         $ids = json_decode($cekRole, true);
       }
       $data = $request->all();
-      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv';
+      $whereField = 'kabupaten, kecamatan, cabang_name, all_global_param.param_name, nomor_inv, ex_master_truck.truck_plat, ex_master_driver.driver_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $groupAdmin = Group::where('group_name', 'Admin Kantor')->first();
       $groupOwner = Group::where('group_name', 'Owner')->first();
@@ -298,7 +297,7 @@ class ExpeditionController extends Controller
                                 ->select('expedition_activity.*', 'all_global_param.param_name as status_name', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name', 'ex_master_truck.truck_plat',
                                             'ex_wil_kecamatan.kecamatan', 'ex_wil_kabupaten.kabupaten', 'ex_master_cabang.cabang_name',
                                             'expedition_activity.harga_ojk', 'expedition_activity.harga_otv', 'ex_master_kenek.kenek_name')
-                                ->orderBy('expedition_activity.created_at', 'ASC')
+                                ->orderBy('expedition_activity.created_at', 'DESC')
                                 ->paginate();
 
       foreach($expeditionActivityList as $key => $row) {
