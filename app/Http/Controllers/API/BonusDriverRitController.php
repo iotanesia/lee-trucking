@@ -114,7 +114,7 @@ class BonusDriverRitController extends Controller
       $firstDate = date('Y-m-01', strtotime($year.'-'.$month.'-01'));
       $lastDate = date('Y-m-t', strtotime($year.'-'.$month.'-01'));
       $truckTipe = GlobalParam::where('param_code', 'TRUCK')->where('param_type', 'TRUCK_TYPE')->first();
-      $whereField = 'driver_name';
+      $whereField = 'kenek_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $rewardList = ExpeditionActivity::join('ex_master_kenek', 'expedition_activity.kenek_id', 'ex_master_kenek.id')
                     ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
