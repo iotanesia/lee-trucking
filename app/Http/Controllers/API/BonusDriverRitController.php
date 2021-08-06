@@ -16,6 +16,12 @@ use DB;
 class BonusDriverRitController extends Controller
 {
   public function getList(Request $request) {
+    $cekRole = $this->checkRoles();
+    $ids = null;
+
+    if($cekRole) {
+      $ids = json_decode($cekRole, true);
+    }
     if($request->isMethod('GET')) {
       $data = $request->all();
       $month = isset($data['month']) ? $data['month'] : date('m');
@@ -27,11 +33,17 @@ class BonusDriverRitController extends Controller
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $rewardList = ExpeditionActivity::join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
                     ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
+                    ->join('public.users', 'users.id', 'ex_master_driver.user_id')
                     ->where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
                             foreach(explode(', ', $whereField) as $idx => $field) {
                                 $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                             }
+                        }
+                    })
+                    ->where(function($query) use($ids) {
+                        if($ids) {
+                            $query->whereIn('users.cabang_id', $ids);
                         }
                     })
                     ->whereIn('status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])

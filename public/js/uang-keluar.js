@@ -32,7 +32,7 @@ $("document").ready(function(){
       url: window.Laravel.app_url + "/api/moneyTransactionHeader/" + event + "",
       type: "POST",
       dataType: "json",
-      data: data,
+      data: 'text'= val,
       processData: false,
       contentType: false,
       headers: {"Authorization": "Bearer " + accessToken},
