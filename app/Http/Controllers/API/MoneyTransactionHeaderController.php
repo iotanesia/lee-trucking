@@ -46,6 +46,7 @@ class MoneyTransactionHeaderController extends Controller
                                     ->select('money_transaction_header.user_id', 'users.name as name_user', DB::raw('SUM(pokok) AS pokok'), DB::raw('SUM(sisa_pokok) AS sisa_pokok'), 
                                     DB::raw("CASE WHEN SUM(sisa_pokok) = 0 THEN 'LUNAS'ELSE 'BELUM_LUNAS' END AS status"))
                                     ->groupBy('money_transaction_header.user_id', 'users.name')
+                                    ->orderBy('money_transaction_header.id', 'DESC')
                                     ->paginate();
 
                                     // , 'money_transaction_header.status as statue', 'users.name as name_user', 'coa_master_rekening.rek_no as rek_no', 'coa_master_rekening.rek_name as rek_name',
@@ -88,6 +89,7 @@ class MoneyTransactionHeaderController extends Controller
       $moneyTransactionHeaderList = MoneyDetailTermin::leftJoin('coa_master_rekening', 'coa_master_rekening.id', 'money_detail_termin.rek_id')
                                     ->where('transaksi_header_id', $data['transaksi_header_id'])
                                     ->select('money_detail_termin.*', 'coa_master_rekening.rek_name', 'coa_master_rekening.rek_no', 'coa_master_rekening.id')
+                                    ->orderBy('money_detail_termin.id', 'DESC')
                                     ->paginate();
 
       foreach($moneyTransactionHeaderList as $row) {
@@ -249,7 +251,7 @@ class MoneyTransactionHeaderController extends Controller
                                     })
                                     ->whereIn('category_name', ['DANA_LAIN_LAIN', 'GAJI_KARYAWAN'])
                                     ->select('money_transaction_header.*', 'coa_master_rekening.rek_no', 'coa_master_rekening.rek_name')
-                                    ->orderBy('money_transaction_header.id', 'ASC')
+                                    ->orderBy('money_transaction_header.id', 'DESC')
                                     ->paginate();
 
       foreach($moneyTransactionHeaderList as $row) {
@@ -452,7 +454,7 @@ class MoneyTransactionHeaderController extends Controller
         $moneyTransactionHeader->created_by = Auth::user()->id;
       }
 
-      if($moneyTransactionHeader->save()) {
+      if($moneyTransactionHeader->save()) {     
           if(isset($data['category_name']) && $data['category_name'] == 'DANA_LAIN_LAIN') {
               $coaMasterSheet = CoaMasterSheet::whereIn('coa_code_sheet', ['PL.0001.04', 'PL.0001.05', 'PL.0001.06', 'PL.0001.07'])->get();
 
@@ -479,10 +481,10 @@ class MoneyTransactionHeaderController extends Controller
             $coaActivity->status = 'ACTIVE';
             $coaActivity->nominal = $moneyTransactionHeader->pokok;
             $coaActivity->coa_id = $value->id;
-            $coaActivity->created_at = $current_date_time;
+            $coaActivity->created_at = $data['date'];
             $coaActivity->created_by = $user_id;
             $coaActivity->rek_id = $request->no_rek;
-            $coaActivity->table = 'money_detail_termin';
+            $coaActivity->table = 'money_transaction_header';
             $coaActivity->table_id = $moneyTransactionHeader->id;
             $coaActivity->save();
           }
@@ -554,7 +556,7 @@ class MoneyTransactionHeaderController extends Controller
             $coaActivity->created_at = $current_date_time;
             $coaActivity->created_by = $user_id;
             $coaActivity->rek_id = $request->no_rek;
-            $coaActivity->table = 'money_detail_termin';
+            $coaActivity->table = 'money_transaction_header';
             $coaActivity->table_id = $moneyTransactionHeader->id;
             $coaActivity->save();
           }
