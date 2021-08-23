@@ -35,7 +35,7 @@ class ExpeditionController extends Controller
       }
 
       $data = $request->all();
-      $whereField = 'kabupaten, ex_wil_kecamatan.kecamatan, cabang_name, all_global_param.param_name, nomor_inv, otv_payment_method, ex_master_driver.driver_name, expedition_activity.nomor_surat_jalan';
+      $whereField = 'kabupaten, ex_wil_kecamatan.kecamatan, cabang_name, all_global_param.param_name, nomor_inv, otv_payment_method, ex_master_driver.driver_name, expedition_activity.nomor_surat_jalan, ex_master_truck.truck_plat';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
       $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
