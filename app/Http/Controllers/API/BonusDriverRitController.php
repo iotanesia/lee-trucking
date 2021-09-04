@@ -9,6 +9,8 @@ use App\Models\Reward;
 use App\Models\Truck;
 use App\Models\GlobalParam;
 use App\Models\Driver;
+use App\Models\CoaActivity;
+use App\Models\CoaMasterSheet;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -34,6 +36,12 @@ class BonusDriverRitController extends Controller
       $rewardList = ExpeditionActivity::join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
                     ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                     ->join('public.users', 'users.id', 'ex_master_driver.user_id')
+                    ->leftJoin('coa_activity AS ca', function($query) use($month, $year) {
+                        $query->on('ca.table_id', 'expedition_activity.driver_id')
+                              ->join('coa_master_sheet as cms', 'ca.coa_id', 'cms.id')
+                              ->where('report_active', 'True')
+                              ->where('table', 'ex_master_driver')->where('month_paid', $month)->where('year_paid', $year)->where('activity_name', 'PAID_BONUS');
+                    })
                     ->where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
                             foreach(explode(', ', $whereField) as $idx => $field) {
@@ -49,8 +57,8 @@ class BonusDriverRitController extends Controller
                     ->whereIn('status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])
                     ->where('ex_master_truck.truck_type', $truckTipe->id)
                     ->whereRaw("expedition_activity.tgl_po between CAST('".$firstDate." 00:00:00' AS DATE) AND CAST('".$lastDate." 23:59:59' AS DATE)")
-                    ->select('expedition_activity.driver_id', 'driver_name', DB::raw('COUNT(expedition_activity."driver_id") AS total_rit'))
-                    ->groupBy('expedition_activity.driver_id', 'driver_name')
+                    ->select('expedition_activity.driver_id', 'driver_name', DB::raw('COUNT(expedition_activity."driver_id") AS total_rit'), 'ca.id AS coa_activity_id')
+                    ->groupBy('expedition_activity.driver_id', 'driver_name', 'ca.id')
                     ->orderBy('total_rit', 'DESC')
                     ->paginate();
                     
@@ -602,5 +610,54 @@ class BonusDriverRitController extends Controller
         'result'=> null
       ], 405);
     }
+  }
+
+  public function paid(Request $request) {
+      try {
+          $mstCoaBonus = CoaMasterSheet::whereIn('coa_code_sheet', ['PL.0001.08', 'PL.0001.09', 'PL.0001.10', 'PL.0001.07'])->get();
+          $mstCoaReward = CoaMasterSheet::whereIn('coa_code_sheet', ['PL.0001.11', 'PL.0001.12', 'PL.0001.13', 'PL.0001.07'])->get();
+
+          foreach($mstCoaBonus as $key => $val) {
+              $insertBonus = new CoaActivity;
+              $insertBonus->activity_name = 'PAID_BONUS';
+              $insertBonus->status = 'ACTIVE';
+              $insertBonus->nominal = $request->bonus;
+              $insertBonus->rek_no = 2;
+              $insertBonus->coa_id = $val->id;
+              $insertBonus->created_by = Auth::user()->id;
+              $insertBonus->rek_id = 2;
+              $insertBonus->table = 'ex_master_driver';
+              $insertBonus->table_id = $request->driver_id;
+              $insertBonus->month_paid = $request->bulan;
+              $insertBonus->year_paid = $request->tahun;
+              $insertBonus->save();
+          }
+
+          foreach($mstCoaReward as $key => $val) {
+              $insertReward = new CoaActivity;
+              $insertReward->activity_name = 'PAID_REWARD';
+              $insertReward->status = 'ACTIVE';
+              $insertReward->nominal = $request->reward;
+              $insertReward->rek_no = 2;
+              $insertReward->coa_id = $val->id;
+              $insertReward->created_by = Auth::user()->id;
+              $insertReward->rek_id = 2;
+              $insertReward->table = 'ex_master_driver';
+              $insertReward->table_id = $request->driver_id;
+              $insertReward->month_paid = $request->bulan;
+              $insertReward->year_paid = $request->tahun;
+              $insertReward->save();
+          }
+
+          return response()->json([
+              'code' => 200,
+              'code_message' => 'Success',
+              'code_type' => 'Success',
+              'result'=> true
+          ], 200);
+
+      } catch (\Throwable $th) {
+          throw $th;
+      }
   }
 }
