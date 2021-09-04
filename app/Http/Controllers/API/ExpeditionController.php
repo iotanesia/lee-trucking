@@ -434,7 +434,6 @@ class ExpeditionController extends Controller
         $exStatusActivity->approval_at = $current_date_time;
         $exStatusActivity->save();
 
-        dd('aa');
         DB::connection(Auth::user()->schema)->commit();
         $userOwner = User::where('group_id', '8')->where('id_fcm_android','<>','')->get();
 
