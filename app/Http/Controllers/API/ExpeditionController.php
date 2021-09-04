@@ -413,7 +413,13 @@ class ExpeditionController extends Controller
       $expeditionActivity->user_id = $idUser;
 
       if($expeditionActivity->save()) {
-        $code = str_repeat("0", 4 - strlen($expeditionActivity->id)).$expeditionActivity->id;
+        if(strlen($expeditionActivity->id) > 4) {
+            $code = $expeditionActivity->id;
+              
+        } else {
+            $code = str_repeat("0", 4 - strlen($expeditionActivity->id)).$expeditionActivity->id;
+        }
+
         $codes = $request->jenis_surat_jalan.date('Y').$code;
         if($request->jenis_surat_jalan) {
             $expeditionActivity->nomor_surat_jalan = $codes;
@@ -428,6 +434,7 @@ class ExpeditionController extends Controller
         $exStatusActivity->approval_at = $current_date_time;
         $exStatusActivity->save();
 
+        dd('aa');
         DB::connection(Auth::user()->schema)->commit();
         $userOwner = User::where('group_id', '8')->where('id_fcm_android','<>','')->get();
 
