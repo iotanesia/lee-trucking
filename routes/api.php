@@ -199,6 +199,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('add', ['as' => '-add', 'uses' => 'API\BonusDriverRitController@add']);
     Route::post('edit', ['as' => '-edit', 'uses' => 'API\BonusDriverRitController@edit']);
     Route::post('delete', ['as' => '-delete', 'uses' => 'API\BonusDriverRitController@delete']);
+    Route::post('paid', ['as' => '-paid', 'uses' => 'API\BonusDriverRitController@paid']);
   });
 
   Route::group(['as' => 'api-stkRepairHeader', 'prefix' => 'stkRepairHeader'], function() {

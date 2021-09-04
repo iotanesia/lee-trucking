@@ -159,6 +159,8 @@ $("document").ready(function(){
     for(var i = 0; i < responses.data.length; i++) {
       id = responses.data[i].id;
       driver_name = responses.data[i].driver_name;
+      coa_activity_id = responses.data[i].coa_activity_id;
+      driver_id = responses.data[i].driver_id;
       rit_truck = responses.data[i].rit_truck;
       truck = responses.data[i].truck;
       total_rit = responses.data[i].total_rit;
@@ -176,7 +178,13 @@ $("document").ready(function(){
                      "<td>"+ convertToRupiah(parseInt(total_rit) * 10000) +"</td>"+
                      "<td>"+  convertToRupiah(bonus)  +"</td>"+
                      "<td>"+  convertToRupiah(parseInt(bonus) + (parseInt(total_rit) * 10000))  +"</td>"+
-                     "<td> <button class='btn btn-success btn-sm'>Paid</button> </td>"+
+                     "<td>"; 
+        
+                     if(!coa_activity_id) {
+                        tableRows += "<button class='btn btn-success btn-sm' onClick='btnPaid("+driver_id+", "+bonus+", "+total_rit * 10000+")'>Paid</button>";
+                     }
+                      
+      tableRows += "</td>"+
                    "</tr>";
     }
   
@@ -212,44 +220,102 @@ $("document").ready(function(){
     })
   
     $("#select-kabupaten").on("click", function() {
-      var id = $(this).val();
-  
-      $.ajax({
-        url: window.Laravel.app_url + "/api/daerah/get-kecamatan-by-idKab",
-        type: "GET",
-        dataType: "json",
-        data:"idKabupaten"+"="+id,
-        crossDomain: true,
-        beforeSend: function( xhr ) { 
-          $('.preloader').show();
-        },
-        success: function(data, textStatus, xhr) {
-            $("#select-kecamatan").html("");
-            optData('#select-kecamatan', data, 'kecamatan');
-            $('.preloader').hide();
-        },
-      });
-  })
+        var id = $(this).val();
+    
+        $.ajax({
+            url: window.Laravel.app_url + "/api/daerah/get-kecamatan-by-idKab",
+            type: "GET",
+            dataType: "json",
+            data:"idKabupaten"+"="+id,
+            crossDomain: true,
+            beforeSend: function( xhr ) { 
+            $('.preloader').show();
+            },
+            success: function(data, textStatus, xhr) {
+                $("#select-kecamatan").html("");
+                optData('#select-kecamatan', data, 'kecamatan');
+                $('.preloader').hide();
+            },
+        });
+    })
   
     function optData(idSelect, res, title) {
-  
-      var opt = '';
-          opt += '<option value="0">--Select '+title+'--</option>';
-  
-      $.each(res.data, function( k, v) {
-          console.log(v.kabupaten);
-  
-          if(title == 'kabupaten') {
-              name = v.kabupaten;
-          
-          } else if(title == 'kecamatan') {
-              name = v.kecamatan;
-          }
-          
-          opt += '<option value="'+v.id+'"> '+name+' </option>';
-      });
-  
-      $(idSelect).html(opt);
+    
+        var opt = '';
+            opt += '<option value="0">--Select '+title+'--</option>';
+    
+        $.each(res.data, function( k, v) {
+            console.log(v.kabupaten);
+    
+            if(title == 'kabupaten') {
+                name = v.kabupaten;
+            
+            } else if(title == 'kecamatan') {
+                name = v.kecamatan;
+            }
+            
+            opt += '<option value="'+v.id+'"> '+name+' </option>';
+        });
+    
+            $(idSelect).html(opt);
+        }
+    });
+
+    function btnPaid(id, bonus, reward) {
+        var conf = confirm("Proses Bonus dan Reward Driver ?");
+
+        if(conf) {
+            var tahun = $("#tahun-select").val();
+            var bulan = $("#bulan-select").val();
+            var data = new FormData();
+            var accessToken =  window.Laravel.api_token;
+            data.append("_token", window.Laravel.csrfToken);
+            data.append("driver_id", id);
+            data.append("bulan", bulan);
+            data.append("tahun", tahun);
+            data.append("bonus", bonus);
+            data.append("reward", reward);
+        
+            $.ajax({
+                url: window.Laravel.app_url + "/api/bonusDriverRit/paid",
+                type: "POST",
+                dataType: "json",
+                data: data,
+                processData: false,
+                contentType: false,
+                headers: {"Authorization": "Bearer " + accessToken},
+                crossDomain: true,
+                beforeSend: function( xhr ) {
+                    $('.preloader').show();
+                },
+                success: function(datas, textStatus, xhr) {
+                    $("#successModal").modal("show");
+                    $("#bonusDriverRit-modal").modal("hide");
+                    $('.preloader').hide();
+                    $.ajax({
+                        url: window.Laravel.app_url + "/api/bonusDriverRit/get-list?year="+tahun+"&month="+bulan+"",
+                        type: "GET",
+                        dataType: "json",
+                        headers: {"Authorization": "Bearer " + accessToken},
+                        crossDomain: true,
+                        beforeSend: function( xhr ) { 
+                            $('.preloader').show();
+                        },
+                        success: function(data, textStatus, xhr) {
+                            $('.preloader').hide();
+                            successLoadbonusDriverRit(data);
+                        },
+                    });
+                },
+                error: function(datas, textStatus, xhr) {
+                    $('.preloader').hide();
+                    msgError = "";
+                    for(var item in datas.responseJSON.errors) {
+                    msgError += datas.responseJSON.errors[item][0] + "*";
+                    }
+                    alert(msgError);
+                }
+            });
+        }
     }
-  });
   
