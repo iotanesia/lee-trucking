@@ -52,7 +52,7 @@
             {
             label: "Expedisi",        
             borderColor: "#3e95cd",
-            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
             data: exCount,        
             fill: true
             }
@@ -80,7 +80,7 @@
         labels: cabang,
         datasets: [{
             label: "Truk",
-            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
             data: total_truck
         }]
         },
