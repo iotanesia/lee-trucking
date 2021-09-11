@@ -17,7 +17,7 @@ class StkRepairBanHeaderController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $whereField = 'name, no_StkRepairHeader';
+      $whereField = 'ex_master_truck.truck_plat, ex_master_truck.truck_name, ex_master_driver.driver_name';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $stkRepairHeader = Truck::join('ex_master_driver', 'ex_master_truck.driver_id', 'ex_master_driver.id')
                          ->leftJoin('expedition_activity', 'expedition_activity.truck_id', 'ex_master_truck.id')
