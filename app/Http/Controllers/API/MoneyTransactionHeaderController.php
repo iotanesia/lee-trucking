@@ -46,7 +46,7 @@ class MoneyTransactionHeaderController extends Controller
                                     ->select('money_transaction_header.user_id', 'users.name as name_user', DB::raw('SUM(pokok) AS pokok'), DB::raw('SUM(sisa_pokok) AS sisa_pokok'), 
                                     DB::raw("CASE WHEN SUM(sisa_pokok) = 0 THEN 'LUNAS'ELSE 'BELUM_LUNAS' END AS status"))
                                     ->groupBy('money_transaction_header.user_id', 'users.name')
-                                    ->orderBy('money_transaction_header.id', 'DESC')
+                                    ->orderBy('users.name', 'DESC')
                                     ->paginate();
 
                                     // , 'money_transaction_header.status as statue', 'users.name as name_user', 'coa_master_rekening.rek_no as rek_no', 'coa_master_rekening.rek_name as rek_name',
