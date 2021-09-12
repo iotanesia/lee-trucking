@@ -793,6 +793,32 @@
         $('input.editor-export-do-active', row).prop('checked', false);
         $('label.editor-export-do-label', row).text('Belum di export');
       }
+
+        
+    $('input.editor-do-active', row).on('change', function () {
+      var isTruePeriksa = false;
+      if($(this).prop('checked')){
+        isTruePeriksa=true;
+      }else{
+        isTruePeriksa =false;
+      }
+      var datasss = { id : data.id, is_read : isTruePeriksa}
+      $.ajax({
+        url: window.Laravel.app_url + "/api/report/post-change-status-periksa",
+        type: "POST",
+        dataType: "json",
+        data: datasss,
+        headers: {"Authorization": "Bearer " + accessToken},
+        dataType: "text",
+        success: function(resultData) {
+          if(isTruePeriksa){
+            $('label.editor-do-label', row).text('Sudah Diperiksa');
+          }else{
+            $('label.editor-do-label', row).text('Belum Diperiksa');
+          }
+        }
+      });
+    });
       
       $('input.editor-export-do-active', row).on('change', function () {
         var isTrueExport = false;
@@ -1281,6 +1307,31 @@
         $('input.editor-export-df-active', row).prop('checked', false);
         $('label.editor-export-df-label', row).text('Belum di export');
       }
+
+      $('input.editor-df-active', row).on('change', function () {
+        var isTruePeriksa = false;
+        if($(this).prop('checked')){
+          isTruePeriksa=true;
+        }else{
+          isTruePeriksa =false;
+        }
+        var datasss = { id : data.id, is_read : isTruePeriksa}
+        $.ajax({
+          url: window.Laravel.app_url + "/api/report/post-change-status-periksa",
+          type: "POST",
+          dataType: "json",
+          data: datasss,
+          headers: {"Authorization": "Bearer " + accessToken},
+          dataType: "text",
+          success: function(resultData) {
+            if(isTruePeriksa){
+              $('label.editor-df-label', row).text('Sudah Diperiksa');
+            }else{
+              $('label.editor-df-label', row).text('Belum Diperiksa');
+            }
+          }
+        });
+      });    
       
       $('input.editor-export-df-active', row).on('change', function () {
         var isTrueExport = false;
