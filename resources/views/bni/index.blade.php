@@ -276,7 +276,7 @@
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
                     <li class="nav-item mr-2 mr-md-0">
-                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
+                      <a href="{{url('bni-dashboard-detail')}}" class="nav-link py-2 px-3 active" data-toggle="tab">
                         <span class="d-none d-md-block">See All</span>
                         <span class="d-md-none">M</span>
                       </a>
@@ -1493,7 +1493,6 @@
         </div>
       </div>
       <!-- Footer -->
-      {{json_encode($sl_label)}}
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">

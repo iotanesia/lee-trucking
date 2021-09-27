@@ -102,4 +102,5 @@ Route::get('/export-truck-repair', 'RepairTruckReportController@exportTruckRepai
 
 #endregion
 Route::get('/bni-dashboard', 'BniDashBoardController@index')->name('bni-dashboard');
+Route::get('/bni-dashboard-detail', 'BniDashBoardController@indexAll')->name('bni-dashboard-detail');
 
