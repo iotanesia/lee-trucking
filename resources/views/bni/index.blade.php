@@ -276,7 +276,7 @@
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
                     <li class="nav-item mr-2 mr-md-0">
-                      <a href="{{url('bni-dashboard-detail')}}" class="nav-link py-2 px-3 active" data-toggle="tab">
+                      <a href="{{url('bni-dashboard-detail')}}" class="nav-link py-2 px-3 active">
                         <span class="d-none d-md-block">See All</span>
                         <span class="d-md-none">M</span>
                       </a>
