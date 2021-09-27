@@ -11,16 +11,16 @@ use App\Models\Kenek;
 use App\Models\CoaActivity;
 use App\Models\Driver;
 use App\Models\Truck;
-use App\Models\UserDetail;
 use App\Models\Notification;
 use App\Models\GlobalParam;
 use App\Models\Group;
 use App\Models\Ban;
-use Auth;
-use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use App\Models\UserDetail;
 use App\Services\FirebaseService;
-use Validator;
 use App\Services\FirebaseServic\Messaging;
 
 class ExpeditionController extends Controller
@@ -40,7 +40,6 @@ class ExpeditionController extends Controller
       $whereFilter = (isset($data['where_filter'])) ? $data['where_filter'] : '';
       $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
       $statusCode = isset($data['status_code']) ? $data['status_code'] : false;
-      // echo $whereValue; die();
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                    ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
