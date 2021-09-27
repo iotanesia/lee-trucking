@@ -9,7 +9,7 @@ use App\Models\GlobalParam;
 use App\Models\ExpeditionActivity;
 use App\Models\Cabang;
 use Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class BonusDriverRitController extends Controller
 {
