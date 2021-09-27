@@ -275,9 +275,9 @@
                 </div>
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales-dark" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
+                    <li class="nav-item mr-2 mr-md-0">
                       <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                        <span class="d-none d-md-block">Month</span>
+                        <span class="d-none d-md-block">See All</span>
                         <span class="d-md-none">M</span>
                       </a>
                     </li>
@@ -286,11 +286,9 @@
               </div>
             </div>
             <div class="card-body">
-              <!-- Chart -->
-              <div class="chart">
-                <!-- Chart wrapper -->
-                <canvas id="chart-sales-dark" class="chart-canvas"></canvas>
-              </div>
+                <div class="chart-container" >
+                    <canvas id="bar-chart" class="chart-canvas"></canvas>
+                </div>
             </div>
           </div>
         </div>
@@ -1495,6 +1493,7 @@
         </div>
       </div>
       <!-- Footer -->
+      {{json_encode($sl_label)}}
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
@@ -1524,37 +1523,47 @@
   </div>
 <script src="{{url('assets/chartJs/Chart.min.js')}}"></script>
 <script>
-    var exBln = [1,2,3,4];
-    var exCount = [1,2,3,4];
+    var exBln = {!! json_encode($sl_label) !!};
+    var exCount = {!! json_encode($sl_count) !!};
     var total_truck = [1,2,3,4];
     var cabang = [1,2,3,4];
     // console.log(total_truck)
     new Chart(document.getElementById("bar-chart"), {
-        type: 'bar',
+        type: 'horizontalBar',
         data: {
         labels: exBln,
         datasets: [
-            {
-            label: "Expedisi",        
-            borderColor: "#3e95cd",
-            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2"],
-            data: exCount,        
-            fill: true
-            }
-        ]
+                {
+                    label: "SL",        
+                    borderColor: "#3e95cd",
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2"],
+                    data: exCount,        
+                    fill: true
+                }
+            ]
         },
         options: {
-        legend: { display: false },
-        title: {
-            display: true,
-            text: 'Expedisi Per Bulan'
-        },
+            legend: { display: false },
+            indexAxis: 'y',
+            title: {
+                display: true,
+                text: 'Report SL'
+            },
             scales: {
                 yAxes: [{
                     ticks: {
                        beginAtZero: true
                     }
                 }]
+            },
+            plugins: {
+                legend: {
+                    position: 'right',
+                },
+                title: {
+                    display: true,
+                    text: 'Chart.js Horizontal Bar Chart'
+                }
             }
         }
     });

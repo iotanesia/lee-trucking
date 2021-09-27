@@ -24,9 +24,17 @@ class BniDashboardController extends Controller
      */
     public function index(Request $request)
     {
-        $data['sl'] = BniDashBoadrd::getSlChart();
-        $data['slAll'] = BniDashBoadrd::getSlAllChart();
-        $data['produk'] = BniDashBoadrd::getSlProdukChart();
+        $dataSl = BniDashBoadrd::getSlChart();
+        foreach($dataSl as $key => $val) {
+            $data['sl_label'][] = $val['unit'];
+            $data['sl_count'][] = $val['count'];
+        }
+
+        $dataProduk = BniDashBoadrd::getSlProdukChart();
+        foreach($dataProduk as $key => $val) {
+            $data['produk_label'][] = $val['produk'];
+            $data['produk_count'][] = $val['count'];
+        }
        
         return view('bni.index', $data);
     }

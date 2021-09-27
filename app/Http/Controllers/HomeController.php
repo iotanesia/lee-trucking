@@ -7,8 +7,10 @@ use App\User;
 use App\Models\UserDetail;
 use App\Models\GlobalParam;
 use App\Models\Group;
-use Auth;
-use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Customer;
+use App\Tenan;
 
 class HomeController extends Controller
 {
