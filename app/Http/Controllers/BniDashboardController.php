@@ -29,7 +29,7 @@ class BniDashboardController extends Controller
             $data['sl_label'][] = $val['unit'];
             $data['sl_count'][] = $val['count'];
         }
-
+        
         $dataProduk = BniDashBoadrd::getSlProdukChart();
         foreach($dataProduk as $key => $val) {
             $data['produk_label'][] = $val['produk'];
@@ -37,5 +37,16 @@ class BniDashboardController extends Controller
         }
        
         return view('bni.index', $data);
+    }
+
+    public function indexAll(Request $request)
+    {
+        $dataSl = BniDashBoadrd::getSlAllChart();
+        foreach($dataSl as $key => $val) {
+            $data['sl_label'][] = $val['unit'];
+            $data['sl_count'][] = $val['count'];
+        }
+
+        return view('bni.index-detail', $data);
     }
 }
