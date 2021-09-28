@@ -287,7 +287,7 @@
             </div>
             <div class="card-body">
                 <div class="chart-container" >
-                    <canvas id="bar-chart" class="chart-canvas"></canvas>
+                    <canvas style="height:400px" id="bar-chart" class="chart-canvas"></canvas>
                 </div>
             </div>
           </div>
@@ -471,11 +471,12 @@
 
 <script src="{{asset('js/event.js')}}"></script>
 <script src="{{asset('assets/vendor/select2/dist/js/select2.min.js')}}"></script>
+
 <script>
     var exBln = {!! json_encode($sl_label) !!};
     var exCount = {!! json_encode($sl_count) !!};
-    var total_truck = [1,2,3,4];
-    var cabang = [1,2,3,4];
+    var total_truck = {!! json_encode($produk_count) !!};
+    var cabang =  {!! json_encode($produk_label) !!};;
     // console.log(total_truck)
     new Chart(document.getElementById("bar-chart"), {
         type: 'horizontalBar',
@@ -483,7 +484,7 @@
         labels: exBln,
         datasets: [
                 {
-                    label: "SL",        
+                    label: "Nasabah",     
                     borderColor: "#3e95cd",
                     backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2"],
                     data: exCount,        
@@ -494,9 +495,10 @@
         options: {
             legend: { display: false },
             indexAxis: 'y',
+            maintainAspectRatio: false, 
             title: {
                 display: true,
-                text: 'Report SL'
+                text: 'Total Nasabah / Wilayah'
             },
             scales: {
                 yAxes: [{
@@ -522,7 +524,7 @@
         data: {
         labels: cabang,
         datasets: [{
-            label: "Truk",
+            label: "Nasabah",
             backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2"],
             data: total_truck
         }]
@@ -530,8 +532,9 @@
         options: {
             title: {
                 display: true,
-                text: 'Total Truk'
-            }
+                text: 'Total Nasabah / Produk'
+            },
+            maintainAspectRatio: false, 
         }
     });
 </script>
