@@ -293,14 +293,23 @@
           </div>
         </div>
       </div>
-      
+      <div class="row">
+          <div class="col-xl-6">
+            <div class="card" style="height:450px">
+                <div class="card-header bg-transparent">
+                    <div class="card-body">
+                        <canvas style="height:400px" id="pie-chart"></canvas>
+                    </div>
+                </div>
+          </div>
+      </div>
+      </div>
       <div class="row">
         <div class="col-xl-12">
           <div class="card" id="expedition">
             <div class="card-header bg-transparent" style="background-color:#005e6a !important">
               <div class="row align-items-center">
                   <h5 class="h3 mb-0" style="color:#ffffff !important;padding-left: 10px;">Tabel Data SL</h5><br/>
-        
               </div>
             </div>
             <div class="card-body">
@@ -308,7 +317,7 @@
                 <div id="ad" class="tab-pane in active">
                   <form id="form-export-bo" method="get" action="{{url('export-bo')}}">
                     <div class="row">
-                          <div class="col-md-4">
+                          <div class="col-md-3">
                             <input class="form-control" name="tipeFileBO" id="tipeFileBO" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                             <input class="form-control" name="noInvoiceBO" id="noInvoiceBO" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                             <div class="input-group input-group-alternative input-group-merge" 
@@ -319,15 +328,8 @@
                                 <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                             </div>
                           </div>    
-                          <div class="col-md-3" >
-                            <select class="form-control filter-aktifiti"  id="filter_select_unit" >
-                                  <option value="">Unit</option>
-                                  @foreach($filterUnit as $row)
-                                  <option value="{{$row['unit']}}">{{$row['unit']}}</option>
-                                  @endforeach
-                              </select>
-                          </div>  
-                          <div class="col-md-1" >
+                      
+                          <div class="col-xs-2" >
                             <select class="form-control filter-aktifiti"  id="filter_select_kol" >
                                   <option value="">Kol</option>
                                   @foreach($filterKol as $row)
@@ -335,7 +337,16 @@
                                   @endforeach
                               </select>
                           </div>  
-                          <div class="col-md-3" >
+                          
+                          <div class="col-md-1" >
+                            <select class="form-control filter-aktifiti"  id="filter_select_flag" >
+                                  <option value="">Flag</option>
+                                  @foreach($filterFlag as $row)
+                                  <option value="{{$row['flag']}}">{{$row['flag']}}</option>
+                                  @endforeach
+                              </select>
+                          </div>  
+                          <div class="col-xs-2" >
                             <select class="form-control filter-aktifiti"  id="filter_select_flagCovid" >
                                   <option value="">Flag Covid</option>
                                   @foreach($filterFlagCovid as $row)
@@ -343,6 +354,23 @@
                                   @endforeach
                               </select>
                           </div>  
+                          <div class="col-md-2" >
+                            <select class="form-control filter-aktifiti"  id="filter_select_produk" >
+                                  <option value="">Produk</option>
+                                  @foreach($filterProduk as $row)
+                                  <option value="{{$row['produk']}}">{{$row['produk']}}</option>
+                                  @endforeach
+                              </select>
+                          </div>  
+                          
+                          <div class="col-md-2" >
+                            <select class="form-control filter-aktifiti"  id="filter_select_unit" >
+                                  <option value="">Unit</option>
+                                  @foreach($filterUnit as $row)
+                                  <option value="{{$row['unit']}}">{{$row['unit']}}</option>
+                                  @endforeach
+                              </select>
+                          </div> 
                         <div id="tag-cloud-widget" class="col-md-2">  
                           <div class="content">  
                             <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
