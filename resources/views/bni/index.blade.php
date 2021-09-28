@@ -315,7 +315,7 @@
             <div class="card-body">
               <div class="tab-content">
                 <div id="ad" class="tab-pane in active">
-                  <form id="form-export-bo" method="get" action="{{url('export-bo')}}">
+                  <form id="form-export-bo" method="get" action="{{url('export-bni')}}">
                     <div class="row">
                           <div class="col-md-3">
                           <input class="form-control" name="filterSelectKol" id="filterSelectKol" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
@@ -391,7 +391,7 @@
                               <div class="dropdown-header noti-title">
                                 <h6 class="text-overflow m-0">Eksport</h6>
                               </div>
-                              <a href="#" id="is-excel-bo" class="dropdown-item">
+                              <a onclick="($('#form-export-bo').submit())" id="is-excel-bo" class="dropdown-item">
                                 <i class="fas fa-file-excel"></i>
                                 <span>Excel</span>
                               </a>
@@ -547,8 +547,8 @@
     var ld = new Date(y, m + 1, 0);
     var lastDay = formatDate(ld);
 
-    var startDateBO = formatDateReq(firstDay);
-    var endDateBO = formatDateReq(lastDay);
+    var startDateBO = null;
+    var endDateBO = null;
 
     var table = $('#table-invoice-bo').DataTable({
     processing: true,
@@ -558,7 +558,7 @@
       type: "GET",
       data: function (d) {
         d.start_date = startDateBO;
-        d.end_date = endDateBO;
+        d.end_date = startDateBO;
         d.filter_select_kol = $("#filter_select_kol").val();
         d.filter_select_flag = $("#filter_select_flag").val();
         d.filter_select_flagCovid = $("#filter_select_flagCovid").val();

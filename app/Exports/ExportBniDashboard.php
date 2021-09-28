@@ -17,12 +17,20 @@ class ExportBniDashboard implements FromView, WithDrawings
 
 protected $startDate;
 protected $endDate;
-protected $noInvoice;
-protected $jenisPembayaran;
-protected $ids;
+protected $kol;
+protected $flag;
+protected $flagCovid;
+protected $unit;
+protected $produk;
 
- function __construct($startDate, $endDate) {
+ function __construct($startDate, $endDate, $kol, $flag, $flagCovid, $unit, $produk) {
         $this->startDate = $startDate;
+        $this->endDate = $endDate;
+        $this->kol = $kol;
+        $this->flag = $flag;
+        $this->flagCovid = $flagCovid;
+        $this->unit = $unit;
+        $this->produk = $produk;
  }
 
 /**
@@ -32,10 +40,59 @@ public function view(): View
 {
     setlocale(LC_TIME, 'id_ID');
     Carbon::setLocale('id');
-    $data = BniDashBoadrd::take(50)->
-    // whereBetween('dates', [$startDate, $endDate])
-            orderBy('dates','DESC')
-            ->get();
+    $startDates = $this->startDate;
+    $endDates = $this->endDate;
+    $filterFlag = $this->flag;
+    $filterFlagCovid = $this->flagCovid;
+    $filterKol = $this->kol;
+    $filterProduk = $this->produk;
+    $filterUnit = $this->unit;
+    $data = BniDashBoadrd::
+        // where(function($query) use($startDates, $endDates) {
+        //   if($startDates && $endDates) {
+        //     if($startDates != null && $endDates != null){
+        //       $query->whereBetween('dates', [$startDates, $endDates]);
+        //     }
+        //   }
+        // })->
+          // whereBetween('dates', [$startDate, $endDate])->
+          where(function($query) use($filterKol) {
+            if($filterKol) {
+              if($filterKol != 'Kol'){
+                $query->where('kol', $filterKol);
+              }
+            }
+          })->
+          where(function($query) use($filterFlag) {
+            if($filterFlag) {
+              if($filterFlag != 'Flag'){
+                $query->where('flag', $filterFlag);
+              }
+            }
+          })->
+          where(function($query) use($filterFlagCovid) {
+            if($filterFlagCovid) {
+              if($filterFlagCovid != 'Flag Covid'){
+                $query->where('flag_covid', $filterFlagCovid);
+              }
+            }
+          })->
+          where(function($query) use($filterUnit) {
+            if($filterUnit) {
+              if($filterUnit != 'Unit'){
+                $query->where('unit', $filterUnit);
+              }
+            }
+          })->
+          where(function($query) use($filterProduk) {
+            if($filterProduk) {
+              if($filterProduk != 'Produk'){
+                $query->where('produk', $filterProduk);
+              }
+            }
+          })->
+          take(100)->orderBy('dates','DESC')->
+          get();
         $startDates =  Carbon::parse($this->startDate)->formatLocalized('%d %B %Y');
         $endDates =  Carbon::parse($this->endDate)->formatLocalized('%d %B %Y');
         foreach($data as $row) {
