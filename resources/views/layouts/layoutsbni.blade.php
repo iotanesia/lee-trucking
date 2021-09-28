@@ -43,8 +43,16 @@
     cursor: pointer;
     box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;
   }
-  </style>
+  </style> 
   <script src="{{asset('js/jquery3.5.1.js')}}"></script>
+  <script>
+      window.Laravel = {!! json_encode([
+      "csrfToken" => csrf_token(),
+      "api_token" => Auth::user()->tokens,
+      "app_url" => url('/'),
+      "group_id" => Auth::user()->group_id
+      ]) !!};
+  </script>
 </head>
 
 <body>

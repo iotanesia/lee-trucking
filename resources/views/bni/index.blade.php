@@ -276,7 +276,7 @@
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
                     <li class="nav-item mr-2 mr-md-0">
-                      <a href="{{url('bni-dashboard-detail')}}" class="nav-link py-2 px-3 active" data-toggle="tab">
+                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
                         <span class="d-none d-md-block">See All</span>
                         <span class="d-md-none">M</span>
                       </a>
@@ -293,1206 +293,135 @@
           </div>
         </div>
       </div>
+      
       <div class="row">
-        <div class="col-xl-4">
-          <!-- Members list group card -->
-          <div class="card">
-            <!-- Card header -->
-            <div class="card-header">
-              <!-- Title -->
-              <h5 class="h3 mb-0">Team members</h5>
-            </div>
-            <!-- Card body -->
-            <div class="card-body">
-              <!-- List group -->
-              <ul class="list-group list-group-flush list my--3">
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg">
-                      </a>
-                    </div>
-                    <div class="col ml--2">
-                      <h4 class="mb-0">
-                        <a href="#!">John Michael</a>
-                      </h4>
-                      <span class="text-success">●</span>
-                      <small>Online</small>
-                    </div>
-                    <div class="col-auto">
-                      <button type="button" class="btn btn-sm btn-primary">Add</button>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg">
-                      </a>
-                    </div>
-                    <div class="col ml--2">
-                      <h4 class="mb-0">
-                        <a href="#!">Alex Smith</a>
-                      </h4>
-                      <span class="text-warning">●</span>
-                      <small>In a meeting</small>
-                    </div>
-                    <div class="col-auto">
-                      <button type="button" class="btn btn-sm btn-primary">Add</button>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg">
-                      </a>
-                    </div>
-                    <div class="col ml--2">
-                      <h4 class="mb-0">
-                        <a href="#!">Samantha Ivy</a>
-                      </h4>
-                      <span class="text-danger">●</span>
-                      <small>Offline</small>
-                    </div>
-                    <div class="col-auto">
-                      <button type="button" class="btn btn-sm btn-primary">Add</button>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                      </a>
-                    </div>
-                    <div class="col ml--2">
-                      <h4 class="mb-0">
-                        <a href="#!">John Michael</a>
-                      </h4>
-                      <span class="text-success">●</span>
-                      <small>Online</small>
-                    </div>
-                    <div class="col-auto">
-                      <button type="button" class="btn btn-sm btn-primary">Add</button>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4">
-          <!-- Checklist -->
-          <div class="card">
-            <!-- Card header -->
-            <div class="card-header">
-              <!-- Title -->
-              <h5 class="h3 mb-0">To do list</h5>
-            </div>
-            <!-- Card body -->
-            <div class="card-body p-0">
-              <!-- List group -->
-              <ul class="list-group list-group-flush" data-toggle="checklist">
-                <li class="checklist-entry list-group-item flex-column align-items-start py-4 px-4">
-                  <div class="checklist-item checklist-item-success">
-                    <div class="checklist-info">
-                      <h5 class="checklist-title mb-0">Call with Dave</h5>
-                      <small>10:30 AM</small>
-                    </div>
-                    <div>
-                      <div class="custom-control custom-checkbox custom-checkbox-success">
-                        <input class="custom-control-input" id="chk-todo-task-1" type="checkbox" checked>
-                        <label class="custom-control-label" for="chk-todo-task-1"></label>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="checklist-entry list-group-item flex-column align-items-start py-4 px-4">
-                  <div class="checklist-item checklist-item-warning">
-                    <div class="checklist-info">
-                      <h5 class="checklist-title mb-0">Lunch meeting</h5>
-                      <small>10:30 AM</small>
-                    </div>
-                    <div>
-                      <div class="custom-control custom-checkbox custom-checkbox-warning">
-                        <input class="custom-control-input" id="chk-todo-task-2" type="checkbox">
-                        <label class="custom-control-label" for="chk-todo-task-2"></label>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="checklist-entry list-group-item flex-column align-items-start py-4 px-4">
-                  <div class="checklist-item checklist-item-info">
-                    <div class="checklist-info">
-                      <h5 class="checklist-title mb-0">Argon Dashboard Launch</h5>
-                      <small>10:30 AM</small>
-                    </div>
-                    <div>
-                      <div class="custom-control custom-checkbox custom-checkbox-info">
-                        <input class="custom-control-input" id="chk-todo-task-3" type="checkbox">
-                        <label class="custom-control-label" for="chk-todo-task-3"></label>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="checklist-entry list-group-item flex-column align-items-start py-4 px-4">
-                  <div class="checklist-item checklist-item-danger">
-                    <div class="checklist-info">
-                      <h5 class="checklist-title mb-0">Winter Hackaton</h5>
-                      <small>10:30 AM</small>
-                    </div>
-                    <div>
-                      <div class="custom-control custom-checkbox custom-checkbox-danger">
-                        <input class="custom-control-input" id="chk-todo-task-4" type="checkbox" checked>
-                        <label class="custom-control-label" for="chk-todo-task-4"></label>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4">
-          <!-- Progress track -->
-          <div class="card">
-            <!-- Card header -->
-            <div class="card-header">
-              <!-- Title -->
-              <h5 class="h3 mb-0">Progress track</h5>
-            </div>
-            <!-- Card body -->
-            <div class="card-body">
-              <!-- List group -->
-              <ul class="list-group list-group-flush list my--3">
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="../../assets/img/theme/bootstrap.jpg">
-                      </a>
-                    </div>
-                    <div class="col">
-                      <h5>Argon Design System</h5>
-                      <div class="progress progress-xs mb-0">
-                        <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="../../assets/img/theme/angular.jpg">
-                      </a>
-                    </div>
-                    <div class="col">
-                      <h5>Angular Now UI Kit PRO</h5>
-                      <div class="progress progress-xs mb-0">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="../../assets/img/theme/sketch.jpg">
-                      </a>
-                    </div>
-                    <div class="col">
-                      <h5>Black Dashboard</h5>
-                      <div class="progress progress-xs mb-0">
-                        <div class="progress-bar bg-red" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img alt="Image placeholder" src="../../assets/img/theme/react.jpg">
-                      </a>
-                    </div>
-                    <div class="col">
-                      <h5>React Material Dashboard</h5>
-                      <div class="progress progress-xs mb-0">
-                        <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-5">
-          <div class="card">
-            <div class="card-header">
-              <h5 class="h3 mb-0">Activity feed</h5>
-            </div>
-            <div class="card-header d-flex align-items-center">
-              <div class="d-flex align-items-center">
-                <a href="#">
-                  <img src="../../assets/img/theme/team-1.jpg" class="avatar">
-                </a>
-                <div class="mx-3">
-                  <a href="#" class="text-dark font-weight-600 text-sm">John Snow</a>
-                  <small class="d-block text-muted">3 days ago</small>
+        <div class="col-xl-12">
+          <div class="card" id="expedition">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-uppercase text-muted ls-1 mb-1">Data </h6>
+                  <h5 class="h3 mb-0">Tabel </h5><br/>
+                  <!-- <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm">
+                    <li class="nav-item submenu">
+                        <a class="nav-link active show" id="user-ad" data-toggle="tab" href="#ad" role="tab" aria-selected="true">BO</a>
+                    </li>
+                    <li class="nav-item submenu">
+                        <a class="nav-link" id="user-up" data-toggle="tab" href="#up" role="tab" aria-selected="false">BA</a>
+                    </li>
+                    <li class="nav-item submenu">
+                        <a class="nav-link" id="user-ud" data-toggle="tab" href="#ud" role="tab" aria-selected="false">BJ</a>
+                    </li>
+                    <li class="nav-item submenu">
+                        <a class="nav-link" id="user-uf" data-toggle="tab" href="#uf" role="tab" aria-selected="false">BF</a>
+                    </li>
+                  </ul> -->
                 </div>
-              </div>
-              <div class="text-right ml-auto">
-                <button type="button" class="btn btn-sm btn-primary btn-icon">
-                  <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
-                  <span class="btn-inner--text">Follow</span>
-                </button>
               </div>
             </div>
             <div class="card-body">
-              <p class="mb-4">
-                Personal profiles are the perfect way for you to grab their attention and persuade recruiters to continue reading your CV because you’re telling them from the off exactly why they should hire you.
-              </p>
-              <img alt="Image placeholder" src="../../assets/img/theme/img-1-1000x600.jpg" class="img-fluid rounded">
-              <div class="row align-items-center my-3 pb-3 border-bottom">
-                <div class="col-sm-6">
-                  <div class="icon-actions">
-                    <a href="#" class="like active">
-                      <i class="ni ni-like-2"></i>
-                      <span class="text-muted">150</span>
-                    </a>
-                    <a href="#">
-                      <i class="ni ni-chat-round"></i>
-                      <span class="text-muted">36</span>
-                    </a>
-                    <a href="#">
-                      <i class="ni ni-curved-next"></i>
-                      <span class="text-muted">12</span>
-                    </a>
-                  </div>
-                </div>
-                <div class="col-sm-6 d-none d-sm-block">
-                  <div class="d-flex align-items-center justify-content-sm-end">
-                    <div class="avatar-group">
-                      <a href="#" class="avatar avatar-xs rounded-circle" data-toggle="tooltip" data-original-title="Jessica Rowland">
-                        <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg" class="">
-                      </a>
-                      <a href="#" class="avatar avatar-xs rounded-circle" data-toggle="tooltip" data-original-title="Audrey Love">
-                        <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg" class="rounded-circle">
-                      </a>
-                      <a href="#" class="avatar avatar-xs rounded-circle" data-toggle="tooltip" data-original-title="Michael Lewis">
-                        <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg" class="rounded-circle">
-                      </a>
-                    </div>
-                    <small class="pl-2 font-weight-bold">and 30+ more</small>
-                  </div>
-                </div>
-              </div>
-              <!-- Comments -->
-              <div class="mb-1">
-                <div class="media media-comment">
-                  <img alt="Image placeholder" class="avatar avatar-lg media-comment-avatar rounded-circle" src="../../assets/img/theme/team-1.jpg">
-                  <div class="media-body">
-                    <div class="media-comment-text">
-                      <h6 class="h5 mt-0">Michael Lewis</h6>
-                      <p class="text-sm lh-160">Cras sit amet nibh libero nulla vel metus scelerisque ante sollicitudin. Cras purus odio vestibulum in vulputate viverra turpis.</p>
-                      <div class="icon-actions">
-                        <a href="#" class="like active">
-                          <i class="ni ni-like-2"></i>
-                          <span class="text-muted">3 likes</span>
-                        </a>
-                        <a href="#">
-                          <i class="ni ni-curved-next"></i>
-                          <span class="text-muted">2 shares</span>
-                        </a>
+              <div class="tab-content">
+                <div id="ad" class="tab-pane in active">
+                  <form id="form-export-bo" method="get" action="{{url('export-bo')}}">
+                    <div class="row">
+                          <div class="col-md-4">
+                            <input class="form-control" name="tipeFileBO" id="tipeFileBO" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            <input class="form-control" name="noInvoiceBO" id="noInvoiceBO" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            <div class="input-group input-group-alternative input-group-merge" 
+                                style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                              <div class="input-group-prepend" style="margin-left: 10px;">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                              </div>
+                                <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                            </div>
+                          </div>
+                          <div class="col-md-2" >
+                            <select class="form-control" id="filter-select-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="TUNAI">TUNAI</option>
+                                <option value="NON_TUNAI">NON TUNAI</option>
+                            </select>
+                          </div>     
+                           <!-- <div class="col-md-2" >
+                            <select class="form-control" id="filter-periksa-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di periksa</option>
+                                <option value="false">Belum di periksa</option>
+                            </select>
+                          </div> -->
+                          <!-- <div class="col-md-2" >
+                            <select class="form-control" id="filter-export-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
+                                <option value="">Semua</option>
+                                <option value="true">Sudah di export</option>
+                                <option value="false">Belum di export</option>
+                            </select>
+                          </div> -->
+                        <div id="tag-cloud-widget" class="col-md-2">  
+                          <div class="content">  
+                            <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fas fa-file-export"></i>
+                                </span>
+                                <div class="media-body d-none d-lg-block" style="margin-top: 4px;margin-right: 20px;text-align:center">
+                                  <span class="mb-0 text-sm  font-weight-bold">Eksport</span>
+                                </div>
+                              </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left">
+                              <div class="dropdown-header noti-title">
+                                <h6 class="text-overflow m-0">Eksport</h6>
+                              </div>
+                              <a href="#" id="is-excel-bo" class="dropdown-item">
+                                <i class="fas fa-file-excel"></i>
+                                <span>Excel</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <br/><br/><br/>
+                        <!-- <div style='margin-left:10px'>
+                            <label class="switch">
+                              <input type="checkbox" id="cbPpn10Bo" checked>
+                              <span class="slider round">PPN 10%</span>
+                            </label>
+                            <label class="switch">
+                              <input type="checkbox" id="cbPph23Bo" checked>
+                              <span class="slider round">PPH 23</span>
+                            </label>
+                        </div> -->
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="media media-comment">
-                  <img alt="Image placeholder" class="avatar avatar-lg media-comment-avatar rounded-circle" src="../../assets/img/theme/team-2.jpg">
-                  <div class="media-body">
-                    <div class="media-comment-text">
-                      <h6 class="h5 mt-0">Jessica Stones</h6>
-                      <p class="text-sm lh-160">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-                      <div class="icon-actions">
-                        <a href="#" class="like active">
-                          <i class="ni ni-like-2"></i>
-                          <span class="text-muted">10 likes</span>
-                        </a>
-                        <a href="#">
-                          <i class="ni ni-curved-next"></i>
-                          <span class="text-muted">1 share</span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <hr />
-                <div class="media align-items-center">
-                  <img alt="Image placeholder" class="avatar avatar-lg rounded-circle mr-4" src="../../assets/img/theme/team-3.jpg">
-                  <div class="media-body">
-                    <form>
-                      <textarea class="form-control" placeholder="Write your comment" rows="1"></textarea>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-7">
-          <div class="row">
-            <div class="col">
-              <div class="card">
-                <!-- Card header -->
-                <div class="card-header border-0">
-                  <h3 class="mb-0">Light table</h3>
-                </div>
-                <div class="table-responsive">
-                  <table class="table align-items-center table-flush">
-                    <thead class="thead-light">
+                  </form>
+                  <br/>
+                  <table class="table table-responsive align-items-center table-striped" id="table-invoice-bo" son-success-load="successLoadexpedition" width="100%">
+                      <thead class="bg-gradient-info text-white">
                       <tr>
-                        <th scope="col" class="sort" data-sort="name">Project</th>
-                        <th scope="col" class="sort" data-sort="budget">Budget</th>
-                        <th scope="col" class="sort" data-sort="status">Status</th>
-                        <th scope="col">Users</th>
-                        <th scope="col" class="sort" data-sort="completion">Completion</th>
-                        <th scope="col"></th>
+                          <th>No</th>
+                          <th>Wil</th>
+                          <th>Unit</th>
+                          <th>Produk</th>
+                          <th>CIF</th>
+                          <th>No Rek</th>
+                          <th>Nama Nasabah</th>
+                          <th>Kol</th>
+                          <th>Maks Krd</th>
+                          <th>BK Debit</th>
+                          <th>Retrukturasi</th>
+                          <th>Flag Covid</th>
+                          <th>Desk Flag Covid</th>
+                          <th>Flag</th>
+                          <th>Dates</th>
                       </tr>
-                    </thead>
-                    <tbody class="list">
-                      <tr>
-                        <th scope="row">
-                          <div class="media align-items-center">
-                            <a href="#" class="avatar rounded-circle mr-3">
-                              <img alt="Image placeholder" src="../../assets/img/theme/bootstrap.jpg">
-                            </a>
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">Argon Design System</span>
-                            </div>
-                          </div>
-                        </th>
-                        <td class="budget">
-                          $2500 USD
-                        </td>
-                        <td>
-                          <span class="badge badge-dot mr-4">
-                            <i class="bg-warning"></i>
-                            <span class="status">pending</span>
-                          </span>
-                        </td>
-                        <td>
-                          <div class="avatar-group">
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Alexander Smith">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Jessica Doe">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                            </a>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <span class="completion mr-2">60%</span>
-                            <div>
-                              <div class="progress">
-                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right">
-                          <div class="dropdown">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div class="media align-items-center">
-                            <a href="#" class="avatar rounded-circle mr-3">
-                              <img alt="Image placeholder" src="../../assets/img/theme/angular.jpg">
-                            </a>
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">Angular Now UI Kit PRO</span>
-                            </div>
-                          </div>
-                        </th>
-                        <td class="budget">
-                          $1800 USD
-                        </td>
-                        <td>
-                          <span class="badge badge-dot mr-4">
-                            <i class="bg-success"></i>
-                            <span class="status">completed</span>
-                          </span>
-                        </td>
-                        <td>
-                          <div class="avatar-group">
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Alexander Smith">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Jessica Doe">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                            </a>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <span class="completion mr-2">100%</span>
-                            <div>
-                              <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right">
-                          <div class="dropdown">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div class="media align-items-center">
-                            <a href="#" class="avatar rounded-circle mr-3">
-                              <img alt="Image placeholder" src="../../assets/img/theme/sketch.jpg">
-                            </a>
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">Black Dashboard</span>
-                            </div>
-                          </div>
-                        </th>
-                        <td class="budget">
-                          $3150 USD
-                        </td>
-                        <td>
-                          <span class="badge badge-dot mr-4">
-                            <i class="bg-danger"></i>
-                            <span class="status">delayed</span>
-                          </span>
-                        </td>
-                        <td>
-                          <div class="avatar-group">
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Alexander Smith">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Jessica Doe">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                            </a>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <span class="completion mr-2">72%</span>
-                            <div>
-                              <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%;"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right">
-                          <div class="dropdown">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div class="media align-items-center">
-                            <a href="#" class="avatar rounded-circle mr-3">
-                              <img alt="Image placeholder" src="../../assets/img/theme/react.jpg">
-                            </a>
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">React Material Dashboard</span>
-                            </div>
-                          </div>
-                        </th>
-                        <td class="budget">
-                          $4400 USD
-                        </td>
-                        <td>
-                          <span class="badge badge-dot mr-4">
-                            <i class="bg-info"></i>
-                            <span class="status">on schedule</span>
-                          </span>
-                        </td>
-                        <td>
-                          <div class="avatar-group">
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Alexander Smith">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Jessica Doe">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                            </a>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <span class="completion mr-2">90%</span>
-                            <div>
-                              <div class="progress">
-                                <div class="progress-bar bg-info" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right">
-                          <div class="dropdown">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div class="media align-items-center">
-                            <a href="#" class="avatar rounded-circle mr-3">
-                              <img alt="Image placeholder" src="../../assets/img/theme/vue.jpg">
-                            </a>
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">Vue Paper UI Kit PRO</span>
-                            </div>
-                          </div>
-                        </th>
-                        <td class="budget">
-                          $2200 USD
-                        </td>
-                        <td>
-                          <span class="badge badge-dot mr-4">
-                            <i class="bg-success"></i>
-                            <span class="status">completed</span>
-                          </span>
-                        </td>
-                        <td>
-                          <div class="avatar-group">
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Alexander Smith">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Jessica Doe">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                            </a>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <span class="completion mr-2">100%</span>
-                            <div>
-                              <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right">
-                          <div class="dropdown">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div class="media align-items-center">
-                            <a href="#" class="avatar rounded-circle mr-3">
-                              <img alt="Image placeholder" src="../../assets/img/theme/bootstrap.jpg">
-                            </a>
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">Argon Design System</span>
-                            </div>
-                          </div>
-                        </th>
-                        <td class="budget">
-                          $2500 USD
-                        </td>
-                        <td>
-                          <span class="badge badge-dot mr-4">
-                            <i class="bg-warning"></i>
-                            <span class="status">pending</span>
-                          </span>
-                        </td>
-                        <td>
-                          <div class="avatar-group">
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Alexander Smith">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Jessica Doe">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                            </a>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <span class="completion mr-2">60%</span>
-                            <div>
-                              <div class="progress">
-                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right">
-                          <div class="dropdown">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div class="media align-items-center">
-                            <a href="#" class="avatar rounded-circle mr-3">
-                              <img alt="Image placeholder" src="../../assets/img/theme/angular.jpg">
-                            </a>
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">Angular Now UI Kit PRO</span>
-                            </div>
-                          </div>
-                        </th>
-                        <td class="budget">
-                          $1800 USD
-                        </td>
-                        <td>
-                          <span class="badge badge-dot mr-4">
-                            <i class="bg-success"></i>
-                            <span class="status">completed</span>
-                          </span>
-                        </td>
-                        <td>
-                          <div class="avatar-group">
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Alexander Smith">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Jessica Doe">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                            </a>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <span class="completion mr-2">100%</span>
-                            <div>
-                              <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right">
-                          <div class="dropdown">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div class="media align-items-center">
-                            <a href="#" class="avatar rounded-circle mr-3">
-                              <img alt="Image placeholder" src="../../assets/img/theme/sketch.jpg">
-                            </a>
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">Black Dashboard</span>
-                            </div>
-                          </div>
-                        </th>
-                        <td class="budget">
-                          $3150 USD
-                        </td>
-                        <td>
-                          <span class="badge badge-dot mr-4">
-                            <i class="bg-danger"></i>
-                            <span class="status">delayed</span>
-                          </span>
-                        </td>
-                        <td>
-                          <div class="avatar-group">
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Alexander Smith">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Jessica Doe">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                            </a>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <span class="completion mr-2">72%</span>
-                            <div>
-                              <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%;"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right">
-                          <div class="dropdown">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">
-                          <div class="media align-items-center">
-                            <a href="#" class="avatar rounded-circle mr-3">
-                              <img alt="Image placeholder" src="../../assets/img/theme/angular.jpg">
-                            </a>
-                            <div class="media-body">
-                              <span class="name mb-0 text-sm">Angular Now UI Kit PRO</span>
-                            </div>
-                          </div>
-                        </th>
-                        <td class="budget">
-                          $1800 USD
-                        </td>
-                        <td>
-                          <span class="badge badge-dot mr-4">
-                            <i class="bg-success"></i>
-                            <span class="status">completed</span>
-                          </span>
-                        </td>
-                        <td>
-                          <div class="avatar-group">
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-1.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Romina Hadid">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-2.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Alexander Smith">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-3.jpg">
-                            </a>
-                            <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Jessica Doe">
-                              <img alt="Image placeholder" src="../../assets/img/theme/team-4.jpg">
-                            </a>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <span class="completion mr-2">100%</span>
-                            <div>
-                              <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-right">
-                          <div class="dropdown">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
+                      </thead>
                   </table>
                 </div>
               </div>
             </div>
           </div>
-          <div class="card-deck">
-            <div class="card bg-gradient-default">
-              <div class="card-body">
-                <div class="mb-2">
-                  <sup class="text-white">$</sup> <span class="h2 text-white">3,300</span>
-                  <div class="text-light mt-2 text-sm">Your current balance</div>
-                  <div>
-                    <span class="text-success font-weight-600">+ 15%</span> <span class="text-light">($250)</span>
-                  </div>
-                </div>
-                <button class="btn btn-sm btn-block btn-neutral">Add credit</button>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <small class="text-light">Orders: 60%</small>
-                    <div class="progress progress-xs my-2">
-                      <div class="progress-bar bg-success" style="width: 60%"></div>
-                    </div>
-                  </div>
-                  <div class="col"><small class="text-light">Sales: 40%</small>
-                    <div class="progress progress-xs my-2">
-                      <div class="progress-bar bg-warning" style="width: 40%"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Username card -->
-            <div class="card bg-gradient-danger">
-              <!-- Card body -->
-              <div class="card-body">
-                <div class="row justify-content-between align-items-center">
-                  <div class="col">
-                    <img src="../../assets/img/icons/cards/bitcoin.png" alt="Image placeholder" />
-                  </div>
-                  <div class="col-auto">
-                    <span class="badge badge-lg badge-success">Active</span>
-                  </div>
-                </div>
-                <div class="my-4">
-                  <span class="h6 surtitle text-light">
-                    Username
-                  </span>
-                  <div class="h1 text-white">@johnsnow</div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <span class="h6 surtitle text-light">Name</span>
-                    <span class="d-block h3 text-white">John Snow</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-8">
-          <div class="card">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="mb-0">Page visits</h3>
-                </div>
-                <div class="col text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
-                </div>
-              </div>
-            </div>
-            <div class="table-responsive">
-              <!-- Projects table -->
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Page name</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col">Unique users</th>
-                    <th scope="col">Bounce rate</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      /argon/
-                    </th>
-                    <td>
-                      4,569
-                    </td>
-                    <td>
-                      340
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      /argon/index.html
-                    </th>
-                    <td>
-                      3,985
-                    </td>
-                    <td>
-                      319
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      /argon/charts.html
-                    </th>
-                    <td>
-                      3,513
-                    </td>
-                    <td>
-                      294
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      /argon/tables.html
-                    </th>
-                    <td>
-                      2,050
-                    </td>
-                    <td>
-                      147
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      /argon/profile.html
-                    </th>
-                    <td>
-                      1,795
-                    </td>
-                    <td>
-                      190
-                    </td>
-                    <td>
-                      <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-4">
-          <div class="card">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="mb-0">Social traffic</h3>
-                </div>
-                <div class="col text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
-                </div>
-              </div>
-            </div>
-            <div class="table-responsive">
-              <!-- Projects table -->
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Referral</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">
-                      Facebook
-                    </th>
-                    <td>
-                      1,480
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2">60%</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Facebook
-                    </th>
-                    <td>
-                      5,480
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2">70%</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Google
-                    </th>
-                    <td>
-                      4,807
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2">80%</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      Instagram
-                    </th>
-                    <td>
-                      3,678
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2">75%</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      twitter
-                    </th>
-                    <td>
-                      2,645
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="mr-2">30%</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-gradient-warning" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
       </div>
       <!-- Footer -->
+      {{json_encode($sl_label)}}
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
@@ -1521,6 +450,9 @@
     </div>
   </div>
 <script src="{{url('assets/chartJs/Chart.min.js')}}"></script>
+
+<script src="{{asset('js/event.js')}}"></script>
+<script src="{{asset('assets/vendor/select2/dist/js/select2.min.js')}}"></script>
 <script>
     var exBln = {!! json_encode($sl_label) !!};
     var exCount = {!! json_encode($sl_count) !!};
@@ -1585,5 +517,178 @@
         }
     });
 </script>
+<script>
+  
+  $(document).ready(function() {  
+   var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+    var fd = new Date(y, m, 1);
+    var firstDay = formatDate(fd);
+    var ld = new Date(y, m + 1, 0);
+    var lastDay = formatDate(ld);
 
+    var startDateBO = formatDateReq(firstDay);
+    var endDateBO = formatDateReq(lastDay);
+
+    var table = $('#table-invoice-bo').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+      url: window.Laravel.app_url + "/api/bni/get-data",
+      type: "GET",
+      data: function (d) {
+        d.start_date = startDateBO;
+        d.end_date = endDateBO;
+    },
+      crossDomain: true,
+    },
+    columns: [
+        {
+          "data": null, "sortable": false,
+            render: function (data, type, row, meta) {
+              return meta.row + meta.settings._iDisplayStart + 1;
+          }
+        },
+        {"data":"wil"},
+        {"data":"unit"},
+        {"data":"produk"},
+        {"data":"cif"},
+        {"data":"no_rek"},
+        {"data":"nama_nasabah"},
+        {"data":"kol"},  
+        {
+          "data":"MaksKrd", render: function (data, type, row, meta) {
+            return convertToRupiah(data);
+          }
+        },
+        {
+          "data":"bk_debit", render: function (data, type, row, meta) {
+            return convertToRupiah(data);
+          }
+        },
+        {"data":"restrukturisasi"},
+        {"data":"flag_covid"},
+        {"data":"desk_flag_covid"},
+        {"data":"flag"},
+        {
+          "data":"dates", render: function (data, type, row, meta) {
+            return formatDate(data);
+          }
+        },
+    ],
+  
+    scrollCollapse: false,
+    "language": {
+        "paginate": {
+            "previous": '<i class="fas fa-angle-left"></i>',
+            "next": '<i class="fas fa-angle-right"></i>'
+        }
+    },
+  });
+
+  
+  $(function() {
+    $('input[name="dateRangeBO"]').daterangepicker({
+      opens: 'right',
+      showDropdowns: true,
+    locale: {
+        format:'DD MMMM YYYY',
+        separator:' - ',
+        applyLabel: 'Pilih',
+        cancelLabel: 'Batal',
+        customRangeLabel:'Custom',
+        daysOfWeek:[
+            'Min',
+            'Sen',
+            'Sel',
+            'Rab',
+            'Kam',
+            'Jum',
+            'Sab'
+        ],
+        monthNames:[
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+      ],
+        firstDay:'1'
+    },
+      startDate: formatDate(firstDay),
+      endDate: formatDate(lastDay)
+    },
+    function(start, end, label) {
+      startDateBO = start.format('YYYY-MM-DD');
+      endDateBO = end.format('YYYY-MM-DD');
+      $('#table-invoice-bo').DataTable().ajax.reload();
+    });
+  });
+
+  function formatDate(date) {
+    var d = new Date(date),
+        bulan = d.getMonth(),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+        switch(bulan) {
+          case 0: bulan = "January"; break;
+          case 1: bulan = "February"; break;
+          case 2: bulan = "March"; break;
+          case 3: bulan = "April"; break;
+          case 4: bulan = "May"; break;
+          case 5: bulan = "June"; break;
+          case 6: bulan = "July"; break;
+          case 7: bulan = "August"; break;
+          case 8: bulan = "September"; break;
+          case 9: bulan = "October"; break;
+          case 10: bulan = "November"; break;
+          case 11: bulan = "December"; break;
+        }
+
+ 
+    if (day.length < 2) 
+        day = '0' + day;
+    var result = [day, bulan, year].join(' ');
+    // console.log(result);
+    return result;
+  }
+
+  function formatDateReq(date) {
+    var d = new Date(date),
+    month = '' + (d.getMonth()+1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  $("#is-excel-bo").click(function(e) {
+    e.preventDefault();
+    // alert("excel");
+    $("#tipeFileBO").val("excel");
+   
+    // return false;
+  });
+
+  function convertToRupiah(angka)
+  {
+    var rupiah = '';		
+    var angkarev = angka.toString().split('').reverse().join('');
+    for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+    return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+  }
+});
+</script>
 @endsection
