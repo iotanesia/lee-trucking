@@ -29,7 +29,10 @@ class BniDashBoadrd extends CompModel
 
     static function getSlProdukChart() {
         try {
-            return BniDashBoadrd::select('unit', 'produk', DB::raw('COUNT(produk)'))->where('produk', '<>', '')->groupBy('unit', 'produk')->orderBy(DB::raw('COUNT(produk)'), 'DESC')->limit(5)->get()->toArray();
+            return BniDashBoadrd::select('produk', DB::raw('COUNT(produk)'))
+                //    ->where('produk', '<>', '')
+                   ->groupBy('produk')
+                   ->orderBy(DB::raw('COUNT(produk)'), 'DESC')->limit(5)->get()->toArray();
 
         } catch (\Throwable $th) {
             throw $th;

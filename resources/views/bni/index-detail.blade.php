@@ -1,7 +1,5 @@
 @extends('layouts/layoutsbni')
 @section('content')
-<style>
-</style>
 <div class="main-content" id="panel">
     <!-- Topnav -->
     <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom" style="background-color:#f15a23 !important">
@@ -254,8 +252,6 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral" style="background-color:#f15a23 !important; color:#ffffff !important">New</a>
-              <a href="#" class="btn btn-sm btn-neutral" style="background-color:#f15a23 !important; color:#ffffff !important">Filters</a>
             </div>
           </div>
           <!-- Card stats -->
@@ -268,7 +264,7 @@
     <div class="container-flui">
       <div class="row">
         <div class="col-xl-12">
-            <canvas id="bar-chart" class="chart-canvas"></canvas>
+            <canvas  style="height:6700px" id="bar-chart" class="chart-canvas"></canvas>
         </div>
       </div>
       <!-- Footer -->
@@ -345,6 +341,7 @@
         },
         options: {
             legend: { display: false },
+            maintainAspectRatio: false, 
             indexAxis: 'y',
             title: {
                 display: true,

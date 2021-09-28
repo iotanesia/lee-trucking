@@ -4,7 +4,7 @@ namespace App\Exports;
 
 use App\Models\ExpeditionActivity;
 use DB;
-use CarBFn\CarBFn;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithDrawings;
@@ -38,7 +38,7 @@ public function view(): View
     $jenisP = $this->jenisPembayaran;
     $ids = $this->ids;
     setlocale(LC_TIME, 'id_ID');
-    CarBFn::setLocale('id');
+    Carbon::setLocale('id');
     $data = ExpeditionActivity::leftJoin('ex_master_ojk' ,'expedition_activity.ojk_id','ex_master_ojk.id')
     ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
     ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
@@ -75,7 +75,7 @@ public function view(): View
             foreach($data as $row) {
                 $row->harga_per_rit = 'Rp. '. number_format($row->harga_otv, 0, ',', '.');
                 $row->total = 'Rp. '. number_format(($row->rit*$row->harga_otv), 0, ',', '.');
-                $row->tgl_po =  CarBFn::parse($row->tgl_po)->formatLocalized('%d %B %Y');
+                $row->tgl_po =  Carbon::parse($row->tgl_po)->formatLocalized('%d %B %Y');
                 $row->totalNya = $row->rit*$row->harga_otv;
             }
             $totalInv = $data->sum(function ($datas) {
@@ -84,21 +84,21 @@ public function view(): View
             $ppn10 = ($totalInv*10)/100;
             $pph23 = ($totalInv*2)/100;
             $totalKeseluruhan = $totalInv + $ppn10 + $pph23;
-        $startDates =  CarBFn::parse($this->startDate)->formatLocalized('%d %B %Y');
-        $endDates =  CarBFn::parse($this->endDate)->formatLocalized('%d %B %Y');
+        $startDates =  Carbon::parse($this->startDate)->formatLocalized('%d %B %Y');
+        $endDates =  Carbon::parse($this->endDate)->formatLocalized('%d %B %Y');
         return view('invoice.excel-BF', [
             'data' => $data,
             'startDate' => $startDates,
             'endDate' => $endDates,
-            'month' => CarBFn::parse($this->endDate)->formatLocalized('%B'),
-            'year' => CarBFn::parse($this->endDate)->formatLocalized('%Y'),
+            'month' => Carbon::parse($this->endDate)->formatLocalized('%B'),
+            'year' => Carbon::parse($this->endDate)->formatLocalized('%Y'),
             'totalInv' => 'Rp. '. number_format(($totalInv), 0, ',', '.'),
             'ppn10' => 'Rp. '. number_format(($ppn10), 0, ',', '.'),
             'pph23' => 'Rp. '. number_format(($pph23), 0, ',', '.'),
             'totalKeseluruhan' => 'Rp. '. number_format(($totalKeseluruhan), 0, ',', '.'),
             'namaPt' => $data[0]->pabrik_pesanan,
             'noInvoice' => $noInv,
-            'tglInvoice' => CarBFn::parse($data[0]->tgl_inv)->formatLocalized('%d %B %Y')
+            'tglInvoice' => Carbon::parse($data[0]->tgl_inv)->formatLocalized('%d %B %Y')
         ]);
     }
 

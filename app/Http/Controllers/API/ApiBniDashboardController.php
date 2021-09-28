@@ -15,7 +15,7 @@ class ApiBniDashboardController extends Controller
         $datas = $request->all();
         $startDate = $datas['start_date'];
         $endDate = $datas['end_date'];
-        $data = BniDashBoadrd::take(10)->
+        $data = BniDashBoadrd::take(50)->
           // whereBetween('dates', [$startDate, $endDate])
         orderBy('dates','DESC')
         ->get();
