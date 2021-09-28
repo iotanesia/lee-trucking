@@ -318,8 +318,12 @@
                   <form id="form-export-bo" method="get" action="{{url('export-bo')}}">
                     <div class="row">
                           <div class="col-md-3">
-                            <input class="form-control" name="tipeFileBO" id="tipeFileBO" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
-                            <input class="form-control" name="noInvoiceBO" id="noInvoiceBO" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                          <input class="form-control" name="filterSelectKol" id="filterSelectKol" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                          <input class="form-control" name="filterSelectFlag" id="filterSelectFlag" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                          <input class="form-control" name="filterSelectFlagCovid" id="filterSelectFlagCovid" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                          <input class="form-control" name="filterSelectUnit" id="filterSelectUnit" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                          <input class="form-control" name="filterSelectProduk" id="filterSelectProduk" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
+                        
                             <div class="input-group input-group-alternative input-group-merge" 
                                 style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
                               <div class="input-group-prepend" style="margin-left: 10px;">
@@ -552,6 +556,11 @@
       data: function (d) {
         d.start_date = startDateBO;
         d.end_date = endDateBO;
+        d.filter_select_kol = $("#filter_select_kol").val();
+        d.filter_select_flag = $("#filter_select_flag").val();
+        d.filter_select_flagCovid = $("#filter_select_flagCovid").val();
+        d.filter_select_produk = $("#filter_select_produk").val();
+        d.filter_select_unit = $("#filter_select_unit").val();
     },
       crossDomain: true,
     },
@@ -703,6 +712,32 @@
     for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
     return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
   }
+
+  $("#filter_select_kol").on("change", function() {
+    $('#filterSelectKol').val($("#filter_select_kol").val());
+    $('#table-invoice-bo').DataTable().ajax.reload();
+  });
+
+  
+  $("#filter_select_flag").on("change", function() {
+    $('#filterSelectFlag').val($("#filter_select_flag").val());
+    $('#table-invoice-bo').DataTable().ajax.reload();
+  });
+
+  $("#filter_select_flagCovid").on("change", function() {
+    $('#filterSelectFlagCovid').val($("#filter_select_flagCovid").val());
+    $('#table-invoice-bo').DataTable().ajax.reload();
+  });
+
+  $("#filter_select_unit").on("change", function() {
+    $('#filterSelectUnit').val($("#filter_select_unit").val());
+    $('#table-invoice-bo').DataTable().ajax.reload();
+  });
+
+  $("#filter_select_produk").on("change", function() {
+    $('#filterSelectProduk').val($("#filter_select_produk").val());
+    $('#table-invoice-bo').DataTable().ajax.reload();
+  });
 });
 </script>
 @endsection
