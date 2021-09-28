@@ -2,7 +2,7 @@
 @section('content')
 <div class="main-content" id="panel">
     <!-- Topnav -->
-    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom" style="background-color:#f15a23 !important">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
@@ -238,7 +238,7 @@
     </nav>
     <!-- Header -->
     <!-- Header -->
-    <div class="header bg-primary pb-6">
+    <div class="header bg-primary pb-6" style="background-color:#005e6a !important">
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
@@ -252,8 +252,8 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">New</a>
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+              <a href="#" class="btn btn-sm btn-neutral" style="background-color:#f15a23 !important; color:#ffffff !important">New</a>
+              <a href="#" class="btn btn-sm btn-neutral" style="background-color:#f15a23 !important; color:#ffffff !important">Filters</a>
             </div>
           </div>
           <!-- Card stats -->
