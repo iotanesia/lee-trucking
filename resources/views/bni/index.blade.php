@@ -300,26 +300,13 @@
             <div class="card-header bg-transparent" style="background-color:#005e6a !important">
               <div class="row align-items-center">
                   <h5 class="h3 mb-0" style="color:#ffffff !important;padding-left: 10px;">Tabel Data SL</h5><br/>
-                  <!-- <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm">
-                    <li class="nav-item submenu">
-                        <a class="nav-link active show" id="user-ad" data-toggle="tab" href="#ad" role="tab" aria-selected="true">BO</a>
-                    </li>
-                    <li class="nav-item submenu">
-                        <a class="nav-link" id="user-up" data-toggle="tab" href="#up" role="tab" aria-selected="false">BA</a>
-                    </li>
-                    <li class="nav-item submenu">
-                        <a class="nav-link" id="user-ud" data-toggle="tab" href="#ud" role="tab" aria-selected="false">BJ</a>
-                    </li>
-                    <li class="nav-item submenu">
-                        <a class="nav-link" id="user-uf" data-toggle="tab" href="#uf" role="tab" aria-selected="false">BF</a>
-                    </li>
-                  </ul> -->
+        
               </div>
             </div>
             <div class="card-body">
               <div class="tab-content">
                 <div id="ad" class="tab-pane in active">
-                  <form id="form-export-bo" method="get" action="{{url('export-bo')}}">
+                  <form id="form-export-bo" method="get" action="{{url('export-bni')}}">
                     <div class="row">
                           <div class="col-md-4">
                             <input class="form-control" name="tipeFileBO" id="tipeFileBO" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
@@ -332,14 +319,36 @@
                                 <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                             </div>
                           </div>
-                          <div class="col-md-2" >
+                          <!-- <div class="col-md-2" >
                             <select class="form-control" id="filter-select-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
                                 <option value="">Semua</option>
                                 <option value="TUNAI">TUNAI</option>
                                 <option value="NON_TUNAI">NON TUNAI</option>
                             </select>
-                          </div>     
-                           <!-- <div class="col-md-2" >
+                          </div>      -->
+                          <!-- <div class="col-md-4" >
+                            <select class="form-control filter-aktifiti"  id="filter_select_aktiviti_jurnal" >
+                                  <option value="">Semua</option>
+                                  @foreach($sheetName as $row)
+                                  <option value="{{$row->sheet_name}}">{{$row->sheet_name}}</option>
+                                  @endforeach
+                              </select>
+                              <br/>
+                              <select class="form-control filter-aktifiti"  id="filter_select_aktiviti_jurnal2" style="display: none;">
+                                  <option value="">Pilih Aktifiti Jurnal ke 2</option>
+                                  @foreach($sheetName as $row)
+                                  <option value="{{$row->sheet_name}}">{{$row->sheet_name}}</option>
+                                  @endforeach
+                              </select>
+                              <br/>
+                              <select class="form-control filter-aktifiti"  id="filter_select_aktiviti_jurnal3" style="display: none;">
+                                  <option value="">Pilih Aktifiti Jurnal ke 3</option>
+                                  @foreach($sheetName as $row)
+                                  <option value="{{$row->sheet_name}}">{{$row->sheet_name}}</option>
+                                  @endforeach
+                              </select>
+                          </div>   -->
+                          <!-- <div class="col-md-2" >
                             <select class="form-control" id="filter-periksa-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
                                 <option value="">Semua</option>
                                 <option value="true">Sudah di periksa</option>
@@ -371,7 +380,7 @@
                               </div>
                               <a href="#" id="is-excel-bo" class="dropdown-item">
                                 <i class="fas fa-file-excel"></i>
-                                <span>Excel</span>
+                                <a type="button" class="btn btn-success"  onclick="($('#form-export-bo').submit())">Excel</a>
                               </a>
                             </div>
                           </div>
