@@ -35,4 +35,44 @@ class BniDashBoadrd extends CompModel
             throw $th;
         }
     }
+
+    static function mstUnit() {
+        try {
+            return BniDashBoadrd::select('unit')->groupBy('unit')->get()->toArray();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    static function mstKol() {
+        try {
+            return BniDashBoadrd::select('kol')->groupBy('kol')->get()->toArray();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    static function mstflagCovid() {
+        try {
+            return BniDashBoadrd::select('flag_covid')->groupBy('flag_covid')->get()->toArray();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    static function mstflag() {
+        try {
+            return BniDashBoadrd::select('flag')->groupBy('flag')->get()->toArray();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    static function mstProduk() {
+        try {
+            return BniDashBoadrd::select('produk')->groupBy('produk')->get()->toArray();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
