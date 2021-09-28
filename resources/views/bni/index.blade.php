@@ -2,7 +2,7 @@
 @section('content')
 <div class="main-content" id="panel">
     <!-- Topnav -->
-    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom" style="background-color:#f15a23 !important">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Search form -->
@@ -238,7 +238,7 @@
     </nav>
     <!-- Header -->
     <!-- Header -->
-    <div class="header bg-primary pb-6">
+    <div class="header bg-primary pb-6" style="background-color:#f15a23 !important">
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
@@ -252,8 +252,8 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">New</a>
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+              <a href="#" class="btn btn-sm btn-neutral" style="background-color:#005e6a !important; color:#ffffff !important">New</a>
+              <a href="#" class="btn btn-sm btn-neutral" style="background-color:#005e6a !important; color:#ffffff !important">Filters</a>
             </div>
           </div>
           <!-- Card stats -->
@@ -266,8 +266,8 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-12">
-          <div class="card bg-default">
-            <div class="card-header bg-transparent">
+          <div class="card bg-default" style="background-color:#ffffff !important">
+            <div class="card-header bg-transparent" style="background-color:#005e6a !important">
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-light text-uppercase ls-1 mb-1">Report SL</h6>
@@ -276,7 +276,7 @@
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
                     <li class="nav-item mr-2 mr-md-0">
-                      <a href="{{url('bni-dashboard-detail')}}" class="nav-link py-2 px-3 active">
+                      <a href="{{url('bni-dashboard-detail')}}" class="nav-link py-2 px-3 active" style="background-color:#ffffff !important; color: #005e6a !important; font-weight:600 !important">
                         <span class="d-none d-md-block">See All</span>
                         <span class="d-md-none">M</span>
                       </a>
@@ -297,11 +297,9 @@
       <div class="row">
         <div class="col-xl-12">
           <div class="card" id="expedition">
-            <div class="card-header bg-transparent">
+            <div class="card-header bg-transparent" style="background-color:#005e6a !important">
               <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-uppercase text-muted ls-1 mb-1">Data </h6>
-                  <h5 class="h3 mb-0">Tabel </h5><br/>
+                  <h5 class="h3 mb-0" style="color:#ffffff !important;padding-left: 10px;">Tabel Data SL</h5><br/>
                   <!-- <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm">
                     <li class="nav-item submenu">
                         <a class="nav-link active show" id="user-ad" data-toggle="tab" href="#ad" role="tab" aria-selected="true">BO</a>
@@ -316,7 +314,6 @@
                         <a class="nav-link" id="user-uf" data-toggle="tab" href="#uf" role="tab" aria-selected="false">BF</a>
                     </li>
                   </ul> -->
-                </div>
               </div>
             </div>
             <div class="card-body">
@@ -394,7 +391,7 @@
                   </form>
                   <br/>
                   <table class="table table-responsive align-items-center table-striped" id="table-invoice-bo" son-success-load="successLoadexpedition" width="100%">
-                      <thead class="bg-gradient-info text-white">
+                      <thead class="bg-gradient-info text-white" style="background:linear-gradient(90deg, #005e6a 0, #f15a23 100%) !important">
                       <tr>
                           <th>No</th>
                           <th>Wil</th>
