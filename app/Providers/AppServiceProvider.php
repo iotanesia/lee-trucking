@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Auth;
-use DB;
-use View;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,9 +23,9 @@ class AppServiceProvider extends ServiceProvider
                 $all['user_detail'] = DB::table($schema.'usr_detail')->where('id_user', Auth::user()->id)->first();
                 // dd($all);
                 $all['menus'] = DB::table($schema.'usr_group_menu')
-                         ->join($schema.'usr_menu', 'usr_group_menu.menu_id', 'usr_menu.id')
-                         ->orderBy('sort', 'ASC')
-                         ->where('group_id', Auth::user()->group_id)->get();
+                                ->join($schema.'usr_menu', 'usr_group_menu.menu_id', 'usr_menu.id')
+                                ->orderBy('sort', 'ASC')
+                                ->where('group_id', Auth::user()->group_id)->get();
 
                 $all['notif'] = DB::table($schema.'notification')->where(function($query){
                     $query->where('id_user_to', Auth::user()->id)
@@ -34,9 +34,7 @@ class AppServiceProvider extends ServiceProvider
 
                 View::share('all', $all);
             }
-
-
-          });
+        });
 
 
           Validator::extend('iunique', function ($attribute, $value, $parameters, $validator) {

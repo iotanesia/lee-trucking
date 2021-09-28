@@ -20,6 +20,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 
 Route::post('login', 'API\UserController@login');
+Route::group(['as' => 'api-bni', 'prefix' => 'bni'], function() {
+  Route::get('get-data', ['as' => '-get-data', 'uses' => 'API\ApiBniDashboardController@getTableBniDashboard']);
+});
  
 Route::group(['middleware' => 'auth:api'], function(){
   Route::post('register', 'API\UserController@register');

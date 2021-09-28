@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -98,3 +101,6 @@ Route::get('/export-rit-truck', 'ExpeditionAndRitReportController@exportExcelRit
 Route::get('/export-truck-repair', 'RepairTruckReportController@exportTruckRepair')->name('export-truck-repair');
 
 #endregion
+Route::get('/bni-dashboard', 'BniDashBoardController@index')->name('bni-dashboard');
+Route::get('/bni-dashboard-detail', 'BniDashBoardController@indexAll')->name('bni-dashboard-detail');
+
