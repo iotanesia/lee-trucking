@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BniDashBoadrd;
+use App\Exports\ExportBniDashboard;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BniDashboardController extends Controller
 {
@@ -48,5 +51,24 @@ class BniDashboardController extends Controller
         }
 
         return view('bni.index-detail', $data);
+    }
+
+    public function excelExportBni(Request $request){
+        $date = $request->dateRangeBO;
+        $dates = explode('-',$date);
+        $ids = null;
+        $startDate = Date('Y-m-d',strtotime($dates[0]));
+        $endDate =  Date('Y-m-d',strtotime($dates[1]));
+
+        setlocale(LC_TIME, 'id_ID');
+        Carbon::setLocale('id');
+
+        $namaFile = 'Laporan Data SL '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
+        // if($request->tipeFile == "excel"){
+        return Excel::download(new ExportBniDashboard($startDate, $endDate), $namaFile.'.xlsx');
+        // }else if($request->tipeFile == "pdf"){
+        //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
+        // }
+
     }
 }
