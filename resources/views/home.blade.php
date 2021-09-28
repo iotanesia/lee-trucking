@@ -135,7 +135,7 @@
           </div>
         </div>
         <div class="col-xl-4">
-          <div class="card" style="height:600px">
+          <div class="card" style="height:500px">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
