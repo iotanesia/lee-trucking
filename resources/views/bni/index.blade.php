@@ -264,7 +264,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-12">
-          <div class="card bg-default" style="background-color:#ffffff !important">
+          <div class="card bg-default" style="background-color:#ffffff !important;">
             <div class="card-header bg-transparent" style="background-color:#005e6a !important">
               <div class="row align-items-center">
                 <div class="col">
@@ -285,7 +285,7 @@
             </div>
             <div class="card-body">
                 <div class="chart-container" >
-                    <canvas id="bar-chart" class="chart-canvas"></canvas>
+                    <canvas style="height:400px" id="bar-chart" class="chart-canvas"></canvas>
                 </div>
             </div>
           </div>
@@ -293,11 +293,11 @@
       </div>
 
       <div class="row">
-          <div class="col-xl-8">
-            <div class="card" style="height:600px">
+          <div class="col-xl-6">
+            <div class="card" style="height:450px">
                 <div class="card-header bg-transparent">
                     <div class="card-body">
-                        <canvas id="pie-chart"></canvas>
+                        <canvas style="height:400px" id="pie-chart"></canvas>
                     </div>
                 </div>
           </div>
@@ -470,7 +470,7 @@
         labels: exBln,
         datasets: [
                 {
-                    label: "Nasabah",        
+                    label: "Nasabah",     
                     borderColor: "#3e95cd",
                     backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2"],
                     data: exCount,        
@@ -481,6 +481,7 @@
         options: {
             legend: { display: false },
             indexAxis: 'y',
+            maintainAspectRatio: false, 
             title: {
                 display: true,
                 text: 'Total Nasabah / Wilayah'
@@ -518,7 +519,8 @@
             title: {
                 display: true,
                 text: 'Total Nasabah / Produk'
-            }
+            },
+            maintainAspectRatio: false, 
         }
     });
 </script>
