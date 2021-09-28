@@ -61,6 +61,11 @@ class BniDashboardController extends Controller
 
     public function excelExportBni(Request $request){
         $date = $request->dateRangeBO;
+        $filterSelectKol = (isset($request->filterSelectKol) ? $request->filterSelectKol : 'Kol');
+        $filterSelectFlag = (isset($request->filterSelectFlag) ? $request->filterSelectFlag : 'Flag');
+        $filterSelectFlagCovid = (isset($request->filterSelectFlagCovid) ? $request->filterSelectFlagCovid : 'Flag Covid');
+        $filterSelectUnit = (isset($request->filterSelectUnit) ? $request->filterSelectUnit : 'Unit');
+        $filterSelectProduk = (isset($request->filterSelectProduk) ? $request->filterSelectProduk : 'Produk');
         $dates = explode('-',$date);
         $ids = null;
         $startDate = Date('Y-m-d',strtotime($dates[0]));
@@ -71,7 +76,7 @@ class BniDashboardController extends Controller
 
         $namaFile = 'Laporan Data SL '.Carbon::parse($startDate)->formatLocalized('%d %B %Y').'-'.Carbon::parse($endDate)->formatLocalized('%d %B %Y');
         // if($request->tipeFile == "excel"){
-        return Excel::download(new ExportBniDashboard($startDate, $endDate), $namaFile.'.xlsx');
+        return Excel::download(new ExportBniDashboard($startDate, $endDate, $filterSelectKol, $filterSelectFlag, $filterSelectFlagCovid, $filterSelectUnit, $filterSelectProduk), $namaFile.'.xlsx');
         // }else if($request->tipeFile == "pdf"){
         //     return Excel::download(new ExportInvoiceBO($startDate, $endDate), $namaFile.'.pdf', Excel::TCPDF);
         // }

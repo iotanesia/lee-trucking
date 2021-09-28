@@ -15,15 +15,21 @@ class ApiBniDashboardController extends Controller
         $datas = $request->all();
         $startDate = $datas['start_date'];
         $endDate = $datas['end_date'];
-        $filterKol = (isset($data['filter_select_kol'])) ? $data['filter_select_kol'] : 'Kol';
-        $filterFlag = (isset($data['filter_select_flag'])) ? $data['filter_select_flag'] : 'Flag';
-        $filterFlagCovid = (isset($data['filter_select_flagCovid'])) ? $data['filter_select_flagCovid'] : 'Flag Covid';
-        $filterUnit = (isset($data['filter_select_unit'])) ? $data['filter_select_unit'] : 'Unit';
-        $filterProduk = (isset($data['filter_select_produk'])) ? $data['filter_select_produk'] : 'Produk';
-        $endDate = $datas['end_date'];
-        $endDate = $datas['end_date'];
+        $filterKol = (isset($datas['filter_select_kol'])) ? $datas['filter_select_kol'] : 'Kol';
+        $filterFlag = (isset($datas['filter_select_flag'])) ? $datas['filter_select_flag'] : 'Flag';
+        $filterFlagCovid = (isset($datas['filter_select_flagCovid'])) ? $datas['filter_select_flagCovid'] : 'Flag Covid';
+        $filterUnit = (isset($datas['filter_select_unit'])) ? $datas['filter_select_unit'] : 'Unit';
+        $filterProduk = (isset($datas['filter_select_produk'])) ? $datas['filter_select_produk'] : 'Produk';
+       
         $data = BniDashBoadrd::
-          whereBetween('dates', [$startDate, $endDate])->
+        // where(function($query) use($startDate, $endDate) {
+        //   if($startDate && $endDate) {
+        //     if($startDate != null && $endDate != null){
+        //       $query->whereBetween('dates', [$startDate, $endDate]);
+        //     }
+        //   }
+        // })->
+          // whereBetween('dates', [$startDate, $endDate])->
           where(function($query) use($filterKol) {
             if($filterKol) {
               if($filterKol != 'Kol'){
@@ -59,7 +65,7 @@ class ApiBniDashboardController extends Controller
               }
             }
           })->
-          take(50)->orderBy('dates','DESC')->
+          take(100)->orderBy('dates','DESC')->
           get();
           // dd($data);      
           return datatables($data)->toJson();
