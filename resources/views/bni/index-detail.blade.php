@@ -1,5 +1,7 @@
 @extends('layouts/layoutsbni')
 @section('content')
+<style>
+</style>
 <div class="main-content" id="panel">
     <!-- Topnav -->
     <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom" style="background-color:#f15a23 !important">
