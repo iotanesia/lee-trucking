@@ -263,165 +263,13 @@
       </div>
     </div>
     <!-- Page content -->
-    <div class="container-fluid mt--6">
+    <div class="container-flui">
       <div class="row">
         <div class="col-xl-12">
-          <div class="card bg-default">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-light text-uppercase ls-1 mb-1">Report SL</h6>
-                  <h5 class="h3 text-white mb-0">Overview</h5>
-                </div>
-                <div class="col">
-                  <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item mr-2 mr-md-0">
-                      <a href="{{url('bni-dashboard-detail')}}" class="nav-link py-2 px-3 active">
-                        <span class="d-none d-md-block">See All</span>
-                        <span class="d-md-none">M</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-                <div class="chart-container" >
-                    <canvas id="bar-chart" class="chart-canvas"></canvas>
-                </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col-xl-12">
-          <div class="card" id="expedition">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-uppercase text-muted ls-1 mb-1">Data </h6>
-                  <h5 class="h3 mb-0">Tabel </h5><br/>
-                  <!-- <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm">
-                    <li class="nav-item submenu">
-                        <a class="nav-link active show" id="user-ad" data-toggle="tab" href="#ad" role="tab" aria-selected="true">BO</a>
-                    </li>
-                    <li class="nav-item submenu">
-                        <a class="nav-link" id="user-up" data-toggle="tab" href="#up" role="tab" aria-selected="false">BA</a>
-                    </li>
-                    <li class="nav-item submenu">
-                        <a class="nav-link" id="user-ud" data-toggle="tab" href="#ud" role="tab" aria-selected="false">BJ</a>
-                    </li>
-                    <li class="nav-item submenu">
-                        <a class="nav-link" id="user-uf" data-toggle="tab" href="#uf" role="tab" aria-selected="false">BF</a>
-                    </li>
-                  </ul> -->
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="tab-content">
-                <div id="ad" class="tab-pane in active">
-                  <form id="form-export-bo" method="get" action="{{url('export-bo')}}">
-                    <div class="row">
-                          <div class="col-md-4">
-                            <input class="form-control" name="tipeFileBO" id="tipeFileBO" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
-                            <input class="form-control" name="noInvoiceBO" id="noInvoiceBO" placeholder="no invoice" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
-                            <div class="input-group input-group-alternative input-group-merge" 
-                                style="box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                              <div class="input-group-prepend" style="margin-left: 10px;">
-                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                              </div>
-                                <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
-                            </div>
-                          </div>
-                          <div class="col-md-2" >
-                            <select class="form-control" id="filter-select-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                                <option value="">Semua</option>
-                                <option value="TUNAI">TUNAI</option>
-                                <option value="NON_TUNAI">NON TUNAI</option>
-                            </select>
-                          </div>     
-                           <!-- <div class="col-md-2" >
-                            <select class="form-control" id="filter-periksa-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                                <option value="">Semua</option>
-                                <option value="true">Sudah di periksa</option>
-                                <option value="false">Belum di periksa</option>
-                            </select>
-                          </div> -->
-                          <!-- <div class="col-md-2" >
-                            <select class="form-control" id="filter-export-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                                <option value="">Semua</option>
-                                <option value="true">Sudah di export</option>
-                                <option value="false">Belum di export</option>
-                            </select>
-                          </div> -->
-                        <div id="tag-cloud-widget" class="col-md-2">  
-                          <div class="content">  
-                            <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                  <i class="fas fa-file-export"></i>
-                                </span>
-                                <div class="media-body d-none d-lg-block" style="margin-top: 4px;margin-right: 20px;text-align:center">
-                                  <span class="mb-0 text-sm  font-weight-bold">Eksport</span>
-                                </div>
-                              </div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-left">
-                              <div class="dropdown-header noti-title">
-                                <h6 class="text-overflow m-0">Eksport</h6>
-                              </div>
-                              <a href="#" id="is-excel-bo" class="dropdown-item">
-                                <i class="fas fa-file-excel"></i>
-                                <span>Excel</span>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <br/><br/><br/>
-                        <!-- <div style='margin-left:10px'>
-                            <label class="switch">
-                              <input type="checkbox" id="cbPpn10Bo" checked>
-                              <span class="slider round">PPN 10%</span>
-                            </label>
-                            <label class="switch">
-                              <input type="checkbox" id="cbPph23Bo" checked>
-                              <span class="slider round">PPH 23</span>
-                            </label>
-                        </div> -->
-                      </div>
-                  </form>
-                  <br/>
-                  <table class="table table-responsive align-items-center table-striped" id="table-invoice-bo" son-success-load="successLoadexpedition" width="100%">
-                      <thead class="bg-gradient-info text-white">
-                      <tr>
-                          <th>No</th>
-                          <th>Wil</th>
-                          <th>Unit</th>
-                          <th>Produk</th>
-                          <th>CIF</th>
-                          <th>No Rek</th>
-                          <th>Nama Nasabah</th>
-                          <th>Kol</th>
-                          <th>Maks Krd</th>
-                          <th>BK Debit</th>
-                          <th>Retrukturasi</th>
-                          <th>Flag Covid</th>
-                          <th>Desk Flag Covid</th>
-                          <th>Flag</th>
-                          <th>Dates</th>
-                      </tr>
-                      </thead>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
+            <canvas id="bar-chart" class="chart-canvas"></canvas>
         </div>
       </div>
       <!-- Footer -->
-      {{json_encode($sl_label)}}
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
@@ -450,9 +298,6 @@
     </div>
   </div>
 <script src="{{url('assets/chartJs/Chart.min.js')}}"></script>
-
-<script src="{{asset('js/event.js')}}"></script>
-<script src="{{asset('assets/vendor/select2/dist/js/select2.min.js')}}"></script>
 <script>
     var exBln = {!! json_encode($sl_label) !!};
     var exCount = {!! json_encode($sl_count) !!};
@@ -467,7 +312,30 @@
                 {
                     label: "SL",        
                     borderColor: "#3e95cd",
-                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2"],
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2",
+                    "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2"],
+                    
                     data: exCount,        
                     fill: true
                 }
@@ -517,178 +385,5 @@
         }
     });
 </script>
-<script>
-  
-  $(document).ready(function() {  
-   var date = new Date(), y = date.getFullYear(), m = date.getMonth();
-    var fd = new Date(y, m, 1);
-    var firstDay = formatDate(fd);
-    var ld = new Date(y, m + 1, 0);
-    var lastDay = formatDate(ld);
 
-    var startDateBO = formatDateReq(firstDay);
-    var endDateBO = formatDateReq(lastDay);
-
-    var table = $('#table-invoice-bo').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: {
-      url: window.Laravel.app_url + "/api/bni/get-data",
-      type: "GET",
-      data: function (d) {
-        d.start_date = startDateBO;
-        d.end_date = endDateBO;
-    },
-      crossDomain: true,
-    },
-    columns: [
-        {
-          "data": null, "sortable": false,
-            render: function (data, type, row, meta) {
-              return meta.row + meta.settings._iDisplayStart + 1;
-          }
-        },
-        {"data":"wil"},
-        {"data":"unit"},
-        {"data":"produk"},
-        {"data":"cif"},
-        {"data":"no_rek"},
-        {"data":"nama_nasabah"},
-        {"data":"kol"},  
-        {
-          "data":"MaksKrd", render: function (data, type, row, meta) {
-            return convertToRupiah(data);
-          }
-        },
-        {
-          "data":"bk_debit", render: function (data, type, row, meta) {
-            return convertToRupiah(data);
-          }
-        },
-        {"data":"restrukturisasi"},
-        {"data":"flag_covid"},
-        {"data":"desk_flag_covid"},
-        {"data":"flag"},
-        {
-          "data":"dates", render: function (data, type, row, meta) {
-            return formatDate(data);
-          }
-        },
-    ],
-  
-    scrollCollapse: false,
-    "language": {
-        "paginate": {
-            "previous": '<i class="fas fa-angle-left"></i>',
-            "next": '<i class="fas fa-angle-right"></i>'
-        }
-    },
-  });
-
-  
-  $(function() {
-    $('input[name="dateRangeBO"]').daterangepicker({
-      opens: 'right',
-      showDropdowns: true,
-    locale: {
-        format:'DD MMMM YYYY',
-        separator:' - ',
-        applyLabel: 'Pilih',
-        cancelLabel: 'Batal',
-        customRangeLabel:'Custom',
-        daysOfWeek:[
-            'Min',
-            'Sen',
-            'Sel',
-            'Rab',
-            'Kam',
-            'Jum',
-            'Sab'
-        ],
-        monthNames:[
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July',
-          'August',
-          'September',
-          'October',
-          'November',
-          'December'
-      ],
-        firstDay:'1'
-    },
-      startDate: formatDate(firstDay),
-      endDate: formatDate(lastDay)
-    },
-    function(start, end, label) {
-      startDateBO = start.format('YYYY-MM-DD');
-      endDateBO = end.format('YYYY-MM-DD');
-      $('#table-invoice-bo').DataTable().ajax.reload();
-    });
-  });
-
-  function formatDate(date) {
-    var d = new Date(date),
-        bulan = d.getMonth(),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-        switch(bulan) {
-          case 0: bulan = "January"; break;
-          case 1: bulan = "February"; break;
-          case 2: bulan = "March"; break;
-          case 3: bulan = "April"; break;
-          case 4: bulan = "May"; break;
-          case 5: bulan = "June"; break;
-          case 6: bulan = "July"; break;
-          case 7: bulan = "August"; break;
-          case 8: bulan = "September"; break;
-          case 9: bulan = "October"; break;
-          case 10: bulan = "November"; break;
-          case 11: bulan = "December"; break;
-        }
-
- 
-    if (day.length < 2) 
-        day = '0' + day;
-    var result = [day, bulan, year].join(' ');
-    // console.log(result);
-    return result;
-  }
-
-  function formatDateReq(date) {
-    var d = new Date(date),
-    month = '' + (d.getMonth()+1),
-    day = '' + d.getDate(),
-    year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-  }
-
-  $("#is-excel-bo").click(function(e) {
-    e.preventDefault();
-    // alert("excel");
-    $("#tipeFileBO").val("excel");
-   
-    // return false;
-  });
-
-  function convertToRupiah(angka)
-  {
-    var rupiah = '';		
-    var angkarev = angka.toString().split('').reverse().join('');
-    for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
-    return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
-  }
-});
-</script>
 @endsection
