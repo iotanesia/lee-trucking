@@ -328,49 +328,6 @@
                                 <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                             </div>
                           </div>
-                          <!-- <div class="col-md-2" >
-                            <select class="form-control" id="filter-select-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                                <option value="">Semua</option>
-                                <option value="TUNAI">TUNAI</option>
-                                <option value="NON_TUNAI">NON TUNAI</option>
-                            </select>
-                          </div>      -->
-                          <!-- <div class="col-md-4" >
-                            <select class="form-control filter-aktifiti"  id="filter_select_aktiviti_jurnal" >
-                                  <option value="">Semua</option>
-                                  @foreach($sheetName as $row)
-                                  <option value="{{$row->sheet_name}}">{{$row->sheet_name}}</option>
-                                  @endforeach
-                              </select>
-                              <br/>
-                              <select class="form-control filter-aktifiti"  id="filter_select_aktiviti_jurnal2" style="display: none;">
-                                  <option value="">Pilih Aktifiti Jurnal ke 2</option>
-                                  @foreach($sheetName as $row)
-                                  <option value="{{$row->sheet_name}}">{{$row->sheet_name}}</option>
-                                  @endforeach
-                              </select>
-                              <br/>
-                              <select class="form-control filter-aktifiti"  id="filter_select_aktiviti_jurnal3" style="display: none;">
-                                  <option value="">Pilih Aktifiti Jurnal ke 3</option>
-                                  @foreach($sheetName as $row)
-                                  <option value="{{$row->sheet_name}}">{{$row->sheet_name}}</option>
-                                  @endforeach
-                              </select>
-                          </div>   -->
-                          <!-- <div class="col-md-2" >
-                            <select class="form-control" id="filter-periksa-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                                <option value="">Semua</option>
-                                <option value="true">Sudah di periksa</option>
-                                <option value="false">Belum di periksa</option>
-                            </select>
-                          </div> -->
-                          <!-- <div class="col-md-2" >
-                            <select class="form-control" id="filter-export-bo" style="cursor: pointer;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;">
-                                <option value="">Semua</option>
-                                <option value="true">Sudah di export</option>
-                                <option value="false">Belum di export</option>
-                            </select>
-                          </div> -->
                         <div id="tag-cloud-widget" class="col-md-2">  
                           <div class="content">  
                             <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -387,10 +344,8 @@
                               <div class="dropdown-header noti-title">
                                 <h6 class="text-overflow m-0">Eksport</h6>
                               </div>
-                              <a href="#" id="is-excel-bo" class="dropdown-item">
-                                <i class="fas fa-file-excel"></i>
-                                <a type="button" class="btn btn-success"  onclick="($('#form-export-bo').submit())">Excel</a>
-                              </a>
+                               <a onclick="($('#form-export-bo').submit())" class="dropdown-item" style="padding-left:10px; cursor: pointer !important;"> <i class="fas fa-file-excel"></i>  Excel</a>
+                            
                             </div>
                           </div>
                         </div>

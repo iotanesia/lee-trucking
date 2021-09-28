@@ -31,13 +31,13 @@ protected $ids;
 public function view(): View
 {
     setlocale(LC_TIME, 'id_ID');
-    CarBFn::setLocale('id');
-    $data = BniDashBoadrd::take(10)->
+    Carbon::setLocale('id');
+    $data = BniDashBoadrd::take(50)->
     // whereBetween('dates', [$startDate, $endDate])
             orderBy('dates','DESC')
             ->get();
-        $startDates =  CarBFn::parse($this->startDate)->formatLocalized('%d %B %Y');
-        $endDates =  CarBFn::parse($this->endDate)->formatLocalized('%d %B %Y');
+        $startDates =  Carbon::parse($this->startDate)->formatLocalized('%d %B %Y');
+        $endDates =  Carbon::parse($this->endDate)->formatLocalized('%d %B %Y');
         foreach($data as $row) {
             $row->MaksKrd = 'Rp. '. number_format($row->MaksKrd, 0, ',', '.');
             $row->bk_debit = 'Rp. '. number_format(($row->bk_debit), 0, ',', '.');
@@ -46,8 +46,8 @@ public function view(): View
             'data' => $data,
             'startDate' => $startDates,
             'endDate' => $endDates,
-            'month' => CarBFn::parse($this->endDate)->formatLocalized('%B'),
-            'year' => CarBFn::parse($this->endDate)->formatLocalized('%Y'),
+            'month' => Carbon::parse($this->endDate)->formatLocalized('%B'),
+            'year' => Carbon::parse($this->endDate)->formatLocalized('%Y'),
         ]);
     }
 
@@ -57,8 +57,8 @@ public function view(): View
         $drawing->setName('Logo');
         $drawing->setDescription('This is my logo');
         $drawing->setPath(public_path('assets/img/BNI_logo.png'));
-        $drawing->setHeight(135);
-        $drawing->setCoordinates('E1');
+        $drawing->setHeight(50);
+        $drawing->setCoordinates('A1');
 
         return $drawing;
     }

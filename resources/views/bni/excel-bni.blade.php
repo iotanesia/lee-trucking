@@ -5,11 +5,6 @@
         <br/>
         <br/>
         <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
         <Table>
             <tr>
                 <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:11pt;text-align:left;">
@@ -19,43 +14,18 @@
                 <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
                 <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
                 <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:11pt;text-align:left;">
-                </td>  
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
                 <td style="border-top: 2px solid #000000;border-right: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
                
             </tr>
             <br/>
-            
-            <tr>
-                <td style="font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="font-family:Calibri;font-size:11pt;text-align:left;">
-                </td>
-                <td style="font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-right: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-              
-            </tr>
             <tr> 
+                <td style="border-bottom: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;">
+                    PER TANGGAL: {{$startDate}} - {{$endDate}}</td>
                 <td style="border-bottom: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
                 <td style="border-bottom: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
                 <td style="border-bottom: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
                 <td style="border-bottom: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-bottom: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-bottom: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-bottom: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-bottom: 2px solid #000000;font-family:Calibri;font-size:11pt;text-align:left;">
-                    PER TANGGAL: {{$startDate}} - {{$endDate}}
-                </td> 
-                <td style="border-bottom: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-bottom: 2px solid #000000;border-right: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
+                  <td style="border-bottom: 2px solid #000000;border-right: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
                
             </tr>
         </Table>
@@ -85,18 +55,18 @@
             @foreach ($data as $row)
                 <tr>
                     <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:5px;vertical-align: middle;">{{$no++}}</td>
-                    <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:15px;vertical-align: middle;">{{$row->wil}}</td>
+                    <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:10px;vertical-align: middle;">{{$row->wil}}</td>
                     <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:15px;vertical-align: middle;">{{$row->unit}}</td>
                     <td style="border: 1px solid #000000; text-align:left;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:20px;vertical-align: middle;">{{$row->produk}}</td>
-                    <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;vertical-align: middle;">{{$row->cif}}</td>
-                    <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:10px;vertical-align: middle;">{{$row->no_rek}}</td>
-                    <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:5px;vertical-align: middle;">{{$row->nama_nasabah}}</td>
-                    <td style="border: 1px solid #000000; text-align:left;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:23px;vertical-align: middle;">{{$row->kol}}</td>
+                    <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:20px;vertical-align: middle;">{{$row->cif}}</td>
+                    <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:15px;vertical-align: middle;">{{$row->no_rek}}</td>
+                    <td style="border: 1px solid #000000; text-align:left;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:20px;vertical-align: middle;">{{$row->nama_nasabah}}</td>
+                    <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:10px;vertical-align: middle;">{{$row->kol}}</td>
                     <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:15px;vertical-align: middle;">{{$row->MaksKrd}}</td>
                     <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:15px;vertical-align: middle;">{{$row->bk_debit}}</td>
                     <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:15px;vertical-align: middle;">{{$row->restrukturisasi}}</td>
                     <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:15px;vertical-align: middle;">{{$row->flag_covid}}</td>
-                    <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:15px;vertical-align: middle;">{{$row->desk_flag_covid}}</td>
+                    <td style="border: 1px solid #000000; text-align:left;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:25px;vertical-align: middle;">{{$row->desk_flag_covid}}</td>
                     <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:15px;vertical-align: middle;">{{$row->flag}}</td>
                     <td style="border: 1px solid #000000; text-align:center;font-family:Calibri;font-size:8pt;color:#000000;word-wrap:break-word;width:15px;vertical-align: middle;">{{$row->dates}}</td>
                 </tr>
