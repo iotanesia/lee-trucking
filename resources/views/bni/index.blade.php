@@ -252,8 +252,6 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral" style="background-color:#005e6a !important; color:#ffffff !important">New</a>
-              <a href="#" class="btn btn-sm btn-neutral" style="background-color:#005e6a !important; color:#ffffff !important">Filters</a>
             </div>
           </div>
           <!-- Card stats -->
@@ -292,6 +290,17 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="row">
+          <div class="col-xl-8">
+            <div class="card" style="height:600px">
+                <div class="card-header bg-transparent">
+                    <div class="card-body">
+                        <canvas id="pie-chart"></canvas>
+                    </div>
+                </div>
+          </div>
       </div>
       
       <div class="row">
@@ -461,8 +470,8 @@
 <script>
     var exBln = {!! json_encode($sl_label) !!};
     var exCount = {!! json_encode($sl_count) !!};
-    var total_truck = [1,2,3,4];
-    var cabang = [1,2,3,4];
+    var total_truck = {!! json_encode($produk_count) !!};
+    var cabang =  {!! json_encode($produk_label) !!};;
     // console.log(total_truck)
     new Chart(document.getElementById("bar-chart"), {
         type: 'horizontalBar',
@@ -517,7 +526,7 @@
         options: {
             title: {
                 display: true,
-                text: 'Total Truk'
+                text: 'Total Produk'
             }
         }
     });
