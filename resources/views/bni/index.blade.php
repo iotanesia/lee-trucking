@@ -421,7 +421,6 @@
         </div>
       </div>
       <!-- Footer -->
-      {{json_encode($sl_label)}}
       <footer class="footer pt-0">
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
