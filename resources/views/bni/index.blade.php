@@ -252,6 +252,8 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
+              <a href="#" class="btn btn-sm btn-neutral" style="background-color:#005e6a !important; color:#ffffff !important">New</a>
+              <a href="#" class="btn btn-sm btn-neutral" style="background-color:#005e6a !important; color:#ffffff !important">Filters</a>
             </div>
           </div>
           <!-- Card stats -->
@@ -264,7 +266,7 @@
     <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-12">
-          <div class="card bg-default" style="background-color:#ffffff !important;">
+          <div class="card bg-default" style="background-color:#ffffff !important">
             <div class="card-header bg-transparent" style="background-color:#005e6a !important">
               <div class="row align-items-center">
                 <div class="col">
@@ -285,22 +287,11 @@
             </div>
             <div class="card-body">
                 <div class="chart-container" >
-                    <canvas style="height:400px" id="bar-chart" class="chart-canvas"></canvas>
+                    <canvas id="bar-chart" class="chart-canvas"></canvas>
                 </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="row">
-          <div class="col-xl-6">
-            <div class="card" style="height:450px">
-                <div class="card-header bg-transparent">
-                    <div class="card-body">
-                        <canvas style="height:400px" id="pie-chart"></canvas>
-                    </div>
-                </div>
-          </div>
       </div>
       
       <div class="row">
@@ -315,7 +306,7 @@
             <div class="card-body">
               <div class="tab-content">
                 <div id="ad" class="tab-pane in active">
-                  <form id="form-export-bo" method="get" action="{{url('export-bni')}}">
+                  <form id="form-export-bo" method="get" action="{{url('export-bo')}}">
                     <div class="row">
                           <div class="col-md-4">
                             <input class="form-control" name="tipeFileBO" id="tipeFileBO" placeholder="tipe file" type="text" style="display:none;margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
@@ -327,7 +318,31 @@
                               </div>
                                 <input class="form-control" name="dateRangeBO" placeholder="Pilih Rentang Tanggal" type="text" style="margin-right: 30px;text-align: center !important;background-color:transparent !important;cursor:pointer !important;">
                             </div>
-                          </div>
+                          </div>    
+                          <div class="col-md-3" >
+                            <select class="form-control filter-aktifiti"  id="filter_select_unit" >
+                                  <option value="">Unit</option>
+                                  @foreach($filterUnit as $row)
+                                  <option value="{{$row['unit']}}">{{$row['unit']}}</option>
+                                  @endforeach
+                              </select>
+                          </div>  
+                          <div class="col-md-1" >
+                            <select class="form-control filter-aktifiti"  id="filter_select_kol" >
+                                  <option value="">Kol</option>
+                                  @foreach($filterKol as $row)
+                                  <option value="{{$row['kol']}}">{{$row['kol']}}</option>
+                                  @endforeach
+                              </select>
+                          </div>  
+                          <div class="col-md-3" >
+                            <select class="form-control filter-aktifiti"  id="filter_select_flagCovid" >
+                                  <option value="">Flag Covid</option>
+                                  @foreach($filterFlagCovid as $row)
+                                  <option value="{{$row['flag_covid']}}">{{$row['flag_covid']}}</option>
+                                  @endforeach
+                              </select>
+                          </div>  
                         <div id="tag-cloud-widget" class="col-md-2">  
                           <div class="content">  
                             <a class="nav-link input-group input-group-alternative input-group-merge" href="#" style="padding: .37rem .75rem;box-shadow: 0 1px 3px rgb(50 50 93 / 77%), 0 1px 0 rgb(0 0 0 / 2%) !important;" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -344,8 +359,10 @@
                               <div class="dropdown-header noti-title">
                                 <h6 class="text-overflow m-0">Eksport</h6>
                               </div>
-                               <a onclick="($('#form-export-bo').submit())" class="dropdown-item" style="padding-left:10px; cursor: pointer !important;"> <i class="fas fa-file-excel"></i>  Excel</a>
-                            
+                              <a href="#" id="is-excel-bo" class="dropdown-item">
+                                <i class="fas fa-file-excel"></i>
+                                <span>Excel</span>
+                              </a>
                             </div>
                           </div>
                         </div>
@@ -425,8 +442,8 @@
 <script>
     var exBln = {!! json_encode($sl_label) !!};
     var exCount = {!! json_encode($sl_count) !!};
-    var total_truck = {!! json_encode($produk_count) !!};
-    var cabang =  {!! json_encode($produk_label) !!};;
+    var total_truck = [1,2,3,4];
+    var cabang = [1,2,3,4];
     // console.log(total_truck)
     new Chart(document.getElementById("bar-chart"), {
         type: 'horizontalBar',
@@ -434,7 +451,7 @@
         labels: exBln,
         datasets: [
                 {
-                    label: "Nasabah",     
+                    label: "SL",        
                     borderColor: "#3e95cd",
                     backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2"],
                     data: exCount,        
@@ -445,10 +462,9 @@
         options: {
             legend: { display: false },
             indexAxis: 'y',
-            maintainAspectRatio: false, 
             title: {
                 display: true,
-                text: 'Total Nasabah / Wilayah'
+                text: 'Report SL'
             },
             scales: {
                 yAxes: [{
@@ -474,7 +490,7 @@
         data: {
         labels: cabang,
         datasets: [{
-            label: "Nasabah",
+            label: "Truk",
             backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2"],
             data: total_truck
         }]
@@ -482,9 +498,8 @@
         options: {
             title: {
                 display: true,
-                text: 'Total Nasabah / Produk'
-            },
-            maintainAspectRatio: false, 
+                text: 'Total Truk'
+            }
         }
     });
 </script>
