@@ -38,8 +38,14 @@ class BniDashboardController extends Controller
             $data['produk_label'][] = $val['produk'];
             $data['produk_count'][] = $val['count'];
         }
+
+        $filterUnit = BniDashBoadrd::mstUnit();
+        $filterKol = BniDashBoadrd::mstKol();
+        $filterFlagCovid = BniDashBoadrd::mstflagCovid();
+        $filterFlag = BniDashBoadrd::mstflag();
+        $filterProduk = BniDashBoadrd::mstProduk();
        
-        return view('bni.index', $data);
+        return view('bni.index', $data, $filterUnit, $filterKol, $filterFlagCovid, $filterFlag, $filterProduk);
     }
 
     public function indexAll(Request $request)
