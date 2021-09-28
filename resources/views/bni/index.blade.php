@@ -470,7 +470,7 @@
         labels: exBln,
         datasets: [
                 {
-                    label: "SL",        
+                    label: "Nasabah",        
                     borderColor: "#3e95cd",
                     backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2"],
                     data: exCount,        
@@ -483,7 +483,7 @@
             indexAxis: 'y',
             title: {
                 display: true,
-                text: 'Report SL'
+                text: 'Total Nasabah / Wilayah'
             },
             scales: {
                 yAxes: [{
@@ -509,7 +509,7 @@
         data: {
         labels: cabang,
         datasets: [{
-            label: "Truk",
+            label: "Nasabah",
             backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850", "#3e95cd", "#8e5ea2"],
             data: total_truck
         }]
@@ -517,7 +517,7 @@
         options: {
             title: {
                 display: true,
-                text: 'Total Produk'
+                text: 'Total Nasabah / Produk'
             }
         }
     });
