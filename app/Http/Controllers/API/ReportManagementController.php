@@ -71,7 +71,7 @@ class ReportManagementController extends Controller
                   ,'coa_master_sheet.jurnal_category','public.users.name'
                   ,'coa_master_rekening.bank_name','coa_master_rekening.rek_name'
                   ,'coa_master_rekening.rek_no','coa_activity.nominal','coa_activity.table_id'
-                  ,'coa_activity.table','expedition_activity.nomor_inv','expedition_activity.nomor_surat_jalan')
+                  ,'coa_activity.table','expedition_activity.nomor_inv','expedition_activity.nomor_inv')
                   ->orderBy('expedition_activity.tgl_inv','DESC')->get();
 
           foreach($jurnalReportList as $row) {
@@ -113,7 +113,7 @@ class ReportManagementController extends Controller
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
-        ->where('expedition_activity.nomor_surat_jalan','iLike','BO%')
+        ->where('expedition_activity.nomor_inv','iLike','BO%')
         ->where(function($query) use($filterPembayaran) {
           if($filterPembayaran) {
             if($filterPembayaran != 'Semua'){
@@ -139,7 +139,7 @@ class ReportManagementController extends Controller
           ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -148,7 +148,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -183,7 +183,7 @@ class ReportManagementController extends Controller
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
         ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
-        ->where('expedition_activity.nomor_surat_jalan','iLike','BA%')
+        ->where('expedition_activity.nomor_inv','iLike','BA%')
         ->where(function($query) use($filterPembayaran) {
           if($filterPembayaran) {
             if($filterPembayaran != 'Semua'){
@@ -209,7 +209,7 @@ class ReportManagementController extends Controller
           ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -218,7 +218,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -253,7 +253,7 @@ class ReportManagementController extends Controller
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
         ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
-        ->where('expedition_activity.nomor_surat_jalan','iLike','BJ%')
+        ->where('expedition_activity.nomor_inv','iLike','BJ%')
         ->where(function($query) use($ids) {
             if($ids) {
                $query->whereIn('public.users.cabang_id', $ids);
@@ -279,7 +279,7 @@ class ReportManagementController extends Controller
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -288,7 +288,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -323,7 +323,7 @@ class ReportManagementController extends Controller
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
         ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
-        ->where('expedition_activity.nomor_surat_jalan','iLike','BF%')
+        ->where('expedition_activity.nomor_inv','iLike','BF%')
         ->where(function($query) use($ids) {
             if($ids) {
                $query->whereIn('public.users.cabang_id', $ids);
@@ -349,7 +349,7 @@ class ReportManagementController extends Controller
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -358,7 +358,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -393,7 +393,7 @@ class ReportManagementController extends Controller
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
-        ->where('expedition_activity.nomor_surat_jalan','iLike','DO%')
+        ->where('expedition_activity.nomor_inv','iLike','DO%')
         ->where(function($query) use($filterPembayaran) {
           if($filterPembayaran) {
             if($filterPembayaran != 'Semua'){
@@ -419,7 +419,7 @@ class ReportManagementController extends Controller
           ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -428,7 +428,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -463,7 +463,7 @@ class ReportManagementController extends Controller
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
         ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
-        ->where('expedition_activity.nomor_surat_jalan','iLike','DA%')
+        ->where('expedition_activity.nomor_inv','iLike','DA%')
         ->where(function($query) use($filterPembayaran) {
           if($filterPembayaran) {
             if($filterPembayaran != 'Semua'){
@@ -489,7 +489,7 @@ class ReportManagementController extends Controller
           ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -498,7 +498,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -533,7 +533,7 @@ class ReportManagementController extends Controller
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
         ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
-        ->where('expedition_activity.nomor_surat_jalan','iLike','DJ%')
+        ->where('expedition_activity.nomor_inv','iLike','DJ%')
         ->where(function($query) use($ids) {
             if($ids) {
                $query->whereIn('public.users.cabang_id', $ids);
@@ -559,7 +559,7 @@ class ReportManagementController extends Controller
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -568,7 +568,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -603,7 +603,7 @@ class ReportManagementController extends Controller
         ->leftJoin('ex_wil_kabupaten','ex_master_ojk.kabupaten_id','ex_wil_kabupaten.id')
         ->leftJoin('ex_master_truck','expedition_activity.truck_id','ex_master_truck.id')
         ->join('public.users', 'public.users.id', 'expedition_activity.user_id')
-        ->where('expedition_activity.nomor_surat_jalan','iLike','DF%')
+        ->where('expedition_activity.nomor_inv','iLike','DF%')
         ->where(function($query) use($ids) {
             if($ids) {
                $query->whereIn('public.users.cabang_id', $ids);
@@ -629,7 +629,7 @@ class ReportManagementController extends Controller
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -638,7 +638,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
