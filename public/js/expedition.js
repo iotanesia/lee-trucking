@@ -120,6 +120,8 @@ $("document").ready(function() {
       if(invoker.attr('el-event') == 'edit') {
         var dataJSON = invoker.attr("data-json");
         var dataJSON = JSON.parse(dataJSON);
+
+        console.log(dataJSON);
   
         $("#expedition-form").find("input[name=id]").val(dataJSON.id);
         $("#expedition-modal #btn-submit").attr("el-event", "edit");
@@ -127,12 +129,12 @@ $("document").ready(function() {
         
         bindToForm($("#expedition-modal"), dataJSON);
 
-        $("#expedition-modal #tujuan").html("<option value='"+dataJSON.ojk_id+"'>"+kabupaten +" - "+ kecamatan +" - "+ cabang_name +"</option>").trigger("change");
+        $("#expedition-modal #tujuan").html("<option value='"+dataJSON.ojk_id+"'>"+dataJSON.kabupaten +" - "+ dataJSON.kecamatan +" - "+ dataJSON.cabang_name +"</option>").trigger("change");
         $("#expedition-modal #ojk").val(dataJSON.harga_ojk);
         $("#expedition-modal #otv").val(dataJSON.harga_otv);
         
     } else {
-        $("#expedition-modal #tujuan").html("");
+        $("#expedition-modal #tujuan").html("").trigger("change");
         $("#expedition-form").find("input[name=id]").val(null);
         $("#expedition-modal #btn-submit").attr("el-event", "add");
         $("#expedition-form").find("textarea[name=content]").summernote("code", "");
@@ -172,11 +174,11 @@ $("document").ready(function() {
                      "<td>"+ kabupaten +" - "+ kecamatan +" - "+ cabang_name +"</td>"+
                      "<td align='center'>"+
                        "<div class='btn-group'>";
-                       if(responses.data[i].status_activity == "SUBMIT") {
+                    //    if(responses.data[i].status_activity == "SUBMIT") {
 
                         tableRows += "<a class='btn btn-success btn-xs btn-sm' href='#' el-event='edit' data-json='"+ data_json +"' data-toggle='modal' data-target='#expedition-modal'><i class='fas fa-edit'></i></a>"+
                                      "<a class='btn btn-danger btn-xs btn-delete btn-sm' href='#' el-event='edit' data-id='"+ id +"'><i class='fa fa-trash'></i></a>";
-                       }
+                    //    }
       tableRows +=     "</div>"+
                      "</td>"+
                    "</tr>";
