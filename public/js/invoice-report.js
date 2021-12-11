@@ -74,7 +74,7 @@
           return formatDate(data);
         }
       },
-      {"data":"nomor_surat_jalan"},
+      {"data":"nomor_inv"},
       {"data":"kabupaten"},
       {"data":"truck_plat"},
       {"data":"jumlah_palet"},
@@ -255,7 +255,7 @@
           return formatDate(data);
         }
       },
-      {"data":"nomor_surat_jalan"},
+      {"data":"nomor_inv"},
       {"data":"kabupaten"},
       {"data":"truck_plat"},
       {"data":"jumlah_palet"},
@@ -432,7 +432,7 @@
           return formatDate(data);
         }
       },
-      {"data":"nomor_surat_jalan"},
+      {"data":"nomor_inv"},
       {"data":"kabupaten"},
       {"data":"truck_plat"},
       {"data":"jumlah_palet"},
@@ -588,7 +588,7 @@
           return formatDate(data);
         }
       },
-      {"data":"nomor_surat_jalan"},
+      {"data":"nomor_inv"},
       {"data":"kabupaten"},
       {"data":"truck_plat"},
       {"data":"jumlah_palet"},
@@ -767,7 +767,7 @@
             return formatDate(data);
           }
         },
-        {"data":"nomor_surat_jalan"},
+        {"data":"nomor_inv"},
         {"data":"kabupaten"},
         {"data":"truck_plat"},
         {"data":"jumlah_palet"},
@@ -949,7 +949,7 @@
             return formatDate(data);
           }
         },
-        {"data":"nomor_surat_jalan"},
+        {"data":"nomor_inv"},
         {"data":"kabupaten"},
         {"data":"truck_plat"},
         {"data":"jumlah_palet"},
@@ -1126,7 +1126,7 @@
             return formatDate(data);
           }
         },
-        {"data":"nomor_surat_jalan"},
+        {"data":"nomor_inv"},
         {"data":"kabupaten"},
         {"data":"truck_plat"},
         {"data":"jumlah_palet"},
@@ -1281,7 +1281,7 @@
             return formatDate(data);
           }
         },
-        {"data":"nomor_surat_jalan"},
+        {"data":"nomor_inv"},
         {"data":"kabupaten"},
         {"data":"truck_plat"},
         {"data":"jumlah_palet"},
