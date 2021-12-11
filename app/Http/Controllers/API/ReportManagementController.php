@@ -71,7 +71,7 @@ class ReportManagementController extends Controller
                   ,'coa_master_sheet.jurnal_category','public.users.name'
                   ,'coa_master_rekening.bank_name','coa_master_rekening.rek_name'
                   ,'coa_master_rekening.rek_no','coa_activity.nominal','coa_activity.table_id'
-                  ,'coa_activity.table','expedition_activity.nomor_inv','expedition_activity.nomor_inv')
+                  ,'coa_activity.table','expedition_activity.nomor_inv','expedition_activity.nomor_surat_jalan')
                   ->orderBy('expedition_activity.tgl_inv','DESC')->get();
 
           foreach($jurnalReportList as $row) {
@@ -139,7 +139,7 @@ class ReportManagementController extends Controller
           ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -148,7 +148,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -209,7 +209,7 @@ class ReportManagementController extends Controller
           ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -218,7 +218,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -279,7 +279,7 @@ class ReportManagementController extends Controller
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -288,7 +288,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -349,7 +349,7 @@ class ReportManagementController extends Controller
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -358,7 +358,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -419,7 +419,7 @@ class ReportManagementController extends Controller
           ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -428,7 +428,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -489,7 +489,7 @@ class ReportManagementController extends Controller
           ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -498,7 +498,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -559,7 +559,7 @@ class ReportManagementController extends Controller
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -568,7 +568,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -629,7 +629,7 @@ class ReportManagementController extends Controller
         ->select(DB::raw('COUNT("ojk_id") AS rit'),'expedition_activity.tgl_po'
           ,'expedition_activity.id'
           ,'expedition_activity.nomor_inv'
-          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+          ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
@@ -638,7 +638,7 @@ class ReportManagementController extends Controller
           ->orderBy('expedition_activity.tgl_po','DESC')
          ->groupBy('expedition_activity.tgl_po'
          ,'expedition_activity.id','expedition_activity.nomor_inv'
-         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_inv'
+         ,'ex_wil_kabupaten.kabupaten','expedition_activity.nomor_surat_jalan'
           ,'expedition_activity.ojk_id','ex_master_truck.truck_plat'
           ,'expedition_activity.jumlah_palet','expedition_activity.truck_id'
           ,'expedition_activity.toko','expedition_activity.harga_otv','expedition_activity.is_read_invoice_report'
