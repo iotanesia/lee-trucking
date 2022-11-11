@@ -13,52 +13,25 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 class Helper {
 
-
-    
-    // $key = 'example_key';
-    // $payload = [
-    //     'iss' => 'http://example.org',
-    //     'aud' => 'http://example.com',
-    //     'iat' => 1356999524,
-    //     'nbf' => 1357000000
-    // ];
-    // $jwt = JWT::encode($payload, $key, 'HS256');
-    // $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
-    // print_r($decoded);
-    // $decoded_array = (array) $decoded;
-    // JWT::$leeway = 60; // $leeway in seconds
-    // $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
-
-
-    
     static function createJwt($data = NULL, $is_refresh_token = FALSE) {
         $issued_at = time();
-        $key = 'example_key';
-        // $payload = [
-        //     'iss' => 'http://example.org', // Issuer of the token
-        //     'aud' => 'http://example.com',
-        //     'sub' => $data, // Subject of the token
-        //     'iat' => $issued_at, // Time when JWT was issued.
-        //     // 'exp' => $issued_at + 60*60*99999999999999999999999999999999
-        //     // 'exp' => $is_refresh_token
-        //     //     ?($issued_at + 60*60*24*30) // Waktu kadaluarsa 30 hari
-        //     //     :($issued_at + 60*60*4) // Waktu kadaluarsa 1 jam
-        // ];
         $payload = [
-                'iss' => 'http://example.org',
-                'aud' => 'http://example.com',
-                'iat' => 1356999524,
-                'nbf' => 1357000000
-            ];
+            'iss' => "sicana-2022", // Issuer of the token
+            'sub' => $data, // Subject of the token
+            'iat' => $issued_at, // Time when JWT was issued.
+            'exp' => $issued_at + 60*60*9999999999999999999999999999999999999
+            // 'exp' => $is_refresh_token
+            //     ?($issued_at + 60*60*24*30) // Waktu kadaluarsa 30 hari
+            //     :($issued_at + 60*60*4) // Waktu kadaluarsa 1 jam
+        ];
 
         JWT::$leeway = 60; // $leeway dalam detik
-        return JWT::encode($payload, $key,'HS256');
+        return JWT::encode($payload, 'LEETRCK','HS256');
     }
 
     static function decodeJwt($token) {
-        try {        
-            $key = 'example_key';
-            return JWT::decode($token,new Key($key, 'HS256'));
+        try {
+            return JWT::decode($token,new Key('LEETRCK', 'HS256'));
         } catch(\Throwable $e) {
             throw $e;
         }

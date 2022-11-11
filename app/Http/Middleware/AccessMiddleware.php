@@ -9,8 +9,7 @@ use App\Query\User;
 use Firebase\JWT\ExpiredException;
 use Illuminate\Support\Str;
 use App\Exceptions\CustomException;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+use Illuminate\Support\Facades\Auth;
 
 class AccessMiddleware
 {
@@ -24,35 +23,19 @@ class AccessMiddleware
     public function handle(Request $request, Closure $next)
     {
        try {
-        
-    $key = 'example_key';
-    // $payload = [
-    //     'iss' => 'http://example.org',
-    //     'aud' => 'http://example.com',
-    //     'iat' => 1356999524,
-    //     'nbf' => 1357000000
-    // ];
-    // $jwt = JWT::encode($payload, $key, 'HS256');
-    // $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
-    // print_r($decoded);
-    // $decoded_array = (array) $decoded;
-    // JWT::$leeway = 60; // $leeway in seconds
-    // $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
-
-
+            dd(Auth::user());
             $token = $request->bearerToken();
-            // dd($token);
-            dd(JWT::decode($token, new Key($key, 'HS256')));
             if($token) {
                 try {
-                    $credentials = Helper::decodeJwt($token);
-                    
+                    if($token){
+                        $credentials = Helper::decodeJwt($token);
+                    }
                 } catch(ExpiredException $e) {
                     throw new \Exception("Expired Access Token.", 500);
                     // throw $e;
                 } catch(\Throwable $e) {
-                    // throw $th new \Exception("Invalid Access Token.", 500);
-                    throw $e;
+                    throw new \Exception("Invalid Access Token.", 500);
+                    // throw $e;
                 } catch (\Throwable $th) {
                     throw $th;
                 }
