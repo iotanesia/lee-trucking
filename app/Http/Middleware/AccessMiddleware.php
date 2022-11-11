@@ -25,6 +25,7 @@ class AccessMiddleware
     {
        try {
             $token = $request->bearerToken();
+            dd($token);
             if($token) {
                 try {
                     $credentials = Helper::decodeJwt($token);
@@ -33,8 +34,8 @@ class AccessMiddleware
                     throw new \Exception("Expired Access Token.", 500);
                     // throw $e;
                 } catch(\Throwable $e) {
-                    throw new \Exception("Invalid Access Token.", 500);
-                    // throw $e;
+                    // throw $th new \Exception("Invalid Access Token.", 500);
+                    throw $e;
                 } catch (\Throwable $th) {
                     throw $th;
                 }
