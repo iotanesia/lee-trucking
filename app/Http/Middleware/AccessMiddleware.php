@@ -20,28 +20,27 @@ class AccessMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-    //    try {
+       try {
             $token = $request->bearerToken();
             if($token) {
-                // try {
+                try {
                     $credentials = Helper::decodeJwt($token);
-                    dd($credentials);
                     
-                // } catch(ExpiredException $e) {
-                //     throw new \Exception("Expired Access Token.", 500);
-                //     // throw $e;
-                // } catch(\Throwable $e) {
-                //     throw new \Exception("Invalid Access Token.", 500);
-                //     // throw $e;
-                // } catch (\Throwable $th) {
-                //     throw $th;
-                // }
+                } catch(ExpiredException $e) {
+                    throw new \Exception("Expired Access Token.", 500);
+                    // throw $e;
+                } catch(\Throwable $e) {
+                    throw new \Exception("Invalid Access Token.", 500);
+                    // throw $e;
+                } catch (\Throwable $th) {
+                    throw $th;
+                }
                 $request->current_user = $credentials->sub;
             }
 
             return $next($request);
-    //    } catch (\Throwable $th) {
-    //         return Helper::setErrorResponse($th);
-    //    }
+       } catch (\Throwable $th) {
+            return Helper::setErrorResponse($th);
+       }
     }
 }
