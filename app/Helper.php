@@ -31,7 +31,9 @@ class Helper {
 
     static function decodeJwt($token) {
         try {
-            return JWT::decode($token,new Key('LEETRCK', 'HS256'));
+            $res = JWT::decode($token,new Key('LEETRCK', 'HS256'));
+            dd($res);
+            return $res;
         } catch(\Throwable $e) {
             throw $e;
         }

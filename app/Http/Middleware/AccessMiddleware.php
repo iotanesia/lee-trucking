@@ -22,12 +22,10 @@ class AccessMiddleware
     {
        try {
             $token = $request->bearerToken();
-            dd($token);
             if($token) {
                 try {
-                    if($token){
-                        $credentials = Helper::decodeJwt($token);
-                    }
+                    $credentials = Helper::decodeJwt($token);
+                    
                 } catch(ExpiredException $e) {
                     throw new \Exception("Expired Access Token.", 500);
                     // throw $e;
