@@ -47,7 +47,6 @@ class UserController extends Controller
           
           $schema = Auth::user()->schema.'.';
           $token = Helper::createJwt($user);
-          dd($token);
         //   $user->remember_token = $user->createToken('nApp')->accessToken;
           $user->tokens = $token;
           $user->id_fcm_android = request('id_fcm_android');
@@ -65,7 +64,6 @@ class UserController extends Controller
           }
 
           $user->module_access = $datas;
-          Auth::login($user);
           return response()->json([
               'code' => 200,
               'code_message' => 'Success',
