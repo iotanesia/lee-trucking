@@ -22,7 +22,7 @@ class GroupController extends Controller
                        }
                      }
                    })
-                   ->where('is_deleted', false)
+                   ->where('is_deleted', 'f')
                    ->select('usr_group.*')
                    ->orderBy('usr_group.id', 'ASC')
                    ->paginate();

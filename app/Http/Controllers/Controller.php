@@ -6,7 +6,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Group;
 use App\Models\Cabang;
 
@@ -14,9 +14,8 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function checkRoles() {
-        $user = Auth::user();
-        $role = $user->cabang_id;
+    public function checkRoles($request) {
+        $role = $request->current_user->cabang_id ?? Auth::user()->cabang_id;
         $cabang = null;
         
         $checkRole = Cabang::find($role);

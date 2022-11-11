@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ Route::group(['as' => 'api-bni', 'prefix' => 'bni'], function() {
   Route::get('get-data', ['as' => '-get-data', 'uses' => 'API\ApiBniDashboardController@getTableBniDashboard']);
 });
  
-Route::group(['middleware' => 'auth:api'], function(){
+Route::group(['middleware' => 'access'], function(){
   Route::post('register', 'API\UserController@register');
   Route::group(['as' => 'api-user', 'prefix' => 'user'], function() {
     Route::get('/', 'Services\UserController@index');

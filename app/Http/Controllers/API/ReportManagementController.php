@@ -21,7 +21,7 @@ class ReportManagementController extends Controller
     public function getListJurnalReport(Request $request) {
         if($request->isMethod('GET')) {
           $data = $request->all();
-          $cekRole = $this->checkRoles();
+          $cekRole = $this->checkRoles($request);
           $ids = null;
 
           if($cekRole) {
@@ -96,7 +96,7 @@ class ReportManagementController extends Controller
     public function getListInvoiceBOReport(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -166,7 +166,7 @@ class ReportManagementController extends Controller
     public function getListInvoiceBAReport(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -236,7 +236,7 @@ class ReportManagementController extends Controller
     public function getListInvoiceBJReport(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -306,7 +306,7 @@ class ReportManagementController extends Controller
     public function getListInvoiceBFReport(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -376,7 +376,7 @@ class ReportManagementController extends Controller
     public function getListInvoiceDOReport(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -446,7 +446,7 @@ class ReportManagementController extends Controller
     public function getListInvoiceDAReport(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -516,7 +516,7 @@ class ReportManagementController extends Controller
     public function getListInvoiceDJReport(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -586,7 +586,7 @@ class ReportManagementController extends Controller
     public function getListInvoiceDFReport(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -763,7 +763,7 @@ class ReportManagementController extends Controller
     public function getListRitDriver(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -804,7 +804,7 @@ class ReportManagementController extends Controller
     public function getListRitTruck(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -845,7 +845,7 @@ class ReportManagementController extends Controller
     public function getListRitTujuan(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -889,7 +889,7 @@ class ReportManagementController extends Controller
     public function getDetailListRit(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -951,7 +951,7 @@ class ReportManagementController extends Controller
     public function getDetailListRitTruck(Request $request){
       if($request->isMethod('GET')) {
         $data = $request->all();
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {

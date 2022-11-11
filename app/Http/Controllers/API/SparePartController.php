@@ -19,7 +19,7 @@ class SparePartController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
-      $cekRole = $this->checkRoles();
+      $cekRole = $this->checkRoles($request);
       $ids = null;
 
       if($cekRole) {
@@ -84,7 +84,7 @@ class SparePartController extends Controller
   }
 
   public function getListAll(Request $request) {
-    $cekRole = $this->checkRoles();
+    $cekRole = $this->checkRoles($request);
     $ids = null;
 
     if($cekRole) {
@@ -204,7 +204,7 @@ class SparePartController extends Controller
 
   public function getListUnpaid(Request $request) {
     if($request->isMethod('GET')) {
-      $cekRole = $this->checkRoles();
+      $cekRole = $this->checkRoles($request);
       $ids = null;
 
       if($cekRole) {

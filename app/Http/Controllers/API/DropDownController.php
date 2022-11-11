@@ -19,7 +19,7 @@ class DropDownController extends Controller
 {
     public function getListTruck(Request $request) {
         if($request->isMethod('GET')) {
-            $cekRole = $this->checkRoles();
+            $cekRole = $this->checkRoles($request);
             $ids = null;
 
             if($cekRole) {
@@ -133,7 +133,7 @@ class DropDownController extends Controller
 
     public function getListallUser(Request $request) {
         if($request->isMethod('GET')) {
-            $cekRole = $this->checkRoles();
+            $cekRole = $this->checkRoles($request);
             $ids = null;
 
             if($cekRole) {

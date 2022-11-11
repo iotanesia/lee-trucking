@@ -17,7 +17,7 @@ class StkRepairHeaderController extends Controller
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
         
-      $cekRole = $this->checkRoles();
+      $cekRole = $this->checkRoles($request);
       $ids = null;
 
       if($cekRole) {

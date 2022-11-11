@@ -41,7 +41,7 @@ class JurnalController extends Controller
         $date = $request->dateRangeJurnal;
         $dates = explode('-',$date);
 
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {

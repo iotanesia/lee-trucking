@@ -25,9 +25,10 @@ use App\Services\FirebaseServic\Messaging;
 
 class ExpeditionController extends Controller
 {
+    
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
-      $cekRole = $this->checkRoles();
+      $cekRole = $this->checkRoles($request);
       $ids = null;
 
       if($cekRole) {
@@ -127,7 +128,7 @@ class ExpeditionController extends Controller
 
   public function getListApprovalOjk(Request $request) {
     if($request->isMethod('GET')) {
-      $cekRole = $this->checkRoles();
+      $cekRole = $this->checkRoles($request);
       $ids = null;
 
       if($cekRole) {
@@ -240,7 +241,7 @@ class ExpeditionController extends Controller
 
   public function getListApprovalOtv(Request $request) {
     if($request->isMethod('GET')) {
-      $cekRole = $this->checkRoles();
+      $cekRole = $this->checkRoles($request);
       $ids = null;
 
       if($cekRole) {
@@ -251,7 +252,7 @@ class ExpeditionController extends Controller
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $groupAdmin = Group::where('group_name', 'Admin Kantor')->first();
       $groupOwner = Group::where('group_name', 'Owner')->first();
-      $groupId = Auth::user()->group_id;
+      $groupId = $request->current_user->group_id;
 
       $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
@@ -1368,7 +1369,7 @@ class ExpeditionController extends Controller
 
   public function getExpeditionHistoryByNoInvOrNoSuratJalan(Request $request){
     if($request->isMethod('GET')) {
-      $cekRole = $this->checkRoles();
+      $cekRole = $this->checkRoles($request);
       $ids = null;
 
       if($cekRole) {

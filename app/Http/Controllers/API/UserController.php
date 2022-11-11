@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
-use Auth;
-use DB;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Cabang;
 use App\Models\UserDetail;
 use App\Models\GlobalParam;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Firebase\JWT\JWT;
 
 class UserController extends Controller
 {
@@ -44,7 +46,9 @@ class UserController extends Controller
           }
           
           $schema = Auth::user()->schema.'.';
-          $user->remember_token = $user->createToken('nApp')->accessToken;
+          $token = Helper::createJwt($user);
+        //   $user->remember_token = $user->createToken('nApp')->accessToken;
+          $user->tokens = $token;
           $user->id_fcm_android = request('id_fcm_android');
           $user->save();
           $roleAccess = DB::table(Auth::user()->schema.'.usr_group_menu')
@@ -60,6 +64,7 @@ class UserController extends Controller
           }
 
           $user->module_access = $datas;
+          Auth::login($user);
           return response()->json([
               'code' => 200,
               'code_message' => 'Success',
@@ -339,8 +344,8 @@ class UserController extends Controller
         $data = $request->all();
         $whereField = 'users.name, users.email, usr_groups.group_name';
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
-        $userList = User::join(Auth::user()->schema.'.usr_group as usr_groups', 'users.group_id', 'usr_groups.id')
-                    ->leftjoin(Auth::user()->schema.'.usr_detail as usr_details', 'users.id', 'usr_details.id_user')
+        $userList = User::join($request->current_user->schema.'.usr_group as usr_groups', 'users.group_id', 'usr_groups.id')
+                    ->leftjoin($request->current_user->schema.'.usr_detail as usr_details', 'users.id', 'usr_details.id_user')
                     ->where(function($query) use($whereField, $whereValue) {
                         if($whereValue) {
                             foreach(explode(', ', $whereField) as $idx => $field) {

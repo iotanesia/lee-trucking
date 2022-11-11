@@ -40,7 +40,7 @@ class ExpeditionAndRitReportController extends Controller
         $date = $request->dateRangeRitTujuan;
         $dates = explode('-',$date);
 
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -64,7 +64,7 @@ class ExpeditionAndRitReportController extends Controller
     public function exportExcelRitDriver(Request $request){
         $date = $request->dateRangeRitDriver;
         $dates = explode('-',$date);
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -89,7 +89,7 @@ class ExpeditionAndRitReportController extends Controller
         $date = $request->dateRangeRitTruck;
         $dates = explode('-',$date);
 
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {

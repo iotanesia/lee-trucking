@@ -31,7 +31,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $queryRole = "";
 
         if($cekRole) {

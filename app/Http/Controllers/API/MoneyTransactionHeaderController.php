@@ -16,7 +16,7 @@ class MoneyTransactionHeaderController extends Controller
 {
   public function getList(Request $request) {
     if($request->isMethod('GET')) {
-      $cekRole = $this->checkRoles();
+      $cekRole = $this->checkRoles($request);
       $ids = null;
   
       if($cekRole) {
@@ -229,7 +229,7 @@ class MoneyTransactionHeaderController extends Controller
 
   public function getListUangKeluar(Request $request) {
     if($request->isMethod('GET')) {
-      $cekRole = $this->checkRoles();
+      $cekRole = $this->checkRoles($request);
       $ids = null;
 
       if($cekRole) {
@@ -286,7 +286,7 @@ class MoneyTransactionHeaderController extends Controller
 
   public function getListModalUsaha(Request $request) {
     if($request->isMethod('GET')) {
-      $cekRole = $this->checkRoles();
+      $cekRole = $this->checkRoles($request);
       $ids = null;
 
       if($cekRole) {

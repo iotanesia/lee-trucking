@@ -18,7 +18,7 @@ use DB;
 class BonusDriverRitController extends Controller
 {
   public function getList(Request $request) {
-    $cekRole = $this->checkRoles();
+    $cekRole = $this->checkRoles($request);
     $ids = null;
 
     if($cekRole) {

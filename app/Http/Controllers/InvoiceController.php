@@ -66,7 +66,7 @@ class InvoiceController extends Controller
         $date = $request->dateRangeBO;
         $dates = explode('-',$date);
 
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -93,7 +93,7 @@ class InvoiceController extends Controller
         $date = $request->dateRangeBA;
         $dates = explode('-',$date);
 
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -120,7 +120,7 @@ class InvoiceController extends Controller
         $date = $request->dateRangeBJ;
         $dates = explode('-',$date);
 
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -147,7 +147,7 @@ class InvoiceController extends Controller
         $date = $request->dateRangeBF;
         $dates = explode('-',$date);
 
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -174,7 +174,7 @@ class InvoiceController extends Controller
         $date = $request->dateRangeDO;
         $dates = explode('-',$date);
 
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -201,7 +201,7 @@ class InvoiceController extends Controller
         $date = $request->dateRangeDA;
         $dates = explode('-',$date);
 
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -228,7 +228,7 @@ class InvoiceController extends Controller
         $date = $request->dateRangeDJ;
         $dates = explode('-',$date);
 
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {
@@ -255,7 +255,7 @@ class InvoiceController extends Controller
         $date = $request->dateRangeDF;
         $dates = explode('-',$date);
 
-        $cekRole = $this->checkRoles();
+        $cekRole = $this->checkRoles($request);
         $ids = null;
 
         if($cekRole) {

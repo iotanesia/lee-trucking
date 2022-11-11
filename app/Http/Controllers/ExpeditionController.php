@@ -12,7 +12,7 @@ use App\Models\Kenek;
 use App\Models\Rekening;
 use App\Models\Truck;
 use App\Models\ExStatusActivity;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class ExpeditionController extends Controller
 {
