@@ -30,13 +30,13 @@ class Helper {
     }
 
     static function decodeJwt($token) {
-        try {
+        // try {
             Log::info(JWT::decode($token,new Key('LEETRCK', 'HS256')));
             $res = JWT::decode($token,new Key('LEETRCK', 'HS256'));
             return $res;
-        } catch(\Throwable $e) {
-            throw $e;
-        }
+        // } catch(\Throwable $e) {
+        //     throw $e;
+        // }
 
     }
 
