@@ -40,8 +40,8 @@ class ExpeditionController extends Controller
         $data['group'] = ExpeditionActivity::where('is_deleted', 'f')->get();
         $status_driver = GlobalParam::where('param_type', 'DRIVER_STATUS')->where('param_code', 'ACTIVE')->first();
         $data['driver'] = Driver::where('is_deleted', 'f')->where('driver_status', $status_driver->id)->get();
-        $data['truck'] = Truck::where('is_deleted', 'f')->get();
-        $data['kenek'] = Kenek::where('is_deleted', 'f')->get();
+        $data['truck'] = Truck::where('is_deleted', 'f')->where('truck_status',4)->get();
+        $data['kenek'] = Kenek::where('is_deleted', 'f')->where('kenek_status',5)->get();
 
         return view('expedition.new_ex.index', $data);
     }
