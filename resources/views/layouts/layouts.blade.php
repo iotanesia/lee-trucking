@@ -48,7 +48,7 @@
   <script>
       window.Laravel = {!! json_encode([
       "csrfToken" => csrf_token(),
-      "api_token" => Auth::user()->tokens,
+      "api_token" => Helper::createJwt(Auth::user()),
       "app_url" => url('/'),
       "group_id" => Auth::user()->group_id
       ]) !!};
