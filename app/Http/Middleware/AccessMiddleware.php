@@ -23,7 +23,6 @@ class AccessMiddleware
     public function handle(Request $request, Closure $next)
     {
        try {
-            dd(Auth::user());
             $token = $request->bearerToken();
             if($token) {
                 try {
