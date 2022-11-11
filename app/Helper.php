@@ -34,16 +34,22 @@ class Helper {
     static function createJwt($data = NULL, $is_refresh_token = FALSE) {
         $issued_at = time();
         $key = 'example_key';
+        // $payload = [
+        //     'iss' => 'http://example.org', // Issuer of the token
+        //     'aud' => 'http://example.com',
+        //     'sub' => $data, // Subject of the token
+        //     'iat' => $issued_at, // Time when JWT was issued.
+        //     // 'exp' => $issued_at + 60*60*99999999999999999999999999999999
+        //     // 'exp' => $is_refresh_token
+        //     //     ?($issued_at + 60*60*24*30) // Waktu kadaluarsa 30 hari
+        //     //     :($issued_at + 60*60*4) // Waktu kadaluarsa 1 jam
+        // ];
         $payload = [
-            'iss' => 'http://example.org', // Issuer of the token
-            'aud' => 'http://example.com',
-            'sub' => $data, // Subject of the token
-            'iat' => $issued_at, // Time when JWT was issued.
-            // 'exp' => $issued_at + 60*60*99999999999999999999999999999999
-            // 'exp' => $is_refresh_token
-            //     ?($issued_at + 60*60*24*30) // Waktu kadaluarsa 30 hari
-            //     :($issued_at + 60*60*4) // Waktu kadaluarsa 1 jam
-        ];
+                'iss' => 'http://example.org',
+                'aud' => 'http://example.com',
+                'iat' => 1356999524,
+                'nbf' => 1357000000
+            ];
 
         JWT::$leeway = 60; // $leeway dalam detik
         return JWT::encode($payload, $key,'HS256');
