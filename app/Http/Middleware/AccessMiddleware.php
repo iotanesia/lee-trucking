@@ -26,6 +26,7 @@ class AccessMiddleware
                 try {
                     if($token){
                         $credentials = Helper::decodeJwt($token);
+                        dd($credentials);
                     }
                 } catch(ExpiredException $e) {
                     throw new \Exception("Expired Access Token.", 500);
