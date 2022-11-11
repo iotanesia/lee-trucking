@@ -26,12 +26,12 @@ class Helper {
         ];
 
         JWT::$leeway = 60; // $leeway dalam detik
-        return JWT::encode($payload, 'LEETRCK','HS256');
+        return JWT::encode($payload, 'leetrck','HS256');
     }
 
     static function decodeJwt($token) {
         try {
-            return JWT::decode($token,new Key('LEETRCK', 'HS256'));
+            return JWT::decode($token,new Key('leetrck', 'HS256'));
         } catch(\Throwable $e) {
             throw $e;
         }
