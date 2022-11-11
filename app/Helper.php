@@ -26,13 +26,13 @@ class Helper {
         ];
 
         JWT::$leeway = 60; // $leeway dalam detik
-        return JWT::encode($payload, 'LEETRCK','HS256');
+        return JWT::encode($payload, 'LEETRCK','RS256');
     }
 
     static function decodeJwt($token) {
         // try {
-            Log::info(JWT::decode($token,new Key('LEETRCK', 'HS256')));
-            $res = JWT::decode($token,new Key('LEETRCK', 'HS256'));
+            Log::info(JWT::decode($token,new Key('LEETRCK', 'RS256')));
+            $res = JWT::decode($token,new Key('LEETRCK', 'RS256'));
             return $res;
         // } catch(\Throwable $e) {
         //     throw $e;
