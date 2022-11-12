@@ -36,7 +36,7 @@ class UserController extends Controller
       if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
           $cabang_name = Cabang::find($user->cabang_id)->cabang_name;
 
-          if(!$request->current_user->is_active) {
+          if(!$user->is_active) {
               return response()->json([
                   'code' => 402,
                   'code_message' => 'User tidak aktif',
