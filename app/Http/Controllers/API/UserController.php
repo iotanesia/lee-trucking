@@ -45,7 +45,7 @@ class UserController extends Controller
               ], 402);
           }
           
-          $schema = $request->current_user->schema.'.';
+          $schema = $user->schema.'.';
           $token = Helper::createJwt($user);
         //   $user->remember_token = $user->createToken('nApp')->accessToken;
           $user->tokens = $token;
