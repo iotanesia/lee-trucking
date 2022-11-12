@@ -21,7 +21,7 @@ class UserController extends Controller
   public $successStatus = 201;
  
   public function login(Request $request){
-      $user = User::where('email', request('email'))->first();
+      $user = User::select('id','name','email','created_at','updated_at','is_active','schema','group_id','id_fcm_android','cabang_id')->where('email', request('email'))->first();
       $datas = null;
 
       if(!isset($user)) {
@@ -49,6 +49,7 @@ class UserController extends Controller
           $token = Helper::createJwt($user);
         //   $user->remember_token = $user->createToken('nApp')->accessToken;
           $user->tokens = $token;
+          $user->remember_token = $token;
           $user->id_fcm_android = request('id_fcm_android');
           $user->save();
           $roleAccess = DB::table($user->schema.'.usr_group_menu')
