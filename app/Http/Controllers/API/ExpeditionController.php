@@ -362,7 +362,7 @@ class ExpeditionController extends Controller
   public function add(Request $request) {
     if($request->isMethod('POST')) {
       $data = $request->all();
-      $idUser = Auth::user()->id;
+      $idUser = $request->current_user->id;
       $current_date_time = Carbon::now()->toDateTimeString();
       DB::connection(Auth::user()->schema)->beginTransaction();
       $expeditionActivity = new ExpeditionActivity;
@@ -570,7 +570,7 @@ class ExpeditionController extends Controller
       $expeditionActivity = ExpeditionActivity::find($data['id']);
       $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('created_at', 'DESC')->first();
       $allExActivity = ExStatusActivity::where('ex_id', $data['id'])->where('status_activity', 'APPROVAL_OJK_DRIVER')->where('status_approval', 'APPROVED')->get();
-      $idUser = Auth::user()->id;
+      $idUser = $request->current_user->id;
 
       if(isset($data['truck_id'])) {
           $truckDetail = Truck::find($data['truck_id']);
@@ -1290,7 +1290,7 @@ class ExpeditionController extends Controller
       $data = $request->all();
       $expeditionActivity = ExpeditionActivity::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString();
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       $expeditionActivity->deleted_at = $current_date_time;
       $expeditionActivity->deleted_by = $user_id;
       $expeditionActivity->is_deleted = true;
