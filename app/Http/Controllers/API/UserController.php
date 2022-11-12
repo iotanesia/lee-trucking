@@ -20,7 +20,7 @@ class UserController extends Controller
 {
   public $successStatus = 201;
  
-  public function login(){
+  public function login(Request $request){
       $user = User::where('email', request('email'))->first();
       $datas = null;
 
@@ -326,7 +326,7 @@ class UserController extends Controller
   }
   }
 
-  public function details()
+  public function details(Request $request)
   {
       $user = $request->current_user;
       
@@ -426,7 +426,7 @@ class UserController extends Controller
       }
   }
 
-  public function detailProfile(){
+  public function detailProfile(Request $request){
     $user = $request->current_user;
     $userDetail = UserDetail::where('id_user',$user->id)->first();
     if(isset($userDetail)){
