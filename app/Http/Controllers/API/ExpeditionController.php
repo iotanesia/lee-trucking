@@ -364,17 +364,17 @@ class ExpeditionController extends Controller
       $data = $request->all();
       $idUser = $request->current_user->id;
       $current_date_time = Carbon::now()->toDateTimeString();
-      DB::connection(Auth::user()->schema)->beginTransaction();
+      DB::connection($request->current_user->schema)->beginTransaction();
       $expeditionActivity = new ExpeditionActivity;
       if(isset($data['ojk_id'])){
       // $factory = new FirebaseService();
       $masterOjk = OJK::where('id', $data['ojk_id'])->select('harga_otv', 'harga_ojk')->first();
     //   $this->validate($request, [
-    //       'nomor_inv' => 'required|string|max:255|unique:'.Auth::user()->schema.'.expedition_activity',
+    //       'nomor_inv' => 'required|string|max:255|unique:'.$request->current_user->schema.'.expedition_activity',
     //       // 'no_ExpeditionActivity' => 'required|string|max:255|unique:ExpeditionActivity',
     //     // 'ExpeditionActivity_name' => 'required|string|max:255',
     //   ]);
-      $rules = ['nomor_inv' => 'required|string|max:255|iunique:'.Auth::user()->schema.'.expedition_activity',];
+      $rules = ['nomor_inv' => 'required|string|max:255|iunique:'.$request->current_user->schema.'.expedition_activity',];
       $validator = Validator::make($data, $rules);
 
       if($validator->fails()) {
@@ -434,7 +434,7 @@ class ExpeditionController extends Controller
         $exStatusActivity->approval_at = $current_date_time;
         $exStatusActivity->save();
 
-        DB::connection(Auth::user()->schema)->commit();
+        DB::connection($request->current_user->schema)->commit();
         $userOwner = User::where('group_id', '8')->where('id_fcm_android','<>','')->get();
 
         foreach($userOwner as $key => $row) {
@@ -539,7 +539,7 @@ class ExpeditionController extends Controller
         ], 200);
 
       } else {
-        DB::connection(Auth::user()->schema)->rollback();
+        DB::connection($request->current_user->schema)->rollback();
         return response()->json([
           'code' => 401,
           'code_message' => 'Gagal menyimpan data',
@@ -620,7 +620,7 @@ class ExpeditionController extends Controller
       }
 
       if($request->status_activity == 'DRIVER_SELESAI_EKSPEDISI' && !count($allExActivity)) {
-          DB::connection(Auth::user()->schema)->rollback();
+          DB::connection($request->current_user->schema)->rollback();
           return response()->json([
               'code' => 405,
               'code_message' => 'Expedisi belum di Approve oleh Owner, Harap Hubungi Owner',
@@ -661,7 +661,7 @@ class ExpeditionController extends Controller
             $expeditionActivity->penagihan_id = $request->penagihan_id;
         }
 
-        DB::connection(Auth::user()->schema)->beginTransaction();
+        DB::connection($request->current_user->schema)->beginTransaction();
 
         if($request->otv_payment_method) {
             $expeditionActivity->otv_payment_method = $request->otv_payment_method;
@@ -889,7 +889,7 @@ class ExpeditionController extends Controller
             }
 
             $driverUser = Driver::where('id', $expeditionActivity->driver_id)->first();
-            $userApprove = Auth::user();
+            $userApprove = $request->current_user;
             if($expeditionActivity->status_activity == 'APPROVAL_OJK_DRIVER'){
               if($exStatusActivity->status_approval == 'APPROVED'){
                 $notification = new Notification();
@@ -1238,14 +1238,14 @@ class ExpeditionController extends Controller
                 $exStatusActivity->save();
             }
 
-            DB::connection(Auth::user()->schema)->commit();
+            DB::connection($request->current_user->schema)->commit();
             return response()->json([
               'code' => 200,
               'code_message' => 'Berhasil menyimpan data',
               'code_type' => 'Success',
             ], 200);
           } else {
-            DB::connection(Auth::user()->schema)->rollback();
+            DB::connection($request->current_user->schema)->rollback();
             return response()->json([
               'code' => 401,
               'code_message' => 'Gagal menyimpan data',
@@ -1260,7 +1260,7 @@ class ExpeditionController extends Controller
         }
 
         if($expeditionActivity->save()) {
-            DB::connection(Auth::user()->schema)->commit();
+            DB::connection($request->current_user->schema)->commit();
             return response()->json([
                 'code' => 200,
                 'code_message' => 'Berhasil menyimpan data',
@@ -1268,7 +1268,7 @@ class ExpeditionController extends Controller
               ], 200);
 
         } else {
-            DB::connection(Auth::user()->schema)->rollback();
+            DB::connection($request->current_user->schema)->rollback();
             return response()->json([
                 'code' => 405,
                 'code_message' => 'Method salah',
@@ -1277,7 +1277,7 @@ class ExpeditionController extends Controller
         }
 
       } else {
-        DB::connection(Auth::user()->schema)->rollback();
+        DB::connection($request->current_user->schema)->rollback();
         return response()->json([
           'code' => 405,
           'code_message' => 'Method salah',
@@ -1428,7 +1428,7 @@ class ExpeditionController extends Controller
     if($request->isMethod('GET')) {
       $data = $request->all();
       $groupDriver = Group::where('group_name', 'Driver')->first();
-      $user = Auth::user();
+      $user = $request->current_user;
       $whereNotifId = (isset($data['filter_by_id'])) ? $data['filter_by_id'] : '';
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                    ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
@@ -1509,7 +1509,7 @@ class ExpeditionController extends Controller
   public function getExpeditionHistoryByDriverSelesai(Request $request){
     if($request->isMethod('GET')) {
       $data = $request->all();
-      $user = Auth::user();
+      $user = $request->current_user;
       $expeditionActivityList = ExpeditionActivity::leftJoin('all_global_param', 'expedition_activity.status_activity', 'all_global_param.param_code')
                     ->join('ex_master_truck', 'expedition_activity.truck_id', 'ex_master_truck.id')
                     ->join('ex_master_driver', 'expedition_activity.driver_id', 'ex_master_driver.id')
@@ -1690,7 +1690,7 @@ class ExpeditionController extends Controller
 
   public function testNotif(Request $request){
       // $factory = new FirebaseService();
-      $user = Auth::user();
+      $user = $request->current_user;
       $notif = array(
         'title' => 'hello',
         'body' => 'test test test'
