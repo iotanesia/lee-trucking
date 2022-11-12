@@ -12,7 +12,7 @@ use App\User;
 use Validator;
 use Auth;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use DNS1D;
 
 class SparePartController extends Controller
@@ -333,7 +333,7 @@ class SparePartController extends Controller
       $img = $request->file('img_sparepart');
       $sparePart = new SparePart;
 
-      DB::connection(Auth::user()->schema)->beginTransaction();
+      DB::connection($request->current_user->schema)->beginTransaction();
 
       $validator = Validator::make($request->all(), [
         'sparepart_name' => 'required|string|max:255',
@@ -360,7 +360,7 @@ class SparePartController extends Controller
         unset($data['img_sparepart']);
 
         $current_date_time = Carbon::now()->toDateTimeString(); 
-        $user_id = Auth::user()->id;
+        $user_id = $request->current_user->id;
 
         if(isset($img)){
             //upload image
@@ -423,7 +423,7 @@ class SparePartController extends Controller
             }  
           }
 
-          DB::connection(Auth::user()->schema)->commit();
+          DB::connection($request->current_user->schema)->commit();
 
           return response()->json([
             'code' => 200,
@@ -432,7 +432,7 @@ class SparePartController extends Controller
           ], 200);
         
         } else {
-          DB::connection(Auth::user()->schema)->rollback();
+          DB::connection($request->current_user->schema)->rollback();
 
           return response()->json([
             'code' => 401,
@@ -467,7 +467,7 @@ class SparePartController extends Controller
       unset($data['no_rek']);
       
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
 
       foreach($data as $key => $row) {
         $sparePart->{$key} = $row;
@@ -561,7 +561,7 @@ class SparePartController extends Controller
       $data = $request->all();
       $sparePart = SparePart::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
 
       $sparePart->deleted_at = $current_date_time;
       $sparePart->deleted_by = $user_id;
@@ -651,7 +651,7 @@ class SparePartController extends Controller
         unset($data['no_rek']);
         
         $current_date_time = Carbon::now()->toDateTimeString(); 
-        $user_id = Auth::user()->id;
+        $user_id = $request->current_user->id;
 
         foreach($data as $key => $row) {
           $sparePart->{$key} = $row;
@@ -749,7 +749,7 @@ class SparePartController extends Controller
         }
 
         $current_date_time = Carbon::now()->toDateTimeString(); 
-        $user_id = Auth::user()->id;
+        $user_id = $request->current_user->id;
         $historyStokSparepart->sparepart_type = 'PAID_OFF';
   
         if($historyStokSparepart->save()) {

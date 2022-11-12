@@ -69,7 +69,7 @@ class CabangsController extends Controller
       unset($data['id']);
 
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
      
       foreach($data as $key => $row) {
         $cabang->{$key} = $row; 
@@ -114,7 +114,7 @@ class CabangsController extends Controller
       unset($data['_token']);
       unset($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
      
       foreach($data as $key => $row) {
         $cabang->{$key} = $row;
@@ -151,7 +151,7 @@ class CabangsController extends Controller
       $data = $request->all();
       $cabang = cabang::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       $cabang->deleted_at = $current_date_time;
       $cabang->deleted_by = $user_id;
       $cabang->is_deleted = true;

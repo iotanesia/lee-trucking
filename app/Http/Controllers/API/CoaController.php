@@ -148,7 +148,7 @@ class CoaController extends Controller
       $data = $request->all();
       $coa = Coa::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       $coa->deleted_at = $current_date_time;
       $coa->deleted_by = $user_id;
       $coa->is_deleted = true;

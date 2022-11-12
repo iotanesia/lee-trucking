@@ -12,7 +12,7 @@ use App\Models\Rekening;
 use App\Models\Group;
 use App\Models\SparePart;
 use App\User;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class DropDownController extends Controller

@@ -144,7 +144,7 @@ class RewardController extends Controller
       $data = $request->all();
       $reward = Reward::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       $reward->deleted_at = $current_date_time;
       $reward->deleted_by = $user_id;
       $reward->is_deleted = true;

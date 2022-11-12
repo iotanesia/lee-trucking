@@ -78,7 +78,7 @@ class StkRepairBanHeaderController extends Controller
                                 }
                             }
                         })
-                        ->where('ex_master_driver.user_id', Auth::user()->id)
+                        ->where('ex_master_driver.user_id', $request->current_user->id)
                         ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
                         ->orderBy('id', 'ASC')
                         ->paginate();
@@ -131,7 +131,7 @@ class StkRepairBanHeaderController extends Controller
 
       foreach($data as $key => $row) {
         $stkRepairHeader->{$key} = $row;
-        $stkRepairHeader->created_by = Auth::user()->id;
+        $stkRepairHeader->created_by = $request->current_user->id;
       }
     //   dd($sparepart_detail['sparepart_id']);
 
@@ -144,7 +144,7 @@ class StkRepairBanHeaderController extends Controller
                   $detail->sparepart_status = $sparepart->sparepart_status;
                   $detail->sparepart_jenis = $sparepart->sparepart_jenis;
                   $detail->jumlah_stok = $sparepart_detail['jumlah_stock'][$key];
-                  $detail->created_by = Auth::user()->id;
+                  $detail->created_by = $request->current_user->id;
                   $detail->barcode_gudang = $sparepart->barcode_gudang;
                   $detail->barcode_pabrik = $sparepart->barcode_pabrik;
                   $detail->sparepart_type = $sparepart->sparepart_type;
@@ -197,7 +197,7 @@ class StkRepairBanHeaderController extends Controller
       
       foreach($data as $key => $row) {
         $stkRepairHeader->{$key} = $row;
-        $stkRepairHeader->created_by = Auth::user()->id;
+        $stkRepairHeader->created_by = $request->current_user->id;
       }
 
       if($stkRepairHeader->save()){
@@ -221,7 +221,7 @@ class StkRepairBanHeaderController extends Controller
                     $detail->sparepart_status = $sparepart->sparepart_status;
                     $detail->sparepart_jenis = $sparepart->sparepart_jenis;
                     $detail->jumlah_stok = $sparepart_detail['jumlah_stock'][$key];
-                    $detail->created_by = Auth::user()->id;
+                    $detail->created_by = $request->current_user->id;
                     $detail->barcode_gudang = $sparepart->barcode_gudang;
                     $detail->barcode_pabrik = $sparepart->barcode_pabrik;
                     $detail->sparepart_type = $sparepart->sparepart_type;

@@ -144,7 +144,7 @@ class KenekController extends Controller
       $data = $request->all();
       $kenek = Kenek::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       $kenek->deleted_at = $current_date_time;
       $kenek->deleted_by = $user_id;
       $kenek->is_deleted = true;

@@ -22,7 +22,7 @@ class NotificationController extends Controller
 {
     public function getList(Request $request) {
       if($request->isMethod('GET')) {
-        $user = Auth::user();
+        $user = $request->current_user;
         $data = $request->all();
         $notificationList = Notification::
                         where('notification.id_user_to',$user->id)
@@ -89,7 +89,7 @@ class NotificationController extends Controller
     public function readAll(Request $request){
       if($request->isMethod('POST')) {
           $data = $request->all();
-          $userLogin = Auth::user();
+          $userLogin = $request->current_user;
           $notificationList = Notification::where('id_user_to',$userLogin->id)->get();
           foreach($notificationList as $notif){
             $notif->is_read = true;
@@ -147,7 +147,7 @@ class NotificationController extends Controller
     public function getCount(Request $request){
       $data['count'] = 0;
       $data = $request->all();
-      $userLogin = Auth::user();
+      $userLogin = $request->current_user;
 
       $notificationList = Notification::where('id_user_to',$userLogin->id)->where('is_read',false)->get();
       $data['count'] = isset($notificationList) ? $notificationList->count() : 0;

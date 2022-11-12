@@ -10,7 +10,7 @@ use App\Models\StkHistorySparePart;
 use App\Models\StkGroupSparepart;
 use Auth;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class StkRepairHeaderController extends Controller
 {
@@ -109,7 +109,7 @@ class StkRepairHeaderController extends Controller
                                 }
                             }
                         })
-                        ->where('ex_master_driver.user_id', Auth::user()->id)
+                        ->where('ex_master_driver.user_id', $request->current_user->id)
                         ->select('stk_repair_header.*', 'ex_master_truck.truck_plat', 'ex_master_truck.truck_name', 'ex_master_driver.driver_name')
                         ->orderBy('id', 'DESC')
                         ->paginate();
@@ -160,11 +160,11 @@ class StkRepairHeaderController extends Controller
       unset($data['id']);
       unset($data['sparepart_detail']);
 
-      DB::connection(Auth::user()->schema)->beginTransaction();
+      DB::connection($request->current_user->schema)->beginTransaction();
 
       foreach($data as $key => $row) {
         $stkRepairHeader->{$key} = $row;
-        $stkRepairHeader->created_by = Auth::user()->id;
+        $stkRepairHeader->created_by = $request->current_user->id;
       }
     //   dd($sparepart_detail['sparepart_id']);
 
@@ -179,7 +179,7 @@ class StkRepairHeaderController extends Controller
                   $sparepart = SparePart::find($row);
 
                   if($sparepart->jumlah_stok < $sparepart_detail['jumlah_stock'][$key]) {
-                      DB::connection(Auth::user()->schema)->rollback();
+                      DB::connection($request->current_user->schema)->rollback();
                       return response()->json([
                           'code' => 401,
                           'code_message' => 'Stok Tidak mencukupi',
@@ -194,7 +194,7 @@ class StkRepairHeaderController extends Controller
                   $detail->sparepart_status = $sparepart->sparepart_status;
                   $detail->sparepart_jenis = $sparepart->sparepart_jenis;
                   $detail->jumlah_stok = $sparepart_detail['jumlah_stock'][$key];
-                  $detail->created_by = Auth::user()->id;
+                  $detail->created_by = $request->current_user->id;
                   $detail->barcode_gudang = $sparepart->barcode_gudang;
                   $detail->barcode_pabrik = $sparepart->barcode_pabrik;
                   $detail->sparepart_type = $sparepart->sparepart_type;
@@ -207,7 +207,7 @@ class StkRepairHeaderController extends Controller
               }
           }
 
-          DB::connection(Auth::user()->schema)->commit();
+          DB::connection($request->current_user->schema)->commit();
           return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -215,7 +215,7 @@ class StkRepairHeaderController extends Controller
           ], 200);
       
       } else {
-        DB::connection(Auth::user()->schema)->rollback();
+        DB::connection($request->current_user->schema)->rollback();
         return response()->json([
           'code' => 400,
           'code_message' => 'Gagal menyimpan data',
@@ -248,11 +248,11 @@ class StkRepairHeaderController extends Controller
       unset($data['id']);
       unset($data['sparepart_detail']);
 
-      DB::connection(Auth::user()->schema)->beginTransaction();
+      DB::connection($request->current_user->schema)->beginTransaction();
 
       foreach($data as $key => $row) {
         $stkRepairHeader->{$key} = $row;
-        $stkRepairHeader->created_by = Auth::user()->id;
+        $stkRepairHeader->created_by = $request->current_user->id;
       }
     //   dd($sparepart_detail['sparepart_id']);
 
@@ -267,7 +267,7 @@ class StkRepairHeaderController extends Controller
                   $sparepart = SparePart::find($row);
 
                   if($sparepart->jumlah_stok < $sparepart_detail['jumlah_stock'][$key]) {
-                      DB::connection(Auth::user()->schema)->rollback();
+                      DB::connection($request->current_user->schema)->rollback();
                       return response()->json([
                           'code' => 401,
                           'code_message' => 'Stok Tidak mencukupi',
@@ -282,7 +282,7 @@ class StkRepairHeaderController extends Controller
                   $detail->sparepart_status = $sparepart->sparepart_status;
                   $detail->sparepart_jenis = $sparepart->sparepart_jenis;
                   $detail->jumlah_stok = $sparepart_detail['jumlah_stock'][$key];
-                  $detail->created_by = Auth::user()->id;
+                  $detail->created_by = $request->current_user->id;
                   $detail->barcode_gudang = $sparepart->barcode_gudang;
                   $detail->barcode_pabrik = $sparepart->barcode_pabrik;
                   $detail->sparepart_type = $sparepart->sparepart_type;
@@ -295,7 +295,7 @@ class StkRepairHeaderController extends Controller
               }
           }
 
-          DB::connection(Auth::user()->schema)->commit();
+          DB::connection($request->current_user->schema)->commit();
           return response()->json([
           'code' => 200,
           'code_message' => 'Berhasil menyimpan data',
@@ -303,7 +303,7 @@ class StkRepairHeaderController extends Controller
           ], 200);
       
       } else {
-        DB::connection(Auth::user()->schema)->rollback();
+        DB::connection($request->current_user->schema)->rollback();
         return response()->json([
           'code' => 400,
           'code_message' => 'Gagal menyimpan data',
@@ -337,7 +337,7 @@ class StkRepairHeaderController extends Controller
       
       foreach($data as $key => $row) {
         $stkRepairHeader->{$key} = $row;
-        $stkRepairHeader->created_by = Auth::user()->id;
+        $stkRepairHeader->created_by = $request->current_user->id;
       }
 
       if($stkRepairHeader->save()){
@@ -361,7 +361,7 @@ class StkRepairHeaderController extends Controller
                     $detail->sparepart_status = $sparepart->sparepart_status;
                     $detail->sparepart_jenis = $sparepart->sparepart_jenis;
                     $detail->jumlah_stok = $sparepart_detail['jumlah_stock'][$key];
-                    $detail->created_by = Auth::user()->id;
+                    $detail->created_by = $request->current_user->id;
                     $detail->barcode_gudang = $sparepart->barcode_gudang;
                     $detail->barcode_pabrik = $sparepart->barcode_pabrik;
                     $detail->sparepart_type = $sparepart->sparepart_type;
@@ -415,7 +415,7 @@ class StkRepairHeaderController extends Controller
       
       foreach($data as $key => $row) {
         $stkRepairHeader->{$key} = $row;
-        $stkRepairHeader->created_by = Auth::user()->id;
+        $stkRepairHeader->created_by = $request->current_user->id;
       }
 
       if($stkRepairHeader->save()){
@@ -436,7 +436,7 @@ class StkRepairHeaderController extends Controller
                     $detail->sparepart_status = $sparepart->sparepart_status;
                     $detail->sparepart_jenis = $sparepart->sparepart_jenis;
                     $detail->jumlah_stok = $sparepart_detail['jumlah_stock'][$key];
-                    $detail->created_by = Auth::user()->id;
+                    $detail->created_by = $request->current_user->id;
                     $detail->barcode_gudang = $sparepart->barcode_gudang;
                     $detail->barcode_pabrik = $sparepart->barcode_pabrik;
                     $detail->sparepart_type = $sparepart->sparepart_type;

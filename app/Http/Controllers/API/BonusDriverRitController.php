@@ -13,7 +13,7 @@ use App\Models\CoaActivity;
 use App\Models\CoaMasterSheet;
 use Auth;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class BonusDriverRitController extends Controller
 {
@@ -328,7 +328,7 @@ class BonusDriverRitController extends Controller
       $data = $request->all();
       $reward = Reward::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       $reward->deleted_at = $current_date_time;
       $reward->deleted_by = $user_id;
       $reward->is_deleted = true;
@@ -363,7 +363,7 @@ class BonusDriverRitController extends Controller
       $data = $request->all();
       $firstDate = date('Y-m-01');
       $lastDate = date('Y-m-t');
-      $user = Auth::user();
+      $user = $request->current_user;
       $whereField = 'name, no_Reward';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $truckTipe = GlobalParam::where('param_code', 'TRUCK')->where('param_type', 'TRUCK_TYPE')->first();
@@ -437,7 +437,7 @@ class BonusDriverRitController extends Controller
       $data = $request->all();
       $firstDate = date('Y-m-01');
       $lastDate = date('Y-m-t');
-      $user = Auth::user();
+      $user = $request->current_user;
       $whereField = 'name, no_Reward';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $rewardList = ExpeditionActivity::join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
@@ -494,7 +494,7 @@ class BonusDriverRitController extends Controller
       $data = $request->all();
       $firstDate = date('Y-m-01');
       $lastDate = date('Y-m-t');
-      $user = Auth::user();
+      $user = $request->current_user;
       $whereField = 'name, no_Reward';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $rewardList = ExpeditionActivity::join('ex_master_ojk', 'expedition_activity.ojk_id', 'ex_master_ojk.id')
@@ -559,7 +559,7 @@ class BonusDriverRitController extends Controller
       $data = $request->all();
       $firstDate = date('Y-m-01');
       $lastDate = date('Y-m-t');
-      $user = Auth::user();
+      $user = $request->current_user;
       $whereField = 'name, no_Reward';
       $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
       $rewardList = ExpeditionActivity::join('ex_master_kenek', 'expedition_activity.kenek_id', 'ex_master_kenek.id')
@@ -624,7 +624,7 @@ class BonusDriverRitController extends Controller
               $insertBonus->nominal = $request->bonus;
               $insertBonus->rek_no = 2;
               $insertBonus->coa_id = $val->id;
-              $insertBonus->created_by = Auth::user()->id;
+              $insertBonus->created_by = $request->current_user->id;
               $insertBonus->rek_id = 2;
               $insertBonus->table = 'ex_master_driver';
               $insertBonus->table_id = $request->driver_id;
@@ -640,7 +640,7 @@ class BonusDriverRitController extends Controller
               $insertReward->nominal = $request->reward;
               $insertReward->rek_no = 2;
               $insertReward->coa_id = $val->id;
-              $insertReward->created_by = Auth::user()->id;
+              $insertReward->created_by = $request->current_user->id;
               $insertReward->rek_id = 2;
               $insertReward->table = 'ex_master_driver';
               $insertReward->table_id = $request->driver_id;

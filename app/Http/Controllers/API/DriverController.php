@@ -8,7 +8,7 @@ use App\Models\Driver;
 use App\Models\UserDetail;
 use Auth;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class DriverController extends Controller
 {
@@ -94,7 +94,7 @@ class DriverController extends Controller
       
       $this->validate($request, [
         // 'no_Driver' => 'required|string|max:255|unique:Driver',
-        'user_id' => 'required|string|max:255|unique:'.Auth::user()->schema.'.ex_master_driver',
+        'user_id' => 'required|string|max:255|unique:'.$request->current_user->schema.'.ex_master_driver',
         'driver_name' => 'required|string|max:255',
         'kenek_id' => 'required',
         'driver_status' => 'required',
@@ -138,7 +138,7 @@ class DriverController extends Controller
       
       $this->validate($request, [
         // 'no_Driver' => 'required|string|max:255|unique:Driver,no_Driver,'.$data['id'].',id',
-        'user_id' => 'required|string|max:255|unique:'.Auth::user()->schema.'.ex_master_driver,user_id,'.$data['id'].',id',
+        'user_id' => 'required|string|max:255|unique:'.$request->current_user->schema.'.ex_master_driver,user_id,'.$data['id'].',id',
         'driver_name' => 'required|string|max:255',
         'kenek_id' => 'required',
         'driver_status' => 'required',
@@ -180,7 +180,7 @@ class DriverController extends Controller
       $data = $request->all();
       $driver = Driver::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       $driver->deleted_at = $current_date_time;
       $driver->deleted_by = $user_id;
       $driver->is_deleted = true;

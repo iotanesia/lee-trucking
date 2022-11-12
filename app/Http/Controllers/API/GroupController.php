@@ -143,7 +143,7 @@ class GroupController extends Controller
       $data = $request->all();
       $group = Group::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
 
       $group->deleted_at = $current_date_time;
       $group->deleted_by = $user_id;

@@ -86,7 +86,7 @@ class OjkController extends Controller
         unset($data['_token']);
         unset($data['id']);
         $current_date_time = Carbon::now()->toDateTimeString(); 
-        $user_id = Auth::user()->id;
+        $user_id = $request->current_user->id;
         foreach($data as $key => $row) {
           $ojk->{$key} = $row;
           $ojk->created_at = $current_date_time; 
@@ -143,7 +143,7 @@ class OjkController extends Controller
         unset($data['id']);
         
         $current_date_time = Carbon::now()->toDateTimeString(); 
-        $user_id = Auth::user()->id;
+        $user_id = $request->current_user->id;
         foreach($data as $key => $row) {
           $ojk->{$key} = $row;
           $ojk->updated_at = $current_date_time; 
@@ -179,7 +179,7 @@ class OjkController extends Controller
       $data = $request->all();
       $ojk = Ojk::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
 
       $ojk->deleted_at = $current_date_time;
       $ojk->deleted_by = $user_id;

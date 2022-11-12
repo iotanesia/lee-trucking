@@ -36,7 +36,7 @@ class UserController extends Controller
       if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
           $cabang_name = Cabang::find($user->cabang_id)->cabang_name;
 
-          if(!Auth::user()->is_active) {
+          if(!$request->current_user->is_active) {
               return response()->json([
                   'code' => 402,
                   'code_message' => 'User tidak aktif',
@@ -45,16 +45,16 @@ class UserController extends Controller
               ], 402);
           }
           
-          $schema = Auth::user()->schema.'.';
+          $schema = $request->current_user->schema.'.';
           $token = Helper::createJwt($user);
         //   $user->remember_token = $user->createToken('nApp')->accessToken;
           $user->tokens = $token;
           $user->id_fcm_android = request('id_fcm_android');
           $user->save();
-          $roleAccess = DB::table(Auth::user()->schema.'.usr_group_menu')
-                        ->join(Auth::user()->schema.'.usr_menu', 'usr_group_menu.menu_id', 'usr_menu.id')
+          $roleAccess = DB::table($request->current_user->schema.'.usr_group_menu')
+                        ->join($request->current_user->schema.'.usr_menu', 'usr_group_menu.menu_id', 'usr_menu.id')
                         ->select('usr_menu.menu_name as menu_name')
-                        ->where('usr_group_menu.group_id', Auth::user()->group_id)
+                        ->where('usr_group_menu.group_id', $request->current_user->group_id)
                         ->get();
 
           $user->group_name = isset(DB::table($schema.'usr_group')->find($user->group_id)->group_name) ? DB::table($schema.'usr_group')->find($user->group_id)->group_name : null;
@@ -92,7 +92,7 @@ class UserController extends Controller
           'password_confirmation' => 'required|same:password'
       ]);
 
-      $userAuth = Auth::user();
+      $userAuth = $request->current_user;
       $current_date_time = Carbon::now()->toDateTimeString();
       if ($validator->fails()) {
         return response()->json([
@@ -191,7 +191,7 @@ class UserController extends Controller
       $input['password'] = bcrypt($input['password']);
     }
     
-    $userAuth = Auth::user();
+    $userAuth = $request->current_user;
     $current_date_time = Carbon::now()->toDateTimeString();
     if ($validator->fails()) {
       return response()->json([
@@ -280,7 +280,7 @@ class UserController extends Controller
     //     'password_confirmation' => 'nullable|same:password'
     // ]);
 
-    $user = Auth::user();
+    $user = $request->current_user;
 
     
     $current_date_time = Carbon::now()->toDateTimeString();
@@ -328,7 +328,7 @@ class UserController extends Controller
 
   public function details()
   {
-      $user = Auth::user();
+      $user = $request->current_user;
       
       return response()->json([
         'code' => 200,
@@ -392,7 +392,7 @@ class UserController extends Controller
   public function updatePassword(Request $request)
   {
     if($request->isMethod('POST')) {
-      $user = Auth::user();
+      $user = $request->current_user;
       if (Hash::check($request->password_old, $user->password)) { 
         $user->password = bcrypt($request->password);
         if($user->save()){
@@ -427,7 +427,7 @@ class UserController extends Controller
   }
 
   public function detailProfile(){
-    $user = Auth::user();
+    $user = $request->current_user;
     $userDetail = UserDetail::where('id_user',$user->id)->first();
     if(isset($userDetail)){
       $agama = GlobalParam::where('param_code', $userDetail->agama)->select('description')->first();
@@ -454,7 +454,7 @@ class UserController extends Controller
   public function updatePhotoProfile(Request $request){
     if($request->isMethod('POST')) {
       $img = $request->file('foto_profil');
-      $user = Auth::user();
+      $user = $request->current_user;
       $userDetail = UserDetail::where('id_user',$user->id)->first();
       
       $current_date_time = Carbon::now()->toDateTimeString(); 
@@ -502,7 +502,7 @@ class UserController extends Controller
   
   public function updateFcm(Request $request){
     if($request->isMethod('POST')) {
-      $user = Auth::user();
+      $user = $request->current_user;
       $userDetail = User::where('id',$user->id)->first();
       
       $current_date_time = Carbon::now()->toDateTimeString(); 
@@ -543,7 +543,7 @@ class UserController extends Controller
         $data = $request->all();
         $user = User::find($data['id']);
         $current_date_time = Carbon::now()->toDateTimeString(); 
-        $user_id = Auth::user()->id;
+        $user_id = $request->current_user->id;
         $user->deleted_at = $current_date_time;
         $user->deleted_by = $user_id;
         $user->is_deleted = true;

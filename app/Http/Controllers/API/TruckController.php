@@ -168,7 +168,7 @@ class TruckController extends Controller
       $data = $request->all();
       $truck = Truck::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
 
       $truck->deleted_at = $current_date_time;
       $truck->deleted_by = $user_id;
@@ -254,7 +254,7 @@ class TruckController extends Controller
         $data = $request->all();
         $ban = Ban::find($data['id']);
         $current_date_time = Carbon::now()->toDateTimeString(); 
-        $user_id = Auth::user()->id;
+        $user_id = $request->current_user->id;
         $ban->deleted_at = $current_date_time;
         
         if($ban->save()){

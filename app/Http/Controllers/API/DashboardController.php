@@ -8,7 +8,7 @@ use Auth;
 use App\Models\Provinsi;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class DashboardController extends Controller
@@ -25,7 +25,7 @@ class DashboardController extends Controller
                 $queryRole = 'AND b.cabang_id IN ('.$idRole.')';
             }
 
-            $schema = Auth::user()->schema;
+            $schema = $request->current_user->schema;
             $bln = date('m');
             $thn = date('Y');
             $data['cabang_tsj'] = 0;

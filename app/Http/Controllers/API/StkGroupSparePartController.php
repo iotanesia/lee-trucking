@@ -123,7 +123,7 @@ class StkGroupSparePartController extends Controller
         unset($data['_token']);
         unset($data['id']);
         $current_date_time = Carbon::now()->toDateTimeString(); 
-        $user_id = Auth::user()->id;
+        $user_id = $request->current_user->id;
         foreach($data as $key => $row) {
           $sparePart->{$key} = $row;
           $sparePart->created_at = $current_date_time;
@@ -168,7 +168,7 @@ class StkGroupSparePartController extends Controller
       unset($data['id']);
       
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       foreach($data as $key => $row) {
         $sparePart->{$key} = $row;
         $sparePart->updated_at = $current_date_time;
@@ -203,7 +203,7 @@ class StkGroupSparePartController extends Controller
       $data = $request->all();
       $sparePart = StkGroupSparepart::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
 
       $sparePart->deleted_at = $current_date_time;
       $sparePart->deleted_by = $user_id;

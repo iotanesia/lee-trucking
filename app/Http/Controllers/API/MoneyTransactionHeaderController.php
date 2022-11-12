@@ -9,7 +9,7 @@ use App\Models\MoneyDetailTermin;
 use App\Models\CoaActivity;
 use App\Models\CoaMasterSheet;
 use Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class MoneyTransactionHeaderController extends Controller
@@ -191,7 +191,7 @@ class MoneyTransactionHeaderController extends Controller
                                             }
                                         }
                                     })
-                                    ->where('user_id', Auth::user()->id)
+                                    ->where('user_id', $request->current_user->id)
                                     ->where('category_name', 'PINJAMAN_KARYAWAN')
                                     ->select('money_transaction_header.*', 'users.name as name_user', 'coa_master_rekening.rek_no', 'coa_master_rekening.rek_name')
                                     ->orderBy('money_transaction_header.id', 'ASC')
@@ -352,7 +352,7 @@ class MoneyTransactionHeaderController extends Controller
       $data = $request->all();
       $moneyTransactionHeader = new MoneyTransactionHeader;
       $current_date_time = Carbon::now()->toDateTimeString();
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       
       $this->validate($request, [
         // 'no_MoneyTransactionHeader' => 'required|string|max:255|unique:MoneyTransactionHeader',
@@ -367,7 +367,7 @@ class MoneyTransactionHeaderController extends Controller
         $moneyTransactionHeader->status = 'BELUM_LUNAS';
         $moneyTransactionHeader->category_name = 'MODAL_USAHA';
         $moneyTransactionHeader->sisa_pokok = $data['pokok'];
-        $moneyTransactionHeader->created_by = Auth::user()->id;
+        $moneyTransactionHeader->created_by = $request->current_user->id;
       }
 
       if($moneyTransactionHeader->save()) {
@@ -378,7 +378,7 @@ class MoneyTransactionHeaderController extends Controller
         //       $moneyDetailTermin->baris_termin = 1;
         //       $moneyDetailTermin->nominal_termin = $moneyTransactionHeader->pokok / $moneyTransactionHeader->termin;
         //       $moneyDetailTermin->transaksi_header_id = $moneyTransactionHeader->id;
-        //       $moneyDetailTermin->created_by = Auth::user()->id;
+        //       $moneyDetailTermin->created_by = $request->current_user->id;
         //       $moneyDetailTermin->save();
         //   }
 
@@ -425,7 +425,7 @@ class MoneyTransactionHeaderController extends Controller
       $data = $request->all();
       $moneyTransactionHeader = new MoneyTransactionHeader;
       $current_date_time = Carbon::now()->toDateTimeString();
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
 
       if($data['date']) {
           $data['date'] = date('Y-m-d', strtotime($data['date']));
@@ -451,7 +451,7 @@ class MoneyTransactionHeaderController extends Controller
         $moneyTransactionHeader->status = 'BELUM_LUNAS';
         // $moneyTransactionHeader->category_name = 'PINJAMAN_KARYAWAN';
         $moneyTransactionHeader->sisa_pokok = $data['pokok'];
-        $moneyTransactionHeader->created_by = Auth::user()->id;
+        $moneyTransactionHeader->created_by = $request->current_user->id;
       }
 
       if($moneyTransactionHeader->save()) {     
@@ -470,7 +470,7 @@ class MoneyTransactionHeaderController extends Controller
         //       $moneyDetailTermin->baris_termin = 1;
         //       $moneyDetailTermin->nominal_termin = $moneyTransactionHeader->pokok / $moneyTransactionHeader->termin;
         //       $moneyDetailTermin->transaksi_header_id = $moneyTransactionHeader->id;
-        //       $moneyDetailTermin->created_by = Auth::user()->id;
+        //       $moneyDetailTermin->created_by = $request->current_user->id;
         //       $moneyDetailTermin->save();
         //   }
 
@@ -516,7 +516,7 @@ class MoneyTransactionHeaderController extends Controller
     if($request->isMethod('POST')) {
       $data = $request->all();
       $current_date_time = Carbon::now()->toDateTimeString();
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       $moneyTransactionHeader = MoneyTransactionHeader::find($data['id']);
       $coaActivity = CoaActivity::where('table', 'money_transaction_header')->where('table_id', $data['id'])->delete();
       
@@ -542,7 +542,7 @@ class MoneyTransactionHeaderController extends Controller
         //     $moneyDetailTermin->baris_termin = 1;
         //     $moneyDetailTermin->nominal_termin = $moneyTransactionHeader->pokok / $moneyTransactionHeader->termin;
         //     $moneyDetailTermin->transaksi_header_id = $moneyTransactionHeader->id;
-        //     $moneyDetailTermin->created_by = Auth::user()->id;
+        //     $moneyDetailTermin->created_by = $request->current_user->id;
         //     $moneyDetailTermin->save();
         //   }
 
@@ -588,7 +588,7 @@ class MoneyTransactionHeaderController extends Controller
     if($request->isMethod('POST')) {
       $data = $request->all();
       $current_date_time = Carbon::now()->toDateTimeString();
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       $moneyTransactionHeader = MoneyTransactionHeader::find($data['id']);
       $coaActivity = CoaActivity::where('table', 'money_transaction_header')->where('table_id', $data['id'])->delete();
       
@@ -614,7 +614,7 @@ class MoneyTransactionHeaderController extends Controller
         //     $moneyDetailTermin->baris_termin = 1;
         //     $moneyDetailTermin->nominal_termin = $moneyTransactionHeader->pokok / $moneyTransactionHeader->termin;
         //     $moneyDetailTermin->transaksi_header_id = $moneyTransactionHeader->id;
-        //     $moneyDetailTermin->created_by = Auth::user()->id;
+        //     $moneyDetailTermin->created_by = $request->current_user->id;
         //     $moneyDetailTermin->save();
         //   }
 
@@ -667,7 +667,7 @@ class MoneyTransactionHeaderController extends Controller
           if($data['date']) {
               $data['date'] = date('Y-m-d', strtotime($data['date']));
           }
-          $user_id = Auth::user()->id;
+          $user_id = $request->current_user->id;
           
           if($checkBarisLast) {
               $baris_termin = $checkBarisLast->baris_termin + 1;
@@ -732,7 +732,7 @@ class MoneyTransactionHeaderController extends Controller
       $MoneyDetailTermin = MoneyDetailTermin::where('transaksi_header_id', $data['id'])->delete();
       $moneyTransactionHeader = MoneyTransactionHeader::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
 
     //   $moneyTransactionHeader->deleted_at = $current_date_time;
     //   $moneyTransactionHeader->deleted_by = $user_id;

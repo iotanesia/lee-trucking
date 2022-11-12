@@ -61,7 +61,7 @@ class CabangController extends Controller
       
       $this->validate($request, [
         // 'no_cabang' => 'required|string|max:255|unique:cabang',
-        'nomor_inv' => 'required|string|max:255|unique:'.Auth::user()->schema.'.expedition_activity',
+        'nomor_inv' => 'required|string|max:255|unique:'.$request->current_user->schema.'.expedition_activity',
         'cabang_name' => 'required|string|max:255',
       ]);
 
@@ -69,7 +69,7 @@ class CabangController extends Controller
       unset($data['id']);
 
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       foreach($data as $key => $row) {
         $cabang->{$key} = $row;
         $cabang->created_at = $current_date_time;
@@ -114,7 +114,7 @@ class CabangController extends Controller
       unset($data['id']);
       
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       foreach($data as $key => $row) {
         $cabang->{$key} = $row;
         $cabang->updated_at = $current_date_time;
@@ -150,7 +150,7 @@ class CabangController extends Controller
       $data = $request->all();
       $cabang = cabang::find($data['id']);
       $current_date_time = Carbon::now()->toDateTimeString(); 
-      $user_id = Auth::user()->id;
+      $user_id = $request->current_user->id;
       $cabang->deleted_at = $current_date_time;
       $cabang->deleted_by = $user_id;
       $cabang->is_deleted = true;
