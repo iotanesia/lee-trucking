@@ -370,10 +370,12 @@ $(document).on("click", "a[el-event='show-page']", function(event) {
   var data = new FormData();
   var page = invoker.attr("page");
   var onSuccessLoad = $("table[data-model='" + dataModel + "']").attr("on-success-load");
+  var searchValue = $("input[name='search_value']").val();
 
   data.append("_method", "GET");
   data.append("api_token", window.Laravel.api_token);
   data.append("page", page);
+  data.append("where_value", searchValue);
   
   var tahun = $('#tahun-select').val();
   var bulan = $('#bulan-select').val();
