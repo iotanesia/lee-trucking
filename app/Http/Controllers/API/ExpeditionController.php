@@ -565,8 +565,11 @@ class ExpeditionController extends Controller
 
   public function edit(Request $request) {
     if($request->isMethod('POST')) {
-      $isUpdate = false;
-      $data = $request->all();
+        $isUpdate = false;
+        $data = $request->all();
+        if(isset($data['tgl_po'])) $data['tgl_po'] = Carbon::parse($data['tgl_po'])->format('Y-m-d H:i:s');
+        if(isset($data['tgl_inv'])) $data['tgl_inv'] = Carbon::parse($data['tgl_inv'])->format('Y-m-d H:i:s');
+    //   dd($data);
       $expeditionActivity = ExpeditionActivity::find($data['id']);
       $lastExActivity = ExStatusActivity::where('ex_id', $data['id'])->orderBy('created_at', 'DESC')->first();
       $allExActivity = ExStatusActivity::where('ex_id', $data['id'])->where('status_activity', 'APPROVAL_OJK_DRIVER')->where('status_approval', 'APPROVED')->get();
