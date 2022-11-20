@@ -723,7 +723,7 @@ class ReportManagementController extends Controller
         foreach($data as $row) {
           $historyStok = StkHistorySparePart::where('header_id', $row->id)->where('transaction_type','OUT')->get();
           foreach($historyStok as $rowHistory){
-              $totals = ($rowHistory->jumlah_stok * $rowHistory->amount);
+              $totals = ($rowHistory->amount);
           }
             $row->total = 'Rp.'. number_format($totals, 0, ',', '.');
         }
@@ -751,8 +751,8 @@ class ReportManagementController extends Controller
         ->orderBy('stk_history_stock.updated_at','DESC')->get();
 
         foreach($data as $row) {
-          $row->total = 'Rp.'. number_format(($row->jumlah_stok * $row->amount), 0, ',', '.');
-          $row->amount = 'Rp.'. number_format($row->amount, 0, ',', '.');
+          $row->total = 'Rp.'. number_format(($row->amount), 0, ',', '.');
+          $row->amount = 'Rp.'. number_format($row->amount / $row->jumlah_stok, 0, ',', '.');
         }
         return datatables($data)->toJson();
       }
