@@ -619,11 +619,11 @@ input:checked + .slider:before {
                                 <i class="fas fa-file-excel"></i>
                                 <span>Excel</span>
                               </a>
-                              {{-- <div class="dropdown-divider"></div>
+                              <div class="dropdown-divider"></div>
                               <a href="#" id="is-pdf-bf" class="dropdown-item" data-toggle="modal" data-target="#modal-export-bf">
                               <i class="fas fa-file-pdf"></i>
                                 <span>PDF</span>
-                              </a> --}}
+                              </a>
                             </div>
                           </div>
                         </div>

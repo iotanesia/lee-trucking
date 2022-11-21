@@ -721,7 +721,7 @@ class ReportManagementController extends Controller
 
         $totals = 0;
         foreach($data as $row) {
-          $historyStok = StkHistorySparePart::where('header_id', $row->id)->where('transaction_type','OUT')->get();
+          $historyStok = StkHistorySparePart::where(php 'header_id', $row->id)->where('transaction_type','OUT')->get();
           foreach($historyStok as $rowHistory){
               $totals = ($rowHistory->amount);
           }
