@@ -607,7 +607,7 @@ input:checked + .slider:before {
                                   <i class="fas fa-file-export"></i>
                                 </span>
                                 <div class="media-body d-none d-lg-block" style="margin-top: 4px;margin-right: 20px;text-align:center">
-                                  <span class="mb-0 text-sm  font-weight-bold">Eksport</span>
+                                  <span class="mb-0 text-sm  font-weight-bold">Eksports</span>
                                 </div>
                               </div>
                             </a>
@@ -621,9 +621,9 @@ input:checked + .slider:before {
                               </a>
                               <div class="dropdown-divider"></div>
                               <a href="#" id="is-pdf-bf" class="dropdown-item" data-toggle="modal" data-target="#modal-export-bf">
-                              <i class="fas fa-file-pdf"></i>
+                              <!-- <i class="fas fa-file-pdf"></i>
                                 <span>PDF</span>
-                              </a>
+                              </a> -->
                             </div>
                           </div>
                         </div>
@@ -1323,6 +1323,34 @@ input:checked + .slider:before {
       </div>
     </footer>
 
+<div class="modal fade" id="modal-export-bf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin:10rem auto">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="width:30% !important; margin:auto !important;">
+            <div class="modal-header" style="background: linear-gradient(
+              87deg
+              , #11cdef 0, #1171ef 100%) !important;">
+              <h5 class="modal-title text-white" id="exampleModalLabel">NOMOR INVOICE</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true text-white">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="form-no-invoice-bf">
+                <input type="hidden" name="id" id="id">
+                  <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="no-invoice-bf" id="no-invoice-bf" placeholder="Nomor Invoice">
+                    </div>
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-bf" onclick="($('#form-export-bf').submit())">Eksport</a>
+            </div>
+        </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="modal-export-bo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin:10rem auto">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="width:30% !important; margin:auto !important;">
@@ -1402,34 +1430,6 @@ input:checked + .slider:before {
             </div>
         <div class="modal-footer">
             <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-bj" onclick="($('#form-export-bj').submit())">Eksport</a>
-        </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="modal-export-bf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin:10rem auto">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" style="width:30% !important; margin:auto !important;">
-            <div class="modal-header" style="background: linear-gradient(
-              87deg
-              , #11cdef 0, #1171ef 100%) !important;">
-              <h5 class="modal-title text-white" id="exampleModalLabel">NOMOR INVOICE</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true text-white">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <form role="form" id="form-no-invoice-bf">
-                <input type="hidden" name="id" id="id">
-                  <div class="card-body">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="no-invoice-bf" id="no-invoice-bf" placeholder="Nomor Invoice">
-                    </div>
-                  </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-bf" onclick="($('#form-export-bf').submit())">Eksport</a>
-            </div>
         </div>
     </div>
   </div>
