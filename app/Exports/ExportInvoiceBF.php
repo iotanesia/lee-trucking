@@ -86,7 +86,7 @@ public function view(): View
             $totalKeseluruhan = $totalInv + $ppn10 + $pph23;
         $startDates =  Carbon::parse($this->startDate)->formatLocalized('%d %B %Y');
         $endDates =  Carbon::parse($this->endDate)->formatLocalized('%d %B %Y');
-        return view('invoice.excel-BF', [
+        return view('invoice.excel-bf', [
             'data' => $data,
             'startDate' => $startDates,
             'endDate' => $endDates,
