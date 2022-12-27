@@ -32,6 +32,7 @@ class ExpeditionAndRitReportController extends Controller
      */
     public function index(Request $request)
     {
+        ini_set('max_execution_time', 3000);
         $data['title'] = 'Laporan Ekspedisi Dan Rit';
         return view('expedition-rit-report.index', $data);
     }
