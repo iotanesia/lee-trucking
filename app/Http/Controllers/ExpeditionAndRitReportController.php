@@ -38,6 +38,7 @@ class ExpeditionAndRitReportController extends Controller
     }
 
     public function exportExcelRitTujuan(Request $request){
+        ini_set('max_execution_time', 300);
         $date = $request->dateRangeRitTujuan;
         $dates = explode('-',$date);
 
