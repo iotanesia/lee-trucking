@@ -72,7 +72,7 @@ class ReportManagementController extends Controller
                   ,'coa_master_rekening.bank_name','coa_master_rekening.rek_name'
                   ,'coa_master_rekening.rek_no','coa_activity.nominal','coa_activity.table_id'
                   ,'coa_activity.table','expedition_activity.nomor_inv','expedition_activity.nomor_surat_jalan')
-                  ->orderBy('expedition_activity.tgl_inv','DESC')->get();
+                  ->orderBy('expedition_activity.id','DESC')->get();
 
           foreach($jurnalReportList as $row) {
             $row->activity_name = $row->sheet_name.' ['.$row->table_id.' ]';
