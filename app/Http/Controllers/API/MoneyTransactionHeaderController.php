@@ -699,7 +699,7 @@ class MoneyTransactionHeaderController extends Controller
                   $coaActivity->activity_id = 52;
                   $coaActivity->activity_name = 'PINJAMAN_KARYAWAN';
                   $coaActivity->status = 'ACTIVE';
-                  $coaActivity->nominal = $moneyTransactionHeader->pokok;
+                  $coaActivity->nominal = $moneyDetailTermin->nominal_termin;
                   $coaActivity->coa_id = $value->id;
                   $coaActivity->created_at = $current_date_time;
                   $coaActivity->created_by = $user_id;
