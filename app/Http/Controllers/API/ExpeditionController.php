@@ -832,7 +832,7 @@ class ExpeditionController extends Controller
                 $coaActivity->activity_id = $statusActivityId['id'];
                 $coaActivity->activity_name = $expeditionActivity->status_activity;
                 $coaActivity->status = 'ACTIVE';
-                $coaActivity->nominal = $expeditionActivity->harga_ojk;
+                $coaActivity->nominal = $expeditionActivity->kenek_id != $idNonKenek ? $expeditionActivity->harga_ojk : $expeditionActivity->harga_ojk - 60000;
                 $coaActivity->rek_no = $exStatusActivity->no_rek;
                 $coaActivity->coa_id = $row;
                 $coaActivity->ex_id = $expeditionActivity->id;
