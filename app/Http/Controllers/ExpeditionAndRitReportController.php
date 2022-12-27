@@ -64,6 +64,7 @@ class ExpeditionAndRitReportController extends Controller
     }
 
     public function exportExcelRitDriver(Request $request){
+        ini_set('max_execution_time', 300);
         $date = $request->dateRangeRitDriver;
         $dates = explode('-',$date);
         $cekRole = $this->checkRoles($request);
@@ -88,6 +89,7 @@ class ExpeditionAndRitReportController extends Controller
     }
 
     public function exportExcelRitTruck(Request $request){
+        ini_set('max_execution_time', 300);
         $date = $request->dateRangeRitTruck;
         $dates = explode('-',$date);
 
