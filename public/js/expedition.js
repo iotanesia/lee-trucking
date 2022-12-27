@@ -116,7 +116,6 @@ $("document").ready(function() {
   
     $("#expedition-modal").on("show.bs.modal", function(e) {
       var invoker = $(e.relatedTarget);
-  
       if(invoker.attr('el-event') == 'edit') {
         var dataJSON = invoker.attr("data-json");
         var dataJSON = JSON.parse(dataJSON);
@@ -134,6 +133,11 @@ $("document").ready(function() {
         $("#expedition-modal #otv").val(dataJSON.harga_otv);
         
     } else {
+        $("#jenis_surat_jalan").val("").trigger("change");
+        $("#otv_payment_method").val("").trigger("change");
+        $("#truck_id").val("").trigger("change");
+        $("#driver_id").val("").trigger("change");
+        $("#kenek_id").val("").trigger("change");
         $("#expedition-modal #tujuan").html("").trigger("change");
         $("#expedition-form").find("input[name=id]").val(null);
         $("#expedition-modal #btn-submit").attr("el-event", "add");

@@ -218,9 +218,7 @@ class UserController extends Controller
     unset($input['nama_rekening']);
 
     foreach($input as $key => $row) {
-        if($row) {
-            $user->{$key} = $row;
-        }
+      $user->{$key} = $row;
     }
 
     if($user->save()){

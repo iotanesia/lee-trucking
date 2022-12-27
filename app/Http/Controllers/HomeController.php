@@ -69,9 +69,9 @@ class HomeController extends Controller
                              WHERE a.kode_repair LIKE '%RP-%' AND EXTRACT(MONTH FROM a.updated_at) = ".$bln." AND EXTRACT(YEAR FROM a.updated_at) = ".$thn." ".$queryRole);
         $totaltruck = DB::select("SELECT COUNT(id) AS total FROM ".$schema.".ex_master_truck as b WHERE is_deleted = false ".$queryRole);
         $month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        $ex = DB::select("SELECT date_part('month', a.tgl_po) AS months, COUNT(a.id) FROM ".$schema.".expedition_activity as a
+        $ex = DB::select("SELECT date_part('month', a.tgl_po) AS months, date_part('year', a.tgl_po) AS years, COUNT(a.id) FROM ".$schema.".expedition_activity as a
               JOIN users as b ON b.id = a.user_id  AND a.is_deleted = 'f' ".$queryRole."   
-              GROUP BY months ORDER BY months ASC");
+              GROUP BY months,years ORDER BY years,months ASC");
         $truck = DB::select("SELECT a.cabang_name, COUNT(b.id) FROM ".$schema.".ex_master_truck AS b JOIN ".$schema.".ex_master_cabang AS a ON b.cabang_id = a.id 
                  WHERE b.is_deleted = false ".$queryRole." GROUP BY cabang_id, a.cabang_name");
 
@@ -83,7 +83,7 @@ class HomeController extends Controller
         
         foreach($ex as $key => $row) {
             $row->months = $month[($row->months - 1)];
-            $data['bulan'][] = $row->months;
+            $data['bulan'][] = $row->months.' - '.$row->years;
             $data['total'][] = $row->count;
         }
 
