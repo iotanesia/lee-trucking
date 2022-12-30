@@ -81,7 +81,6 @@ $("document").ready(function(){
       $("#stkRepairHeader-modal #btn-submit").attr("el-event", "edit");
       $("#stkRepairHeader-form").find("input[name=truck_id]").attr('readonly', true);
       $("#stkRepairHeader-form").find("textarea[name=content]").summernote("code", dataJSON.content);
-      
       bindToForm($("#stkRepairHeader-modal"), dataJSON);
 
       for (var i = 0; i < dataJSON.stk_history_stok.length; i++) {
@@ -89,6 +88,7 @@ $("document").ready(function(){
           var selectBlock = '';
 
           $.each(dataSparepart, function( k, v) {
+            console.log(v.id+' - '+v.sparepart_name)
             if(v.id == responses.sparepart_id) {
               var selected = 'selected';
             

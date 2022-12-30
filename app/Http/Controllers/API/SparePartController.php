@@ -113,7 +113,7 @@ class SparePartController extends Controller
                             }
                         })
                        ->where('type', 'SPAREPART')
-                       ->where('group_sparepart_id', '<>', 5)
+                    //    ->where('group_sparepart_id', '<>', 5)
                        ->select('stk_master_sparepart.*', 'stk_master_group_sparepart.group_name')
                        ->orderBy('stk_master_sparepart.id', 'DESC')
                        ->get();
