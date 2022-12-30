@@ -12,21 +12,20 @@
         <br/>
         <Table>
             <tr>
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:11pt;text-align:left;">
+                <td width="150" style="border-top: 2px solid #000000;font-family:Calibri;font-size:11pt;text-align:left;">
                     KEPADA: {{$namaPt}}
                 </td>
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:11pt;text-align:left;">
+                <td width="150" style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
+                <td width="150" style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
+                <td width="150" style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
+                <td width="150" style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
+                <td width="150" style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
+                <td width="150" style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
+                <td width="150" style="border-top: 2px solid #000000;font-family:Calibri;font-size:11pt;text-align:left;">
                      NO INVOICE : {{$noInvoice}}
                 </td>  
-                <td style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-                <td style="border-top: 2px solid #000000;border-right: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
-               
+                <td width="150" style="border-top: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
+                <td width="150" style="border-top: 2px solid #000000;border-right: 2px solid #000000;font-family:Calibri;font-size:10pt;text-align:left;"></td>
             </tr>
             <br/>
             
