@@ -32,7 +32,7 @@ class SparePartController extends Controller
       $sparePartList = SparePart::join('stk_master_group_sparepart', 'stk_master_group_sparepart.id',
                                        'stk_master_sparepart.group_sparepart_id')
                        ->join('all_global_param as sparepart_jenis', 'stk_master_sparepart.sparepart_jenis', 'sparepart_jenis.param_code')
-                       ->join('public.users', DB::raw('CAST(users.id AS VARCHAR)'), 'stk_master_sparepart.created_by')
+                       ->join('public.users', 'users.id', 'stk_master_sparepart.created_by')
                        ->where('stk_master_sparepart.is_deleted','=','false')
                        ->where(function($query) use($whereField, $whereValue) {
                            if($whereValue) {
@@ -222,7 +222,7 @@ class SparePartController extends Controller
                             }
                        ])
                        ->join('all_global_param as sparepart_jenis', 'stk_master_sparepart.sparepart_jenis', 'sparepart_jenis.param_code')
-                       ->join('public.users', DB::raw('CAST(users.id AS VARCHAR)'), 'stk_master_sparepart.created_by')
+                       ->join('public.users', 'users.id', 'stk_master_sparepart.created_by')
                        ->where('stk_master_sparepart.is_deleted','=','false')
                        ->where('stk_master_sparepart.sparepart_type', 'DEBT')
                        ->where('stk_master_sparepart.sparepart_type', 'DEBT')
