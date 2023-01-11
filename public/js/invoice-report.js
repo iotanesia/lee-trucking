@@ -2154,7 +2154,7 @@
   $('#cbPpn10Bf').click(function() {
     if(this.checked){
       $('#table-invoice-bf').DataTable().ajax.reload(function() {
-        $('#trPpn10Ba').show();
+        $('#trPpn10Bf').show();
       });
     }else{
       $('#table-invoice-bf').DataTable().ajax.reload(function() {
