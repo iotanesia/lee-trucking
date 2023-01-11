@@ -1392,9 +1392,9 @@ input:checked + .slider:before {
             </div>
           </form>
         </div>
-      </div>
-      <div class="modal-footer">
-        <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-dj" onclick="($('#form-export-dj').submit())">Eksport</a>
+        <div class="modal-footer">
+          <a style="display:none;" type="button" class="btn btn-success" style="color:#FFFFFF; margin:auto" id="btn-export-dj" onclick="($('#form-export-dj').submit())">Eksport</a>
+        </div>
       </div>
     </div>
   </div>
