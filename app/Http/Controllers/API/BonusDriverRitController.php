@@ -115,6 +115,13 @@ class BonusDriverRitController extends Controller
   }
 
   public function getListKenek(Request $request) {
+    $cekRole = $this->checkRoles($request);
+    $ids = null;
+
+    if($cekRole) {
+      $ids = json_decode($cekRole, true);
+    }
+
     if($request->isMethod('GET')) {
       $data = $request->all();
       $month = isset($data['bulan']) ? $data['bulan'] : date('m');
@@ -131,6 +138,11 @@ class BonusDriverRitController extends Controller
                             foreach(explode(', ', $whereField) as $idx => $field) {
                                 $query->orWhere($field, 'iLIKE', "%".$whereValue."%");
                             }
+                        }
+                    })
+                    ->where(function($query) use($ids) {
+                        if($ids) {
+                            $query->whereIn('ex_master_kenek.cabang_id', $ids);
                         }
                     })
                     ->whereIn('status_activity', ['CLOSED_EXPEDITION', 'WAITING_OWNER'])
