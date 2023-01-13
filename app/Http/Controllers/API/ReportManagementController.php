@@ -704,6 +704,7 @@ class ReportManagementController extends Controller
 
     //Truck Repairs Report
     public function getListTruckRepair(Request $request){
+        ini_set('max_execution_time', 3000);
       if($request->isMethod('GET')) {
         $data = $request->all();
         $whereValue = (isset($data['where_value'])) ? $data['where_value'] : '';
@@ -723,7 +724,7 @@ class ReportManagementController extends Controller
         foreach($data as $row) {
           $historyStok = StkHistorySparePart::where('header_id', $row->id)->where('transaction_type','OUT')->get();
           foreach($historyStok as $rowHistory){
-              $totals = ($rowHistory->amount);
+              $totals += ($rowHistory->amount);
           }
             $row->total = 'Rp.'. number_format($totals, 0, ',', '.');
         }
