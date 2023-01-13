@@ -720,8 +720,8 @@ class ReportManagementController extends Controller
         ->select('stk_repair_header.*', 'ex_master_truck.truck_name','ex_master_truck.truck_plat')
         ->orderBy('stk_repair_header.updated_at','DESC')->get();
 
-        $totals = 0;
         foreach($data as $row) {
+          $totals = 0;
           $historyStok = StkHistorySparePart::where('header_id', $row->id)->where('transaction_type','OUT')->get();
           foreach($historyStok as $rowHistory){
               $totals += ($rowHistory->amount);
