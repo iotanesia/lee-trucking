@@ -82,4 +82,8 @@ class BniDashboardController extends Controller
         // }
 
     }
+
+    public function tnc() {
+        return view('bni.tnc');
+    }
 }
