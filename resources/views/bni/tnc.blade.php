@@ -161,9 +161,9 @@ You are advised to review this Privacy Policy periodically for any changes. Chan
 You always have option to remove our service connected to your Facebook account. You can follow these steps :
 1.On your Facebook account, go to "settings"
 2.Choose "Apps and Websites"
-3.From the lists, choose "Mitra toko Indonesia"
+3.From the lists, choose "PT Acon"
 4.Click on the "Remove" button to disconnect your account from our service
-5.You will be given options to remove previous posts, videos or events that Mitra toko Indonesia posted on your timeline. And option for Facebook to notify us about your request disconnecting with our service.
+5.You will be given options to remove previous posts, videos or events that PT Acon posted on your timeline. And option for Facebook to notify us about your request disconnecting with our service.
 6.After deletion of our service, you will receive confirmation from Facebook.
 7.Please use another way to login to our website and App
 
