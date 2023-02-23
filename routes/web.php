@@ -108,6 +108,6 @@ Route::get('/bni-dashboard', 'BniDashboardController@index')->name('bni-dashboar
 Route::get('/bni-dashboard-detail', 'BniDashboardController@indexAll')->name('bni-dashboard-detail');
 
 Route::get('/export-bni', 'BniDashboardController@excelExportBni')->name('export-bni');
-Route::get('/tnc', 'BniDashboardController@excelExportBni')->name('tnc');
+Route::get('/tnc', 'BniDashboardController@tnc')->name('tnc');
 
 
